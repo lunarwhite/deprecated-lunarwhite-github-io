@@ -1,0 +1,185 @@
+<!doctype html><html><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge"><title>[MIT-missing] 03 Command-line Environment - lunarwhite</title><link rel=icon type=image/png href=favicon/favicon.ico><meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="Notes for awesome courses offered by the top universities.">
+<meta property="og:image" content>
+<meta property="og:title" content="[MIT-missing] 03 Command-line Environment">
+<meta property="og:description" content="Notes for awesome courses offered by the top universities.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lunarwhite.github.io/posts/notes/mitmissing3/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-07-24T20:11:48+00:00">
+<meta property="article:modified_time" content="2021-07-24T20:11:48+00:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="[MIT-missing] 03 Command-line Environment">
+<meta name=twitter:description content="Notes for awesome courses offered by the top universities.">
+<script src=https://lunarwhite.github.iojs/feather.min.js></script>
+<link href=https://lunarwhite.github.io/css/fonts.b685ac6f654695232de7b82a9143a46f9e049c8e3af3a21d9737b01f4be211d1.css rel=stylesheet>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+</head>
+<body>
+<div class=content><header>
+<div class=main>
+<a href=https://lunarwhite.github.io>lunarwhite</a>
+</div>
+<nav>
+<a href=/>Home</a>
+<a href=/posts>Posts</a>
+<a href=/tags>Tags</a>
+<a href=/about>About</a>
+</nav>
+</header>
+<main>
+<article>
+<div class=title>
+<h1 class=title>[MIT-missing] 03 Command-line Environment</h1>
+<div class=meta>Posted on Jul 24, 2021</div>
+</div>
+<section class=body>
+<blockquote>
+<p><a href=https://missing.csail.mit.edu/2020/command-line/>Command-line Environment - missing-semester</a></p>
+</blockquote>
+<h2 id=1-job-control>1 Job Control</h2>
+<ul>
+<li>To kill a process, type <code>Ctrl-C</code>.</li>
+<li>To pause and backgrounding processes, type <code>Ctrl-Z</code>.</li>
+</ul>
+<h2 id=2-aliases>2 Aliases</h2>
+<ul>
+<li>It can become tiresome typing long commands that involve many flags or verbose options. For this reason, most shells support <em>aliasing</em>.</li>
+<li>A shell alias is a short form for another command that your shell will replace automatically for you. For instance, an alias in bash has the following structure:</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#007020>alias</span> <span style=color:#bb60d5>alias_name</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;command_to_alias arg1 arg2&#34;</span>
+</code></pre></div><ul>
+<li>Note that there is no space around the equal sign <code>=</code>, because <a href=https://www.man7.org/linux/man-pages/man1/alias.1p.html><code>alias</code></a> is a shell command that takes a single argument.</li>
+<li>Aliases have many convenient features:</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic># Make shorthands for common flags</span>
+<span style=color:#007020>alias</span> <span style=color:#bb60d5>ll</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;ls -lh&#34;</span>
+
+<span style=color:#60a0b0;font-style:italic># Save a lot of typing for common commands</span>
+<span style=color:#007020>alias</span> <span style=color:#bb60d5>gs</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;git status&#34;</span>
+<span style=color:#007020>alias</span> <span style=color:#bb60d5>gc</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;git commit&#34;</span>
+<span style=color:#007020>alias</span> <span style=color:#bb60d5>v</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;vim&#34;</span>
+
+<span style=color:#60a0b0;font-style:italic># Save you from mistyping</span>
+<span style=color:#007020>alias</span> <span style=color:#bb60d5>sl</span><span style=color:#666>=</span>ls
+
+<span style=color:#60a0b0;font-style:italic># Overwrite existing commands for better defaults</span>
+<span style=color:#007020>alias</span> <span style=color:#bb60d5>mv</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;mv -i&#34;</span>           <span style=color:#60a0b0;font-style:italic># -i prompts before overwrite</span>
+<span style=color:#007020>alias</span> <span style=color:#bb60d5>mkdir</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;mkdir -p&#34;</span>     <span style=color:#60a0b0;font-style:italic># -p make parent dirs as needed</span>
+<span style=color:#007020>alias</span> <span style=color:#bb60d5>df</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;df -h&#34;</span>           <span style=color:#60a0b0;font-style:italic># -h prints human readable format</span>
+
+<span style=color:#60a0b0;font-style:italic># Alias can be composed</span>
+<span style=color:#007020>alias</span> <span style=color:#bb60d5>la</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;ls -A&#34;</span>
+<span style=color:#007020>alias</span> <span style=color:#bb60d5>lla</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;la -l&#34;</span>
+
+<span style=color:#60a0b0;font-style:italic># To ignore an alias run it prepended with \</span>
+<span style=color:#4070a0;font-weight:700>\l</span>s
+<span style=color:#60a0b0;font-style:italic># Or disable an alias altogether with unalias</span>
+<span style=color:#007020>unalias</span> la
+
+<span style=color:#60a0b0;font-style:italic># To get an alias definition just call it with alias</span>
+<span style=color:#007020>alias</span> ll
+<span style=color:#60a0b0;font-style:italic># Will print ll=&#39;ls -lh&#39;</span>
+</code></pre></div><ul>
+<li>Note that aliases do not persist shell sessions by default. To make an alias persistent you need to include it in shell startup files, like <code>.bashrc</code> or <code>.zshrc</code>.</li>
+</ul>
+<h2 id=4-dotfiles>4 Dotfiles</h2>
+<ul>
+<li>For <code>bash</code>, editing your <code>.bashrc</code> or <code>.bash_profile</code> will work in most systems. Here you can include commands that you want to run on startup, like the alias we just described or modifications to your <code>PATH</code> environment variable.</li>
+<li>In fact, many programs will ask you to include a line like <code>export PATH="$PATH:/path/to/program/bin"</code> in your shell configuration file so their binaries can be found.</li>
+<li>Some other examples of tools that can be configured through dotfiles are:
+<ul>
+<li><code>bash</code> - <code>~/.bashrc</code>, <code>~/.bash_profile</code></li>
+<li><code>git</code> - <code>~/.gitconfig</code></li>
+<li><code>vim</code> - <code>~/.vimrc</code> and the <code>~/.vim</code> folder</li>
+<li><code>ssh</code> - <code>~/.ssh/config</code></li>
+<li><code>tmux</code> - <code>~/.tmux.conf</code></li>
+</ul>
+</li>
+<li>How should you organize your dotfiles? They should be in their own folder, under version control, and <strong>symlinked</strong> into place using a script.</li>
+</ul>
+<h2 id=35-remote-machines>3.5 Remote Machines</h2>
+<h3 id=351-intro-to-ssh>3.5.1 intro to SSH</h3>
+<ul>
+<li>If you need to use remote servers in order to deploy backend software or you need a server with higher computational capabilities, you will end up using a Secure Shell (SSH).</li>
+<li>To <code>ssh</code> into a server you execute a command as follows</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>ssh foo@bar.mit.edu
+</code></pre></div><h3 id=352-executing-commands>3.5.2 executing commands</h3>
+<ul>
+<li>An often overlooked feature of <code>ssh</code> is the ability to run commands directly. <code>ssh foobar@server ls</code> will execute <code>ls</code> in the home folder of foobar.</li>
+<li>It works with pipes, so <code>ssh foobar@server ls | grep PATTERN</code> will grep locally the remote output of <code>ls</code> and <code>ls | ssh foobar@server grep PATTERN</code> will grep remotely the local output of <code>ls</code>.</li>
+</ul>
+<h3 id=353-ssh-keys>3.5.3 SSH keys</h3>
+<ul>
+<li>Key-based authentication exploits public-key cryptography to prove to the server that the client owns the secret private key without revealing the key.</li>
+<li>This way you do not need to reenter your password every time. Nevertheless, the private key (often <code>~/.ssh/id_rsa</code> and more recently <code>~/.ssh/id_ed25519</code>) is effectively your password, so treat it like so.</li>
+</ul>
+<h3 id=354-key-generation>3.5.4 key generation</h3>
+<ul>
+<li>To generate a pair you can run <a href=https://www.man7.org/linux/man-pages/man1/ssh-keygen.1.html><code>ssh-keygen</code></a>.</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>ssh-keygen -o -a <span style=color:#40a070>100</span> -t ed25519 -f ~/.ssh/id_ed25519
+</code></pre></div><ul>
+<li>You should choose a passphrase, to avoid someone who gets hold of your private key to access authorized servers. Use <a href=https://www.man7.org/linux/man-pages/man1/ssh-agent.1.html><code>ssh-agent</code></a> or <a href=https://linux.die.net/man/1/gpg-agent><code>gpg-agent</code></a> so you do not have to type your passphrase every time.</li>
+<li>To check if you have a passphrase and validate it you can run <code>ssh-keygen -y -f /path/to/key</code>.</li>
+</ul>
+<h3 id=355-copying-files-over-ssh>3.5.5 copying files over SSH</h3>
+<ul>
+<li>There are many ways to copy files over ssh:
+<ul>
+<li><code>ssh+tee</code>, the simplest is to use <code>ssh</code> command execution and STDIN input by doing <code>cat localfile | ssh remote_server tee serverfile</code>. Recall that <a href=https://www.man7.org/linux/man-pages/man1/tee.1.html><code>tee</code></a> writes the output from STDIN into a file.</li>
+<li><a href=https://www.man7.org/linux/man-pages/man1/scp.1.html><code>scp</code></a> when copying large amounts of files/directories, the secure copy <code>scp</code> command is more convenient since it can easily recurse over paths. The syntax is <code>scp path/to/local_file remote_host:path/to/remote_file</code></li>
+<li><a href=https://www.man7.org/linux/man-pages/man1/rsync.1.html><code>rsync</code></a> improves upon <code>scp</code> by detecting identical files in local and remote, and preventing copying them again. It also provides more fine grained control over symlinks, permissions and has extra features like the <code>--partial</code> flag that can resume from a previously interrupted copy. <code>rsync</code> has a similar syntax to <code>scp</code>.</li>
+</ul>
+</li>
+</ul>
+<h3 id=356-port-forwarding>3.5.6 port forwarding</h3>
+<ul>
+<li>In many scenarios you will run into software that listens to specific ports in the machine. When this happens in your local machine you can type <code>localhost:PORT</code> or <code>127.0.0.1:PORT</code>, but what do you do with a remote server that does not have its ports directly available through the network/internet?.</li>
+<li>This is called <em>port forwarding</em> and it comes in two flavors: Local Port Forwarding and Remote Port Forwarding (<a href=https://unix.stackexchange.com/questions/115897/whats-ssh-port-forwarding-and-whats-the-difference-between-ssh-local-and-remot>this StackOverflow post</a>).</li>
+<li>The most common scenario is local port forwarding, where a service in the remote machine listens in a port and you want to link a port in your local machine to forward to the remote port. For example, if we execute <code>jupyter notebook</code> in the remote server that listens to the port <code>8888</code>. Thus, to forward that to the local port <code>9999</code>, we would do <code>ssh -L 9999:localhost:8888 foobar@remote_server</code> and then navigate to <code>locahost:9999</code> in our local machine.</li>
+</ul>
+<h3 id=357-ssh-configuration>3.5.7 SSH configuration</h3>
+<ul>
+<li>We have covered many many arguments that we can pass. A tempting alternative is to create shell aliases that look like</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#007020>alias</span> <span style=color:#bb60d5>my_server</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;ssh -i ~/.id_ed25519 --port 2222 -L 9999:localhost:8888 foobar@remote_server
+</span></code></pre></div><ul>
+<li>However, there is a better alternative using <code>~/.ssh/config</code>.</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>Host vm
+    User foobar
+    HostName 172.16.174.141
+    Port 2222
+    IdentityFile ~/.ssh/id_ed25519
+    LocalForward 9999 localhost:8888
+
+# Configs can also take wildcards
+Host *.mit.edu
+    User foobaz
+</code></pre></div><ul>
+<li>An additional advantage of using the <code>~/.ssh/config</code> file over aliases is that other programs like <code>scp</code>, <code>rsync</code>, <code>mosh</code>, &c are able to read it as well and convert the settings into the corresponding flags.</li>
+<li>Note that the <code>~/.ssh/config</code> file can be considered a dotfile, and in general it is fine for it to be included with the rest of your dotfiles. However, if you make it public, think about the information that you are potentially providing strangers on the internet: addresses of your servers, users, open ports, &c. This may facilitate some types of attacks so be thoughtful about sharing your SSH configuration.</li>
+<li>Server side configuration is usually specified in <code>/etc/ssh/sshd_config</code>. Here you can make changes like disabling password authentication, changing ssh ports, enabling X11 forwarding, &c. You can specify config settings on a per user basis.</li>
+</ul>
+</section>
+<div class=post-tags>
+<nav class="nav tags">
+<ul class=tags>
+<li><a href=/tags/awesome-course>awesome-course</a></li>
+<li><a href=/tags/shell/command-line>shell/command-line</a></li>
+</ul>
+</nav>
+</div>
+</article>
+</main>
+<footer>
+<hr><a class=soc href=https://www.linkedin.com/in/yuedongwoo/ title=LinkedIn><i data-feather=linkedin></i></a>|<a class=soc href=https://github.com/lunarwhite title=GitHub><i data-feather=github></i></a>|<a class=soc href title=Twitter><i data-feather=twitter></i></a>|<a class=soc href title=Instagram><i data-feather=instagram></i></a>|<a class=soc href title=Bilibili><i data-feather=tv></i></a>|<a class=soc href=https://www.zhihu.com/people/wydnlz title=Zhihu><i data-feather=link></i></a>|⚡️
+2021 © lunarwhite | <a href=https://github.com/athul/archie>Archie Theme</a> | Built with <a href=https://gohugo.io>Hugo</a>
+</footer>
+<script>feather.replace()</script>
+<script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
+</body>
+</html>

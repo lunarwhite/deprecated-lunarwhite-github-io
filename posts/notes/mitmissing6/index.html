@@ -1,0 +1,159 @@
+<!doctype html><html><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge"><title>[MIT-missing] 06 Security & Cryptography - lunarwhite</title><link rel=icon type=image/png href=favicon/favicon.ico><meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="Notes for awesome courses offered by the top universities.">
+<meta property="og:image" content>
+<meta property="og:title" content="[MIT-missing] 06 Security & Cryptography">
+<meta property="og:description" content="Notes for awesome courses offered by the top universities.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lunarwhite.github.io/posts/notes/mitmissing6/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-07-29T14:51:12+00:00">
+<meta property="article:modified_time" content="2021-07-29T14:51:12+00:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="[MIT-missing] 06 Security & Cryptography">
+<meta name=twitter:description content="Notes for awesome courses offered by the top universities.">
+<script src=https://lunarwhite.github.iojs/feather.min.js></script>
+<link href=https://lunarwhite.github.io/css/fonts.b685ac6f654695232de7b82a9143a46f9e049c8e3af3a21d9737b01f4be211d1.css rel=stylesheet>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+</head>
+<body>
+<div class=content><header>
+<div class=main>
+<a href=https://lunarwhite.github.io>lunarwhite</a>
+</div>
+<nav>
+<a href=/>Home</a>
+<a href=/posts>Posts</a>
+<a href=/tags>Tags</a>
+<a href=/about>About</a>
+</nav>
+</header>
+<main>
+<article>
+<div class=title>
+<h1 class=title>[MIT-missing] 06 Security & Cryptography</h1>
+<div class=meta>Posted on Jul 29, 2021</div>
+</div>
+<section class=body>
+<blockquote>
+<p><a href=https://missing.csail.mit.edu/2020/security/>Security and Cryptography - missing-semester</a></p>
+</blockquote>
+<h2 id=1-entropy>1 Entropy</h2>
+<ul>
+<li><a href=https://en.wikipedia.org/wiki/Entropy_(information_theory)>Entropy</a> is a measure of randomness. This is useful, for example, when determining the strength of a password.</li>
+<li>Entropy is measured in <em>bits</em>, and when selecting uniformly at random from a set of possible outcomes, the entropy is equal to <code>log_2(# of possibilities)</code>. A fair coin flip gives 1 bit of entropy. A dice roll (of a 6-sided die) has ~2.58 bits of entropy.</li>
+<li>How many bits of entropy is enough? It depends on your threat model. For online guessing, ~40 bits of entropy is pretty good. To be resistant to offline guessing, a stronger password would be necessary (e.g. 80 bits, or more).</li>
+</ul>
+<h2 id=2-hash-functions>2 Hash functions</h2>
+<ul>
+<li>A <a href=https://en.wikipedia.org/wiki/Cryptographic_hash_function>cryptographic hash function</a> maps data of arbitrary size to a fixed size, and has some special properties. A rough specification of a hash function is as follows:</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>hash(value: array&lt;byte&gt;) -&gt; vector&lt;byte, N&gt;  (for some fixed N)
+</code></pre></div><ul>
+<li>An example of a hash function is <a href=https://en.wikipedia.org/wiki/SHA-1>SHA1</a>, which is used in Git. It maps arbitrary-sized inputs to 160-bit outputs (which can be represented as 40 hexadecimal characters). We can try out the SHA1 hash on an input using the <code>sha1sum</code> command:</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ printf &#39;hello&#39; | sha1sum
+aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d
+$ printf &#39;hello&#39; | sha1sum
+aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d
+$ printf &#39;Hello&#39; | sha1sum
+f7ff9e8b7bb2e09b70935a5d785e0cc5d9d0abf0
+</code></pre></div><ul>
+<li>At a high level, a hash function can be thought of as a hard-to-invert random-looking (but deterministic) function (and this is the <a href=https://en.wikipedia.org/wiki/Random_oracle>ideal model of a hash function</a>). A hash function has the following properties:
+<ul>
+<li>Deterministic: the same input always generates the same output.</li>
+<li>Non-invertible: it is hard to find an input <code>m</code> such that <code>hash(m) = h</code> for some desired output <code>h</code>.</li>
+<li>Target collision resistant: given an input <code>m_1</code>, it’s hard to find a different input <code>m_2</code> such that <code>hash(m_1) = hash(m_2)</code>.</li>
+<li>Collision resistant: it’s hard to find two inputs <code>m_1</code> and <code>m_2</code> such that <code>hash(m_1) = hash(m_2)</code> (note that this is a strictly stronger property than target collision resistance).</li>
+</ul>
+</li>
+<li>Note: while it may work for certain purposes, SHA-1 is <a href=https://shattered.io/>no longer</a> considered a strong cryptographic hash function.</li>
+</ul>
+<h2 id=3-key-derivation-functions>3 Key derivation functions</h2>
+<ul>
+<li>A related concept to cryptographic hashes, <a href=https://en.wikipedia.org/wiki/Key_derivation_function>key derivation functions</a> (KDFs) are used for a number of applications, including producing fixed-length output for use as keys in other cryptographic algorithms. Usually, KDFs are deliberately slow, in order to slow down offline brute-force attacks.</li>
+<li>Storing login credentials. Storing plaintext passwords is bad; the right approach is to generate and store a random <a href=https://en.wikipedia.org/wiki/Salt_(cryptography)>salt</a> <code>salt = random()</code> for each user, store <code>KDF(password + salt)</code>, and verify login attempts by re-computing the KDF given the entered password and the stored salt.</li>
+</ul>
+<h2 id=4-symmetric-cryptography>4 Symmetric cryptography</h2>
+<ul>
+<li>Symmetric cryptography accomplishes hiding message contents with the following set of functionality:</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>keygen() -&gt; key  (this function is randomized)
+
+encrypt(plaintext: array&lt;byte&gt;, key) -&gt; array&lt;byte&gt;  (the ciphertext)
+decrypt(ciphertext: array&lt;byte&gt;, key) -&gt; array&lt;byte&gt;  (the plaintext)
+</code></pre></div><ul>
+<li><code>decrypt(encrypt(m, key), key) = m</code>.</li>
+<li>An example of a symmetric cryptosystem in wide use today is <a href=https://en.wikipedia.org/wiki/Advanced_Encryption_Standard>AES</a>.</li>
+</ul>
+<h2 id=5-asymmetric-cryptography>5 Asymmetric cryptography</h2>
+<ul>
+<li>The term “asymmetric” refers to there being two keys, with two different roles. A private key, as its name implies, is meant to be kept private, while the public key can be publicly shared and it won’t affect security (unlike sharing the key in a symmetric cryptosystem).</li>
+<li>Asymmetric cryptosystems provide the following set of functionality, to encrypt/decrypt and to sign/verify:</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>keygen() -&gt; (public key, private key)  (this function is randomized)
+
+encrypt(plaintext: array&lt;byte&gt;, public key) -&gt; array&lt;byte&gt;  (the ciphertext)
+decrypt(ciphertext: array&lt;byte&gt;, private key) -&gt; array&lt;byte&gt;  (the plaintext)
+
+sign(message: array&lt;byte&gt;, private key) -&gt; array&lt;byte&gt;  (the signature)
+verify(message: array&lt;byte&gt;, signature: array&lt;byte&gt;, public key) -&gt; bool  (whether or not the signature is valid)
+</code></pre></div><ul>
+<li><code>decrypt(encrypt(m, public key), private key) = m</code>.</li>
+<li>Symmetric and asymmetric encryption can be compared to physical locks.
+<ul>
+<li>A symmetric cryptosystem is like a door lock: anyone with the key can lock and unlock it.</li>
+<li>Asymmetric encryption is like a padlock with a key. You could give the unlocked lock to someone (the public key), they could put a message in a box and then put the lock on, and after that, only you could open the lock because you kept the key (the private key).</li>
+</ul>
+</li>
+<li>The sign/verify functions have the same properties that you would hope physical signatures would have, in that it’s hard to forge a signature. No matter the message, without the <em>private</em> key, it’s hard to produce a signature such that <code>verify(message, signature, public key)</code> returns true. And of course, the verify function has the obvious correctness property that <code>verify(message, sign(message, private key), public key) = true</code>.</li>
+</ul>
+<h2 id=6-case-studies>6 Case studies</h2>
+<ul>
+<li>password managers
+<ul>
+<li>Password managers make it convenient to use unique, randomly generated high-entropy passwords for all your logins, and they save all your passwords in one place, encrypted with a symmetric cipher with a key produced from a passphrase using a KDF.</li>
+</ul>
+</li>
+<li>two-factor authentication
+<ul>
+<li>Require you to use a passphrase (“something you know”) along with a 2FA authenticator (like a <a href=https://www.yubico.com/>YubiKey</a>, “something you have”) in order to protect against stolen passwords and <a href=https://en.wikipedia.org/wiki/Phishing>phishing</a> attacks.</li>
+</ul>
+</li>
+<li>full disk encryption
+<ul>
+<li>You can use <a href=https://wiki.archlinux.org/index.php/Dm-crypt/Encrypting_a_non-root_file_system>cryptsetup + LUKS</a> on Linux, <a href=https://fossbytes.com/enable-full-disk-encryption-windows-10/>BitLocker</a> on Windows, or <a href=https://support.apple.com/en-us/HT204837>FileVault</a> on macOS. This encrypts the entire disk with a symmetric cipher, with a key protected by a passphrase.</li>
+</ul>
+</li>
+<li>private messaging
+<ul>
+<li>End-to-end security is bootstrapped from asymmetric-key encryption. Obtaining your contacts’ public keys is the critical step here.</li>
+<li>If you want good security, you need to authenticate public keys out-of-band (with Signal or Keybase), or trust social proofs (with Keybase).</li>
+</ul>
+</li>
+<li>SSH
+<ul>
+<li>When you run <code>ssh-keygen</code>, it generates an asymmetric keypair, <code>public_key, private_key</code>. This is generated randomly, using entropy provided by the operating system (collected from hardware events, etc.).</li>
+<li>The public key is stored as-is (it’s public, so keeping it a secret is not important), but at rest, the private key should be encrypted on disk. The <code>ssh-keygen</code> program prompts the user for a passphrase, and this is fed through a key derivation function to produce a key, which is then used to encrypt the private key with a symmetric cipher.</li>
+</ul>
+</li>
+</ul>
+</section>
+<div class=post-tags>
+<nav class="nav tags">
+<ul class=tags>
+<li><a href=/tags/awesome-course>awesome-course</a></li>
+<li><a href=/tags/cyber-security>cyber-security</a></li>
+</ul>
+</nav>
+</div>
+</article>
+</main>
+<footer>
+<hr><a class=soc href=https://www.linkedin.com/in/yuedongwoo/ title=LinkedIn><i data-feather=linkedin></i></a>|<a class=soc href=https://github.com/lunarwhite title=GitHub><i data-feather=github></i></a>|<a class=soc href title=Twitter><i data-feather=twitter></i></a>|<a class=soc href title=Instagram><i data-feather=instagram></i></a>|<a class=soc href title=Bilibili><i data-feather=tv></i></a>|<a class=soc href=https://www.zhihu.com/people/wydnlz title=Zhihu><i data-feather=link></i></a>|⚡️
+2021 © lunarwhite | <a href=https://github.com/athul/archie>Archie Theme</a> | Built with <a href=https://gohugo.io>Hugo</a>
+</footer>
+<script>feather.replace()</script>
+<script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!doctype html><html><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge"><title>COVID19 sentiment data analysis - lunarwhite</title><link rel=icon type=image/png href=favicon/favicon.ico><meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="summary for in-class assignments in SDU.">
+<meta property="og:image" content>
+<meta property="og:title" content="COVID19 sentiment data analysis">
+<meta property="og:description" content="summary for in-class assignments in SDU.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lunarwhite.github.io/posts/assigns/ds-covid/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-06-21T11:12:00+00:00">
+<meta property="article:modified_time" content="2021-06-21T11:12:00+00:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="COVID19 sentiment data analysis">
+<meta name=twitter:description content="summary for in-class assignments in SDU.">
+<script src=https://lunarwhite.github.iojs/feather.min.js></script>
+<link href=https://lunarwhite.github.io/css/fonts.b685ac6f654695232de7b82a9143a46f9e049c8e3af3a21d9737b01f4be211d1.css rel=stylesheet>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+</head>
+<body>
+<div class=content><header>
+<div class=main>
+<a href=https://lunarwhite.github.io>lunarwhite</a>
+</div>
+<nav>
+<a href=/>Home</a>
+<a href=/posts>Posts</a>
+<a href=/tags>Tags</a>
+<a href=/about>About</a>
+</nav>
+</header>
+<main>
+<article>
+<div class=title>
+<h1 class=title>COVID19 sentiment data analysis</h1>
+<div class=meta>Posted on Jun 21, 2021</div>
+</div>
+<section class=body>
+<blockquote>
+<p>本项目为数据结构课程设计的<strong>设计&开发文档</strong></p>
+<p>代码仓库<a href=https://github.com/lunarwhite/Chinese-corpus-sentiment-data-analysis>在这里</a></p>
+</blockquote>
+<h2 id=1-引言>1 引言</h2>
+<h3 id=11-编写目的>1.1 编写目的</h3>
+<p>公众情绪一直复杂多元，随着信息化程度的提高与大数据、人工智能等技术的不断普及又得以放大，让更多人的情感和想法得以在网络上得到表达与传播，传播范围比以往更大。新冠疫情于去年一月开始爆发，转眼间已经过去了一年多，疫情在国内得到了有效的控制。回顾这个过程，疫情下形成了特殊的网络社会心态和公众情绪。多元复杂的公众情绪，借助网络的力量传播和放大。但也方便了收集数据，并研究情绪变化的具体过程。</p>
+<p>因此基于此次疫情，借助适宜的数据、分析手段和自然语言处理技术，希望在一定程度上了解新冠疫情这一特殊事件，在其自身不同发展阶段对中国大众心态的影响，以大数据技术研究中国大众的网络社会心态及其变化规律，进而形成引导公众情绪、维护社会稳定的参考性依据，或许有助于未来的类似事件的应对。</p>
+<h3 id=12-项目概述>1.2 项目概述</h3>
+<p>以微博为代表的社交媒体上广泛的传播各种疫情信息，在疫情阶段发挥着比较重要的信息传输作用。本次作业的目的就是深入分析疫情信息中蕴含的网民情绪及其变化情况。以新冠肺炎疫情相关的短微博和相关新闻下的评论作为主要研究对象，首先爬取大量数据，利用心态词典方法可以大致观察心态演变，并结合层次聚类法从中分析网民关注热点，最后通过可视化方法展现相应的结果。</p>
+<h3 id=13-可行性分析>1.3 可行性分析</h3>
+<p>1）市场可行性：有助于平台运营人员乃至普通群众以可视化这种友好的交互方式分析、及时准确把握舆情变化，和不同阶段大众心态的影响。进而便于引导公众情绪、维护社会稳定，并对未来的类似突发事件的应对产生参考性意义。</p>
+<p>2）技术可行性：数据源、数据量的支持，爬虫技术的成熟，机器学习尤其是自然语言处理方向发展如火如荼，文本情感分析技术趋于成熟，Python 有大量的可视化分析的第三方库，如pyecharts、matplotlib等。</p>
+<h3 id=14-术语和缩略语>1.4 术语和缩略语</h3>
+<p>[1] 聚类分析：聚类分析（英语：Cluster analysis）亦称为群集分析，是对于统计数据分析的一门技术，在许多领域受到广泛应用，包括机器学习，数据挖掘，模式识别，图像分析以及生物信息。聚类是把相似的对象通过静态分类的方法分成不同的组别或者更多的子集（subset），这样让在同一个子集中的成员对象都有相似的一些属性，常见的包括在坐标系中更加短的空间距离等。一般把数据聚类归纳为一种非监督式学习。</p>
+<p>[2] 文本情感分析：文本情感分析（也称为意见挖掘）是指用自然语言处理、文本挖掘以及计算机语言学等方法来识别和提取原素材中的主观信息。通常来说，情感分析的目的是为了找出说话者/作者在某些话题上或者针对一个文本两极的观点的态度。这个态度或许是他或她的个人判断或是评估，也许是他当时的情感状态（就是说，作者在做出这个言论时的情绪状态），或是作者有意向的情感交流（就是作者想要读者所体验的情绪）。</p>
+<p>[3] 文本分割：文本分割（Text segmentation）将书面文本分割成有意义单位的过程，如单词、句子或主题。这个术语既适用于人类阅读文本时的心理过程，也适用于在计算机中实现的人工过程，后者属于自然语言处理的领域。一些书面语言有明确的单词分界标记，例如英语的词之间有空格标识，阿拉伯语有独特的首、中、末字母形状，但这种标记不是所有书面语言都有。</p>
+<p>[4] 停用词：在信息检索中，为节省存储空间和提高搜索效率，在自然语言处理数据（或文本）之前或之后会自动过滤掉某些字或词，这些字或词即被称为Stop Words(停用词)。不要把停用词与安全口令混淆。 这些停用词都是人工输入、非自动化生成的，生成后的停用词会形成一个停用词表。但是，并没有一个明确的停用词表能够适用于所有的工具。甚至有一些工具是明确地避免使用停用词来支持短语搜索的。</p>
+<p>[5] 网络爬虫：网络爬虫（英语：web crawler），也叫网络蜘蛛（spider），是一种用来自动浏览万维网的网络机器人。其目的一般为编纂网络索引。 网络搜索引擎等站点通过爬虫软件更新自身的网站内容或其对其他网站的索引。网络爬虫可以将自己所访问的页面保存下来，以便搜索引擎事后生成索引供用户搜索。 爬虫访问网站的过程会消耗目标系统资源。不少网络系统并不默许爬虫工作。因此在访问大量页面时，爬虫需要考虑到规划、负载，还需要讲“礼貌”。 不愿意被爬虫访问、被爬虫主人知晓的公开站点可以使用 robots.txt 文件之类的方法避免访问。这个文件可以要求机器人只对网站的一部分进行索引，或完全不作处理。</p>
+<h3 id=15-参考资料>1.5 参考资料</h3>
+<p>[1] Scrapy Tutorial <a href=https://docs.scrapy.org/en/latest/intro/tutorial.html>https://docs.scrapy.org/en/latest/intro/tutorial.html</a></p>
+<p>[2] Matplotlib Tutorial <a href=https://matplotlib.org/stable/tutorials/index.html>https://matplotlib.org/stable/tutorials/index.html</a></p>
+<p>[3] Documenation of scikit-learn 0.19.1 <a href=https://sklearn.org/documentation.html>https://sklearn.org/documentation.html</a></p>
+<p>[4] scikit-learn (sklearn) 官方文档中文版 <a href=https://sklearn.apachecn.org>https://sklearn.apachecn.org</a></p>
+<p>[5] HanLP: Han Language Processing <a href=https://hanlp.hankcs.com/docs/>https://hanlp.hankcs.com/docs/</a></p>
+<p>[6] Natural Language Toolkit 3.6 Doc <a href=https://www.nltk.org/api/nltk.html>https://www.nltk.org/api/nltk.html</a></p>
+<p>[7] 李然,林政,林海伦,王伟平,孟丹.文本情绪分析综述[J].计算机研究与发展,2018,55(01):30-52. <a href="https://kns.cnki.net/kcms/detail/detail.aspx?dbcode=CJFD&dbname=CJFDLAST2018&filename=JFYZ201801003&v=ZAbRKlUKg8sXhXWeogck7ddWaI%25mmd2BaHTU0QZu3PkMeCIK6gh%25mmd2BJr4J5WWmOTGHqfMDZ">https://kns.cnki.net/kcms/detail/detail.aspx?dbcode=CJFD&dbname=CJFDLAST2018&filename=JFYZ201801003&v=ZAbRKlUKg8sXhXWeogck7ddWaI%25mmd2BaHTU0QZu3PkMeCIK6gh%25mmd2BJr4J5WWmOTGHqfMDZ</a></p>
+<p>[8] 洪巍,李敏.文本情感分析方法研究综述[J].计算机工程与科学,2019,41(04):750-757. <a href="https://kns.cnki.net/kcms/detail/detail.aspx?dbcode=CJFD&dbname=CJFDLAST2019&filename=JSJK201904025&v=o4zWGFiYxi4xLiFj3Wz%25mmd2BMBw3s%25mmd2BUQah5A1rCCLHYwixO4tHs2HQJgn9r2BbgQlpdB">https://kns.cnki.net/kcms/detail/detail.aspx?dbcode=CJFD&dbname=CJFDLAST2019&filename=JSJK201904025&v=o4zWGFiYxi4xLiFj3Wz%25mmd2BMBw3s%25mmd2BUQah5A1rCCLHYwixO4tHs2HQJgn9r2BbgQlpdB</a></p>
+<p>[9] 徐琳宏,丁堃,林原,杨阳.基于机器学习算法的引文情感自动识别研究——以自然语言处理领域为例[J].现代情报,2020,40(01):35-40+48.</p>
+<p><a href="https://kns.cnki.net/kcms/detail/detail.aspx?dbcode=CJFD&dbname=CJFDLAST2020&filename=XDQB202001005&v=QvJXxfJ04mWed0LH7hx32lDMRyjome3LP7gYGXV4wuze7T%25mmd2FXEd0FFxk%25mmd2B4IvBE4G7">https://kns.cnki.net/kcms/detail/detail.aspx?dbcode=CJFD&dbname=CJFDLAST2020&filename=XDQB202001005&v=QvJXxfJ04mWed0LH7hx32lDMRyjome3LP7gYGXV4wuze7T%25mmd2FXEd0FFxk%25mmd2B4IvBE4G7</a></p>
+<p>[10] 杨立公,朱俭,汤世平.文本情感分析综述[J].计算机应用,2016,33(06):1574-1578+1607. <a href="https://kns.cnki.net/kcms/detail/detail.aspx?dbcode=CJFD&dbname=CJFD2013&filename=JSJY201306024&v=UtFgreUpe9tNHtARVkZ72iKdphIwRtdhqB%25mmd2FALUYDrqfejemxrcMk0bwt8VuSiY9S">https://kns.cnki.net/kcms/detail/detail.aspx?dbcode=CJFD&dbname=CJFD2013&filename=JSJY201306024&v=UtFgreUpe9tNHtARVkZ72iKdphIwRtdhqB%25mmd2FALUYDrqfejemxrcMk0bwt8VuSiY9S</a></p>
+<p>[11] 江腾蛟,万常选,刘德喜,刘喜平,廖国琼.基于语义分析的评价对象-情感词对抽取[J].计算机学报,2017,40(03):617-633.</p>
+<p><a href="https://kns.cnki.net/kcms/detail/detail.aspx?dbcode=CJFD&dbname=CJFDLAST2017&filename=JSJX201703006&v=teU34iDZHdtpYWs3vt6PkF2JHzAxav18KchWNndgFgQpcstAJjV%25mmd2FIpUEalIf8JbY">https://kns.cnki.net/kcms/detail/detail.aspx?dbcode=CJFD&dbname=CJFDLAST2017&filename=JSJX201703006&v=teU34iDZHdtpYWs3vt6PkF2JHzAxav18KchWNndgFgQpcstAJjV%25mmd2FIpUEalIf8JbY</a></p>
+<p>[12] 吴维芳,高宝俊,杨海霞,孙含琳.评论文本对酒店满意度的影响:基于情感分析的方法[J].数据分析与知识发现,2019,1(03):62-71. <a href="https://kns.cnki.net/kcms/detail/detail.aspx?dbcode=CJFD&dbname=CJFDLAST2017&filename=XDTQ201703012&v=yt4%25mmd2Bh%25mmd2FY9MLcnlHIOlIOTXDWwV64Ddlh1axTa0omj7kVnDFvD8EtevRpBX5DJpYxk">https://kns.cnki.net/kcms/detail/detail.aspx?dbcode=CJFD&dbname=CJFDLAST2017&filename=XDTQ201703012&v=yt4%25mmd2Bh%25mmd2FY9MLcnlHIOlIOTXDWwV64Ddlh1axTa0omj7kVnDFvD8EtevRpBX5DJpYxk</a></p>
+<p>[13] 唐晓波,刘广超.细粒度情感分析研究综述[J].图书情报工作,2020,61(05):132-140. <a href="https://kns.cnki.net/kcms/detail/detail.aspx?dbcode=CJFD&dbname=CJFDLAST2017&filename=TSQB201705028&v=rkAWFJ1ikDylivc7AiHzWcJFtSQU9JlL0dSVtY7KapKk2sUcax89%25mmd2B3A8oU9jA6gm">https://kns.cnki.net/kcms/detail/detail.aspx?dbcode=CJFD&dbname=CJFDLAST2017&filename=TSQB201705028&v=rkAWFJ1ikDylivc7AiHzWcJFtSQU9JlL0dSVtY7KapKk2sUcax89%25mmd2B3A8oU9jA6gm</a></p>
+<h2 id=2-开发计划>2 开发计划</h2>
+<h3 id=21-呈现形式>2.1 呈现形式</h3>
+<p>借助pyecharts和matplotlib可视化绘图的形式，来展示用户微博文本中提取的关键词并生成词云，以统计图表的形式展示对用户发文分析不同阶段主要事件下的网民心态极性，并结合层次聚类法从中抽取网民关注热点，最后通过可视化方法展现相应的结果，并进行总结分析。</p>
+<h3 id=22-功能描述>2.2 功能描述</h3>
+<p>0）实现的技术：包括利用python爬虫，爬取关键词搜索的微博正文，特定微博下的评论；预处理微博文本；修改textRank；聚类，kmeans，DBSCAN，层次聚类；情感词典情感分析；pyecharts可视化绘图。</p>
+<p>1）生成关键词云：对爬取到的微博文本内容进行处理，分疫情发展阶段提取关键词生成词云图片。</p>
+<p>2）文本情感分析：博文本信息表达了人们的各种情感色彩和情感倾向性，如喜、怒、哀、乐、批评和赞扬等。通过对带有情感色彩的文本信息进行分析处理，从而了解用户对于不同阶段疫情的情感变化。</p>
+<p>3）情感值计算和聚类分析：类别分为疫情认知相关（疫情认知与了解，新冠消息等）、群众自我相关（个人心态，自我安全防护等）和社会行为相关（社会帮助，复工，防疫等），对不同疫情发展阶段的关注点进行聚类分析，一定程度上可以反映出大众心态转变态势。</p>
+<h3 id=23-运行环境>2.3 运行环境</h3>
+<ul>
+<li>Windows Home 10 2004</li>
+<li>Conda 4.10.1</li>
+<li>Python 3.6</li>
+<li>Visual Studio Code 1.55.2</li>
+</ul>
+<h3 id=24-关键问题>2.4 关键问题</h3>
+<p>0）确定数据源，互联网数据庞大复杂，从庞大复杂的数据里获取有用数据，首先需要确定数据源。本次作业希望得到能代表网民情感的数据。最初想到了抖音、B站相关疫情视频上的弹幕或评论，但随着了解深入，发现这部分的数据受视频内容影响严重，比如许多弹幕存在重复的现象，并不利于我们的进⼀步分析所以本次数据采用新浪微博的数据，微博是⼀种被大众广泛使用的社交平台，其信息传播快，更新速度快，信息类型远多于其他平台。在微博上，网民不仅可以接收信息，还可以可以发布自己的文本，也可以到其他的微博下进行评论或转发，甚至很多情况下有人使用微博来传递重要信息或者处理应急事件，所以选择微博进行分析比较合适。</p>
+<p>1）应对反爬机制，常见的反爬虫手段包括统计IP访问限制、单个session访问量以及单个User-agent的访问，基于网站流量统计和日志分析反爬虫，通过Headers反爬虫，添加验证码限制等。</p>
+<p>2）数据量。合理的分析应该建立在一定的数据数量基础之上，把握数据量级也是一门学问，要在不破坏平衡的基础上尽量增加数据量级。基于随机抽取的疫情关键词，爬取了疫情期间2020年1月23日至2020年5月21日共计50MB数据。</p>
+<p>3）获取新闻内容进行分词，提取出现频率最高的心态词，与心态词典进行碰撞，对新闻进行主题思想的评估。利用人工打过标签的新闻文本训练数据分析模型，再通过模型将所偶有新闻文本进行智能识别自动标签。进而可以统计分析不同省份，不同时间段，不同媒体平台社会心态变化趋势，了解整个疫情发展下社会舆论与网友心态变化的走向。</p>
+<p>4）将通过各种文本处理技术，对社会心态进行分析。但分析前需要人工进行干预或训练，具体包括以下两个方面：心态字典和新闻标签。前者需要根据分析需求，定义相应的心态词（如冷漠、高兴、怀疑等），再建立 一个覆盖较为全面的情绪与心态的对应关系，分析文章中的核心情绪词（如太棒了->高兴）：后者需要有一定的学习样本，因此在获取到数据后，通过阅读内容根据经验为新闻或评论打上心态词标签，为了分析的精确性，可根据所获取数据的总量按一定百分比制定样本。</p>
+<p>5）情感分析是对带有情感色彩的主观性文本进行分析和推理的过程，本次主要使用心态词用典及其相关联信息分析情感。心态词典法是最简单也是最符合直觉的方法，其核心是通过判断特定的关键字是否出现在文本中从而给文本确定情感倾向性。基于情感词典法主要将情感词表人工制定的相关规则结合。这里面最主要的一个问题就是无法解决未录入词表词的问题，尤其是很多包含情感倾向性的新兴网络词汇，导致最后结果的召回率偏低。本次作业将重点考虑这部分的词语，以求得更高的准确率。</p>
+<p>6）加入算法评估与算法对比部分，选出适合课题场景下的最佳算法。比如具体的聚类方法就包括 K-means 算法、DBSCAN 密度聚类和层次聚类等。</p>
+<h2 id=3-概要设计>3 概要设计</h2>
+<h3 id=31-处理流程>3.1 处理流程</h3>
+<p>1）划分时间段：根据标志性事件，大致将整个疫情发展的时间轴进行阶段性划分，比如：初期扩散阶段、资源缺乏阶段、统一管控与援助阶段、复学复工阶段。通过分析不同阶段内的互联网数据，掌握不同阶段内社会心态的变化趋势。</p>
+<p>2）提取关键词：提取不同阶段的疫情关键词，同时需要人为进行筛选。</p>
+<p>3）获取数据：爬取含有关键词的数据，包括新闻标题、评论和微博文本等。具体而言，本次实验所需要的数据是 2020年1月20日到2020年5月的疫情相关短微博和同时间下某些重点微博下的相关评论，且重点是疫情相关随机关键词搜索下的微博正文。我的想法是，微博评论的内容会受正文影响，且评论的文本普遍较短，不能体现疫情下网民心态，只能体现网民对新闻所陈述事件的看法，所以爬的数据以短微博文本为主。</p>
+<p>微博网页端（weibo.cn）是几个微博接口中最好的选择，提供了我们需要的搜索功能，可以借助它来查询特定时间和特定关键词的微博⽂本。爬虫的主要内容是先在浏览器中请求微博，然后对于得到的内容进行解析。</p>
+<p>4）数据预处理：需要筛出重复和无价值的数据。初期阶段的数据是高维的，我们需要借助高维数据可视化来了解社会心态的大致趋势。</p>
+<p>5）数据分析：在这些数据的基础上，采取多种方法对采集到的数据源，进行疫情相关关键词语料提取与分词分析。对重点疫情相关内容，利用心态词典进行多种情感的分析，并对正文利用机器学习的方式给出积极/消极的情绪极性分析以研究疫情期间大众心态的变化。</p>
+<p>基于情感字典的具体做法是，用已有的人工标注的情感词典去査找一个文本中包含正向情感词汇和负向情感词汇的总分数，根据score=∑E(x_i)计算情感分数并判断情感极性和情感强烈程度。 其中score代表情感分数，x_i表示每个词语对应在情感词典中的分数值，E 表示对于分数值的权重处理。利用 score 的正负情况可以得到情感的极性，score的数值大小可以得到情感的强烈程度。情感极性大致可以分为正向、中性和负向。其中，正向为情感分数大于零，中性为情感分数约等于零，负向为情感分数小于零。</p>
+<p>最能体现⼀段⽂本的热点信息就是关键词，本文实现了比较常用的textRank算法，能较好的完成提取关键信息的任务，此外，聚类是另⼀个提取热点的方法，它是根据目标文本的特征对其行分类的方法，其结果能减少减少对象的类数，使得我们能够快速获取想要的文本热点。具体的聚方法包括 K-means 算法、DBSCAN 密度聚类和层次聚类等。</p>
+<p>6）可视化：最后对这些数据进行综合分析，较真实表现出疫情以来大众心态演变大致过程。</p>
+<h3 id=32-数据结构>3.2 数据结构</h3>
+<p>1）逻辑结构设计：采用集合结构，线性结构。物理结构设计：采用顺序结构存储。</p>
+<p>2）数据结构与程序的关系：采用集合结构，如可视化分析的去除重复信息；线性结构，如用array存储用户名称和id ，用list存储评论的具体内容，发布时间等。</p>
+<p>3）爬取得到的数据：&lsquo;微博id&rsquo;, &lsquo;发布者昵称&rsquo;, &lsquo;发布者性别&rsquo;, &lsquo;发布者地区&rsquo;, &lsquo;发布者关注数&rsquo;, &lsquo;发布者粉丝数&rsquo;, &lsquo;微博正文&rsquo;, &lsquo;发布时间&rsquo;, &lsquo;点赞数&rsquo;, &lsquo;转发数&rsquo;, &lsquo;评论数&rsquo;。</p>
+<h3 id=33-运行效果>3.3 运行效果</h3>
+<h4 id=331-爬虫展示>3.3.1 爬虫展示：</h4>
+<figure><img src=/images/ds-covid/01.png>
+</figure>
+<figure><img src=/images/ds-covid/02.png>
+</figure>
+<figure><img src=/images/ds-covid/03.png>
+</figure>
+<h4 id=332-关键词提取>3.3.2 关键词提取：</h4>
+<figure><img src=/images/ds-covid/04.png>
+</figure>
+<h4 id=333-数据分析-综合>3.3.3 数据分析-综合：</h4>
+<p>首先对四大阶段进行整体的分析百日情感分数变化曲线，但是发现结果并不明显。</p>
+<figure><img src=/images/ds-covid/05.png>
+</figure>
+<p>经过对用户微博文本的情感极性和强度的分析，从百天情感趋势走向图可以看出，总体上大众情绪由前期到后期呈现从低落到积极的波动上升态势，一定程度上与经历感受相符。针对于不同阶段的标志性事件进行细节分析，发现结果有所改进。</p>
+<p>四阶段聚类效果：</p>
+<figure><img src=/images/ds-covid/06.png>
+</figure>
+<figure><img src=/images/ds-covid/07.png>
+</figure>
+<p>四阶段热点对比：</p>
+<figure><img src=/images/ds-covid/08.png>
+</figure>
+<p>疫情前中期大众关注点以心态调整、疫情自我管理等群众自我相关信息为主，后期以复工、防疫等社会行为相关信息为主，总体上大众关注重心由群众自我相关向社会行为相关过渡，一定程度上反映出大众心态向积极方向转变的态势。</p>
+<h4 id=334-数据分析-分阶段>3.3.4 数据分析-分阶段：</h4>
+<figure><img src=/images/ds-covid/09.png>
+</figure>
+<p>从条形图上来看，人传人事件下情感值明显低于当天平均情感值，甚至出现负数的情况，根据聚类饼图，疫情认知相关占比超过一半，可以得出，在疫情爆发前期，信息需求会以疫情关注与了解、心态调整为主。</p>
+<figure><img src=/images/ds-covid/10.png>
+</figure>
+<p>从条形图上来看，封城事件下情感值均为正数，但都明显低于当天平均情感值，根据聚类饼图，疫情认知相关占主体，超过一半，也印证了上述在疫情爆发初期公众恐慌情绪。</p>
+<figure><img src=/images/ds-covid/11.png>
+</figure>
+<p>从条形图上来看，支援事件下的情感值均为正数，但都低于当天平均情感值，根据聚类饼图，可以看出，社会行为相关与群众自我相关占主体，可见在疫情爆发中期，公众信息需求向社会心态调整偏移。</p>
+<figure><img src=/images/ds-covid/12.png>
+</figure>
+<p>从条形图上来看，复学复工下的情感值均为正数，并且接近或高于当天平均情感值，根据聚类饼图，疫情认知相关和群众自我相关占主体，可见在疫情爆发后期，公众关注点以调整心态为主，情感逐渐积极。</p>
+<h2 id=4-详细设计>4 详细设计</h2>
+<h3 id=41-数据爬取模块>4.1 数据爬取模块</h3>
+<p>1）筛选：用户微博初步筛选：初步筛选的目的是得到用于分析的有效的用户微博，即微博所反映的情感、态度能够代表网民的情绪而不是公众微博号的，可以用于筛选的指标有：用户关注数、用户粉丝数、该条微博点赞、转发、评论数。其中用户粉丝数可以反映用户影响力，因为普遍而言，粉丝数较高的博主一般并非能在微博的平台较真实的表达个体的情感，所以我要筛选掉一部分粉丝数过高的博主，结合自己微博经验判断，筛除粉丝量大于1万的文本。经过爬取，数据总量在8-10万条，有效文本在80%以上。</p>
+<figure><img src=/images/ds-covid/13.png>
+</figure>
+<p>除此之外，为了方便下面的关键事件分析，我还专门爬取了几个特定时间和关键词的文本，包括1月20日 &lsquo;人传人&rsquo;、1月23日 &lsquo;封城&rsquo;、2月10日 &lsquo;对口支援&rsquo;、3月10日 &lsquo;复工复产&rsquo;。为了研究新闻对评论影响这个部分，还爬取了50多条央视新闻微博号下的共计上千条评论，具体内容在相应的文件夹下。</p>
+<p>但是数据也存在一定的问题，虽然说上面完成了clean_text()能够很好的对数据进行清洗，然而由于微博搜索引擎的问题，爬取到的微博有很大一部分并非是用户发布，所以认为一些官方号、官媒号微博不能代表网民的心态和情绪……所以再后序进行操作时，根据发布者粉丝这一项对粉丝数大于一万的微博进行了剔除，尽可能的保证所有的微博都来自于网民而不是其他。</p>
+<p>2）请求：请求部分使用requests库，目标是微博网页端搜索的url，为了能够保证在请求时不用登陆，可以在请求的同时传入cookie，因为要搜索特定时间和特定关键词的微博，所以在请求时还要传入关键词和时间，排序方法要按照时间排序。传入的关键词是疫情相关的随机关键词，找到了约50个疫情相关的词语，包括积极词，中性词和消极词，并利用random模块随机生成数字下标，进行随机抽取关键词搜索，以求得到的数据能代表当天的网民主流心态。部分关键代码解释如下：</p>
+<figure><img src=/images/ds-covid/14.png>
+</figure>
+<p>3）解析：解析部分使用lxml库，解析weibos中的每个元素中微博id和微博发布者：</p>
+<figure><img src=/images/ds-covid/15.png>
+</figure>
+<figure><img src=/images/ds-covid/16.png>
+</figure>
+<p>解析完所有的数据后，要把每一条微博写入csv文件：</p>
+<figure><img src=/images/ds-covid/17.png>
+</figure>
+<p>4）防反爬虫：</p>
+<p>由于微博平台有着严格的反爬虫策略，经常会被封号，所以也要采取了⼀些措施来防反爬虫。首先是设置了user-agent，利用from fake_useragent中的 UserAgent().random生成随机的user-agent，且每次完毕都会暂停随机几毫秒，防速度过快：sleep(random.randint(6, 10))，并用ip全局代理来通过不同ip进行访问，防止ip被封的悲剧。</p>
+<h3 id=42-数据预处理模块>4.2 数据预处理模块</h3>
+<p>1）数据清洗：微博正文中有很多特殊字符，且有很多格式是我们不需要的。例如微博中的@，这个表示微博和某人相关来给其⼀个提示，但是@后跟着的是用户昵称，这与文本内容无关，所以我们需要将其清洗掉。另外微博中含有很多表情符，例如[微笑]，将其处理掉，来减少后序任务的复杂性。剩余的例如网址、特殊字等请看下面的代码：</p>
+<figure><img src=/images/ds-covid/18.png>
+</figure>
+<p>2）去停用词和分词：停用词表我使用的是公开的中文停用词表，分词使用jieba分词的精确模式，对于⼀些未登录词，它用基于汉字成词能力的隐马尔可夫模型，能更好的处理文本中的小部分网络词汇。</p>
+<figure><img src=/images/ds-covid/19.png>
+</figure>
+<p>3）关键词提取：参考了网上大多数人的做法采用了textRank方法，先将文本进行分词、去停用词等预处理步骤，还可以对词性进行筛选，只保留特定的词性。然后开始构建关键词图，利用共现关系构造两点之间的边，如果其在长度为k的窗口中同时出现则认为两点间存在边，然后根据原理公式进行迭代直至收敛，最后就会得到个词的权重，排序即可获知关键词。也给下一步按层次聚类提供了更改好的数据支撑。</p>
+<figure><img src=/images/ds-covid/20.png>
+</figure>
+<h3 id=43-数据分析与可视化模块>4.3 数据分析与可视化模块</h3>
+<p>1）情绪词典：SO-PMI（情感点互信息）新词发现是对候选词语情感极性进行判断的一种有效手段，基本思想是在已有的情感基准词的基础上，判断候选词语与基准词同时出现的概率，如果与积极（positive）的词同时出现的概率更高，那么就判断为积极的词语，如果与消极（negative）的词同时出现的概率更高，那么就判断为消极的词语，如果与积极和消极的概率相同，那么就判断为中性的词语。</p>
+<p>2）情感计算：情感计算需要准备情感词表，否定词和程词表，情感计算规则。本作业选择Boson情感词典能良好的展现情感类型和强度。程度词部分，本次作业使用知网程度词表，我们人工也对其进行了简化，选取了较多的日常程度副词，按程度大致分为四个等级，并对每个等级赋予了相应的程度权值。否定词部分，本次作业采用知网否定词表。</p>
+<figure><img src=/images/ds-covid/21.png>
+</figure>
+<p>3）聚类分析：</p>
+<p>层次聚类将不同类别数据间的相似度构建一颗有层次的嵌套聚类树，聚类树中不同类别的原始数据是树的最底层，而顶层是结果cluster。实现中基于上文完成的textRank算法计算出每个短微博文本的前20个关键词，然后基于scikit-Learn中的向量化器对其进行向量化和fit，然后调用进行聚类，衡量距离的方法选择常用的ward。</p>
+<figure><img src=/images/ds-covid/22.png>
+</figure>
+<p>K-means算法是一种基于划分的聚类算法，传入一个参数k作为簇的个数，然后将数据对象划分，是的簇内相似度较高，簇间相似度较低，基本思想是根据给定的数据，先随机选择k个数据作为簇中心，然后根据剩余数据与簇心的距离将它赋给最进的簇心，并重新计算每个簇中对象距离均值重新确定簇心，几次迭代后函数就趋近于收敛，即簇心不再明显变化。</p>
+<p>保证了局部最优，但是很明显，他的缺点在于需要认为的设定k值，这个值对聚类效果的影响很大，不同的值得到的结果不同，且根据定义来看，此种聚类方法对于异常值和样本分类不均衡的分类效果不友好，因为我们需要确定簇数设定为多少时效果最好。</p>
+<figure><img src=/images/ds-covid/23.png>
+</figure>
+<p>DBSCAN算法是一种基于密度的聚类算法，它在聚类前不需要预先指定簇的个数，所以最终簇的个数也不确定，它认为样本数据点的周围的数据点同属一类，即将紧密相连的样本划分为一类，就得到了一个个簇。</p>
+<figure><img src=/images/ds-covid/24.png>
+</figure>
+<p>3）聚类结果评价：对于评估聚类效果、确定不同聚类数对效果的影响，选取了三种常见方式（轮廓系数、CH和DBI），这三个无标签评价函数是常见的分析聚类效果的函数。进行横向对比，相应参数则尽可能选择效果更好的。</p>
+<p>层次聚类数的评价指数变化图， DBI指数在聚类数设置为3或6时较低，CH值在2或3时较高，轮廓系数较为明显，先增加后减少，故聚类数选3比较好：</p>
+<figure><img src=/images/ds-covid/25.png>
+</figure>
+<p>K-means不同簇数（2、3、5）评价函数对比，可以看出k取2时分类效果较好：</p>
+<figure><img src=/images/ds-covid/26.png>
+</figure>
+<p>K-means聚类取不同值时的三种评价函数值，k=2时轮廓系数最大，DBI值最小，k适合取2：</p>
+<figure><img src=/images/ds-covid/27.png>
+</figure>
+<p>DBSCAN不同簇数评价函数，此类算法需要不断的调整参数eps以求得最好的效果，发现DBI值呈明显上升趋势，而CH值和轮廓系数效果不明显，所以参数eps暂取0.01：</p>
+<figure><img src=/images/ds-covid/28.png>
+</figure>
+<p>轮廓系数结合内聚度和分离度两种因素，可以用来在相同原始数据的基础上用来评价不同算法、或者算法不同运行方式对聚类结果所产生的影响；CH值依据簇间色散平均值和群内色散间和来确定，簇内的协方差越小，簇间的协方差越大时，聚类效果较好，且CH值越大；DBI指数也是个常见的评价聚类效果好坏的值，DBI的最小值为0，值越小代表效果越好。</p>
+<p>得出的结果整合成表格：</p>
+<figure><img src=/images/ds-covid/29.png>
+</figure>
+<p>可以看出层次聚类的轮廓系数更接近 1，CH 也更大，明显更适合做微博样本的聚类方法。</p>
+<p>4）实验结论：在一月至五月期间，随时间推移，根据随机关键词抓取的用户短微博体现出的心态值为先普遍较低，后普遍较高，但整体变化并不显著。而对于特定事件，整体用户心态值变化较为明显。说明对于突发公众卫生事件，大众心态会根据不同疫情事件处理阶段差异及发展决定，且后期会出现阶段波动上升趋势。看来突发公共卫生事件在后期的舆情引导还是有必要的，事件处理后期需提前重视网民的情感波动和生活状况，及时加强关怀，相关部门需要根据实际情况调整应对举措，更好的引导大众情绪。</p>
+<h2 id=5-后续思考>5 后续思考</h2>
+<h3 id=51-遇到的问题>5.1 遇到的问题</h3>
+<p>1） 一开始纠结于新闻中绝大多数都没有评论，这但到后来也逐渐发现新闻媒体并不能实实在在的反映大众内心真实的想法。而且新闻和评论的比例难以达成一种平衡，比较便于获得的信息大部分 新闻，主要代表了媒体的意志，能拿到的大众的数据其实很少。现阶段我们能够找到的数据来源中，少有评论这一方面。而朋友圈、说说几乎无法获取，微博内容和b站弹幕获取难度也较大。怎么保证数据能够代表大众呢？或者说如何定义重点新闻？</p>
+<p>2）爬取数据时，时间是一个关键元素，但只有新浪新闻可以查询到指定日期的新闻，其他的主流网站均不行，结合上一条，所以果断放弃了对新闻进行爬取。</p>
+<p>3）“大数据”的数据量是否有具体的量或者数量级，不知道大概要获取到多少数据才能有效支持分析结果。</p>
+<p>4）如果我们通过爬虫爬取了其他地方的评论，比如一些自媒体，那我们也要将自媒体的文章爬下来对应起来，否则这数据似乎就不太就有可信度。当然，保留这些评论的来源（url）或许是一个不错的选择（存疑）。</p>
+<p>5）关于心态词典或者说情感词典，自己建立的话工作量有点大，又不能保证准确性，索性寻找公开的久经使用的心态词典作为参考。心态词典主要基于一些据有明确情感的词语，比如“太好了”对应于高兴， 但是在人民日报等诸多网站上都以官方新闻和正式的新闻为主，文字风格中立，很少能找到这样的词语，对于这类新闻应该怎么建立、如何选取心态字典呢。</p>
+<p>6）情感词典部分缺少对于效果的验证和测试部分：由于时间有限任务量大，所以没有加入</p>
+<p>7）在对文本切词时，是否应该要使用停词表去除那些无意义的词。使用停词表后，文本数据必然大幅度降低，然后对于计算TF-IDF值也会产生相应的影响。但是从TF-IDF的原理来看，我觉得不能使用停词表，因为这些新闻里不会出现政治敏感词，但会有很多人民，你，我，她。又觉得可以使用停词表，因为对于不同心态词之间的比例是不会改变的。</p>
+<p>8）计算情感值时，还需要考虑情感词和否定词，程度词的组合情况，当只有情感词在组合中起到了情感表达作用时，则只需要考虑情感词的情感；当否定词和情感词共同在组合中起到了情感表达作用，如“不满意”则表示与“满意”相反的情感；当程度副词和情感词共同在组合中起到了情感表达作用时，程度词对情感词有⼀个加强的作用；当否定词、程度副词及情感词共同在组合中起到了情感表达作用，我们只需要将其分开考虑；当程度副词、否定词及情感词共同在组合中起到了情感表达作用，认为效果和之前⼀种情况类似；最后，多个否定词及情感词共同在组合中起到了情感表达作用则每有⼀个否定词就否定重情感值即可。</p>
+<p>9）数据量过少，聚类效果不明显。本次爬取的是根据随机疫情相关关键词的微博短文本，这样做的好处是它帮我进行了筛选，剔除了水军贴和广告贴，但是这也有很多的坏处，例如微博会自动隐藏某些情绪偏激的文本，得到的数据大多是积极向上的。</p>
+<h3 id=52-未来计划>5.2 未来计划</h3>
+<p>1）图形化界面，提供友好的交互。</p>
+<p>2）尝试多维情感分析，手动构建多维心态词典。</p>
+<p>3）对于情感分析，本实验更多地倾向于是情感词典，重点是分析；希望有时间还可以尝试应用SOTA的机器学习模型，如Bert、GPT等，提取特征、训练并预测。</p>
+</section>
+<div class=post-tags>
+<nav class="nav tags">
+<ul class=tags>
+<li><a href=/tags/assginment>assginment</a></li>
+<li><a href=/tags/data-structure>data-structure</a></li>
+</ul>
+</nav>
+</div>
+</article>
+</main>
+<footer>
+<hr><a class=soc href=https://www.linkedin.com/in/yuedongwoo/ title=LinkedIn><i data-feather=linkedin></i></a>|<a class=soc href=https://github.com/lunarwhite title=GitHub><i data-feather=github></i></a>|<a class=soc href title=Twitter><i data-feather=twitter></i></a>|<a class=soc href title=Instagram><i data-feather=instagram></i></a>|<a class=soc href title=Bilibili><i data-feather=tv></i></a>|<a class=soc href=https://www.zhihu.com/people/wydnlz title=Zhihu><i data-feather=link></i></a>|⚡️
+2021 © lunarwhite | <a href=https://github.com/athul/archie>Archie Theme</a> | Built with <a href=https://gohugo.io>Hugo</a>
+</footer>
+<script>feather.replace()</script>
+<script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
+</body>
+</html>

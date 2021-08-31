@@ -1,0 +1,101 @@
+<!doctype html><html><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge"><title>VSCode - lunarwhite</title><link rel=icon type=image/png href=favicon/favicon.ico><meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="Awesome tools introduction for daily development.">
+<meta property="og:image" content>
+<meta property="og:title" content="VSCode">
+<meta property="og:description" content="Awesome tools introduction for daily development.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lunarwhite.github.io/posts/devtools/vscode/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2020-01-02T17:04:16+00:00">
+<meta property="article:modified_time" content="2020-01-02T17:04:16+00:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="VSCode">
+<meta name=twitter:description content="Awesome tools introduction for daily development.">
+<script src=https://lunarwhite.github.iojs/feather.min.js></script>
+<link href=https://lunarwhite.github.io/css/fonts.b685ac6f654695232de7b82a9143a46f9e049c8e3af3a21d9737b01f4be211d1.css rel=stylesheet>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+</head>
+<body>
+<div class=content><header>
+<div class=main>
+<a href=https://lunarwhite.github.io>lunarwhite</a>
+</div>
+<nav>
+<a href=/>Home</a>
+<a href=/posts>Posts</a>
+<a href=/tags>Tags</a>
+<a href=/about>About</a>
+</nav>
+</header>
+<main>
+<article>
+<div class=title>
+<h1 class=title>VSCode</h1>
+<div class=meta>Posted on Jan 2, 2020</div>
+</div>
+<section class=body>
+<p>拥抱开源，visual studio code简直就是开发利器、宇宙第一editor，尤其是众多开源的extension，让vscode始终充满活力。本文记录了不同语言下vscode的基本配置和全局快捷键，希望能最大效度利用好此工具，happy hacking，happy coding</p>
+<h2 id=1-全局配置>1 全局配置</h2>
+<ul>
+<li>登录账号同步</li>
+<li>删除自带theme</li>
+</ul>
+<h2 id=2-添加到右键菜单>2 添加到右键菜单</h2>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-reg data-lang=reg>Windows Registry Editor Version 5.00
+
+<span style=color:#007020;font-weight:700>[</span><span style=color:#007020>HKEY_CURRENT_USER</span><span style=color:#007020;font-weight:700>\Software\Classes\*\shell\Open with &amp;Code]</span>
+<span style=color:#4070a0>@</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;Open with Code&#34;</span>
+<span style=color:#4070a0>&#34;Icon&#34;</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;C:\\Users\\mewin\\scoop\\apps\\vscode\\current\\Code.exe&#34;</span>
+<span style=color:#007020;font-weight:700>[</span><span style=color:#007020>HKEY_CURRENT_USER</span><span style=color:#007020;font-weight:700>\Software\Classes\*\shell\Open with Code\command]</span>
+<span style=color:#4070a0>@</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;\&#34;C:\\Users\\mewin\\scoop\\apps\\vscode\\current\\Code.exe\&#34; \&#34;%1\&#34;&#34;</span>
+
+<span style=color:#007020;font-weight:700>[</span><span style=color:#007020>HKEY_CURRENT_USER</span><span style=color:#007020;font-weight:700>\Software\Classes\Directory\shell\Open with Code]</span>
+<span style=color:#4070a0>@</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;Open with Code&#34;</span>
+<span style=color:#4070a0>&#34;Icon&#34;</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;C:\\Users\\mewin\\scoop\\apps\\vscode\\current\\Code.exe&#34;</span>
+<span style=color:#007020;font-weight:700>[</span><span style=color:#007020>HKEY_CURRENT_USER</span><span style=color:#007020;font-weight:700>\Software\Classes\Directory\shell\Open with Code\command]</span>
+<span style=color:#4070a0>@</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;\&#34;C:\\Users\\mewin\\scoop\\apps\\vscode\\current\\Code.exe\&#34; \&#34;%1\&#34;&#34;</span>
+
+<span style=color:#007020;font-weight:700>[</span><span style=color:#007020>HKEY_CURRENT_USER</span><span style=color:#007020;font-weight:700>\Software\Classes\Directory\Background\shell\Open with Code]</span>
+<span style=color:#4070a0>@</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;Open with Code&#34;</span>
+<span style=color:#4070a0>&#34;Icon&#34;</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;C:\\Users\\mewin\\scoop\\apps\\vscode\\current\\Code.exe&#34;</span>
+<span style=color:#007020;font-weight:700>[</span><span style=color:#007020>HKEY_CURRENT_USER</span><span style=color:#007020;font-weight:700>\Software\Classes\Directory\Background\shell\Open with Code\command]</span>
+<span style=color:#4070a0>@</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;\&#34;C:\\Users\\mewin\\scoop\\apps\\vscode\\current\\Code.exe\&#34; \&#34;%V\&#34;&#34;</span>
+</code></pre></div><h2 id=3-快捷键>3 快捷键</h2>
+<ul>
+<li>重开一行：光标不在行尾，ctrl + enter 向下重开一行；ctrl+shift + enter 则是在上一行重开一行</li>
+<li>删除一行：光标没有选择内容时，ctrl + x 剪切一行；ctrl +shift + k 直接删除一行</li>
+<li>移动一行：alt + ↑ 向上移动一行；alt + ↓ 向下移动一行</li>
+<li>复制一行：shift + alt + ↓ 向下复制一行；shift + alt + ↑ 向上复制一行</li>
+<li>ctrl + f ：搜索</li>
+<li>ctrl + alt + f： 替换</li>
+<li>ctrl + shift + f：在项目内搜索</li>
+<li>Ctrl+P 快速打开最近打开的文件</li>
+<li>Ctrl+Shift+N 打开新的编辑器窗口</li>
+<li>Ctrl+Shift+W 关闭编辑器</li>
+<li>Ctrl + Home 跳转到页头</li>
+<li>Ctrl + End 跳转到页尾</li>
+<li>Ctrl + Shift + [ 折叠区域代码</li>
+<li>Ctrl + Shift + ] 展开区域代码</li>
+<li>Ctrl + / 添加关闭行注释</li>
+<li>Shift + Alt +A 块区域注释</li>
+</ul>
+</section>
+<div class=post-tags>
+<nav class="nav tags">
+<ul class=tags>
+<li><a href=/tags/development-tool>development-tool</a></li>
+<li><a href=/tags/ide/editor>ide/editor</a></li>
+</ul>
+</nav>
+</div>
+</article>
+</main>
+<footer>
+<hr><a class=soc href=https://www.linkedin.com/in/yuedongwoo/ title=LinkedIn><i data-feather=linkedin></i></a>|<a class=soc href=https://github.com/lunarwhite title=GitHub><i data-feather=github></i></a>|<a class=soc href title=Twitter><i data-feather=twitter></i></a>|<a class=soc href title=Instagram><i data-feather=instagram></i></a>|<a class=soc href title=Bilibili><i data-feather=tv></i></a>|<a class=soc href=https://www.zhihu.com/people/wydnlz title=Zhihu><i data-feather=link></i></a>|⚡️
+2021 © lunarwhite | <a href=https://github.com/athul/archie>Archie Theme</a> | Built with <a href=https://gohugo.io>Hugo</a>
+</footer>
+<script>feather.replace()</script>
+<script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
+</body>
+</html>

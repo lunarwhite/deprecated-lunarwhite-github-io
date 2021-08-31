@@ -1,0 +1,132 @@
+<!doctype html><html><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge"><title> Available GPU server in SDU - lunarwhite</title><link rel=icon type=image/png href=favicon/favicon.ico><meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="Awesome tools introduction for daily development.">
+<meta property="og:image" content>
+<meta property="og:title" content=" Available GPU server in SDU">
+<meta property="og:description" content="Awesome tools introduction for daily development.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lunarwhite.github.io/posts/devtools/sdu-gpu/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-04-24T20:20:48+00:00">
+<meta property="article:modified_time" content="2021-04-24T20:20:48+00:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content=" Available GPU server in SDU">
+<meta name=twitter:description content="Awesome tools introduction for daily development.">
+<script src=https://lunarwhite.github.iojs/feather.min.js></script>
+<link href=https://lunarwhite.github.io/css/fonts.b685ac6f654695232de7b82a9143a46f9e049c8e3af3a21d9737b01f4be211d1.css rel=stylesheet>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+</head>
+<body>
+<div class=content><header>
+<div class=main>
+<a href=https://lunarwhite.github.io>lunarwhite</a>
+</div>
+<nav>
+<a href=/>Home</a>
+<a href=/posts>Posts</a>
+<a href=/tags>Tags</a>
+<a href=/about>About</a>
+</nav>
+</header>
+<main>
+<article>
+<div class=title>
+<h1 class=title> Available GPU server in SDU</h1>
+<div class=meta>Posted on Apr 24, 2021</div>
+</div>
+<section class=body>
+<h2 id=1-配置>1 配置</h2>
+<h3 id=11-注意>1.1 注意</h3>
+<ul>
+<li>释放显存：手动重启jupyter/重启kernel</li>
+<li>工作目录：<code>/home/ubuntu/work</code></li>
+</ul>
+<h3 id=12-环境>1.2 环境</h3>
+<ul>
+<li>操作系统：Ubuntu</li>
+<li>框架：pytorch-gpu/tensorflow-gpu，连接直接使用</li>
+</ul>
+<h3 id=13-连接-jupyter>1.3 连接-Jupyter</h3>
+<ul>
+<li>默认：12345678</li>
+</ul>
+<h3 id=14-连接-ssh>1.4 连接-SSH</h3>
+<ul>
+<li><code>ssh ubuntu@&lt;address> -p &lt;port></code></li>
+<li>端口：IP地址冒号后-10000</li>
+<li>用户名：ubuntu</li>
+<li>默认：123456</li>
+</ul>
+<h3 id=15-长期运行>1.5 长期运行</h3>
+<ul>
+<li>Terminal：会持续显示输出信息，网页重开还可以持续显示输出</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic># 把jupyter文件copy成一个.py文件</span>
+jupyter nbconvert --to script *.ipynb
+
+<span style=color:#60a0b0;font-style:italic># 执行文件</span>
+python *.py
+</code></pre></div><ul>
+<li>Notebook：网页关闭下次再打开就不再显示输出，程序还在运行但无法查看程序运行进展，而且只有重启kernel才能释放显存。</li>
+</ul>
+<h3 id=16-软件升级>1.6 软件升级</h3>
+<ul>
+<li>系统</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo apt-get update -y
+sudo apt-get upgrade -y
+</code></pre></div><ul>
+<li>安装git</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo apt install git
+</code></pre></div><h3 id=17-空间清理>1.7 空间清理</h3>
+<ul>
+<li>命令清理</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic># 定期观察磁盘占用情况</span>
+df -h
+
+<span style=color:#60a0b0;font-style:italic># 清空回收站</span>
+sudo rm -rf ~/.local/share/Trash/*
+</code></pre></div><ul>
+<li>图形窗口清理</li>
+</ul>
+<h2 id=2-测试>2 测试</h2>
+<h3 id=21-kerastf>2.1 keras/TF</h3>
+<ul>
+<li>查看GPU是否可用</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>tensorflow</span> <span style=color:#007020;font-weight:700>as</span> <span style=color:#0e84b5;font-weight:700>tf</span>
+<span style=color:#007020;font-weight:700>from</span> <span style=color:#0e84b5;font-weight:700>tensorflow.python.client</span> <span style=color:#007020;font-weight:700>import</span> device_lib
+
+<span style=color:#007020>print</span>(tf<span style=color:#666>.</span>__version__)
+<span style=color:#007020>print</span>(tf<span style=color:#666>.</span>test<span style=color:#666>.</span>is_gpu_available())
+
+<span style=color:#007020>print</span>(device_lib<span style=color:#666>.</span>list_local_devices())
+</code></pre></div><ul>
+<li>指定GPU</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>os</span>
+os<span style=color:#666>.</span>environ[<span style=color:#4070a0>&#39;TF_CPP_MIN_LOG_LEVEL&#39;</span>] <span style=color:#666>=</span> <span style=color:#4070a0>&#39;2&#39;</span>
+os<span style=color:#666>.</span>environ[<span style=color:#4070a0>&#34;TF_FORCE_GPU_ALLOW_GROWTH&#34;</span>] <span style=color:#666>=</span> <span style=color:#4070a0>&#34;true&#34;</span>
+os<span style=color:#666>.</span>environ[<span style=color:#4070a0>&#34;CUDA_VISIBLE_DEVICES&#34;</span>] <span style=color:#666>=</span> <span style=color:#4070a0>&#39;0&#39;</span>
+</code></pre></div>
+</section>
+<div class=post-tags>
+<nav class="nav tags">
+<ul class=tags>
+<li><a href=/tags/development-tool>development-tool</a></li>
+<li><a href=/tags/sdu-server>sdu-server</a></li>
+</ul>
+</nav>
+</div>
+</article>
+</main>
+<footer>
+<hr><a class=soc href=https://www.linkedin.com/in/yuedongwoo/ title=LinkedIn><i data-feather=linkedin></i></a>|<a class=soc href=https://github.com/lunarwhite title=GitHub><i data-feather=github></i></a>|<a class=soc href title=Twitter><i data-feather=twitter></i></a>|<a class=soc href title=Instagram><i data-feather=instagram></i></a>|<a class=soc href title=Bilibili><i data-feather=tv></i></a>|<a class=soc href=https://www.zhihu.com/people/wydnlz title=Zhihu><i data-feather=link></i></a>|⚡️
+2021 © lunarwhite | <a href=https://github.com/athul/archie>Archie Theme</a> | Built with <a href=https://gohugo.io>Hugo</a>
+</footer>
+<script>feather.replace()</script>
+<script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
+</body>
+</html>

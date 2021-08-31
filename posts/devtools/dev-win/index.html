@@ -1,0 +1,119 @@
+<!doctype html><html><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge"><title>Windows basic development environment deploy - lunarwhite</title><link rel=icon type=image/png href=favicon/favicon.ico><meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="Awesome tools introduction for daily development.">
+<meta property="og:image" content>
+<meta property="og:title" content="Windows basic development environment deploy">
+<meta property="og:description" content="Awesome tools introduction for daily development.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lunarwhite.github.io/posts/devtools/dev-win/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2019-12-17T17:02:13+00:00">
+<meta property="article:modified_time" content="2019-12-17T17:02:13+00:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="Windows basic development environment deploy">
+<meta name=twitter:description content="Awesome tools introduction for daily development.">
+<script src=https://lunarwhite.github.iojs/feather.min.js></script>
+<link href=https://lunarwhite.github.io/css/fonts.b685ac6f654695232de7b82a9143a46f9e049c8e3af3a21d9737b01f4be211d1.css rel=stylesheet>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+</head>
+<body>
+<div class=content><header>
+<div class=main>
+<a href=https://lunarwhite.github.io>lunarwhite</a>
+</div>
+<nav>
+<a href=/>Home</a>
+<a href=/posts>Posts</a>
+<a href=/tags>Tags</a>
+<a href=/about>About</a>
+</nav>
+</header>
+<main>
+<article>
+<div class=title>
+<h1 class=title>Windows basic development environment deploy</h1>
+<div class=meta>Posted on Dec 17, 2019</div>
+</div>
+<section class=body>
+<p>拿到一台新的Windows开发用电脑需做的几件小事</p>
+<h2 id=1-host-win>1 host-win</h2>
+<ul>
+<li>设置
+<ul>
+<li>流量计费的连接</li>
+<li>电源计划</li>
+<li>文件夹系统</li>
+<li>服务
+<ul>
+<li>WIN+R: services.msc 本地服务
+<ul>
+<li>Connected User Experiences and Telemetry</li>
+<li>microsoft compatibility telemetry</li>
+<li>windows search</li>
+<li>xbox</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>还原点</li>
+</ul>
+</li>
+<li>安装软件
+<ul>
+<li>VMware-Player</li>
+<li>scoop</li>
+</ul>
+</li>
+</ul>
+<h2 id=2-vm-win>2 vm-win</h2>
+<ul>
+<li>创建
+<ul>
+<li>PRO：4G/64G/4</li>
+<li>HME：2G/32G/2</li>
+<li>关闭3D/USB3.1/虚拟化/移除打印机</li>
+<li>US/vmwin</li>
+</ul>
+</li>
+<li>安装软件
+<ul>
+<li>VM-Tools</li>
+<li>7-zip</li>
+<li>GeekUninstall</li>
+<li>Dism++</li>
+<li>Everything</li>
+<li>KMS-pico</li>
+</ul>
+</li>
+<li>设置</li>
+<li>剩余使用时间 <code>slmgr.vbs -xpr</code></li>
+</ul>
+<h2 id=3-shortcuts>3 shortcuts</h2>
+<ul>
+<li>shift+双击：一次性打开多个文件</li>
+<li>Alt+双击：属性</li>
+<li>shift+方向键：可以选择文字</li>
+<li>F2：重命名</li>
+<li>CTRL+W关闭网页</li>
+<li>CTRL+Shift+T恢复关闭网页</li>
+<li>win+D/M：显示桌面</li>
+<li>win+Tab：任务视图</li>
+</ul>
+</section>
+<div class=post-tags>
+<nav class="nav tags">
+<ul class=tags>
+<li><a href=/tags/development-tool-windows>development-tool， windows</a></li>
+</ul>
+</nav>
+</div>
+</article>
+</main>
+<footer>
+<hr><a class=soc href=https://www.linkedin.com/in/yuedongwoo/ title=LinkedIn><i data-feather=linkedin></i></a>|<a class=soc href=https://github.com/lunarwhite title=GitHub><i data-feather=github></i></a>|<a class=soc href title=Twitter><i data-feather=twitter></i></a>|<a class=soc href title=Instagram><i data-feather=instagram></i></a>|<a class=soc href title=Bilibili><i data-feather=tv></i></a>|<a class=soc href=https://www.zhihu.com/people/wydnlz title=Zhihu><i data-feather=link></i></a>|⚡️
+2021 © lunarwhite | <a href=https://github.com/athul/archie>Archie Theme</a> | Built with <a href=https://gohugo.io>Hugo</a>
+</footer>
+<script>feather.replace()</script>
+<script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
+</body>
+</html>

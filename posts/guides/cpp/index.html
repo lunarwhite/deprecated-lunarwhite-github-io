@@ -1,0 +1,658 @@
+<!doctype html><html><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge"><title>C++ - lunarwhite</title><link rel=icon type=image/png href=favicon/favicon.ico><meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="Brief and customised manuals for me to check.">
+<meta property="og:image" content>
+<meta property="og:title" content="C++">
+<meta property="og:description" content="Brief and customised manuals for me to check.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lunarwhite.github.io/posts/guides/cpp/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2020-06-06T20:21:48+00:00">
+<meta property="article:modified_time" content="2020-06-06T20:21:48+00:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="C++">
+<meta name=twitter:description content="Brief and customised manuals for me to check.">
+<script src=https://lunarwhite.github.iojs/feather.min.js></script>
+<link href=https://lunarwhite.github.io/css/fonts.b685ac6f654695232de7b82a9143a46f9e049c8e3af3a21d9737b01f4be211d1.css rel=stylesheet>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+</head>
+<body>
+<div class=content><header>
+<div class=main>
+<a href=https://lunarwhite.github.io>lunarwhite</a>
+</div>
+<nav>
+<a href=/>Home</a>
+<a href=/posts>Posts</a>
+<a href=/tags>Tags</a>
+<a href=/about>About</a>
+</nav>
+</header>
+<main>
+<article>
+<div class=title>
+<h1 class=title>C++</h1>
+<div class=meta>Posted on Jun 6, 2020</div>
+</div>
+<section class=body>
+<h2 id=1-基础语法>1 基础语法</h2>
+<h3 id=11-输入输出>1.1 输入输出</h3>
+<ul>
+<li>⽤<code>cin</code>读⼊字符串的时候，是以空格为分隔符的，如果想要读⼊⼀整⾏的字符串，就需要⽤<code>getline</code></li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp>string s;
+getline(cin,s); <span style=color:#60a0b0;font-style:italic>//读取⼀⾏的字符串，包括空格
+</span><span style=color:#60a0b0;font-style:italic></span>cout<span style=color:#666>&lt;&lt;</span>s.length(); <span style=color:#60a0b0;font-style:italic>//输出字符串s的⻓度
+</span></code></pre></div><ul>
+<li>换行<code>\n</code>和<code>endl</code>有区别，后者输出一个换行符，并立即刷新缓冲区，使得栈中的东西刷新一次。过多的 endl 是影响程序执行效率低下的因素之一。</li>
+<li><code>" "</code> <code>&lt; ></code>头文件也有区别，前者优先在本地目录下找，找不到再去系统目录。</li>
+<li><code>cout</code>多行时，正确姿势：</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp>cout<span style=color:#666>&lt;&lt;</span><span style=color:#4070a0>&#34;Forst line there.</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>
+    <span style=color:#666>&lt;&lt;</span><span style=color:#4070a0>&#34;Second line here.</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>
+</code></pre></div><ul>
+<li>真正的开发中，尽量避免使用<code>using namespace std;</code>等直接引入整个命名空间,否则会因为命名空间污染导致很多不必要的问题。比如自己写的某个函数，名称正好和<code>std</code>中的一样，编译器会不知道使用哪一个，引起编译报错。</li>
+<li><code>extern int a;</code>，只是声明有个变量<code>a</code>存在，具体在哪定义，需要编译器找。</li>
+<li><code>static</code>全局变量：改变作用范围，不改变存储位置；<code>static</code>局部变量：改变存储位置，不改变作用范围。</li>
+<li>访问结构成员，用点运算符；通过指针访问结构成员，用箭头运算符。</li>
+</ul>
+<h3 id=12-字符串>1.2 字符串</h3>
+<ul>
+<li><code>substr</code>，截取某个字符串中的⼦串，⽤法有两种形式：</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp>string s2<span style=color:#666>=</span>s.substr(<span style=color:#40a070>4</span>); <span style=color:#60a0b0;font-style:italic>//从下标4开始⼀直到结束
+</span><span style=color:#60a0b0;font-style:italic></span>string s3<span style=color:#666>=</span>s.substr(<span style=color:#40a070>5</span>,<span style=color:#40a070>3</span>); <span style=color:#60a0b0;font-style:italic>//从下标5开始，3个字符
+</span></code></pre></div><ul>
+<li>String 类实例：</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp>string s<span style=color:#666>=</span><span style=color:#4070a0>&#34;vscode&#34;</span>;
+
+<span style=color:#60a0b0;font-style:italic>//append
+</span><span style=color:#60a0b0;font-style:italic></span>s.append(<span style=color:#4070a0>&#34;hello&#34;</span>);
+
+<span style=color:#60a0b0;font-style:italic>//delete
+</span><span style=color:#60a0b0;font-style:italic></span><span style=color:#902000>int</span> pos<span style=color:#666>=</span>s.find(<span style=color:#4070a0>&#34;ll&#34;</span>);
+s.replace(pos,<span style=color:#40a070>4</span>,<span style=color:#4070a0>&#34;&#34;</span>); <span style=color:#60a0b0;font-style:italic>// 从pos开始后的4个字符替换为空，即删除
+</span><span style=color:#60a0b0;font-style:italic></span>
+<span style=color:#60a0b0;font-style:italic>//find
+</span><span style=color:#60a0b0;font-style:italic></span><span style=color:#902000>int</span> first<span style=color:#666>=</span>s.find_first_of(<span style=color:#4070a0>&#34;.&#34;</span>); <span style=color:#60a0b0;font-style:italic>//从头开始寻找字符&#39;.&#39;的位置
+</span><span style=color:#60a0b0;font-style:italic></span><span style=color:#902000>int</span> last<span style=color:#666>=</span>s.find_last_of(<span style=color:#4070a0>&#34;.&#34;</span>); <span style=color:#60a0b0;font-style:italic>//从尾开始寻找字符&#39;.&#39;的位置
+</span></code></pre></div><h3 id=13-结构体>1.3 结构体</h3>
+<ul>
+<li>定义好结构体<code>stu</code>之后，使⽤这个结构体类型的时候，C语⾔需要写关键字<code>struct</code>，⽽C++⾥⾯可以省略不写：</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#007020;font-weight:700>struct</span> <span style=color:#0e84b5;font-weight:700>stu</span>{
+<span style=color:#902000>int</span> grade;
+<span style=color:#902000>float</span> score;
+};
+<span style=color:#007020;font-weight:700>struct</span> <span style=color:#0e84b5;font-weight:700>stu</span> arr1[<span style=color:#40a070>10</span>]; <span style=color:#60a0b0;font-style:italic>//C语⾔
+</span><span style=color:#60a0b0;font-style:italic></span>stu arr2[<span style=color:#40a070>10</span>]; <span style=color:#60a0b0;font-style:italic>// C++
+</span></code></pre></div><h3 id=14-lambda表达式>1.4 Lambda表达式</h3>
+<ul>
+<li>把函数看作对象，可以像对象一样使用，比如可以将它们赋给变量和作为参数传递，还可以像函数一样对其求值。</li>
+<li>具体形式：<code>[capture](parameters)->return-type{body}</code></li>
+<li><code>[capture]</code>：捕捉列表。捕捉列表总是出现在表达式的开始处。事实上，<code>[]</code> 是引出符。编译器根据该引出符判断接下来的代码是否是 lambda 函数。捕捉列表能够捕捉上下文中的变量供其使用。</li>
+<li><code>(parameters)</code>：参数列表。与普通函数的参数列表一致。如果不需要参数传递，则可以连同 <code>()</code> 一起省略。</li>
+<li><code>->return_type</code>：返回类型。用追踪返回类型形式声明函数的返回类型。出于方便，不需要返回值的时候也可以连同符号<code>-></code>一起省略。此外，在返回类型明确的情况下，也可以省略该部分，让编译器对返回类型进行推导。</li>
+<li><code>{statement}</code>：函数体。内容与普通函数一样，不过除了可以使用参数之外，还可以使用所有捕获的变量。
+<table>
+<thead>
+<tr>
+<th>[capture]</th>
+<th>列表</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[]</td>
+<td>默认不捕获任何变量</td>
+</tr>
+<tr>
+<td>[=]</td>
+<td>默认以值捕获所有变量</td>
+</tr>
+<tr>
+<td>[&]</td>
+<td>默认以引用捕获所有变量</td>
+</tr>
+<tr>
+<td>[x]</td>
+<td>仅以值捕获x，其它变量不捕获</td>
+</tr>
+<tr>
+<td>[&x]</td>
+<td>仅以引用捕获x，其它变量不捕获</td>
+</tr>
+<tr>
+<td>[=, &x]</td>
+<td>默认以值捕获所有变量，但是x是例外，通过引用捕获</td>
+</tr>
+<tr>
+<td>[&, x]</td>
+<td>默认以引用捕获所有变量，但是x是例外，通过值捕获</td>
+</tr>
+<tr>
+<td>[this]</td>
+<td>通过引用捕获当前对象（其实是复制指针）</td>
+</tr>
+<tr>
+<td>[*this]</td>
+<td>通过传值方式捕获当前对象</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h3 id=15-引和传值>1.5 引⽤&和传值</h3>
+<ul>
+<li>C++引⽤符号<code>&</code>要和C语⾔⾥⾯的取地址运算符<code>&</code>区分开来，他们没有什么关系，C++⾥⾯的引⽤是指在变量名之前加⼀个<code>&</code>符号。</li>
+<li>一旦引用被初始化为一个对象，就不能被指向到另一个对象。引用必须在创建时被初始化，不存在空引用。不会新开辟空间，只是把链接引到原变量。</li>
+<li>创建引用：</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#902000>int</span> i<span style=color:#666>=</span><span style=color:#40a070>17</span>;
+<span style=color:#902000>int</span><span style=color:#666>&amp;</span> r<span style=color:#666>=</span>i; <span style=color:#60a0b0;font-style:italic>//r为i的别名
+</span></code></pre></div><ul>
+<li>⽐如在函数传⼊的参数中<code>int &a</code>，那么对这个引⽤变量<code>a</code>做的所有操作都是直接对传⼊的原变量进⾏操作，并没有像原来<code>int a</code>⼀样只是拷⻉⼀个副本。</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#902000>void</span> <span style=color:#06287e>func</span>(<span style=color:#902000>int</span> <span style=color:#666>&amp;</span>a){ <span style=color:#60a0b0;font-style:italic>//传⼊的是n的引⽤，直接对n进⾏操作
+</span><span style=color:#60a0b0;font-style:italic></span>a<span style=color:#666>=</span><span style=color:#40a070>99</span>;
+}
+<span style=color:#902000>int</span> <span style=color:#06287e>main</span>(){
+<span style=color:#902000>int</span> n<span style=color:#666>=</span><span style=color:#40a070>0</span>;
+func(n); <span style=color:#60a0b0;font-style:italic>//n由0变成了99
+</span><span style=color:#60a0b0;font-style:italic></span>}
+</code></pre></div><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#902000>void</span> <span style=color:#06287e>func</span>(<span style=color:#902000>int</span> a){ <span style=color:#60a0b0;font-style:italic>//传⼊的是0这个值，不会改变n的值
+</span><span style=color:#60a0b0;font-style:italic></span>a<span style=color:#666>=</span><span style=color:#40a070>99</span>;
+}
+<span style=color:#902000>int</span> <span style=color:#06287e>main</span>() {
+<span style=color:#902000>int</span> n<span style=color:#666>=</span><span style=color:#40a070>0</span>;
+func(n); <span style=color:#60a0b0;font-style:italic>//并不会改变n的值，n还是0
+</span><span style=color:#60a0b0;font-style:italic></span>}
+</code></pre></div><h2 id=2-面向对象>2 面向对象</h2>
+<h3 id=21-继承派生>2.1 继承&派生</h3>
+<ul>
+<li>三种继承方式
+<ul>
+<li>1.public 继承：分别变成：public, protected, private</li>
+<li>2.protected 继承：分别变成：protected, protected, private</li>
+<li>3.private 继承：分别变成：private, private, private</li>
+</ul>
+</li>
+<li>一个派生类继承了所有的基类方法，但下列情况除外：
+<ul>
+<li>基类的构造函数、析构函数和拷贝构造函数</li>
+<li>基类的重载运算符</li>
+<li>基类的友元函数</li>
+</ul>
+</li>
+<li>多继承举例：</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#007020;font-weight:700>class</span> <span style=color:#0e84b5;font-weight:700>Vehicle</span>{
+<span style=color:#007020;font-weight:700>public</span><span style=color:#666>:</span>
+    Vehicle(){cout<span style=color:#666>&lt;&lt;</span><span style=color:#4070a0>&#34;This is Vehicle.&#34;</span><span style=color:#666>&lt;&lt;</span>endl;}
+};
+<span style=color:#007020;font-weight:700>class</span> <span style=color:#0e84b5;font-weight:700>FourWheeler</span>{
+<span style=color:#007020;font-weight:700>public</span><span style=color:#666>:</span>
+    FourWheeler(){cout<span style=color:#666>&lt;&lt;</span><span style=color:#4070a0>&#34;This is a 4 wheeler Vehicle.&#34;</span><span style=color:#666>&lt;&lt;</span>endl;}
+};
+<span style=color:#007020;font-weight:700>class</span> <span style=color:#0e84b5;font-weight:700>Car</span><span style=color:#666>:</span> <span style=color:#007020;font-weight:700>public</span> Vehicle, <span style=color:#007020;font-weight:700>public</span> FourWheeler{
+
+};
+
+<span style=color:#902000>int</span> <span style=color:#06287e>main</span>(){
+    Car myCar;
+}
+</code></pre></div><ul>
+<li>多层继承举例：</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#007020;font-weight:700>class</span> <span style=color:#0e84b5;font-weight:700>Vehicle</span>{
+<span style=color:#007020;font-weight:700>public</span><span style=color:#666>:</span>
+    Vehicle(){cout<span style=color:#666>&lt;&lt;</span><span style=color:#4070a0>&#34;This is Vehicle.&#34;</span><span style=color:#666>&lt;&lt;</span>endl;}
+};
+<span style=color:#007020;font-weight:700>class</span> <span style=color:#0e84b5;font-weight:700>FourWheeler</span><span style=color:#666>:</span> <span style=color:#007020;font-weight:700>public</span> Vehicle{
+<span style=color:#007020;font-weight:700>public</span><span style=color:#666>:</span>
+    FourWheeler(){cout<span style=color:#666>&lt;&lt;</span><span style=color:#4070a0>&#34;Objects with 4 wheels are vehicles.&#34;</span><span style=color:#666>&lt;&lt;</span>endl;}
+};
+<span style=color:#007020;font-weight:700>class</span> <span style=color:#0e84b5;font-weight:700>Car</span><span style=color:#666>:</span> <span style=color:#007020;font-weight:700>public</span> FourWheeler{
+<span style=color:#007020;font-weight:700>public</span><span style=color:#666>:</span>
+    Car(){cout<span style=color:#666>&lt;&lt;</span><span style=color:#4070a0>&#34;Car has 4 Wheels&#34;</span><span style=color:#666>&lt;&lt;</span>endl;}
+};
+
+<span style=color:#902000>int</span> <span style=color:#06287e>main</span>(){
+    Car myCar;
+}
+</code></pre></div><h3 id=22-inline内联函数>2.2 inline内联函数</h3>
+<ul>
+<li>引入内联函数的目的是为了解决程序中函数调用的效率问题，程序在编译器编译的时候，编译器将程序中出现的内联函数的调用表达式用内联函数的函数体进行替换，而对于其他的函数，都是在运行时候才被替代。这其实就是个空间代价换时间的节省。所以内联函数一般都是1-5行的小函数。</li>
+<li>在内联函数内不允许使用循环语句和开关语句；内联函数的定义必须出现在内联函数第一次调用之前；类结构中所在的类说明内部定义的函数是内联函数。</li>
+<li>使用内联函数来返回两个数中的最大值：</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#007020;font-weight:700>inline</span> <span style=color:#902000>int</span> <span style=color:#06287e>Max</span>(<span style=color:#902000>int</span> x,<span style=color:#902000>int</span> y){
+    <span style=color:#007020;font-weight:700>return</span> (x<span style=color:#666>&gt;</span>y)<span style=color:#666>?</span><span style=color:#002070;font-weight:700>x</span>:y;
+}
+</code></pre></div><h3 id=23-static静态成员>2.3 static静态成员</h3>
+<ul>
+<li>当我们声明类的成员为静态时，这意味着无论创建多少个类的对象，静态成员都只有一个副本。静态成员在类的所有对象中是共享的。如果不存在其他的初始化语句，在创建第一个对象时，所有的静态数据都会被初始化为零。</li>
+<li>如果把函数成员声明为静态的，就可以把函数与类的任何特定对象独立开来。静态成员函数即使在类对象不存在的情况下也能被调用。</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#007020;font-weight:700>class</span> <span style=color:#0e84b5;font-weight:700>Box</span>{
+<span style=color:#007020;font-weight:700>private</span><span style=color:#666>:</span>
+    <span style=color:#902000>double</span> length;
+    <span style=color:#902000>double</span> width;
+    <span style=color:#902000>double</span> height;
+<span style=color:#007020;font-weight:700>public</span><span style=color:#666>:</span>
+    <span style=color:#007020;font-weight:700>static</span> <span style=color:#902000>int</span> boxCount; <span style=color:#60a0b0;font-style:italic>//只声明，不定义
+</span><span style=color:#60a0b0;font-style:italic></span>    Box(<span style=color:#902000>double</span> l,<span style=color:#902000>double</span> w,<span style=color:#902000>double</span> h){
+        <span style=color:#007020;font-weight:700>this</span><span style=color:#666>-&gt;</span>length<span style=color:#666>=</span>l;
+        <span style=color:#007020;font-weight:700>this</span><span style=color:#666>-&gt;</span>width<span style=color:#666>=</span>w;
+        <span style=color:#007020;font-weight:700>this</span><span style=color:#666>-&gt;</span>height<span style=color:#666>=</span>h;
+
+        boxCount<span style=color:#666>++</span>;
+    }
+
+    <span style=color:#007020;font-weight:700>static</span> <span style=color:#902000>int</span> <span style=color:#06287e>getBoxCount</span>(){
+        <span style=color:#007020;font-weight:700>return</span> boxCount;
+    }
+};
+
+<span style=color:#902000>int</span> Box<span style=color:#666>::</span>boxCount<span style=color:#666>=</span><span style=color:#40a070>0</span>; <span style=color:#60a0b0;font-style:italic>//在class外初始化
+</span><span style=color:#60a0b0;font-style:italic></span>
+<span style=color:#902000>int</span> <span style=color:#06287e>main</span>(){
+    Box box1(<span style=color:#40a070>2</span>,<span style=color:#40a070>4</span>,<span style=color:#40a070>5</span>);
+    Box box3(<span style=color:#40a070>3</span>,<span style=color:#40a070>1</span>,<span style=color:#40a070>2</span>);
+
+    cout<span style=color:#666>&lt;&lt;</span>Box<span style=color:#666>::</span>boxCount<span style=color:#666>&lt;&lt;</span>endl; <span style=color:#60a0b0;font-style:italic>//直接调用
+</span><span style=color:#60a0b0;font-style:italic></span>    cout<span style=color:#666>&lt;&lt;</span>Box<span style=color:#666>::</span>getBoxCount()<span style=color:#666>&lt;&lt;</span>endl; <span style=color:#60a0b0;font-style:italic>//直接调用
+</span><span style=color:#60a0b0;font-style:italic></span>}
+</code></pre></div><h3 id=24-friend友元函数>2.4 friend友元函数</h3>
+<ul>
+<li>定义在类外部，但有权访问类的所有私有（private）成员和保护（protected）成员。友元函数并不是成员函数。</li>
+<li>友元也可以是一个类，该类被称为友元类，在这种情况下，整个类及其所有成员都是友元。</li>
+<li>使用举例：</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#007020;font-weight:700>class</span> <span style=color:#0e84b5;font-weight:700>Box</span>{
+<span style=color:#007020;font-weight:700>private</span><span style=color:#666>:</span>
+    <span style=color:#902000>double</span> width;
+<span style=color:#007020;font-weight:700>public</span><span style=color:#666>:</span>
+    Box(<span style=color:#902000>double</span> w){<span style=color:#007020;font-weight:700>this</span><span style=color:#666>-&gt;</span>width<span style=color:#666>=</span>w;}
+    <span style=color:#007020;font-weight:700>friend</span> <span style=color:#902000>void</span> <span style=color:#06287e>printWidth</span>(Box b);
+};
+
+<span style=color:#902000>void</span> <span style=color:#06287e>printWidth</span>(Box b){ <span style=color:#60a0b0;font-style:italic>//在class外定义
+</span><span style=color:#60a0b0;font-style:italic></span>    cout<span style=color:#666>&lt;&lt;</span><span style=color:#4070a0>&#34;Box&#39;s width: &#34;</span><span style=color:#666>&lt;&lt;</span>b.width<span style=color:#666>&lt;&lt;</span>endl;
+}
+
+<span style=color:#902000>int</span> <span style=color:#06287e>main</span>(){
+    Box b(<span style=color:#40a070>23</span>);
+    printWidth(b);
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#007020;font-weight:700>class</span> <span style=color:#0e84b5;font-weight:700>A</span>{
+<span style=color:#007020;font-weight:700>private</span><span style=color:#666>:</span>
+    <span style=color:#902000>int</span> a;
+<span style=color:#007020;font-weight:700>public</span><span style=color:#666>:</span>
+    A(){a<span style=color:#666>=</span><span style=color:#40a070>666</span>;}
+    <span style=color:#007020;font-weight:700>friend</span> <span style=color:#007020;font-weight:700>class</span> <span style=color:#0e84b5;font-weight:700>B</span>;
+};
+
+<span style=color:#007020;font-weight:700>class</span> <span style=color:#0e84b5;font-weight:700>B</span>{
+<span style=color:#007020;font-weight:700>private</span><span style=color:#666>:</span>
+    <span style=color:#902000>int</span> b;
+<span style=color:#007020;font-weight:700>public</span><span style=color:#666>:</span>
+    B(){b<span style=color:#666>=</span><span style=color:#40a070>233</span>;}
+    <span style=color:#902000>void</span> <span style=color:#06287e>showA</span>(A<span style=color:#666>&amp;</span> x){
+        cout<span style=color:#666>&lt;&lt;</span>x.a;
+    }
+};
+
+<span style=color:#902000>int</span> <span style=color:#06287e>main</span>(){
+    A a;
+    B b;
+    b.showA(a);
+}
+</code></pre></div><h3 id=25-拷贝构造函数>2.5 拷贝构造函数</h3>
+<ul>
+<li>当定义一个新对象并用一个同类型的对象对它进行初始化时，将显示使用拷贝构造函数。当该类型的对象传递给函数或从函数返回该类型的对象时，将隐式调用拷贝构造函数。</li>
+<li>通常用于：
+<ul>
+<li>通过使用另一个同类型的对象来初始化新创建的对象；</li>
+<li>复制对象把它作为参数传递给函数；</li>
+<li>复制对象，并从函数返回这个对象。</li>
+</ul>
+</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#007020;font-weight:700>class</span> <span style=color:#0e84b5;font-weight:700>Point</span>{
+<span style=color:#007020;font-weight:700>private</span><span style=color:#666>:</span>
+    <span style=color:#902000>int</span> x,y;
+<span style=color:#007020;font-weight:700>public</span><span style=color:#666>:</span>
+    Point(<span style=color:#902000>int</span> x1,<span style=color:#902000>int</span> y1){<span style=color:#007020;font-weight:700>this</span><span style=color:#666>-&gt;</span>x<span style=color:#666>=</span>x1;<span style=color:#007020;font-weight:700>this</span><span style=color:#666>-&gt;</span>y<span style=color:#666>=</span>y1;}
+    Point(<span style=color:#007020;font-weight:700>const</span> Point<span style=color:#666>&amp;</span> p1){<span style=color:#007020;font-weight:700>this</span><span style=color:#666>-&gt;</span>x<span style=color:#666>=</span>p1.x;<span style=color:#007020;font-weight:700>this</span><span style=color:#666>-&gt;</span>y<span style=color:#666>=</span>p1.y;}
+
+    <span style=color:#902000>int</span> <span style=color:#06287e>getX</span>(){<span style=color:#007020;font-weight:700>return</span> <span style=color:#007020;font-weight:700>this</span><span style=color:#666>-&gt;</span>x;}
+    <span style=color:#902000>int</span> <span style=color:#06287e>getY</span>(){<span style=color:#007020;font-weight:700>return</span> <span style=color:#007020;font-weight:700>this</span><span style=color:#666>-&gt;</span>y;}
+};
+
+<span style=color:#902000>int</span> <span style=color:#06287e>main</span>(){
+    Point p1(<span style=color:#40a070>1</span>,<span style=color:#40a070>3</span>);
+    Point p2<span style=color:#666>=</span>p1;
+
+    cout<span style=color:#666>&lt;&lt;</span>p2.getX()<span style=color:#666>&lt;&lt;</span>endl;
+    cout<span style=color:#666>&lt;&lt;</span>p2.getY()<span style=color:#666>&lt;&lt;</span>endl;
+}
+</code></pre></div><h3 id=26-重载函数运算符>2.6 重载函数&运算符</h3>
+<ul>
+<li>重载运算符比如<code>Box operator+(const Box&);</code>，大多数的重载运算符可被定义为普通的非成员函数或者被定义为类成员函数。</li>
+<li>如果我们定义上面的函数为类的非成员函数，那么我们需要为每次操作传递两个参数，比如<code>Box operator+(const Box&,const Box&);</code>。</li>
+</ul>
+<h3 id=27-虚函数>2.7 虚函数</h3>
+<ul>
+<li>虚函数是C++中用于实现多态的机制，通过基类访问派生类定义的函数。</li>
+<li>纯虚函数比如<code>virtual int area()=0;</code>，纯虚函数一定没有定义，用来规范派生类的行为，即接口。包含纯虚函数的类是抽象类，抽象类不能定义实例，但可以声明指向实现该抽象类的具体类的指针或引用。</li>
+<li>虚函数声比如<code>virtual ReturnType FunctionName(Parameter)</code>，虚函数必须实现，如果不实现，编译器将报错。</li>
+</ul>
+<h3 id=28-接口抽象类>2.8 接口&抽象类</h3>
+<ul>
+<li>如果类中至少有一个函数被声明为纯虚函数，则这个类就是抽象类。</li>
+<li>需要在派生类中重写纯虚函数。</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#007020;font-weight:700>class</span> <span style=color:#0e84b5;font-weight:700>person</span>{
+<span style=color:#007020;font-weight:700>protected</span><span style=color:#666>:</span>
+    string num;
+<span style=color:#007020;font-weight:700>public</span><span style=color:#666>:</span>
+    person(){<span style=color:#007020;font-weight:700>this</span><span style=color:#666>-&gt;</span>num<span style=color:#666>=</span><span style=color:#4070a0>&#34;110101&#34;</span>;}
+    <span style=color:#007020;font-weight:700>virtual</span> string <span style=color:#06287e>getNum</span>()<span style=color:#666>=</span><span style=color:#40a070>0</span>;
+};
+<span style=color:#007020;font-weight:700>class</span> <span style=color:#0e84b5;font-weight:700>student</span><span style=color:#666>:</span> <span style=color:#007020;font-weight:700>public</span> person{
+<span style=color:#007020;font-weight:700>public</span><span style=color:#666>:</span>
+    string getNum(){<span style=color:#007020;font-weight:700>return</span> <span style=color:#007020;font-weight:700>this</span><span style=color:#666>-&gt;</span>num;}
+};
+
+<span style=color:#902000>int</span> <span style=color:#06287e>main</span>(){
+    student s;
+    cout<span style=color:#666>&lt;&lt;</span>s.getNum()<span style=color:#666>&lt;&lt;</span>endl;
+}
+</code></pre></div><h2 id=3-进阶语法>3 进阶语法</h2>
+<h3 id=31-template模板>3.1 template模板</h3>
+<ul>
+<li>函数模板</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#007020;font-weight:700>template</span><span style=color:#666>&lt;</span><span style=color:#007020;font-weight:700>class</span> <span style=color:#0e84b5;font-weight:700>T</span><span style=color:#666>&gt;</span>
+T myMax(T x,T y){
+    <span style=color:#007020;font-weight:700>return</span> (x<span style=color:#666>&gt;</span>y)<span style=color:#666>?</span><span style=color:#002070;font-weight:700>x</span>:y;
+}
+
+<span style=color:#902000>int</span> <span style=color:#06287e>main</span>(){
+    cout<span style=color:#666>&lt;&lt;</span>myMax<span style=color:#666>&lt;</span><span style=color:#902000>int</span><span style=color:#666>&gt;</span>(<span style=color:#40a070>3</span>,<span style=color:#40a070>7</span>)<span style=color:#666>&lt;&lt;</span>endl;
+    cout<span style=color:#666>&lt;&lt;</span>myMax<span style=color:#666>&lt;</span><span style=color:#902000>double</span><span style=color:#666>&gt;</span>(<span style=color:#40a070>45.5</span>,<span style=color:#40a070>11.0</span>)<span style=color:#666>&lt;&lt;</span>endl;
+}
+</code></pre></div><ul>
+<li>类模板</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#007020;font-weight:700>template</span><span style=color:#666>&lt;</span><span style=color:#007020;font-weight:700>class</span> <span style=color:#0e84b5;font-weight:700>T</span>,<span style=color:#007020;font-weight:700>class</span> <span style=color:#0e84b5;font-weight:700>U</span><span style=color:#666>&gt;</span>
+<span style=color:#007020;font-weight:700>class</span> <span style=color:#0e84b5;font-weight:700>A</span>{
+<span style=color:#007020;font-weight:700>private</span><span style=color:#666>:</span>
+    T x;
+    U y;
+<span style=color:#007020;font-weight:700>public</span><span style=color:#666>:</span>
+    A(){cout<span style=color:#666>&lt;&lt;</span><span style=color:#4070a0>&#34;constructor of A() is calling...&#34;</span><span style=color:#666>&lt;&lt;</span>endl;}
+};
+
+<span style=color:#902000>int</span> <span style=color:#06287e>main</span>(){
+    A<span style=color:#666>&lt;</span><span style=color:#902000>char</span>,<span style=color:#902000>char</span><span style=color:#666>&gt;</span> a;
+    A<span style=color:#666>&lt;</span><span style=color:#902000>int</span>,<span style=color:#902000>double</span><span style=color:#666>&gt;</span> b;
+}
+</code></pre></div><h2 id=4-stl-1>4 STL-1</h2>
+<h3 id=21-vector动态数组>2.1 vector动态数组</h3>
+<ul>
+<li>有的书⾥⾯把它翻译成⽮量，但是叫做动态数组更好理解。</li>
+<li>能够在运⾏阶段设置数组的⻓度、在末尾增加新的数据、在中间插⼊新的值、⻓度任意被改变。在头⽂件<code>vector</code>⾥⾯。</li>
+<li><code>vector</code>、<code>stack</code>、<code>queue</code>、<code>map</code>、<code>set</code>这些在C++中都叫做容器，这些容器的⼤⼩都可以⽤<code>.size()</code>获取到。</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#007020>#include</span><span style=color:#007020>&lt;iostream&gt;</span><span style=color:#007020>
+</span><span style=color:#007020>#include</span><span style=color:#007020>&lt;vector&gt;</span><span style=color:#007020>
+</span><span style=color:#007020></span><span style=color:#902000>int</span> <span style=color:#06287e>main</span>(){
+vector<span style=color:#666>&lt;</span><span style=color:#902000>int</span><span style=color:#666>&gt;</span> v1; <span style=color:#60a0b0;font-style:italic>//定义⼀个vector v1，没有分配⼤⼩
+</span><span style=color:#60a0b0;font-style:italic></span>cout<span style=color:#666>&lt;&lt;</span>v1.size(); <span style=color:#60a0b0;font-style:italic>//输出vector v1的⼤⼩
+</span><span style=color:#60a0b0;font-style:italic></span>}
+</code></pre></div><ul>
+<li><code>vector</code>可以⼀开始不定义⼤⼩，之后⽤<code>resize</code>⽅法分配⼤⼩，也可以⼀开始就定义⼤⼩，之后还可以对它插⼊删除动态改变它的⼤⼩～</li>
+<li>⽽且不管在<code>main</code>函数⾥还是在全局中定义，它都能够直接将所有的值初始化为0（不⽤显式地写出来，默认就是所有的元素为0）。</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp>vector<span style=color:#666>&lt;</span><span style=color:#902000>int</span><span style=color:#666>&gt;</span> v(<span style=color:#40a070>10</span>); <span style=color:#60a0b0;font-style:italic>//直接定义⻓度为10的int数组，默认这10个元素值都为0
+</span><span style=color:#60a0b0;font-style:italic></span>
+vector<span style=color:#666>&lt;</span><span style=color:#902000>int</span><span style=color:#666>&gt;</span> v1;
+v1.resize(<span style=color:#40a070>100</span>); <span style=color:#60a0b0;font-style:italic>//先定义⼀个vector变量v1，然后将⻓度resize为8，默认这8个元素都是0
+</span><span style=color:#60a0b0;font-style:italic></span>
+vector<span style=color:#666>&lt;</span><span style=color:#902000>int</span><span style=color:#666>&gt;</span> vector_c(<span style=color:#40a070>20</span>, <span style=color:#40a070>2</span>); <span style=color:#60a0b0;font-style:italic>//定义时指定vector的⼤⼩并把所有的元素赋⼀个指定的值
+</span></code></pre></div><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp>v[<span style=color:#40a070>1</span>]<span style=color:#666>=</span><span style=color:#40a070>2</span>; <span style=color:#60a0b0;font-style:italic>//访问的时候像数组⼀样直接⽤[]下标访问即可
+</span><span style=color:#60a0b0;font-style:italic></span>cout<span style=color:#666>&lt;&lt;</span>v[<span style=color:#40a070>0</span>];
+</code></pre></div><ul>
+<li>常⽤用法：</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#007020;font-weight:700>for</span>(<span style=color:#902000>int</span> i<span style=color:#666>=</span><span style=color:#40a070>0</span>;i<span style=color:#666>&lt;</span><span style=color:#40a070>10</span>;i<span style=color:#666>++</span>){ <span style=color:#60a0b0;font-style:italic>//在vector a的末尾添加⼀个元素i
+</span><span style=color:#60a0b0;font-style:italic></span>vector_a.push_back(i);
+}
+</code></pre></div><ul>
+<li>容器遍历的时候都是使⽤迭代器访问的，<code>c.begin()</code>是⼀个指针，指向容器的<strong>第⼀个元素</strong>，<code>c.end()</code>指向容器的最后⼀个元素的<strong>后⼀个位置</strong>，所以迭代器指针<code>it</code>的<code>for</code>循环判断条件是<code>it!=c.end()</code>。</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#007020;font-weight:700>for</span>(<span style=color:#007020;font-weight:700>auto</span> it<span style=color:#666>=</span>c.begin();it<span style=color:#666>!=</span>c.end();it<span style=color:#666>++</span>) { <span style=color:#60a0b0;font-style:italic>//使⽤迭代器访问
+</span><span style=color:#60a0b0;font-style:italic></span>cout<span style=color:#666>&lt;&lt;*</span>it<span style=color:#666>&lt;&lt;</span><span style=color:#4070a0>&#34; &#34;</span>; <span style=color:#60a0b0;font-style:italic>//加星号
+</span><span style=color:#60a0b0;font-style:italic></span>}
+</code></pre></div><ul>
+<li>更多查看官方 <a href=www.cplusplus.com>doc</a></li>
+</ul>
+<h3 id=22-set集合>2.2 set集合</h3>
+<ul>
+<li>⼀个<code>set</code>⾥⾯的各元素各不相同，且<code>set</code>会按照元素进⾏从⼩到⼤排序～</li>
+<li>常⽤⽤法：</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp>set<span style=color:#666>&lt;</span><span style=color:#902000>int</span><span style=color:#666>&gt;</span> set_s; <span style=color:#60a0b0;font-style:italic>// 定义
+</span><span style=color:#60a0b0;font-style:italic></span>
+set_s.insert(<span style=color:#40a070>99</span>); <span style=color:#60a0b0;font-style:italic>//插入元素
+</span><span style=color:#60a0b0;font-style:italic></span>cout<span style=color:#666>&lt;&lt;*</span>(set_s.begin())<span style=color:#666>&lt;&lt;</span>endl; <span style=color:#60a0b0;font-style:italic>//取址输出第一个
+</span><span style=color:#60a0b0;font-style:italic></span>
+<span style=color:#007020;font-weight:700>for</span>(<span style=color:#007020;font-weight:700>auto</span> it<span style=color:#666>=</span>set_s.begin();it<span style=color:#666>!=</span>set_s.end();it<span style=color:#666>++</span>){ <span style=color:#60a0b0;font-style:italic>//迭代器
+</span><span style=color:#60a0b0;font-style:italic></span>    cout<span style=color:#666>&lt;&lt;*</span>it<span style=color:#666>&lt;&lt;</span><span style=color:#4070a0>&#34; &#34;</span>; <span style=color:#60a0b0;font-style:italic>//遍历取址输出每一个元素
+</span></code></pre></div><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp>cout<span style=color:#666>&lt;&lt;</span>(set_s.find(<span style=color:#40a070>99</span>)<span style=color:#666>!=</span>set_s.end())<span style=color:#666>&lt;&lt;</span>endl; <span style=color:#60a0b0;font-style:italic>//查找集合中的值，如果结果等于set_s.end()表示未找到
+</span><span style=color:#60a0b0;font-style:italic></span>
+set_s.erase(<span style=color:#40a070>1</span>); <span style=color:#60a0b0;font-style:italic>//删除集合中的1这个元素
+</span></code></pre></div><h3 id=23-map映射>2.3 map映射</h3>
+<ul>
+<li><code>map</code>是键值对，⽐如⼀个⼈名对应⼀个学号，就可以定义⼀个字符串<code>string</code>类型的⼈名为“键”，学 号<code>int</code>类型为“值”，如<code>map&lt;string,int>m</code>。</li>
+<li>当然键、值也可以是其它变量类型～<code>map</code>会⾃动将所有的键值对按照键从⼩到⼤排序，使⽤时的头⽂件<code>&lt;map></code></li>
+<li>常⽤用法：</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp>map<span style=color:#666>&lt;</span>string,<span style=color:#902000>int</span><span style=color:#666>&gt;</span> map_m; <span style=color:#60a0b0;font-style:italic>//定义
+</span><span style=color:#60a0b0;font-style:italic></span>
+map_m[<span style=color:#4070a0>&#34;hello&#34;</span>]<span style=color:#666>=</span><span style=color:#40a070>2</span>; <span style=color:#60a0b0;font-style:italic>//将key为&#34;hello&#34;, value为2的键值对存⼊map
+</span><span style=color:#60a0b0;font-style:italic></span>cout<span style=color:#666>&lt;&lt;</span>map_m[<span style=color:#4070a0>&#34;hello&#34;</span>]<span style=color:#666>&lt;&lt;</span>endl; <span style=color:#60a0b0;font-style:italic>//访问map中key为&#34;hello&#34;的value, 如果key不存在，则返回0
+</span></code></pre></div><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#007020;font-weight:700>for</span>(<span style=color:#007020;font-weight:700>auto</span> it<span style=color:#666>=</span>map_m.begin();it<span style=color:#666>!=</span>map_m.end();it<span style=color:#666>++</span>){ <span style=color:#60a0b0;font-style:italic>//迭代器
+</span><span style=color:#60a0b0;font-style:italic></span>    cout<span style=color:#666>&lt;&lt;</span>it<span style=color:#666>-&gt;</span>first<span style=color:#666>&lt;&lt;</span><span style=color:#4070a0>&#34; &#34;</span>; <span style=color:#60a0b0;font-style:italic>//键⽤it-&gt;first获取
+</span><span style=color:#60a0b0;font-style:italic></span>    cout<span style=color:#666>&lt;&lt;</span>it<span style=color:#666>-&gt;</span>second<span style=color:#666>&lt;&lt;</span>endl; <span style=color:#60a0b0;font-style:italic>//值⽤it-&gt;second获取
+</span><span style=color:#60a0b0;font-style:italic></span>}
+
+cout<span style=color:#666>&lt;&lt;</span>map_m.begin()<span style=color:#666>-&gt;</span>first<span style=color:#666>&lt;&lt;</span><span style=color:#4070a0>&#34; &#34;</span>; <span style=color:#60a0b0;font-style:italic>//访问第⼀个元素
+</span><span style=color:#60a0b0;font-style:italic></span>cout<span style=color:#666>&lt;&lt;</span>map_m.begin()<span style=color:#666>-&gt;</span>second<span style=color:#666>&lt;&lt;</span>endl;
+
+cout<span style=color:#666>&lt;&lt;</span>map_m.rbegin()<span style=color:#666>-&gt;</span>first<span style=color:#666>&lt;&lt;</span><span style=color:#4070a0>&#34; &#34;</span>; <span style=color:#60a0b0;font-style:italic>//访问最后⼀个元素
+</span><span style=color:#60a0b0;font-style:italic></span>cout<span style=color:#666>&lt;&lt;</span>map_m.rbegin()<span style=color:#666>-&gt;</span>second<span style=color:#666>&lt;&lt;</span>endl;
+</code></pre></div><h3 id=23-stack栈>2.3 stack栈</h3>
+<ul>
+<li>使⽤时的头⽂件<code>&lt;stack></code> ，常⽤用法：</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp>stack<span style=color:#666>&lt;</span><span style=color:#902000>int</span><span style=color:#666>&gt;</span> stack_s; <span style=color:#60a0b0;font-style:italic>//定义
+</span><span style=color:#60a0b0;font-style:italic></span>
+<span style=color:#007020;font-weight:700>for</span>(<span style=color:#902000>int</span> i<span style=color:#666>=</span><span style=color:#40a070>0</span>;i<span style=color:#666>&lt;</span><span style=color:#40a070>6</span>;i<span style=color:#666>++</span>){
+    stack_s.push(i);
+}
+
+cout<span style=color:#666>&lt;&lt;</span>stack_s.top()<span style=color:#666>&lt;&lt;</span>endl; <span style=color:#60a0b0;font-style:italic>//访问栈顶元素
+</span><span style=color:#60a0b0;font-style:italic></span>cout<span style=color:#666>&lt;&lt;</span>stack_s.size()<span style=color:#666>&lt;&lt;</span>endl; <span style=color:#60a0b0;font-style:italic>//输出元素个数
+</span><span style=color:#60a0b0;font-style:italic></span>
+stack_s.pop(); <span style=color:#60a0b0;font-style:italic>//移除栈顶元素
+</span></code></pre></div><h3 id=24-queue队列>2.4 queue队列</h3>
+<ul>
+<li>使⽤时的头⽂件<code>&lt;queue></code> ，常⽤用法：</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp>queue<span style=color:#666>&lt;</span><span style=color:#902000>int</span><span style=color:#666>&gt;</span> queue_q; <span style=color:#60a0b0;font-style:italic>//定义
+</span><span style=color:#60a0b0;font-style:italic></span>
+<span style=color:#007020;font-weight:700>for</span>(<span style=color:#902000>int</span> i<span style=color:#666>=</span><span style=color:#40a070>0</span>;i<span style=color:#666>&lt;</span><span style=color:#40a070>6</span>;i<span style=color:#666>++</span>){
+    queue_q.push(i);
+}
+
+cout<span style=color:#666>&lt;&lt;</span>queue_q.front()<span style=color:#666>&lt;&lt;</span>endl; <span style=color:#60a0b0;font-style:italic>//访问队⾸元素
+</span><span style=color:#60a0b0;font-style:italic></span>cout<span style=color:#666>&lt;&lt;</span>stack_s.size()<span style=color:#666>&lt;&lt;</span>endl; <span style=color:#60a0b0;font-style:italic>//输出元素个数
+</span><span style=color:#60a0b0;font-style:italic></span>
+queue_q.pop(); <span style=color:#60a0b0;font-style:italic>//移除队⾸元素
+</span></code></pre></div><h3 id=25-unordered_map和unordered_set>2.5 unordered_map和unordered_set</h3>
+<ul>
+<li><code>map</code>会按照键值对的键<code>key</code>进⾏排序；<code>set</code>⾥⾯会按照集合中的元素⼤⼩进⾏排序，从⼩到⼤顺序。⽽<code>unordered_map</code>或<code>unordered_set</code>省去了这个排序的过程。</li>
+<li>如果偶尔刷题时候⽤<code>map</code>或<code>set</code>超时了，可以考虑⽤<code>unordered_map</code>或 <code>unordered_set</code>缩短代码运⾏时间、提⾼代码效率。</li>
+</ul>
+<h2 id=3-stl-2>3 STL-2</h2>
+<h3 id=31-位运算bitset>3.1 位运算bitset</h3>
+<ul>
+<li>⽤来处理⼆进制位⾮常⽅便。可能在PAT、蓝桥OJ中不常⽤，但是在LeetCode OJ中经常⽤到～⽽且知道<code>bitset</code>能够简化⼀些操作，可能⼀些复杂的问题能够直接⽤<code>bitset</code>就很轻易地解决。</li>
+<li>使⽤时的头⽂件<code>&lt;bitset></code> ，常⽤用法：</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp>bitset<span style=color:#666>&lt;</span><span style=color:#40a070>5</span><span style=color:#666>&gt;</span> b1(<span style=color:#4070a0>&#34;11&#34;</span>); <span style=color:#60a0b0;font-style:italic>//5表示5个⼆进位
+</span><span style=color:#60a0b0;font-style:italic></span>bitset<span style=color:#666>&lt;</span><span style=color:#40a070>5</span><span style=color:#666>&gt;</span> b2; <span style=color:#60a0b0;font-style:italic>//都为0
+</span><span style=color:#60a0b0;font-style:italic></span>bitset<span style=color:#666>&lt;</span><span style=color:#40a070>5</span><span style=color:#666>&gt;</span> b3(u); <span style=color:#60a0b0;font-style:italic>//u为unsigned int，如果u=1，被初始化为10000
+</span><span style=color:#60a0b0;font-style:italic></span>bitset<span style=color:#666>&lt;</span><span style=color:#40a070>5</span><span style=color:#666>&gt;</span> b4(s); <span style=color:#60a0b0;font-style:italic>//s为字符串，如&#34;1101&#34; -&gt; &#34;10110&#34;
+</span><span style=color:#60a0b0;font-style:italic></span>bitset<span style=color:#666>&lt;</span><span style=color:#40a070>5</span><span style=color:#666>&gt;</span> b5(s,pos,n); <span style=color:#60a0b0;font-style:italic>//从字符串的s[pos]开始，n位⻓度
+</span></code></pre></div><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#007020;font-weight:700>for</span>(<span style=color:#902000>int</span> i<span style=color:#666>=</span><span style=color:#40a070>0</span>;i<span style=color:#666>&lt;</span><span style=color:#40a070>5</span>;i<span style=color:#666>++</span>){
+    cout<span style=color:#666>&lt;&lt;</span>b[i];
+}
+cout<span style=color:#666>&lt;&lt;</span>endl<span style=color:#666>&lt;&lt;</span>b.any(); <span style=color:#60a0b0;font-style:italic>//b中是否存在1的⼆进制位
+</span><span style=color:#60a0b0;font-style:italic></span>cout<span style=color:#666>&lt;&lt;</span>endl<span style=color:#666>&lt;&lt;</span>b.none(); <span style=color:#60a0b0;font-style:italic>//b中不存在1吗？
+</span><span style=color:#60a0b0;font-style:italic></span>cout<span style=color:#666>&lt;&lt;</span>endl<span style=color:#666>&lt;&lt;</span>b.count(); <span style=color:#60a0b0;font-style:italic>//b中1的⼆进制位的个数
+</span><span style=color:#60a0b0;font-style:italic></span>cout<span style=color:#666>&lt;&lt;</span>endl<span style=color:#666>&lt;&lt;</span>b.size(); <span style=color:#60a0b0;font-style:italic>//b中⼆进制位的个数
+</span><span style=color:#60a0b0;font-style:italic></span>cout<span style=color:#666>&lt;&lt;</span>endl<span style=color:#666>&lt;&lt;</span>b.test(<span style=color:#40a070>2</span>); <span style=color:#60a0b0;font-style:italic>//测试下标为2处是否⼆进制位为1
+</span><span style=color:#60a0b0;font-style:italic></span>b.set(<span style=color:#40a070>4</span>); <span style=color:#60a0b0;font-style:italic>//把b的下标为4处置1
+</span><span style=color:#60a0b0;font-style:italic></span>b.reset(); <span style=color:#60a0b0;font-style:italic>//所有位归零
+</span><span style=color:#60a0b0;font-style:italic></span>b.reset(<span style=color:#40a070>3</span>); <span style=color:#60a0b0;font-style:italic>//b的下标3处归零
+</span><span style=color:#60a0b0;font-style:italic></span>b.flip(); <span style=color:#60a0b0;font-style:italic>//b的所有⼆进制位逐位取反
+</span><span style=color:#60a0b0;font-style:italic></span><span style=color:#902000>unsigned</span> <span style=color:#902000>long</span> a<span style=color:#666>=</span>b.to_ulong(); <span style=color:#60a0b0;font-style:italic>//b转换为unsigned long
+</span></code></pre></div><h3 id=32-sort函数>3.2 sort函数</h3>
+<ul>
+<li>主要是对⼀个数组进⾏排序，<code>vector</code>是容器，要⽤<code>v.begin()</code>和<code>v.end()</code>表示头尾；⽽<code>int arr[]</code>⽤<code>arr</code>表示数组的⾸地址，<code>arr+n</code>表示尾部～</li>
+<li><code>sort</code>函数的<code>cmp</code>必须按照规定来写，即必须只是<code>></code>或者<code>&lt;</code>，⽐如：<code>return a > b;</code>或<code>return a &lt; b;</code>⽽不能是<code>&lt;=</code>或<code>>=</code>。</li>
+<li>使⽤时的头⽂件<code>&lt;algorithm></code> ，常⽤用法：</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#902000>bool</span> <span style=color:#06287e>cmp</span>(<span style=color:#902000>int</span> a,<span style=color:#902000>int</span> b){ <span style=color:#60a0b0;font-style:italic>//cmp函数返回的值是bool类型
+</span><span style=color:#60a0b0;font-style:italic></span>    <span style=color:#007020;font-weight:700>return</span> a<span style=color:#666>&gt;</span>b; <span style=color:#60a0b0;font-style:italic>//从⼤到⼩排列
+</span><span style=color:#60a0b0;font-style:italic></span>}
+
+<span style=color:#902000>int</span> <span style=color:#06287e>main</span>(){
+    vector<span style=color:#666>&lt;</span><span style=color:#902000>int</span><span style=color:#666>&gt;</span> v(<span style=color:#40a070>5</span>);
+    <span style=color:#007020;font-weight:700>for</span>(<span style=color:#902000>int</span> i<span style=color:#666>=</span><span style=color:#40a070>0</span>;i<span style=color:#666>&lt;</span><span style=color:#40a070>5</span>;i<span style=color:#666>++</span>){
+        cin<span style=color:#666>&gt;&gt;</span>v[i];
+    }
+    sort(v.begin(),v.end()); <span style=color:#60a0b0;font-style:italic>//没有传⼊参数cmp，默认⼩到⼤
+</span><span style=color:#60a0b0;font-style:italic></span>    <span style=color:#007020;font-weight:700>for</span>(<span style=color:#007020;font-weight:700>auto</span> it<span style=color:#666>=</span>v.begin();it<span style=color:#666>!=</span>v.end();it<span style=color:#666>++</span>){
+        cout<span style=color:#666>&lt;&lt;*</span>it<span style=color:#666>&lt;&lt;</span><span style=color:#4070a0>&#34; &#34;</span>;
+    }
+
+    <span style=color:#902000>int</span> arr[<span style=color:#40a070>4</span>];
+    <span style=color:#007020;font-weight:700>for</span>(<span style=color:#902000>int</span> i<span style=color:#666>=</span><span style=color:#40a070>0</span>;i<span style=color:#666>&lt;</span><span style=color:#40a070>4</span>;i<span style=color:#666>++</span>){
+        cin<span style=color:#666>&gt;&gt;</span>arr[i];
+    }
+    sort(arr,arr<span style=color:#666>+</span><span style=color:#40a070>4</span>,cmp); <span style=color:#60a0b0;font-style:italic>//⼤到⼩，因为cmp函数排序规则
+</span><span style=color:#60a0b0;font-style:italic></span>    <span style=color:#007020;font-weight:700>for</span>(<span style=color:#902000>int</span> i<span style=color:#666>=</span><span style=color:#40a070>0</span>;i<span style=color:#666>&lt;</span><span style=color:#40a070>4</span>;i<span style=color:#666>++</span>){
+        cout<span style=color:#666>&lt;&lt;</span>arr[i]<span style=color:#666>&lt;&lt;</span><span style=color:#4070a0>&#34; &#34;</span>;
+    }
+
+}
+</code></pre></div><ul>
+<li><code>cmp</code>最好⽤的还是在结构体中，尤其是很多排序的题⽬～⽐如⼀个学⽣结构体<code>stu</code>有学 号和成绩两个变量，要求如果成绩不同就按照成绩从⼤到⼩排列，如果成绩相同就按照学号从⼩到⼤排列，那么就可以写⼀个<code>cmp</code>数组实现这个看上去有点复杂的排序过程：</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#007020;font-weight:700>struct</span> <span style=color:#0e84b5;font-weight:700>stu</span>{
+    <span style=color:#902000>int</span> number;
+    <span style=color:#902000>int</span> score;
+}
+
+<span style=color:#902000>bool</span> <span style=color:#06287e>cmp</span>(stu a,stu b){
+    <span style=color:#007020;font-weight:700>if</span>(a.score<span style=color:#666>!=</span>b.score){
+        <span style=color:#007020;font-weight:700>return</span> a.score<span style=color:#666>&gt;</span>b.score;
+    }<span style=color:#007020;font-weight:700>else</span>{
+        <span style=color:#007020;font-weight:700>return</span> a.number<span style=color:#666>&lt;</span>b.number;
+    }
+}
+</code></pre></div><h3 id=33-cctype头件>3.3 cctype头⽂件</h3>
+<ul>
+<li>使⽤时的头⽂件<code>&lt;cctype></code> 。</li>
+<li>判断⼀个字符是否是字⺟，中已经定义好了判断这些字符应该所属的范围，直接引⼊这个头⽂件并且使⽤⾥⾯的函 数判断即可，⽆需⾃⼰⼿写：</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#902000>char</span> c;
+cin c;
+<span style=color:#007020;font-weight:700>if</span>(isalpha(c)){
+    cout<span style=color:#666>&lt;&lt;</span><span style=color:#4070a0>&#34;c is alpha!&#34;</span>;
+}
+</code></pre></div><ul>
+<li>不仅仅能判断字⺟，还能判断数字、⼩写字⺟、⼤写字⺟等～
+<ul>
+<li><code>isalpha</code>字⺟</li>
+<li><code>islower</code>⼩写字⺟</li>
+<li><code>isupper</code>⼤写字⺟</li>
+<li><code>isalnum</code>字⺟+数字</li>
+<li><code>isblank</code> space和 \t</li>
+<li><code>isspace</code> space 、 \t 、 \r 、 \n</li>
+</ul>
+</li>
+<li>还有两个经常⽤到的函数：<code>tolower</code>和<code>toupper</code>。</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#902000>char</span> c<span style=color:#666>=</span><span style=color:#4070a0>&#34;a&#34;</span>;
+<span style=color:#902000>char</span> t<span style=color:#666>=</span>toupper(c);
+</code></pre></div><h2 id=4-c11>4 C++11</h2>
+<h3 id=41-auto声明>4.1 auto声明</h3>
+<ul>
+<li>以让编译器根据初始值类型直接推断变量的类型：</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#007020;font-weight:700>auto</span> x<span style=color:#666>=</span><span style=color:#40a070>100</span>;
+<span style=color:#007020;font-weight:700>auto</span> s<span style=color:#666>=</span><span style=color:#4070a0>&#34;MAMA&#34;</span>;
+</code></pre></div><ul>
+<li>最主要的⽤处是在STL中使⽤迭代器的时代替⼀⼤⻓串的迭代器类型声明。</li>
+</ul>
+<h3 id=42-基于范围的for循环>4.2 基于范围的for循环</h3>
+<ul>
+<li>这在遍历数组中的每⼀个元素时使⽤会⽐较简便～⽐如想要输出数组<code>arr</code>中的每⼀个值，可以使⽤如下的⽅式输出：</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#902000>int</span> arr[<span style=color:#40a070>4</span>]<span style=color:#666>=</span>{<span style=color:#40a070>3</span>,<span style=color:#40a070>5</span>,<span style=color:#40a070>11</span>,<span style=color:#40a070>8</span>};
+<span style=color:#007020;font-weight:700>for</span>(<span style=color:#007020;font-weight:700>auto</span> <span style=color:#666>&amp;</span><span style=color:#002070;font-weight:700>i</span>: arr){ <span style=color:#60a0b0;font-style:italic>//引用变量
+</span><span style=color:#60a0b0;font-style:italic></span>    i<span style=color:#666>*=</span><span style=color:#40a070>2</span>;
+}
+<span style=color:#007020;font-weight:700>for</span>(<span style=color:#007020;font-weight:700>auto</span> <span style=color:#002070;font-weight:700>i</span>: arr){ <span style=color:#60a0b0;font-style:italic>//输出
+</span><span style=color:#60a0b0;font-style:italic></span>    cout<span style=color:#666>&lt;&lt;</span>i<span style=color:#666>&lt;&lt;</span><span style=color:#4070a0>&#34; &#34;</span>;
+}
+</code></pre></div><h3 id=43-to_string>4.3 to_string</h3>
+<ul>
+<li>使⽤时的头⽂件<code>&lt;string></code> ，常⽤用法是把⼀个<code>int</code>型变量或者⼀个数字转化为<code>string</code>类型的变量，当然也可以转<code>double</code>、<code>float</code>等类型的变量：</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp>string s1<span style=color:#666>=</span>to_string(<span style=color:#40a070>123</span>);
+string s2<span style=color:#666>=</span>to_string(<span style=color:#40a070>33.6</span>);
+</code></pre></div><h3 id=44-字符串转换>4.4 字符串转换</h3>
+<ul>
+<li>stoi / stod / stof / stold (long double) / stoll (long long) / stoul / stoull</li>
+<li>可以将字符串<code>string</code>转化为对应的<code>int</code>型、<code>double</code>型变量，这在字符串处理的很多问题中很有帮助～</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#902000>int</span> a<span style=color:#666>=</span>stoi(<span style=color:#4070a0>&#34;123&#34;</span>);
+<span style=color:#902000>int</span> b<span style=color:#666>=</span>stod(<span style=color:#4070a0>&#34;12.43&#34;</span>);
+</code></pre></div>
+</section>
+<div class=post-tags>
+<nav class="nav tags">
+<ul class=tags>
+<li><a href=/tags/c++>c++</a></li>
+<li><a href=/tags/self-tutorial>self-tutorial</a></li>
+</ul>
+</nav>
+</div>
+</article>
+</main>
+<footer>
+<hr><a class=soc href=https://www.linkedin.com/in/yuedongwoo/ title=LinkedIn><i data-feather=linkedin></i></a>|<a class=soc href=https://github.com/lunarwhite title=GitHub><i data-feather=github></i></a>|<a class=soc href title=Twitter><i data-feather=twitter></i></a>|<a class=soc href title=Instagram><i data-feather=instagram></i></a>|<a class=soc href title=Bilibili><i data-feather=tv></i></a>|<a class=soc href=https://www.zhihu.com/people/wydnlz title=Zhihu><i data-feather=link></i></a>|⚡️
+2021 © lunarwhite | <a href=https://github.com/athul/archie>Archie Theme</a> | Built with <a href=https://gohugo.io>Hugo</a>
+</footer>
+<script>feather.replace()</script>
+<script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
+</body>
+</html>

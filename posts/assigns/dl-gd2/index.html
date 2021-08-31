@@ -1,0 +1,191 @@
+<!doctype html><html><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge"><title>Figure out the best aurgments using gradient descent - Ⅱ - lunarwhite</title><link rel=icon type=image/png href=favicon/favicon.ico><meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="summary for in-class assignments in SDU.">
+<meta property="og:image" content>
+<meta property="og:title" content="Figure out the best aurgments using gradient descent - Ⅱ">
+<meta property="og:description" content="summary for in-class assignments in SDU.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lunarwhite.github.io/posts/assigns/dl-gd2/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-04-17T11:38:49+00:00">
+<meta property="article:modified_time" content="2021-04-17T11:38:49+00:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="Figure out the best aurgments using gradient descent - Ⅱ">
+<meta name=twitter:description content="summary for in-class assignments in SDU.">
+<script src=https://lunarwhite.github.iojs/feather.min.js></script>
+<link href=https://lunarwhite.github.io/css/fonts.b685ac6f654695232de7b82a9143a46f9e049c8e3af3a21d9737b01f4be211d1.css rel=stylesheet>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+</head>
+<body>
+<div class=content><header>
+<div class=main>
+<a href=https://lunarwhite.github.io>lunarwhite</a>
+</div>
+<nav>
+<a href=/>Home</a>
+<a href=/posts>Posts</a>
+<a href=/tags>Tags</a>
+<a href=/about>About</a>
+</nav>
+</header>
+<main>
+<article>
+<div class=title>
+<h1 class=title>Figure out the best aurgments using gradient descent - Ⅱ</h1>
+<div class=meta>Posted on Apr 17, 2021</div>
+</div>
+<section class=body>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#60a0b0;font-style:italic># 采用模型y=b+wx，试着用梯度下降算法求出最优参数</span>
+<span style=color:#60a0b0;font-style:italic># 1.1 画出xdata，ydata的散点图</span>
+<span style=color:#60a0b0;font-style:italic># 1.2 画出线性回归的函数图</span>
+<span style=color:#60a0b0;font-style:italic># 2.1 画出b，w变化的图</span>
+<span style=color:#60a0b0;font-style:italic># 1.在作业三基础上实现Adagrad</span>
+<span style=color:#60a0b0;font-style:italic># 2.在作业三基础上，画出损失函数随迭代次数的变化的图</span>
+
+<span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>numpy</span> <span style=color:#007020;font-weight:700>as</span> <span style=color:#0e84b5;font-weight:700>np</span>
+<span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>matplotlib.pyplot</span> <span style=color:#007020;font-weight:700>as</span> <span style=color:#0e84b5;font-weight:700>plt</span>
+
+<span style=color:#60a0b0;font-style:italic># 给定 xdata, ydata, 都为 10 维长的数组</span>
+xdata <span style=color:#666>=</span> np<span style=color:#666>.</span>array([<span style=color:#40a070>8.</span>, <span style=color:#40a070>3.</span>, <span style=color:#40a070>9.</span>, <span style=color:#40a070>7.</span>, <span style=color:#40a070>16.</span>, <span style=color:#40a070>05.</span>, <span style=color:#40a070>3.</span>, <span style=color:#40a070>10.</span>, <span style=color:#40a070>4.</span>, <span style=color:#40a070>6.</span>])
+ydata <span style=color:#666>=</span> np<span style=color:#666>.</span>array([<span style=color:#40a070>30.</span>, <span style=color:#40a070>21.</span>, <span style=color:#40a070>35.</span>, <span style=color:#40a070>27.</span>, <span style=color:#40a070>42.</span>, <span style=color:#40a070>24.</span>, <span style=color:#40a070>10.</span>, <span style=color:#40a070>38.</span>, <span style=color:#40a070>22.</span>, <span style=color:#40a070>25.</span>])
+
+<span style=color:#60a0b0;font-style:italic># init 超参数</span>
+b <span style=color:#666>=</span> <span style=color:#40a070>70</span>  <span style=color:#60a0b0;font-style:italic># 截距</span>
+w <span style=color:#666>=</span> <span style=color:#40a070>8</span>  <span style=color:#60a0b0;font-style:italic># 斜率</span>
+lr <span style=color:#666>=</span> <span style=color:#40a070>0.01</span>  <span style=color:#60a0b0;font-style:italic># 学习率</span>
+iteration <span style=color:#666>=</span> <span style=color:#40a070>10000</span>  <span style=color:#60a0b0;font-style:italic># 迭代次数</span>
+eps <span style=color:#666>=</span> <span style=color:#40a070>1e-10</span>
+
+<span style=color:#60a0b0;font-style:italic># functions</span>
+<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>cost</span>(b, w, xdata, ydata):
+    <span style=color:#007020>sum</span> <span style=color:#666>=</span> <span style=color:#40a070>0</span>
+    <span style=color:#007020;font-weight:700>for</span> i <span style=color:#007020;font-weight:700>in</span> <span style=color:#007020>range</span>(<span style=color:#40a070>0</span>, <span style=color:#007020>len</span>(xdata)):
+        <span style=color:#007020>sum</span> <span style=color:#666>+=</span> (ydata[i] <span style=color:#666>-</span> (w <span style=color:#666>*</span> xdata[i] <span style=color:#666>+</span> b)) <span style=color:#666>**</span> <span style=color:#40a070>2</span>
+    <span style=color:#007020;font-weight:700>return</span> <span style=color:#007020>sum</span> <span style=color:#666>/</span> (<span style=color:#007020>len</span>(xdata) <span style=color:#666>*</span> <span style=color:#40a070>2</span>)
+
+<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>GD</span>(b, w, xdata, ydata, cache_b_w1):
+    m <span style=color:#666>=</span> <span style=color:#007020>float</span>(<span style=color:#007020>len</span>(xdata))
+    loss <span style=color:#666>=</span> np<span style=color:#666>.</span>zeros((iteration, <span style=color:#40a070>1</span>))
+    epoch <span style=color:#666>=</span> np<span style=color:#666>.</span>zeros((iteration, <span style=color:#40a070>1</span>))
+
+    <span style=color:#007020;font-weight:700>for</span> item <span style=color:#007020;font-weight:700>in</span> <span style=color:#007020>range</span>(iteration):
+        b_grad <span style=color:#666>=</span> <span style=color:#40a070>0</span>
+        w_grad <span style=color:#666>=</span> <span style=color:#40a070>0</span>
+
+        <span style=color:#007020;font-weight:700>for</span> i <span style=color:#007020;font-weight:700>in</span> <span style=color:#007020>range</span>(<span style=color:#007020>len</span>(xdata)):
+            b_grad <span style=color:#666>+=</span> (w <span style=color:#666>*</span> xdata[i] <span style=color:#666>+</span> b) <span style=color:#666>-</span> ydata[i]
+            w_grad <span style=color:#666>+=</span> ((w <span style=color:#666>*</span> xdata[i] <span style=color:#666>+</span> b) <span style=color:#666>-</span> ydata[i]) <span style=color:#666>*</span> xdata[i]
+        b_grad <span style=color:#666>=</span> b_grad <span style=color:#666>/</span> m
+        w_grad <span style=color:#666>=</span> w_grad <span style=color:#666>/</span> m
+        b <span style=color:#666>=</span> b <span style=color:#666>-</span> (lr <span style=color:#666>*</span> b_grad)
+        w <span style=color:#666>=</span> w <span style=color:#666>-</span> (lr <span style=color:#666>*</span> w_grad)
+
+        loss[item] <span style=color:#666>=</span> cost(b, w, xdata, ydata)
+        epoch[item] <span style=color:#666>=</span> item
+        cache_b_w1 <span style=color:#666>=</span> np<span style=color:#666>.</span>vstack((cache_b_w1, [b, w]))
+
+    <span style=color:#007020;font-weight:700>return</span> b, w, cache_b_w1, loss, epoch
+
+<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>AdaGrad</span>(b, w, xdata, ydata, lr, cache_b_w2):
+    m <span style=color:#666>=</span> <span style=color:#007020>float</span>(<span style=color:#007020>len</span>(xdata))
+
+    loss <span style=color:#666>=</span> np<span style=color:#666>.</span>zeros((iteration, <span style=color:#40a070>1</span>))
+    epoch <span style=color:#666>=</span> np<span style=color:#666>.</span>zeros((iteration, <span style=color:#40a070>1</span>))
+
+    <span style=color:#007020;font-weight:700>for</span> item <span style=color:#007020;font-weight:700>in</span> <span style=color:#007020>range</span>(iteration):
+        b_grad <span style=color:#666>=</span> <span style=color:#40a070>0</span>
+        w_grad <span style=color:#666>=</span> <span style=color:#40a070>0</span>
+
+        <span style=color:#007020;font-weight:700>for</span> i <span style=color:#007020;font-weight:700>in</span> <span style=color:#007020>range</span>(<span style=color:#007020>len</span>(xdata)):
+            b_grad <span style=color:#666>+=</span> (w <span style=color:#666>*</span> xdata[i] <span style=color:#666>+</span> b) <span style=color:#666>-</span> ydata[i]
+            w_grad <span style=color:#666>+=</span> ((w <span style=color:#666>*</span> xdata[i] <span style=color:#666>+</span> b) <span style=color:#666>-</span> ydata[i]) <span style=color:#666>*</span> xdata[i]
+
+        b_grad <span style=color:#666>=</span> b_grad <span style=color:#666>/</span> m
+        w_grad <span style=color:#666>=</span> w_grad <span style=color:#666>/</span> m
+        e <span style=color:#666>=</span> <span style=color:#40a070>2</span> <span style=color:#666>*</span> np<span style=color:#666>.</span>dot(xdata, np<span style=color:#666>.</span>dot(xdata, w) <span style=color:#666>-</span> ydata) <span style=color:#666>/</span> m
+        tmp <span style=color:#666>=</span> np<span style=color:#666>.</span>square(e)
+        w2 <span style=color:#666>=</span> lr <span style=color:#666>*</span> e <span style=color:#666>/</span> np<span style=color:#666>.</span>sqrt(tmp <span style=color:#666>+</span> eps)
+
+        b <span style=color:#666>=</span> b <span style=color:#666>-</span> (lr <span style=color:#666>*</span> b_grad)
+        w <span style=color:#666>=</span> w <span style=color:#666>-</span> (lr <span style=color:#666>*</span> w_grad)
+        loss[item] <span style=color:#666>=</span> cost(b, w, xdata, ydata)
+        epoch[item] <span style=color:#666>=</span> item
+        cache_b_w2 <span style=color:#666>=</span> np<span style=color:#666>.</span>vstack((cache_b_w2, [b, w]))
+
+    <span style=color:#007020;font-weight:700>return</span> b, w, cache_b_w2, loss, epoch
+
+<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>draw_contour</span>(cache_b_w1, cache_b_w2):
+    row <span style=color:#666>=</span> np<span style=color:#666>.</span>linspace(<span style=color:#666>-</span><span style=color:#40a070>100</span>, <span style=color:#40a070>100</span>, <span style=color:#40a070>200</span>)
+    col <span style=color:#666>=</span> np<span style=color:#666>.</span>linspace(<span style=color:#666>-</span><span style=color:#40a070>10</span>, <span style=color:#40a070>10</span>, <span style=color:#40a070>200</span>)
+
+    B, W <span style=color:#666>=</span> np<span style=color:#666>.</span>meshgrid(row, col)
+    Z <span style=color:#666>=</span> cost(B, W, xdata, ydata)
+
+    plt<span style=color:#666>.</span>figure(<span style=color:#40a070>1</span>)
+    plt<span style=color:#666>.</span>subplot(<span style=color:#40a070>2</span>, <span style=color:#40a070>2</span>, <span style=color:#40a070>2</span>)
+    plt<span style=color:#666>.</span>xlabel(<span style=color:#4070a0>&#39;b&#39;</span>)
+    plt<span style=color:#666>.</span>ylabel(<span style=color:#4070a0>&#39;w&#39;</span>)
+    plt<span style=color:#666>.</span>contourf(B, W, Z, <span style=color:#40a070>100</span>, alpha<span style=color:#666>=</span><span style=color:#40a070>0.8</span>)  <span style=color:#60a0b0;font-style:italic># 填充轮廓</span>
+
+    cache_b1 <span style=color:#666>=</span> cache_b_w1[:, <span style=color:#40a070>0</span>]
+    cache_w1 <span style=color:#666>=</span> cache_b_w1[:, <span style=color:#40a070>1</span>]
+    cache_b2 <span style=color:#666>=</span> cache_b_w2[:, <span style=color:#40a070>0</span>]
+    cache_w2 <span style=color:#666>=</span> cache_b_w2[:, <span style=color:#40a070>1</span>]
+
+    plt<span style=color:#666>.</span>plot(cache_b1, cache_w1)
+    plt<span style=color:#666>.</span>plot(cache_b1, cache_w1, <span style=color:#4070a0>&#39;*&#39;</span>)
+    plt<span style=color:#666>.</span>plot(cache_b2, cache_w2)
+    plt<span style=color:#666>.</span>plot(cache_b2, cache_w2, <span style=color:#4070a0>&#39;-&#39;</span>)
+
+<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>draw_scatter</span>():
+    plt<span style=color:#666>.</span>figure(<span style=color:#40a070>1</span>)
+    plt<span style=color:#666>.</span>subplot(<span style=color:#40a070>2</span>, <span style=color:#40a070>2</span>, <span style=color:#40a070>1</span>)
+    plt<span style=color:#666>.</span>xlabel(<span style=color:#4070a0>&#39;x&#39;</span>)
+    plt<span style=color:#666>.</span>ylabel(<span style=color:#4070a0>&#39;y&#39;</span>)
+    plt<span style=color:#666>.</span>plot(xdata, ydata, <span style=color:#4070a0>&#39;b.&#39;</span>)
+    plt<span style=color:#666>.</span>plot(xdata, w <span style=color:#666>*</span> xdata <span style=color:#666>+</span> b, <span style=color:#4070a0>&#39;r&#39;</span>)
+
+<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>draw_loss</span>(epoch1, loss1, epoch2, loss2):
+    plt<span style=color:#666>.</span>figure(<span style=color:#40a070>1</span>)
+    plt<span style=color:#666>.</span>subplot(<span style=color:#40a070>2</span>, <span style=color:#40a070>2</span>, <span style=color:#40a070>3</span>)
+    plt<span style=color:#666>.</span>xlabel(<span style=color:#4070a0>&#39;epoch&#39;</span>,)
+    plt<span style=color:#666>.</span>ylabel(<span style=color:#4070a0>&#39;Loss&#39;</span>)
+    plt<span style=color:#666>.</span>plot(epoch1, loss1, <span style=color:#4070a0>&#39;kv-&#39;</span>, label<span style=color:#666>=</span><span style=color:#4070a0>&#39;GD&#39;</span>)
+    plt<span style=color:#666>.</span>plot(epoch2, loss2, <span style=color:#4070a0>&#39;g.-&#39;</span>, label<span style=color:#666>=</span><span style=color:#4070a0>&#39;AdaGrad&#39;</span>)
+    plt<span style=color:#666>.</span>legend()
+
+<span style=color:#007020;font-weight:700>if</span> __name__ <span style=color:#666>==</span> <span style=color:#4070a0>&#39;__main__&#39;</span>:
+    cache_b_w1 <span style=color:#666>=</span> [[b, w]]
+    cache_b_w2 <span style=color:#666>=</span> [[b, w]]
+
+    <span style=color:#60a0b0;font-style:italic># gradient descent</span>
+    b, w, cache_b_w1, loss1, epoch1 <span style=color:#666>=</span> GD(b, w, xdata, ydata, cache_b_w1)
+    b, w, cache_b_w2, loss2, epoch2 <span style=color:#666>=</span> AdaGrad(b, w, xdata, ydata, lr, cache_b_w2)
+
+    <span style=color:#60a0b0;font-style:italic># draw plot</span>
+    plt<span style=color:#666>.</span>figure(figsize<span style=color:#666>=</span>(<span style=color:#40a070>8</span>, <span style=color:#40a070>6</span>))
+    draw_contour(cache_b_w1, cache_b_w2)
+    draw_scatter()
+    draw_loss(epoch1, loss1, epoch2, loss2)
+    plt<span style=color:#666>.</span>show()
+
+</code></pre></div>
+</section>
+<div class=post-tags>
+<nav class="nav tags">
+<ul class=tags>
+<li><a href=/tags/assginment>assginment</a></li>
+<li><a href=/tags/deep-learning>deep-learning</a></li>
+</ul>
+</nav>
+</div>
+</article>
+</main>
+<footer>
+<hr><a class=soc href=https://www.linkedin.com/in/yuedongwoo/ title=LinkedIn><i data-feather=linkedin></i></a>|<a class=soc href=https://github.com/lunarwhite title=GitHub><i data-feather=github></i></a>|<a class=soc href title=Twitter><i data-feather=twitter></i></a>|<a class=soc href title=Instagram><i data-feather=instagram></i></a>|<a class=soc href title=Bilibili><i data-feather=tv></i></a>|<a class=soc href=https://www.zhihu.com/people/wydnlz title=Zhihu><i data-feather=link></i></a>|⚡️
+2021 © lunarwhite | <a href=https://github.com/athul/archie>Archie Theme</a> | Built with <a href=https://gohugo.io>Hugo</a>
+</footer>
+<script>feather.replace()</script>
+<script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
+</body>
+</html>

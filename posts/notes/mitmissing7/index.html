@@ -1,0 +1,103 @@
+<!doctype html><html><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge"><title>[MIT-missing] 07 Potpourri, Q&A - lunarwhite</title><link rel=icon type=image/png href=favicon/favicon.ico><meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="Notes for awesome courses offered by the top universities.">
+<meta property="og:image" content>
+<meta property="og:title" content="[MIT-missing] 07 Potpourri, Q&A">
+<meta property="og:description" content="Notes for awesome courses offered by the top universities.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lunarwhite.github.io/posts/notes/mitmissing7/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-08-03T19:41:22+00:00">
+<meta property="article:modified_time" content="2021-08-03T19:41:22+00:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="[MIT-missing] 07 Potpourri, Q&A">
+<meta name=twitter:description content="Notes for awesome courses offered by the top universities.">
+<script src=https://lunarwhite.github.iojs/feather.min.js></script>
+<link href=https://lunarwhite.github.io/css/fonts.b685ac6f654695232de7b82a9143a46f9e049c8e3af3a21d9737b01f4be211d1.css rel=stylesheet>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+</head>
+<body>
+<div class=content><header>
+<div class=main>
+<a href=https://lunarwhite.github.io>lunarwhite</a>
+</div>
+<nav>
+<a href=/>Home</a>
+<a href=/posts>Posts</a>
+<a href=/tags>Tags</a>
+<a href=/about>About</a>
+</nav>
+</header>
+<main>
+<article>
+<div class=title>
+<h1 class=title>[MIT-missing] 07 Potpourri, Q&A</h1>
+<div class=meta>Posted on Aug 3, 2021</div>
+</div>
+<section class=body>
+<blockquote>
+<p><a href=https://missing.csail.mit.edu/2020/potpourri/>Potpourri - missing-semester</a></p>
+<p><a href=https://missing.csail.mit.edu/2020/qa/>Q&A - missing-semester</a></p>
+</blockquote>
+<h2 id=1-daemons>1 Daemons</h2>
+<ul>
+<li>Most computers have a series of processes that are always running in the background rather than waiting for a user to launch them and interact with them. These processes are called daemons and the programs that run as daemons often end with a <code>d</code> to indicate so.</li>
+<li>For example <code>sshd</code>, the SSH daemon, is the program responsible for listening to incoming SSH requests and checking that the remote user has the necessary credentials to log in.</li>
+<li>In Linux, <code>systemd</code> (the system daemon) is the most common solution for running and setting up daemon processes. You can run <code>systemctl status</code> to list the current running daemons. Most of them might sound unfamiliar but are responsible for core parts of the system such as managing the network, solving DNS queries or displaying the graphical interface for the system.</li>
+<li>Systemd can be interacted with the <code>systemctl</code> command in order to <code>enable</code>, <code>disable</code>, <code>start</code>, <code>stop</code>, <code>restart</code> or check the <code>status</code> of services (those are the <code>systemctl</code> commands).</li>
+</ul>
+<h2 id=2-vpns>2 VPNs</h2>
+<ul>
+<li>A VPN, in the best case, is <em>really</em> just a way for you to change your internet service provider as far as the internet is concerned. All your traffic will look like it’s coming from the VPN provider instead of your “real” location, and the network you are connected to will only see encrypted traffic.</li>
+<li>While that may seem attractive, keep in mind that when you use a VPN, all you are really doing is shifting your trust from you current ISP to the VPN hosting company. Whatever your ISP <em>could</em> see, the VPN provider now sees <em>instead</em>. If you trust them <em>more</em> than your ISP, that is a win.</li>
+<li>You should also know that these days, much of your traffic, at least of a sensitive nature, is <em>already</em> encrypted through HTTPS or TLS more generally. In that case, it usually matters little whether you are on a “bad” network or not – the network operator will only learn what servers you talk to, but not anything about the data that is exchanged.</li>
+<li>Notice that I said “in the best case” above. It is not unheard of for VPN providers to accidentally misconfigure their software such that the encryption is either weak or entirely disabled. Some VPN providers are malicious (or at the very least opportunist), and will log all your traffic, and possibly sell information about it to third parties. Choosing a bad VPN provider is often worse than not using one in the first place.</li>
+<li>Also, if you’re going to roll your own, give <a href=https://www.wireguard.com/>WireGuard</a> a look.</li>
+</ul>
+<h2 id=3-docker-vagrant-vms-cloud-openstack>3 Docker, Vagrant, VMs, Cloud, OpenStack</h2>
+<ul>
+<li><a href=https://en.wikipedia.org/wiki/Virtual_machine>Virtual machines</a> and similar tools like containers let you emulate a whole computer system, including the operating system. This can be useful for creating an isolated environment for testing, development, or exploration (e.g. running potentially malicious code).</li>
+<li><a href=https://www.vagrantup.com/>Vagrant</a> is a tool that lets you describe machine configurations (operating system, services, packages, etc.) in code, and then instantiate VMs with a simple <code>vagrant up</code>. <a href=https://www.docker.com/>Docker</a> is conceptually similar but it uses containers instead.</li>
+</ul>
+<h2 id=4-filesystem-hierarchy-standard>4 Filesystem, Hierarchy Standard</h2>
+<ul>
+<li><code>/bin</code> - Essential command binaries</li>
+<li><code>/sbin</code> - Essential system binaries, usually to be run by root</li>
+<li><code>/dev</code> - Device files, special files that often are interfaces to hardware devices</li>
+<li><code>/etc</code> - Host-specific system-wide configuration files</li>
+<li><code>/home</code> - Home directories for users in the system</li>
+<li><code>/lib</code> - Common libraries for system programs</li>
+<li><code>/opt</code> - Optional application software</li>
+<li><code>/sys</code> - Contains information and configuration for the system (covered in the <a href=https://missing.csail.mit.edu/2020/course-shell/>first lecture</a>)</li>
+<li><code>/tmp</code> - Temporary files (also <code>/var/tmp</code>). Usually deleted between reboots.</li>
+<li><code>/usr/</code> - Read only user data
+<ul>
+<li><code>/usr/bin</code> - Non-essential command binaries</li>
+<li><code>/usr/sbin</code> - Non-essential system binaries, usually to be run by root</li>
+<li><code>/usr/local/bin</code> - Binaries for user compiled programs</li>
+</ul>
+</li>
+<li><code>/var</code> - Variable files like logs or caches</li>
+</ul>
+</section>
+<div class=post-tags>
+<nav class="nav tags">
+<ul class=tags>
+<li><a href=/tags/awesome-course>awesome-course</a></li>
+<li><a href=/tags/daemons>daemons</a></li>
+<li><a href=/tags/proxy/vpns>proxy/vpns</a></li>
+<li><a href=/tags/docker/vms>docker/vms</a></li>
+<li><a href=/tags/file-system>file-system</a></li>
+</ul>
+</nav>
+</div>
+</article>
+</main>
+<footer>
+<hr><a class=soc href=https://www.linkedin.com/in/yuedongwoo/ title=LinkedIn><i data-feather=linkedin></i></a>|<a class=soc href=https://github.com/lunarwhite title=GitHub><i data-feather=github></i></a>|<a class=soc href title=Twitter><i data-feather=twitter></i></a>|<a class=soc href title=Instagram><i data-feather=instagram></i></a>|<a class=soc href title=Bilibili><i data-feather=tv></i></a>|<a class=soc href=https://www.zhihu.com/people/wydnlz title=Zhihu><i data-feather=link></i></a>|⚡️
+2021 © lunarwhite | <a href=https://github.com/athul/archie>Archie Theme</a> | Built with <a href=https://gohugo.io>Hugo</a>
+</footer>
+<script>feather.replace()</script>
+<script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
+</body>
+</html>

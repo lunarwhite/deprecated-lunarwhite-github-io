@@ -1,0 +1,252 @@
+<!doctype html><html><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge"><title>Classify food images using CNN with Keras - lunarwhite</title><link rel=icon type=image/png href=favicon/favicon.ico><meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="summary for in-class assignments in SDU.">
+<meta property="og:image" content>
+<meta property="og:title" content="Classify food images using CNN with Keras">
+<meta property="og:description" content="summary for in-class assignments in SDU.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lunarwhite.github.io/posts/assigns/dl-food-classify/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-06-03T11:38:49+00:00">
+<meta property="article:modified_time" content="2021-06-03T11:38:49+00:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="Classify food images using CNN with Keras">
+<meta name=twitter:description content="summary for in-class assignments in SDU.">
+<script src=https://lunarwhite.github.iojs/feather.min.js></script>
+<link href=https://lunarwhite.github.io/css/fonts.b685ac6f654695232de7b82a9143a46f9e049c8e3af3a21d9737b01f4be211d1.css rel=stylesheet>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+</head>
+<body>
+<div class=content><header>
+<div class=main>
+<a href=https://lunarwhite.github.io>lunarwhite</a>
+</div>
+<nav>
+<a href=/>Home</a>
+<a href=/posts>Posts</a>
+<a href=/tags>Tags</a>
+<a href=/about>About</a>
+</nav>
+</header>
+<main>
+<article>
+<div class=title>
+<h1 class=title>Classify food images using CNN with Keras</h1>
+<div class=meta>Posted on Jun 3, 2021</div>
+</div>
+<section class=body>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#60a0b0;font-style:italic># to be continue:</span>
+<span style=color:#60a0b0;font-style:italic># 1. resize smaller</span>
+<span style=color:#60a0b0;font-style:italic># 2. 归一化</span>
+<span style=color:#60a0b0;font-style:italic># 3. 期望acc 40-70%</span>
+
+<span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>os</span>
+<span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>cv2</span>
+<span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>matplotlib.pyplot</span> <span style=color:#007020;font-weight:700>as</span> <span style=color:#0e84b5;font-weight:700>plt</span>
+<span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>keras</span>
+<span style=color:#007020;font-weight:700>from</span> <span style=color:#0e84b5;font-weight:700>keras_preprocessing.image</span> <span style=color:#007020;font-weight:700>import</span> ImageDataGenerator
+<span style=color:#007020;font-weight:700>from</span> <span style=color:#0e84b5;font-weight:700>keras.models</span> <span style=color:#007020;font-weight:700>import</span> Sequential
+<span style=color:#007020;font-weight:700>from</span> <span style=color:#0e84b5;font-weight:700>keras.layers</span> <span style=color:#007020;font-weight:700>import</span> <span style=color:#666>*</span>
+<span style=color:#007020;font-weight:700>from</span> <span style=color:#0e84b5;font-weight:700>keras.optimizers</span> <span style=color:#007020;font-weight:700>import</span> <span style=color:#666>*</span>
+<span style=color:#007020;font-weight:700>from</span> <span style=color:#0e84b5;font-weight:700>keras.utils</span> <span style=color:#007020;font-weight:700>import</span> plot_model
+
+workspace_dir <span style=color:#666>=</span> <span style=color:#4070a0>&#39;../res/food-11&#39;</span>
+os<span style=color:#666>.</span>environ[<span style=color:#4070a0>&#39;TF_CPP_MIN_LOG_LEVEL&#39;</span>] <span style=color:#666>=</span> <span style=color:#4070a0>&#39;2&#39;</span>
+
+<span style=color:#60a0b0;font-style:italic># init args</span>
+image_dim <span style=color:#666>=</span> <span style=color:#40a070>128</span>
+model_loss <span style=color:#666>=</span> <span style=color:#4070a0>&#39;categorical_crossentropy&#39;</span>
+model_optimizer <span style=color:#666>=</span> Adam()
+model_batch_size <span style=color:#666>=</span> <span style=color:#40a070>128</span>
+model_dropout <span style=color:#666>=</span> <span style=color:#40a070>0.2</span>
+model_epoch <span style=color:#666>=</span> <span style=color:#40a070>50</span>
+
+<span style=color:#60a0b0;font-style:italic># 1 加载数据</span>
+<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>load_data</span>(path, label):
+    <span style=color:#60a0b0;font-style:italic># label标记需不需要传y值：训练集和验证集需要y值-true，测试集不需要-false</span>
+
+    <span style=color:#60a0b0;font-style:italic># listdir得到该路径下所有图片，sorted用于排序</span>
+    image_dir <span style=color:#666>=</span> <span style=color:#007020>sorted</span>(os<span style=color:#666>.</span>listdir(path))
+
+    <span style=color:#60a0b0;font-style:italic># 将数据类型转为int，不然容易出现内存不够的情况</span>
+    x <span style=color:#666>=</span> np<span style=color:#666>.</span>zeros((<span style=color:#007020>len</span>(image_dir), image_dim, image_dim, <span style=color:#40a070>3</span>), dtype<span style=color:#666>=</span>np<span style=color:#666>.</span>uint8)
+    y <span style=color:#666>=</span> np<span style=color:#666>.</span>zeros((<span style=color:#007020>len</span>(image_dir)), dtype<span style=color:#666>=</span>np<span style=color:#666>.</span>uint8)
+
+    <span style=color:#60a0b0;font-style:italic># enumerate得到索引i和文件名file</span>
+    <span style=color:#007020;font-weight:700>for</span> i, file <span style=color:#007020;font-weight:700>in</span> <span style=color:#007020>enumerate</span>(image_dir):
+        img <span style=color:#666>=</span> cv2<span style=color:#666>.</span>imread(os<span style=color:#666>.</span>path<span style=color:#666>.</span>join(path, file))
+
+        <span style=color:#60a0b0;font-style:italic># 利用cv2.resize()函数将不同大小的图片统一为128(高)*128(宽)</span>
+        x[i, :, :] <span style=color:#666>=</span> cv2<span style=color:#666>.</span>resize(img, (image_dim, image_dim))
+        <span style=color:#007020;font-weight:700>if</span> label:
+            <span style=color:#60a0b0;font-style:italic># 取出类别</span>
+            y[i] <span style=color:#666>=</span> <span style=color:#007020>int</span>(file<span style=color:#666>.</span>split(<span style=color:#4070a0>&#34;_&#34;</span>)[<span style=color:#40a070>0</span>])
+    <span style=color:#007020;font-weight:700>if</span> label:
+        <span style=color:#007020;font-weight:700>return</span> x, y
+    <span style=color:#007020;font-weight:700>else</span>:
+        <span style=color:#007020;font-weight:700>return</span> x
+
+x_train, y_train <span style=color:#666>=</span> load_data(os<span style=color:#666>.</span>path<span style=color:#666>.</span>join(workspace_dir, <span style=color:#4070a0>&#34;training&#34;</span>), <span style=color:#007020;font-weight:700>True</span>)
+x_val, y_val <span style=color:#666>=</span> load_data(os<span style=color:#666>.</span>path<span style=color:#666>.</span>join(workspace_dir, <span style=color:#4070a0>&#34;validation&#34;</span>), <span style=color:#007020;font-weight:700>True</span>)
+x_test <span style=color:#666>=</span> load_data(os<span style=color:#666>.</span>path<span style=color:#666>.</span>join(workspace_dir, <span style=color:#4070a0>&#34;testing&#34;</span>), <span style=color:#007020;font-weight:700>False</span>)
+
+<span style=color:#60a0b0;font-style:italic># # 2-1 观察数据-大小</span>
+<span style=color:#60a0b0;font-style:italic># print(&#34;[data-size]&#34;)</span>
+<span style=color:#60a0b0;font-style:italic># print(&#34;training: {}&#34;.format(len(x_train)))</span>
+<span style=color:#60a0b0;font-style:italic># print(&#34;validation: {}&#34;.format(len(x_val)))</span>
+<span style=color:#60a0b0;font-style:italic># print(&#34;testing: {}&#34;.format(len(x_test)))</span>
+<span style=color:#60a0b0;font-style:italic>#</span>
+<span style=color:#60a0b0;font-style:italic># # 2-2 观察数据-图像</span>
+<span style=color:#60a0b0;font-style:italic># plt.figure(figsize=(11, 4))</span>
+<span style=color:#60a0b0;font-style:italic># plt.title(&#39;First 44 image in training&#39;)</span>
+<span style=color:#60a0b0;font-style:italic>#</span>
+<span style=color:#60a0b0;font-style:italic># row, col = 11, 4</span>
+<span style=color:#60a0b0;font-style:italic># for i in range(row*col):</span>
+<span style=color:#60a0b0;font-style:italic>#     plt.subplot(col, row, i+1)</span>
+<span style=color:#60a0b0;font-style:italic>#     img = cv2.cvtColor(x_train[i], cv2.COLOR_BGR2RGB)</span>
+<span style=color:#60a0b0;font-style:italic>#     plt.imshow(img)</span>
+<span style=color:#60a0b0;font-style:italic>#     plt.xticks([])</span>
+<span style=color:#60a0b0;font-style:italic>#     plt.yticks([])</span>
+<span style=color:#60a0b0;font-style:italic>#     plt.axis(&#39;off&#39;)</span>
+<span style=color:#60a0b0;font-style:italic># plt.show()</span>
+<span style=color:#60a0b0;font-style:italic>#</span>
+<span style=color:#60a0b0;font-style:italic># # 2-3 观察数据-分布</span>
+<span style=color:#60a0b0;font-style:italic># def count_category(folder):</span>
+<span style=color:#60a0b0;font-style:italic>#     path = os.path.join(workspace_dir, folder)</span>
+<span style=color:#60a0b0;font-style:italic>#     cnt = [0 for i in range(11)]</span>
+<span style=color:#60a0b0;font-style:italic>#</span>
+<span style=color:#60a0b0;font-style:italic>#     for filename in os.listdir(path):</span>
+<span style=color:#60a0b0;font-style:italic>#         root, ext = os.path.splitext(filename)</span>
+<span style=color:#60a0b0;font-style:italic>#         for i in range(11):</span>
+<span style=color:#60a0b0;font-style:italic>#             if root.startswith(str(i)+&#39;_&#39;):</span>
+<span style=color:#60a0b0;font-style:italic>#                 cnt[i] += 1</span>
+<span style=color:#60a0b0;font-style:italic>#     return cnt</span>
+<span style=color:#60a0b0;font-style:italic>#</span>
+<span style=color:#60a0b0;font-style:italic># cnt_train = count_category(&#34;training&#34;)</span>
+<span style=color:#60a0b0;font-style:italic># cnt_val = count_category(&#34;validation&#34;)</span>
+<span style=color:#60a0b0;font-style:italic># width = 0.4</span>
+<span style=color:#60a0b0;font-style:italic># r1 = range(len(cnt_train))</span>
+<span style=color:#60a0b0;font-style:italic># r2 = [x + width for x in r1]</span>
+<span style=color:#60a0b0;font-style:italic>#</span>
+<span style=color:#60a0b0;font-style:italic># plt.figure(figsize=(12, 6))</span>
+<span style=color:#60a0b0;font-style:italic># plt.xlabel(&#39;category&#39;)</span>
+<span style=color:#60a0b0;font-style:italic># plt.ylabel(&#39;count&#39;)</span>
+<span style=color:#60a0b0;font-style:italic># plt.bar(r1, cnt_train, width=width, label=&#39;training&#39;)</span>
+<span style=color:#60a0b0;font-style:italic># plt.bar(r2, cnt_val, width=width, label=&#39;validation&#39;)</span>
+<span style=color:#60a0b0;font-style:italic># plt.legend()</span>
+<span style=color:#60a0b0;font-style:italic># plt.show()</span>
+
+<span style=color:#60a0b0;font-style:italic># 数据预处理-归一化（重要）</span>
+x_train <span style=color:#666>=</span> x_train<span style=color:#666>.</span>astype(<span style=color:#4070a0>&#39;float32&#39;</span>)
+x_val <span style=color:#666>=</span> x_val<span style=color:#666>.</span>astype(<span style=color:#4070a0>&#39;float32&#39;</span>)
+x_train <span style=color:#666>=</span> x_train<span style=color:#666>/</span><span style=color:#40a070>255</span>
+x_val <span style=color:#666>=</span> x_val<span style=color:#666>/</span><span style=color:#40a070>255</span>
+
+<span style=color:#60a0b0;font-style:italic># 数据预处理-one-hot</span>
+y_train <span style=color:#666>=</span> keras<span style=color:#666>.</span>utils<span style=color:#666>.</span>to_categorical(y_train, <span style=color:#40a070>11</span>)
+y_val <span style=color:#666>=</span> keras<span style=color:#666>.</span>utils<span style=color:#666>.</span>to_categorical(y_val, <span style=color:#40a070>11</span>)
+
+<span style=color:#60a0b0;font-style:italic># 通过随机旋转、水平翻转图片来进行数据增强</span>
+data_gen <span style=color:#666>=</span> ImageDataGenerator(
+    <span style=color:#60a0b0;font-style:italic># zca_whitening=True,</span>
+    featurewise_center<span style=color:#666>=</span><span style=color:#007020;font-weight:700>True</span>,  <span style=color:#60a0b0;font-style:italic># 将输入数据的均值设置为 0，逐特征进行</span>
+    featurewise_std_normalization<span style=color:#666>=</span><span style=color:#007020;font-weight:700>True</span>,  <span style=color:#60a0b0;font-style:italic># 将输入除以数据标准差，逐特征进行</span>
+    rotation_range<span style=color:#666>=</span><span style=color:#40a070>20</span>,  <span style=color:#60a0b0;font-style:italic># 随机旋转的度数范围</span>
+    width_shift_range<span style=color:#666>=</span><span style=color:#40a070>0.2</span>,
+    height_shift_range<span style=color:#666>=</span><span style=color:#40a070>0.2</span>,
+    horizontal_flip<span style=color:#666>=</span><span style=color:#007020;font-weight:700>True</span>
+)
+data_gen<span style=color:#666>.</span>fit(x_train)
+
+<span style=color:#60a0b0;font-style:italic># 搭建神经网络</span>
+model <span style=color:#666>=</span> Sequential()
+model<span style=color:#666>.</span>add(Conv2D(<span style=color:#40a070>32</span>, (<span style=color:#40a070>3</span>, <span style=color:#40a070>3</span>), strides<span style=color:#666>=</span>(<span style=color:#40a070>1</span>, <span style=color:#40a070>1</span>), padding<span style=color:#666>=</span><span style=color:#4070a0>&#39;same&#39;</span>, activation<span style=color:#666>=</span><span style=color:#4070a0>&#39;relu&#39;</span>, input_shape<span style=color:#666>=</span>(image_dim, image_dim, <span style=color:#40a070>3</span>)))
+model<span style=color:#666>.</span>add(MaxPooling2D(pool_size<span style=color:#666>=</span>(<span style=color:#40a070>2</span>, <span style=color:#40a070>2</span>), strides<span style=color:#666>=</span>(<span style=color:#40a070>2</span>, <span style=color:#40a070>2</span>)))
+model<span style=color:#666>.</span>add(Dropout(model_dropout))
+
+model<span style=color:#666>.</span>add(Conv2D(<span style=color:#40a070>64</span>, (<span style=color:#40a070>3</span>, <span style=color:#40a070>3</span>), strides<span style=color:#666>=</span>(<span style=color:#40a070>1</span>, <span style=color:#40a070>1</span>), padding<span style=color:#666>=</span><span style=color:#4070a0>&#39;same&#39;</span>, activation<span style=color:#666>=</span><span style=color:#4070a0>&#39;relu&#39;</span>))
+model<span style=color:#666>.</span>add(MaxPooling2D(pool_size<span style=color:#666>=</span>(<span style=color:#40a070>2</span>, <span style=color:#40a070>2</span>), strides<span style=color:#666>=</span>(<span style=color:#40a070>2</span>, <span style=color:#40a070>2</span>)))
+model<span style=color:#666>.</span>add(Dropout(model_dropout))
+
+model<span style=color:#666>.</span>add(Conv2D(<span style=color:#40a070>128</span>, (<span style=color:#40a070>3</span>, <span style=color:#40a070>3</span>), strides<span style=color:#666>=</span>(<span style=color:#40a070>1</span>, <span style=color:#40a070>1</span>), padding<span style=color:#666>=</span><span style=color:#4070a0>&#39;same&#39;</span>, activation<span style=color:#666>=</span><span style=color:#4070a0>&#39;relu&#39;</span>))
+model<span style=color:#666>.</span>add(MaxPooling2D(pool_size<span style=color:#666>=</span>(<span style=color:#40a070>2</span>, <span style=color:#40a070>2</span>), strides<span style=color:#666>=</span>(<span style=color:#40a070>2</span>, <span style=color:#40a070>2</span>)))
+model<span style=color:#666>.</span>add(Dropout(model_dropout))
+
+model<span style=color:#666>.</span>add(Conv2D(<span style=color:#40a070>128</span>, (<span style=color:#40a070>3</span>, <span style=color:#40a070>3</span>), strides<span style=color:#666>=</span>(<span style=color:#40a070>1</span>, <span style=color:#40a070>1</span>), padding<span style=color:#666>=</span><span style=color:#4070a0>&#39;same&#39;</span>, activation<span style=color:#666>=</span><span style=color:#4070a0>&#39;relu&#39;</span>))
+model<span style=color:#666>.</span>add(MaxPooling2D(pool_size<span style=color:#666>=</span>(<span style=color:#40a070>2</span>, <span style=color:#40a070>2</span>), strides<span style=color:#666>=</span>(<span style=color:#40a070>2</span>, <span style=color:#40a070>2</span>)))
+model<span style=color:#666>.</span>add(Dropout(model_dropout))
+
+model<span style=color:#666>.</span>add(Flatten())
+model<span style=color:#666>.</span>add(Dense(<span style=color:#40a070>128</span>, activation<span style=color:#666>=</span><span style=color:#4070a0>&#39;relu&#39;</span>))
+model<span style=color:#666>.</span>add(Dense(<span style=color:#40a070>11</span>, activation<span style=color:#666>=</span><span style=color:#4070a0>&#39;softmax&#39;</span>))
+
+model<span style=color:#666>.</span>compile(loss<span style=color:#666>=</span>model_loss, optimizer<span style=color:#666>=</span>model_optimizer, metrics<span style=color:#666>=</span>[<span style=color:#4070a0>&#39;accuracy&#39;</span>])
+
+<span style=color:#60a0b0;font-style:italic># 使用实时数据增益的批数据对模型进行拟合：</span>
+history <span style=color:#666>=</span> model<span style=color:#666>.</span>fit_generator(
+    data_gen<span style=color:#666>.</span>flow(x_train, y_train, batch_size<span style=color:#666>=</span>model_batch_size),
+    steps_per_epoch<span style=color:#666>=</span><span style=color:#007020>len</span>(x_train)<span style=color:#666>/</span>model_batch_size,
+    shuffle<span style=color:#666>=</span><span style=color:#007020;font-weight:700>True</span>,
+    validation_data<span style=color:#666>=</span>(x_val, y_val),
+    epochs<span style=color:#666>=</span>model_epoch
+    <span style=color:#60a0b0;font-style:italic># verbose=0</span>
+)
+
+<span style=color:#60a0b0;font-style:italic># 模型可视化-历史</span>
+plt<span style=color:#666>.</span>figure(figsize<span style=color:#666>=</span>(<span style=color:#40a070>11</span>, <span style=color:#40a070>4</span>))
+
+plt<span style=color:#666>.</span>figure(<span style=color:#40a070>1</span>)
+plt<span style=color:#666>.</span>subplot(<span style=color:#40a070>1</span>, <span style=color:#40a070>2</span>, <span style=color:#40a070>1</span>)
+plt<span style=color:#666>.</span>plot(history<span style=color:#666>.</span>history[<span style=color:#4070a0>&#39;accuracy&#39;</span>])
+plt<span style=color:#666>.</span>plot(history<span style=color:#666>.</span>history[<span style=color:#4070a0>&#39;val_accuracy&#39;</span>])
+plt<span style=color:#666>.</span>title(<span style=color:#4070a0>&#39;Model accuracy&#39;</span>)
+plt<span style=color:#666>.</span>ylabel(<span style=color:#4070a0>&#39;Accuracy&#39;</span>)
+plt<span style=color:#666>.</span>xlabel(<span style=color:#4070a0>&#39;Epoch&#39;</span>)
+plt<span style=color:#666>.</span>legend([<span style=color:#4070a0>&#39;Training&#39;</span>, <span style=color:#4070a0>&#39;validation&#39;</span>])
+
+plt<span style=color:#666>.</span>figure(<span style=color:#40a070>1</span>)
+plt<span style=color:#666>.</span>subplot(<span style=color:#40a070>1</span>, <span style=color:#40a070>2</span>, <span style=color:#40a070>2</span>)
+plt<span style=color:#666>.</span>plot(history<span style=color:#666>.</span>history[<span style=color:#4070a0>&#39;loss&#39;</span>])
+plt<span style=color:#666>.</span>plot(history<span style=color:#666>.</span>history[<span style=color:#4070a0>&#39;val_loss&#39;</span>])
+plt<span style=color:#666>.</span>title(<span style=color:#4070a0>&#39;Model loss&#39;</span>)
+plt<span style=color:#666>.</span>ylabel(<span style=color:#4070a0>&#39;Loss&#39;</span>)
+plt<span style=color:#666>.</span>xlabel(<span style=color:#4070a0>&#39;Epoch&#39;</span>)
+plt<span style=color:#666>.</span>legend([<span style=color:#4070a0>&#39;Training&#39;</span>, <span style=color:#4070a0>&#39;validation&#39;</span>])
+
+plt<span style=color:#666>.</span>show()
+
+<span style=color:#60a0b0;font-style:italic># 模型可视化-cnn</span>
+plot_model(model, show_shapes<span style=color:#666>=</span><span style=color:#007020;font-weight:700>True</span>, show_layer_names<span style=color:#666>=</span><span style=color:#007020;font-weight:700>True</span>, to_file<span style=color:#666>=</span><span style=color:#4070a0>&#39;model.png&#39;</span>)
+
+<span style=color:#60a0b0;font-style:italic># 模型评估-准确率</span>
+train_result <span style=color:#666>=</span> model<span style=color:#666>.</span>evaluate(x_train, y_train, verbose<span style=color:#666>=</span><span style=color:#40a070>0</span>)
+test_result <span style=color:#666>=</span> model<span style=color:#666>.</span>evaluate(x_val, y_val, verbose<span style=color:#666>=</span><span style=color:#40a070>0</span>)
+<span style=color:#007020>print</span>(<span style=color:#4070a0>&#39;Training Accuracy:&#39;</span>, train_result[<span style=color:#40a070>1</span>])
+<span style=color:#007020>print</span>(<span style=color:#4070a0>&#39;Validation Accuracy:&#39;</span>, test_result[<span style=color:#40a070>1</span>])
+<span style=color:#007020>print</span>(<span style=color:#4070a0>&#39;Training Loss:&#39;</span>, train_result[<span style=color:#40a070>0</span>])
+<span style=color:#007020>print</span>(<span style=color:#4070a0>&#39;Validation Loss:&#39;</span>, test_result[<span style=color:#40a070>0</span>])
+
+<span style=color:#60a0b0;font-style:italic># # 预测结果</span>
+<span style=color:#60a0b0;font-style:italic># prediction=model.predict_classes(x_test)</span>
+<span style=color:#60a0b0;font-style:italic># prediction[:11]</span>
+
+</code></pre></div>
+</section>
+<div class=post-tags>
+<nav class="nav tags">
+<ul class=tags>
+<li><a href=/tags/assginment>assginment</a></li>
+<li><a href=/tags/deep-learning>deep-learning</a></li>
+</ul>
+</nav>
+</div>
+</article>
+</main>
+<footer>
+<hr><a class=soc href=https://www.linkedin.com/in/yuedongwoo/ title=LinkedIn><i data-feather=linkedin></i></a>|<a class=soc href=https://github.com/lunarwhite title=GitHub><i data-feather=github></i></a>|<a class=soc href title=Twitter><i data-feather=twitter></i></a>|<a class=soc href title=Instagram><i data-feather=instagram></i></a>|<a class=soc href title=Bilibili><i data-feather=tv></i></a>|<a class=soc href=https://www.zhihu.com/people/wydnlz title=Zhihu><i data-feather=link></i></a>|⚡️
+2021 © lunarwhite | <a href=https://github.com/athul/archie>Archie Theme</a> | Built with <a href=https://gohugo.io>Hugo</a>
+</footer>
+<script>feather.replace()</script>
+<script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
+</body>
+</html>

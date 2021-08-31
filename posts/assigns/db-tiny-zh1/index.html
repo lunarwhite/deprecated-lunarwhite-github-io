@@ -1,0 +1,773 @@
+<!doctype html><html><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge"><title>Tiny zhihu-like web - design doc - lunarwhite</title><link rel=icon type=image/png href=favicon/favicon.ico><meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="summary for in-class assignments in SDU.">
+<meta property="og:image" content>
+<meta property="og:title" content="Tiny zhihu-like web - design doc">
+<meta property="og:description" content="summary for in-class assignments in SDU.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lunarwhite.github.io/posts/assigns/db-tiny-zh1/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-05-03T11:38:49+00:00">
+<meta property="article:modified_time" content="2021-05-03T11:38:49+00:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="Tiny zhihu-like web - design doc">
+<meta name=twitter:description content="summary for in-class assignments in SDU.">
+<script src=https://lunarwhite.github.iojs/feather.min.js></script>
+<link href=https://lunarwhite.github.io/css/fonts.b685ac6f654695232de7b82a9143a46f9e049c8e3af3a21d9737b01f4be211d1.css rel=stylesheet>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+</head>
+<body>
+<div class=content><header>
+<div class=main>
+<a href=https://lunarwhite.github.io>lunarwhite</a>
+</div>
+<nav>
+<a href=/>Home</a>
+<a href=/posts>Posts</a>
+<a href=/tags>Tags</a>
+<a href=/about>About</a>
+</nav>
+</header>
+<main>
+<article>
+<div class=title>
+<h1 class=title>Tiny zhihu-like web - design doc</h1>
+<div class=meta>Posted on May 3, 2021</div>
+</div>
+<section class=body>
+<blockquote>
+<p>本项目为数据库课程设计的<strong>设计文档</strong></p>
+<p>开发文档<a href=/posts/assigns/db-tiny-zh2/>在这里</a>，代码仓库<a href=https://github.com/lunarwhite/tiny-zhihu-web>在这里</a></p>
+<p>欢迎交流拍砖~</p>
+</blockquote>
+<h2 id=1-选题说明及需求介绍>1 选题说明及需求介绍</h2>
+<h3 id=11-选题说明>1.1 选题说明</h3>
+<ul>
+<li>主要针对数据库编程的设计和实现。选择设计实现一个仿 「知乎」问答社区系统。今年三月，成立十周年的知乎在美国纽约交易所隆重上市。</li>
+<li>知乎十年以来，知乎使用过的标语有：“认真你就赢了”、“我们 都是有问题的人”、“有问题，上知乎”和“有问题，就会有答案”等。可见，问题与答案是知乎的灵魂、是知乎的运营标准和产品定位。</li>
+</ul>
+<h3 id=12-需求介绍>1.2 需求介绍</h3>
+<ul>
+<li>知乎是知名的中文问答社区，连接各行各业的用户。人们普遍认为它是中文版的 Quora，高质量中文知识社区。用户分享着彼此的知识、经验和见 解，为中文互联网源源不断地提供多种多样的信息。准确地讲，知乎更像一个论坛：用户围绕着某一感兴趣的话题进行相关的讨论，同时可以关注兴趣一致 的人。对于概念性的解释，网络百科几乎涵盖了你所有的疑问；但是对于发散思维的整合，却是知乎的一大特色。</li>
+<li>用户通过搜索、浏览其他用户的问题的回答，解决自己的一些问题，同时可以发布问题与回答，进行友好交流；同时，可以点赞你认可的回答与提问、关注用户，实现简易的社交功能。对于管理员可以进行内容审核，对论坛中一些不合法的信息进行删除，甚至可以封禁用户；对于积极输出某一专业知识领域的优质内容的友善用户，授予「优秀回答者」荣誉称号，鼓励用户创作。</li>
+</ul>
+<h2 id=2-系统的功能模块划分>2 系统的功能模块划分</h2>
+<h3 id=21-需求分析>2.1 需求分析</h3>
+<ul>
+<li>在该社区中已登录用户的操作：
+<ul>
+<li>①浏览，用户可以根据个人兴趣进行浏览，包括问题以及问题下面的回 答、回答下面的评论。</li>
+<li>②提问，用户可以对问题进行简单描述，发布，等待其他用户回答问 题。发布之后可以编辑、删除。</li>
+<li>③回答，用户可以针对问题发表自己的见解，分享经验。</li>
+<li>④点赞，用户可以对喜欢的回答进行点赞、推荐，让更多的人看到。</li>
+<li>⑤关注，用户可以对自己感兴趣的人进行关注、对感兴趣的问题关注。</li>
+<li>⑥收藏，用户可以创建和删除收藏夹，收藏回答，方便下次阅读。</li>
+<li>⑦个人主页，用户拥有自己主页和个人资料，可以查看自己发布和收藏。</li>
+<li>⑧删除，用户只有权对自己发布的问题、回答进行删除。</li>
+<li>⑨搜索，用户通过输入关键字进行搜索，返回相关问题、回答以及用户。</li>
+</ul>
+</li>
+<li>在该社区中管理员的操作：
+<ul>
+<li>①对发表的不合法的提问、回答和评论进行删除。</li>
+<li>②对发表不合法信息的用户进行禁言甚至删除。</li>
+<li>③内容审核，编辑问题或删除问题、回答。</li>
+<li>④对于积极输出优质内容的用户授予「优秀回答者」荣誉称号。</li>
+</ul>
+</li>
+<li>未注册的临时用户的操作：
+<ul>
+<li>①浏览，用户可以根据个人兴趣进行浏览，包括问题以及问题下面的回 答、回答下面的评论。</li>
+<li>②搜索，用户通过输入关键字进行搜索，返回相关问题、回答以及用 户。</li>
+</ul>
+</li>
+</ul>
+<h3 id=22-模块划分>2.2 模块划分</h3>
+<ul>
+<li>整体功能模块图</li>
+</ul>
+<figure><img src=/images/db-tiny-zh/01.png>
+</figure>
+<h3 id=23-数据流图>2.3 数据流图</h3>
+<ul>
+<li>顶层数据流图</li>
+</ul>
+<figure><img src=/images/db-tiny-zh/02.png>
+</figure>
+<ul>
+<li>一层数据流图-临时用户</li>
+</ul>
+<figure><img src=/images/db-tiny-zh/03.png>
+</figure>
+<ul>
+<li>一层数据流图-注册用户</li>
+</ul>
+<figure><img src=/images/db-tiny-zh/04.png>
+</figure>
+<ul>
+<li>一层数据流图-平台管理员</li>
+</ul>
+<figure><img src=/images/db-tiny-zh/05.png>
+</figure>
+<h3 id=24-数据字典>2.4 数据字典</h3>
+<ul>
+<li>用户基本资料表
+<ul>
+<li>存放的是用户登陆时所需要或者记录用户的基本信息，包含比如登陆名、密码，最后登陆时间等。</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>数据类型</th>
+<th>长度</th>
+<th>主键</th>
+<th>外键</th>
+<th>可空</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>User_ID</td>
+<td>int</td>
+<td>20</td>
+<td>是</td>
+<td>否</td>
+<td>否</td>
+<td>主键</td>
+</tr>
+<tr>
+<td>UserName</td>
+<td>Varchar</td>
+<td>20</td>
+<td>否</td>
+<td>是</td>
+<td>否</td>
+<td>用户名</td>
+</tr>
+<tr>
+<td>Mobile</td>
+<td>bigint</td>
+<td>20</td>
+<td>否</td>
+<td>是</td>
+<td>否</td>
+<td>用户手机</td>
+</tr>
+<tr>
+<td>Email</td>
+<td>varchar</td>
+<td>255</td>
+<td>否</td>
+<td>是</td>
+<td>否</td>
+<td>电子邮件</td>
+</tr>
+<tr>
+<td>Sex</td>
+<td>varchar</td>
+<td>4</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+<td>性别信息</td>
+</tr>
+<tr>
+<td>RegTime</td>
+<td>datetime</td>
+<td>&ndash;</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+<td>注册时间</td>
+</tr>
+<tr>
+<td>SignDetail</td>
+<td>text</td>
+<td>255</td>
+<td>否</td>
+<td>否</td>
+<td>是</td>
+<td>用户签名</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>账号信息表
+<ul>
+<li>存放用户的账号信息主要是手机号、邮箱和密码。</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>数据类型</th>
+<th>长度</th>
+<th>主键</th>
+<th>外键</th>
+<th>可空</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mobile</td>
+<td>bigint</td>
+<td>20</td>
+<td>是</td>
+<td>否</td>
+<td>否</td>
+<td>用户手机密码</td>
+</tr>
+<tr>
+<td>Email</td>
+<td>varchar</td>
+<td>255</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+<td>电子邮件</td>
+</tr>
+<tr>
+<td>passwd</td>
+<td>varchar</td>
+<td>255</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+<td>用户的密码</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>问题表
+<ul>
+<li>存放用户所发表的文章信息，也包括回复信息。而在数据库的设计中主要问题是鉴别帖子信息和回复信息。</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>数据类型</th>
+<th>长度</th>
+<th>主键</th>
+<th>外键</th>
+<th>可空</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q_ID</td>
+<td>int</td>
+<td>20</td>
+<td>是</td>
+<td>是</td>
+<td>否</td>
+<td>主键</td>
+</tr>
+<tr>
+<td>User_ID</td>
+<td>int</td>
+<td>20</td>
+<td>否</td>
+<td>是</td>
+<td>否</td>
+<td>发表者ID</td>
+</tr>
+<tr>
+<td>Q_Title</td>
+<td>varchar</td>
+<td>150</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+<td>文章标题</td>
+</tr>
+<tr>
+<td>Q_text</td>
+<td>varchar</td>
+<td>150</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+<td>文章内容</td>
+</tr>
+<tr>
+<td>postTime</td>
+<td>bigint</td>
+<td>20</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+<td>发表时间</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>回答表
+<ul>
+<li>存放论坛中回答的信息。也包括它是哪一个问题的回答，和谁回答的等信息。</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>数据类型</th>
+<th>长度</th>
+<th>主键</th>
+<th>外键</th>
+<th>可空</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A_ID</td>
+<td>int</td>
+<td>20</td>
+<td>是</td>
+<td>否</td>
+<td>否</td>
+<td>主键</td>
+</tr>
+<tr>
+<td>Q_ID</td>
+<td>int</td>
+<td>20</td>
+<td>否</td>
+<td>是</td>
+<td>否</td>
+<td>问题ID</td>
+</tr>
+<tr>
+<td>User_ID</td>
+<td>int</td>
+<td>20</td>
+<td>否</td>
+<td>是</td>
+<td>否</td>
+<td>发表者ID</td>
+</tr>
+<tr>
+<td>A_text</td>
+<td>text</td>
+<td>200</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+<td>回答数量</td>
+</tr>
+<tr>
+<td>C_Number</td>
+<td>bigint</td>
+<td>20</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+<td>评论区数量</td>
+</tr>
+<tr>
+<td>Z_Number</td>
+<td>bigint</td>
+<td>20</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+<td>点赞数</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>评论表
+<ul>
+<li>存放论坛中评论内容。也包括它是哪一个答复的评论，和谁评论的等信息。</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>数据类型</th>
+<th>长度</th>
+<th>主键</th>
+<th>外键</th>
+<th>可空</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C_ID</td>
+<td>int</td>
+<td>20</td>
+<td>是</td>
+<td>否</td>
+<td>否</td>
+<td>主键</td>
+</tr>
+<tr>
+<td>A_ID</td>
+<td>int</td>
+<td>20</td>
+<td>否</td>
+<td>是</td>
+<td>否</td>
+<td>问题ID</td>
+</tr>
+<tr>
+<td>UserID</td>
+<td>int</td>
+<td>20</td>
+<td>否</td>
+<td>是</td>
+<td>否</td>
+<td>发表者ID</td>
+</tr>
+<tr>
+<td>C_text</td>
+<td>text</td>
+<td>20</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+<td>评论内容</td>
+</tr>
+<tr>
+<td>postTime</td>
+<td>data</td>
+<td>20</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+<td>发表时间</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>收藏信息表
+<ul>
+<li>是对用户所喜好的问题或者文章进行收藏的表，主要包含收藏者id和被收藏的问题id，其中两个组合做主键。</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>数据类型</th>
+<th>长度</th>
+<th>主键</th>
+<th>外键</th>
+<th>可空</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UserID</td>
+<td>Int</td>
+<td>20</td>
+<td>是</td>
+<td>是</td>
+<td>否</td>
+<td>收藏者ID</td>
+</tr>
+<tr>
+<td>Q_ID</td>
+<td>int</td>
+<td>20</td>
+<td>是</td>
+<td>是</td>
+<td>否</td>
+<td>问题ID</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>关注信息表
+<ul>
+<li>是对用户和用户之间的多对多关系，主要包含收藏者id和被收藏者id，其中两个组合做主键。</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>数据类型</th>
+<th>长度</th>
+<th>主键</th>
+<th>外键</th>
+<th>可空</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A_UserID</td>
+<td>int</td>
+<td>20</td>
+<td>是</td>
+<td>是</td>
+<td>否</td>
+<td>发表者ID</td>
+</tr>
+<tr>
+<td>B_UserID</td>
+<td>int</td>
+<td>20</td>
+<td>是</td>
+<td>是</td>
+<td>否</td>
+<td>发表者ID</td>
+</tr>
+</tbody>
+</table>
+<h2 id=3-数据库概念结构设计>3 数据库概念结构设计</h2>
+<h3 id=31-局部e-r图>3.1 局部E-R图</h3>
+<figure><img src=/images/db-tiny-zh/06.png>
+</figure>
+<figure><img src=/images/db-tiny-zh/07.png>
+</figure>
+<figure><img src=/images/db-tiny-zh/08.png>
+</figure>
+<h3 id=32-全局e-r图>3.2 全局E-R图</h3>
+<figure><img src=/images/db-tiny-zh/09.png>
+</figure>
+<h2 id=4-数据库逻辑结构设计>4 数据库逻辑结构设计</h2>
+<h3 id=41-关系模式>4.1 关系模式</h3>
+<ul>
+<li>用户（用户ID，手机号，昵称，密码，生日，性别，职业，签名，类型）</li>
+<li>问题（问题ID，提问用户ID，标题，描述，浏览量，关注数，回答数，话题标签）</li>
+<li>回答（回答ID，回答用户ID，对应问题ID，回答内容，点赞数，评论数）</li>
+<li>评论（评论ID，评论用户ID，对应回答ID，评论内容，点赞数）</li>
+<li>文章（文章ID，用户ID，文章标题，文章内容，点赞数，评论数）</li>
+<li>收藏（用户ID，文章或回答ID）</li>
+<li>关注（关注发起者ID，被关注者ID）</li>
+<li>账户（手机号，密码）</li>
+</ul>
+<h3 id=42-规范化处理>4.2 规范化处理</h3>
+<ul>
+<li>用户信息表User_info中，U_id唯一确定其他非主属性，不存在部分函数依赖和传递依赖，为3NF。</li>
+<li>问题信息表Question_info，只有单个主属性完全决定其他非主属性，故满足3NF。</li>
+<li>回答信息表Answer_info，只有单个主属性完全决定其他非主属性，故满足3NF。</li>
+<li>评论信息表Comment_info，只有单个主属性完全决定其他非主属性，故满足3NF。</li>
+<li>关注信息表Focus_info，其有且仅有两个属性，而且这两个属性还一起作为主键，所有一定不存在部分函数依赖和传递依赖，为3NF。</li>
+<li>账户信息表Account_info有且仅有两个属性，两个属性一起作为主键，所有一定不存在部分函数依赖和传递依赖，为3NF。</li>
+<li>收藏信息表Collection_info有且仅有两个属性，而且这两个属性还一起作为主键，所有一定不存在部分函数依赖和传递依赖，也为3NF。</li>
+<li>综上，经过数据库规范化处理，设计的所有表都满足了3NF。</li>
+</ul>
+<h2 id=5-系统实现过程>5 系统实现过程</h2>
+<h3 id=51-过程综述>5.1 过程综述</h3>
+<figure><img src=/images/db-tiny-zh/10.png>
+</figure>
+<ul>
+<li>开发环境
+<ul>
+<li>数据库：Microsoft SQL Server 2019</li>
+<li>前端：HTML、CSS、Javascript</li>
+<li>后端：Python、Flask、Nginx</li>
+</ul>
+</li>
+<li>开发工具
+<ul>
+<li>1）数据库管理系统：Microsoft SQL Server Management Studio 18</li>
+<li>2）集成开发环境：Visual Studio Code 1.55.2</li>
+<li>3）操作系统：Ubuntu 18.04</li>
+</ul>
+</li>
+</ul>
+<h3 id=52-安全性完整性>5.2 安全性&完整性</h3>
+<ul>
+<li>安全性
+<ul>
+<li>①用户标识和鉴定：本系统设计时主要定义了三种用户身份，即注册普通用户、注册管理员用户和未注册普通用户（游客）。不同的用户身份对应的权限不同，通过输入用户手机号和密码核对用户类型，实现用户标识鉴定。</li>
+<li>②存取控制：创建了数据库角色role来方便权限的授予grant与回收revoke。比如在已注册用户中创建了管理员与普通用户的不同角色。</li>
+<li>③视图：利用SQL语法中audit关键字，把要保密的数据对无权存取这些数据的用户，即普通注册用户、普通未注册用户隐藏起来，对数据提供一定程度的安全保护，在视图上进一步定义存取权限，间接实现支持存取谓词的用户权限定义。比如根据账号注册时间和使用时长划分出老用户与新用户，赋予不同权限。</li>
+<li>④审计：利用SQL语法中audit关键字，将用户对数据库的所有操作记录在日志log中，方便数据库管理员利用审计日志找出非法存取数据的人、时间和内容。针对不同信息表的特性，选择建立alter/update的审计。</li>
+<li>⑤数据加密：本系统选择Hash加盐加密存储，用户在注册后，通过前端Javascript将密码hash后再提交，这样子数据库中保存的密码是经过hash的，但未加盐。加盐这一步放在登录时使用。再登陆时，利用python hashlib.sha256()进行加盐，这样我们数据库中存储的密码也时hash过的，更大程度保证了用户数据的安全性。</li>
+</ul>
+</li>
+<li>完整性
+<ul>
+<li>①用户信息表User_info，设置U_id为primary key，设置check注册电话号码符合大陆规范，设置注册电话号码为unique，设置性别sex默认值为“男”，其他属性不为空。</li>
+<li>②问题信息表Question_info，设置Q_id为primary key，设置U_id为参照用户信息表User_info的foreign key，其他属性不为空。</li>
+<li>③回答信息表Answer_info，设置A_id为primary key，设置U_id为参照用户信息表User_info的foreign key，设置Q_id为参照问题信息表Question_info的foreign key，设置性别标志列C_Number、Z_Number默认值为’0’，其他属性不为空。</li>
+<li>④评论信息表Comment_info，设置C_id为primary key，设置U_id为参照用户信息表User_info的foreign key，设置A_id为参照回答信息表Answer_info的foreign key，设置发布时间posttime默认值为当前时间，其他属性不为空。</li>
+<li>⑤关注信息表Focus_info，设置A_user_id和B_user_id为primary key，设置A_user_id为参照用户信息表User_info的foreign key，设置B_user_id为参照用户信息表User_info的foreign key，其他属性不为空。</li>
+<li>⑥账户信息表Account_info，设置Mobile为primary key，设置其他属性不为空。</li>
+<li>⑦收藏信息表Collection_info，设置Q_id和U_id为primary key，设置U_id为参照用户信息表User_info的foreign key，设置Q_id为参照问题信息表Question_info的foreign key，其他属性不为空。</li>
+<li>⑧创立级联更新、级联删除的完整性检查，操作过多且不易用文字表述具体可见后文SQL代码。其他完整性约束也在后文代码中体现。</li>
+</ul>
+</li>
+<li>部分示例代码体现</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#007020;font-weight:700>go</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>CREATE</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>TABLE</span><span style=color:#bbb> </span>User_info(<span style=color:#bbb>
+</span><span style=color:#bbb>    </span>U_id<span style=color:#bbb> </span><span style=color:#007020>int</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>identity</span>(<span style=color:#40a070>1</span>,<span style=color:#40a070>1</span>)<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NOT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NULL</span>,<span style=color:#bbb>
+</span><span style=color:#bbb>    </span>UserName<span style=color:#bbb> </span><span style=color:#007020>VARCHAR</span>(<span style=color:#40a070>20</span>)<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NOT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NULL</span>,<span style=color:#bbb>
+</span><span style=color:#bbb>    </span>Mobile<span style=color:#bbb> </span><span style=color:#007020>bigint</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NOT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NULL</span>,<span style=color:#bbb>
+</span><span style=color:#bbb>    </span>Email<span style=color:#bbb> </span><span style=color:#007020>VARCHAR</span>(<span style=color:#40a070>20</span>)<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NOT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NULL</span>,<span style=color:#bbb>
+</span><span style=color:#bbb>    </span>Sex<span style=color:#bbb> </span><span style=color:#007020>VARCHAR</span>(<span style=color:#40a070>20</span>)<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>default</span><span style=color:#bbb> </span>(<span style=color:#4070a0>&#39;男&#39;</span>),<span style=color:#bbb>
+</span><span style=color:#bbb>    </span>RegTime<span style=color:#bbb> </span>datetime,<span style=color:#bbb>
+</span><span style=color:#bbb>    </span>SignDetail<span style=color:#bbb> </span><span style=color:#007020>text</span>,<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#007020;font-weight:700>CHECK</span><span style=color:#bbb> </span>(Mobile<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>BETWEEN</span><span style=color:#bbb> </span><span style=color:#40a070>10000000000</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>AND</span><span style=color:#bbb> </span><span style=color:#40a070>19999999999</span>),<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#007020;font-weight:700>primary</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>key</span>(U_id),<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#007020;font-weight:700>CONSTRAINT</span><span style=color:#bbb> </span>c_1<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>UNIQUE</span><span style=color:#bbb> </span>(Mobile)<span style=color:#bbb>
+</span><span style=color:#bbb></span>)<span style=color:#bbb>
+</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>go</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>CREATE</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>TABLE</span><span style=color:#bbb> </span>Question_info(<span style=color:#bbb>
+</span><span style=color:#bbb>    </span>Q_ID<span style=color:#bbb> </span><span style=color:#007020>int</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>identity</span>(<span style=color:#40a070>1</span>,<span style=color:#40a070>1</span>)<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NOT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NULL</span>,<span style=color:#bbb>
+</span><span style=color:#bbb>    </span>U_id<span style=color:#bbb> </span><span style=color:#007020>int</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NOT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NULL</span>,<span style=color:#bbb>
+</span><span style=color:#bbb>    </span>Q_title<span style=color:#bbb> </span><span style=color:#007020>text</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NOT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NULL</span>,<span style=color:#bbb>
+</span><span style=color:#bbb>    </span>Q_text<span style=color:#bbb> </span><span style=color:#007020>text</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NOT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NULL</span>,<span style=color:#bbb>
+</span><span style=color:#bbb>    </span>postTime<span style=color:#bbb> </span>datetime<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NOT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NULL</span>,<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#007020;font-weight:700>primary</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>key</span>(Q_ID),<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#007020;font-weight:700>CONSTRAINT</span><span style=color:#bbb> </span>user_fk_1<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>FOREIGN</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>KEY</span>(U_id)<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>REFERENCES</span><span style=color:#bbb> </span>user_info(U_id)<span style=color:#bbb>
+</span><span style=color:#bbb></span>)<span style=color:#bbb>
+</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>go</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>CREATE</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>TABLE</span><span style=color:#bbb> </span>Answer_info(<span style=color:#bbb>
+</span><span style=color:#bbb>    </span>A_ID<span style=color:#bbb> </span><span style=color:#007020>int</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>identity</span>(<span style=color:#40a070>1</span>,<span style=color:#40a070>1</span>)<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NOT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NULL</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>PRIMARY</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>KEY</span>,<span style=color:#bbb>
+</span><span style=color:#bbb>    </span>Q_ID<span style=color:#bbb> </span><span style=color:#007020>int</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NOT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NULL</span>,<span style=color:#bbb>
+</span><span style=color:#bbb>    </span>U_id<span style=color:#bbb> </span><span style=color:#007020>int</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NOT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NULL</span>,<span style=color:#bbb>
+</span><span style=color:#bbb>    </span>A_text<span style=color:#bbb> </span><span style=color:#007020>text</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NOT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NULL</span>,<span style=color:#bbb>
+</span><span style=color:#bbb>    </span>C_Number<span style=color:#bbb> </span><span style=color:#007020>bigint</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>default</span><span style=color:#bbb> </span><span style=color:#4070a0>&#39; 0&#39;</span>,<span style=color:#bbb>
+</span><span style=color:#bbb>    </span>Z_Number<span style=color:#bbb> </span><span style=color:#007020>bigint</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>default</span><span style=color:#bbb> </span><span style=color:#4070a0>&#39; 0&#39;</span>,<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#007020;font-weight:700>CONSTRAINT</span><span style=color:#bbb> </span>user_fk_2<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>FOREIGN</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>KEY</span>(U_id)<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>REFERENCES</span><span style=color:#bbb> </span>user_info(U_id),<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#007020;font-weight:700>CONSTRAINT</span><span style=color:#bbb> </span>Q_fk<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>FOREIGN</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>KEY</span>(Q_ID)<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>REFERENCES</span><span style=color:#bbb> </span>Question_info(Q_id),<span style=color:#bbb>
+</span><span style=color:#bbb></span>)<span style=color:#bbb>
+</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#60a0b0;font-style:italic>--级联删除
+</span><span style=color:#60a0b0;font-style:italic></span><span style=color:#007020;font-weight:700>alter</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>table</span><span style=color:#bbb> </span>question_info<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>add</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>constraint</span><span style=color:#bbb> </span>user_fk_1<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>foreign</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>key</span><span style=color:#bbb> </span>(U_id)<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>references</span><span style=color:#bbb> </span>user_info(U_id)<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>ON</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>DELETE</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>CASCADE</span><span style=color:#bbb>
+</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>alter</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>table</span><span style=color:#bbb> </span>collection_info<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>add</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>CONSTRAINT</span><span style=color:#bbb> </span>Q_fk_1<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>FOREIGN</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>KEY</span><span style=color:#bbb>  </span>(Q_ID)<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>REFERENCES</span><span style=color:#bbb>  </span>Question_info(Q_id)<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>ON</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>DELETE</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>CASCADE</span><span style=color:#bbb>
+</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#60a0b0;font-style:italic>--级联更新
+</span><span style=color:#60a0b0;font-style:italic></span><span style=color:#007020;font-weight:700>alter</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>table</span><span style=color:#bbb> </span>Answer_info<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>add</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>CONSTRAINT</span><span style=color:#bbb> </span>Q_fk<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>FOREIGN</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>KEY</span><span style=color:#bbb>  </span>(Q_ID)<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>REFERENCES</span><span style=color:#bbb>  </span>Questio<span style=color:#bbb>
+</span></code></pre></div><h3 id=53-视图索引>5.3 视图&索引</h3>
+<ul>
+<li>创建视图SQL代码举例：创建用户等级、用户信息的视图</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#60a0b0;font-style:italic>--建立视图
+</span><span style=color:#60a0b0;font-style:italic></span><span style=color:#007020;font-weight:700>go</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>create</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>view</span><span style=color:#bbb> </span>user_account(mobile,passwd)<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>as</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>select</span><span style=color:#bbb> </span>Mobile,passwd<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>from</span><span style=color:#bbb> </span>Account_info<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>with</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>check</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>option</span><span style=color:#bbb>
+</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>go</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>create</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>view</span><span style=color:#bbb> </span>user_level(U_id,U_level)<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>as</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>select</span><span style=color:#bbb> </span>U_id,<span style=color:#007020;font-weight:700>day</span>(getdate()<span style=color:#666>-</span>RegTime)<span style=color:#666>/</span><span style=color:#40a070>100</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>from</span><span style=color:#bbb> </span>User_info<span style=color:#bbb>
+</span></code></pre></div><ul>
+<li>创建索引SQL代码举例：对回答信息表和评论信息表Comment_info添加index索引</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#60a0b0;font-style:italic>--建立索引
+</span><span style=color:#60a0b0;font-style:italic></span><span style=color:#007020;font-weight:700>go</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>create</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>index</span><span style=color:#bbb> </span>idx_l<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>on</span><span style=color:#bbb> </span>comment_info(A_ID)<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>create</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>index</span><span style=color:#bbb> </span>idx_2<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>on</span><span style=color:#bbb> </span>Answer_info(Q_ID)<span style=color:#bbb>
+</span></code></pre></div><h3 id=54-触发器函数存储过程>5.4 触发器&函数&存储过程</h3>
+<ul>
+<li>在回答信息表Answer_info创建触发器，实现当用户发布回答时计数器Z_Number自动+1</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#60a0b0;font-style:italic>--建立触发器
+</span><span style=color:#60a0b0;font-style:italic></span><span style=color:#007020;font-weight:700>go</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>create</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>trigger</span><span style=color:#bbb> </span>t1<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>on</span><span style=color:#bbb> </span>Answer_info<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>for</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>insert</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>as</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>update</span><span style=color:#bbb> </span>Answer_info<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>set</span><span style=color:#bbb> </span>Z_Number<span style=color:#666>=</span><span style=color:#bbb> </span><span style=color:#40a070>1</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>where</span><span style=color:#bbb> </span>Z_Number<span style=color:#bbb> </span><span style=color:#666>=</span><span style=color:#bbb> </span><span style=color:#40a070>0</span><span style=color:#bbb>
+</span></code></pre></div><ul>
+<li>创建函数实现自动计算某个回答的累计赞同数</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#60a0b0;font-style:italic>--建立函数
+</span><span style=color:#60a0b0;font-style:italic></span><span style=color:#007020;font-weight:700>go</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>create</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>function</span><span style=color:#bbb> </span>countZAN<span style=color:#bbb> </span>(<span style=color:#666>@</span>Q_ID<span style=color:#bbb> </span><span style=color:#007020>int</span><span style=color:#bbb> </span>)<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>returns</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>table</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>as</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>return</span>(<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#007020;font-weight:700>select</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>sum</span>(Z_number)<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#007020;font-weight:700>from</span><span style=color:#bbb>  </span>Answer_info<span style=color:#bbb>
+</span><span style=color:#bbb>    </span><span style=color:#007020;font-weight:700>where</span><span style=color:#bbb> </span>Q_ID<span style=color:#bbb> </span><span style=color:#666>=</span><span style=color:#bbb> </span><span style=color:#666>@</span>Q_ID<span style=color:#bbb>
+</span><span style=color:#bbb></span>)<span style=color:#bbb>
+</span></code></pre></div><ul>
+<li>本系统按以下模式创立了存储过程：提出问题（提问者用户ID，标题，描述，标签）、回答问题（回答者用户ID，对应问题ID，回答内容）、评论问题/回答/文章（评论者用户ID，对应问题/回答/文章ID，评论内容）、发表文章（发表者用户ID，文章标题，文章内容）、收藏问题/文章（收藏者用户ID，被收藏文章/回答的ID）、点赞问题/回答/评论/文章（点赞者用户ID，被点赞问题/回答/评论/文章的ID）和评论问题/回答/文章（评论者用户ID，被评论问题/回答/文章的ID），示例SQL代码如下</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#60a0b0;font-style:italic>--建立存储过程
+</span><span style=color:#60a0b0;font-style:italic></span><span style=color:#007020;font-weight:700>go</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>CREATE</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>PROCEDURE</span><span style=color:#bbb> </span>Question_Answer<span style=color:#bbb> </span><span style=color:#666>@</span>Q_ID<span style=color:#bbb> </span><span style=color:#007020>int</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>AS</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>select</span><span style=color:#bbb> </span>A_id,Q_title,Q_text<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>from</span><span style=color:#bbb> </span>Question_info<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>as</span><span style=color:#bbb> </span>Q<span style=color:#bbb> </span>,Answer_info<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>as</span><span style=color:#bbb> </span>A<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>where</span><span style=color:#bbb> </span>Q.Q_ID<span style=color:#bbb> </span><span style=color:#666>=</span><span style=color:#bbb> </span><span style=color:#666>@</span>Q_ID<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>and</span><span style=color:#bbb> </span><span style=color:#666>@</span>Q_ID<span style=color:#bbb> </span><span style=color:#666>=</span>A.Q_ID<span style=color:#bbb>
+</span></code></pre></div><h2 id=6-总结感想与收获>6 总结、感想与收获</h2>
+<h3 id=61-系统的特点>6.1 系统的特点</h3>
+<ul>
+<li>系统实现：采用Sql Server数据库管理系统，所有创建工作用SQL语句建立；前端基于HTML+CSS+Javascript；后端选择Python作为开发语言，选用Flask作为框架搭建；采用Browser/Server架构，目标设计并实现简化版仿知乎web端。</li>
+<li>论坛功能：较为完整，拥有完整的前端和后端功能，分普通用户、临时用户和管理员用户。围绕问题和回答两个灵魂，合理拆解了系统需求、划分了系统的功能模块，能够实现真实知乎论坛场景中的部分功能，实用性高。</li>
+<li>数据库的概念结构设计：秉持上学期讲过的设计思想，自顶向下地进行需求分析、自底向上地设计概念结构，经过多次的提炼，确定了局部ER图，拆分重组成立全局ER图。</li>
+<li>数据库的逻辑结构设计：在ER图的基础上合并组合和转换，不仅要考虑实体与属性合理性，还要考虑冗余度和后续查询性能。经过数据模型的优化，七张表都设计满足3NF，使表内部的信息尽量简洁，可以防止操作产生的数据错误，进一步保证数据的准确性。</li>
+<li>数据库的安全性：一个是后台通过视图和角色分配了不同用户权限等级并为之分配了不同的操作权限；另一个是建立审计，利用日志文件与数据库管理员来审计数据库敏感操作；还有一个是在后端设计了Hash 加盐加密存储，更大程度保证了用户数据的安全性。</li>
+<li>数据库的完整性：通过设计primary key、foreign key ，设置默认值和约束检查，定义触发器，保证了实体完整性、参照完整性和用户自定义的完整性。</li>
+<li>数据库其他系统实现：建立视图提高查询效率，方便角色权限的分配；建立索引加快了数据库操作和存取的速度；触发器、函数和存储过程实现数据库数据一致性和操作自动化。</li>
+<li>使用体验：购买云服务器、申请域名，把系统部署在云上，真正让用户轻松访问与使用，在本地编译运行与测试的基础上更进一步。</li>
+</ul>
+<h3 id=62-有待提高之处>6.2 有待提高之处</h3>
+<ul>
+<li>系统功能：虽然初具雏形，但还有很多功能没有补全。比如：拉黑屏蔽、发布专栏和站内私信交流。要想进一步逼真，需要巨大的产品调研与学习。毕竟个人的课程设计还是不能和成熟的商业公司专业团队设计开发的软件相比。还有很多细节没有精力优化。</li>
+<li>数据库设计：数据库物理存储、数据库恢复技术和高并发、高可用控制方面没有过多设计。</li>
+<li>使用体验：只实现了web端，移动客户端和桌面客户端没有设计与实现。</li>
+<li>界面美化：初学前端并不熟练，且感觉自己的审美水平确实不算高，希望给用户带来的视觉体验更好。比如动画效果和夜间模式等。</li>
+</ul>
+<h3 id=63-经验与收获>6.3 经验与收获</h3>
+<ul>
+<li>第二次独立完成涉及数据库的开发，对整个系统的开发先进行需求分析，然后将其结果反映成结构图，再到设计数据库，再到逻辑设计，和实现了事务处理、触发器、索引、存储过程等机制，并利用数据库系统的开发工具进行具体的实施，经历了软件开发过程所要经历的各个主要设计流程。</li>
+<li>从需求分析到数据库设计，从语言选择到程序编写，从后端到前端，都是在复习或直接学习后再实践。</li>
+</ul>
+</section>
+<div class=post-tags>
+<nav class="nav tags">
+<ul class=tags>
+<li><a href=/tags/assginment>assginment</a></li>
+<li><a href=/tags/database>database</a></li>
+<li><a href=/tags/web-service>web-service</a></li>
+</ul>
+</nav>
+</div>
+</article>
+</main>
+<footer>
+<hr><a class=soc href=https://www.linkedin.com/in/yuedongwoo/ title=LinkedIn><i data-feather=linkedin></i></a>|<a class=soc href=https://github.com/lunarwhite title=GitHub><i data-feather=github></i></a>|<a class=soc href title=Twitter><i data-feather=twitter></i></a>|<a class=soc href title=Instagram><i data-feather=instagram></i></a>|<a class=soc href title=Bilibili><i data-feather=tv></i></a>|<a class=soc href=https://www.zhihu.com/people/wydnlz title=Zhihu><i data-feather=link></i></a>|⚡️
+2021 © lunarwhite | <a href=https://github.com/athul/archie>Archie Theme</a> | Built with <a href=https://gohugo.io>Hugo</a>
+</footer>
+<script>feather.replace()</script>
+<script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
+</body>
+</html>

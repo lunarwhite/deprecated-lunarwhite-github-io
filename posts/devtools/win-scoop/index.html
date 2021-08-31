@@ -1,0 +1,222 @@
+<!doctype html><html><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge"><title>scoop: command-line package manager for Windows - lunarwhite</title><link rel=icon type=image/png href=favicon/favicon.ico><meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="Awesome tools introduction for daily development.">
+<meta property="og:image" content>
+<meta property="og:title" content="scoop: command-line package manager for Windows">
+<meta property="og:description" content="Awesome tools introduction for daily development.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lunarwhite.github.io/posts/devtools/win-scoop/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2019-11-20T16:58:13+00:00">
+<meta property="article:modified_time" content="2019-11-20T16:58:13+00:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="scoop: command-line package manager for Windows">
+<meta name=twitter:description content="Awesome tools introduction for daily development.">
+<script src=https://lunarwhite.github.iojs/feather.min.js></script>
+<link href=https://lunarwhite.github.io/css/fonts.b685ac6f654695232de7b82a9143a46f9e049c8e3af3a21d9737b01f4be211d1.css rel=stylesheet>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+</head>
+<body>
+<div class=content><header>
+<div class=main>
+<a href=https://lunarwhite.github.io>lunarwhite</a>
+</div>
+<nav>
+<a href=/>Home</a>
+<a href=/posts>Posts</a>
+<a href=/tags>Tags</a>
+<a href=/about>About</a>
+</nav>
+</header>
+<main>
+<article>
+<div class=title>
+<h1 class=title>scoop: command-line package manager for Windows</h1>
+<div class=meta>Posted on Nov 20, 2019</div>
+</div>
+<section class=body>
+<p>众所周知，Windows 下进行开发多少有点反人类，环境配置和 macos/linux 相比，简直就是灾难。索性有人开源了一系列包管理工具，scoop/chocolatey/winget，对比之下，选择了 scoop，体验良好，写一文向大家安利。</p>
+<h1 id=必要性>必要性</h1>
+<blockquote>
+<p>如果用过 macOS 或者 Linux 的朋友，或多或少都听说过包管理工具。通过包管理工具，你可以直接在终端中快速自动地安装、配置、卸载和升级软件，而无需通过 GUI 页面一步步手动安装下载软件。这非常适合一次性安装非常多软件，大大地节约了软件安装所需要的时间和步骤，同时也在一定程度上确保了来源软件的安全性</p>
+</blockquote>
+<ul>
+<li>Windows下三大包管理工具，scoop/winget/chocolatey
+<ul>
+<li>降低安装维护软件的成本</li>
+<li>避免安装大量软件造成的路径污染</li>
+<li>不必查找和安装软件的其他依赖项</li>
+<li>避免捆绑和垃圾软件</li>
+<li>彻底地卸载</li>
+</ul>
+</li>
+</ul>
+<h1 id=环境部署>环境部署</h1>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>set-executionpolicy remotesigned -scope currentuser
+
+iex <span style=color:#666>(</span>new-object net.webclient<span style=color:#666>)</span>.downloadstring<span style=color:#666>(</span><span style=color:#4070a0>&#39;https://raw.githubusercontent.com/lukesampson/scoop/master/bin/install.ps1&#39;</span><span style=color:#666>)</span>
+
+<span style=color:#60a0b0;font-style:italic># basic</span>
+scoop install 7zip
+scoop install git
+scoop install sudo
+scoop install innounp
+scoop install dark
+
+scoop checkup
+</code></pre></div><h1 id=软件安装>软件安装</h1>
+<ul>
+<li>
+<p>软件查询</p>
+<ul>
+<li><a href=https://scoop-docs.now.sh/apps/>https://scoop-docs.now.sh/apps/</a></li>
+<li><a href=https://rasa.github.io/scoop-directory/by-apps>https://rasa.github.io/scoop-directory/by-apps</a></li>
+</ul>
+</li>
+<li>
+<p>软件仓库</p>
+</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic># 添加第三方库</span>
+scoop bucket add &lt;bucket&gt; &lt;bucket_url&gt;
+
+<span style=color:#60a0b0;font-style:italic># 添加库</span>
+scoop bucket add extras
+scoop bucket add versions
+scoop bucket add java
+</code></pre></div><ul>
+<li>日常</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic># 系统</span>
+scoop install geekuninstaller
+scoop install dismplusplus
+scoop install listary
+scoop install everything
+scoop install motrix
+
+<span style=color:#60a0b0;font-style:italic># 网络</span>
+scoop install switchhosts
+scoop install psiphon3
+
+<span style=color:#60a0b0;font-style:italic># 日常</span>
+scoop install chromium
+scoop install hugo-extended
+
+<span style=color:#60a0b0;font-style:italic># 图影</span>
+scoop install ditto
+scoop install wpsoffice
+scoop install lightshot  <span style=color:#60a0b0;font-style:italic># CTRL+shift+S</span>
+scoop install imageglass
+scoop install mpv
+</code></pre></div><ul>
+<li>开发</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic>#命令行</span>
+scoop install windows-terminal	<span style=color:#60a0b0;font-style:italic># admin</span>
+scoop install mobaxterm	<span style=color:#60a0b0;font-style:italic># admin, icon</span>
+
+<span style=color:#60a0b0;font-style:italic># 编辑器 / IDE</span>
+scoop install typora	<span style=color:#60a0b0;font-style:italic># theme: github, night, monokai, misty, purple, fluent, drake</span>
+scoop install vscode
+scoop install jetbrains-toolbox
+
+--------------------------
+<span style=color:#60a0b0;font-style:italic># 环境-文本图像</span>
+scoop install pandoc
+scoop install graphviz
+
+<span style=color:#60a0b0;font-style:italic># 环境-数据库</span>
+scoop install mysql
+
+<span style=color:#60a0b0;font-style:italic># 环境-C/C++</span>
+scoop install gcc
+scoop install gdb
+
+<span style=color:#60a0b0;font-style:italic># 环境-Java</span>
+scoop install openjdk8-redhat
+
+<span style=color:#60a0b0;font-style:italic># 环境-Python</span>
+scoop install miniconda3
+
+<span style=color:#60a0b0;font-style:italic># 环境-front</span>
+scoop install nodejs-lts
+</code></pre></div><ul>
+<li>备用</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>scoop install kms
+scoop install quicklook
+scoop install autohotkey
+
+scoop install shadowsocks
+scoop install v2rayn
+
+scoop install firefox
+scoop install teamviewer
+
+scoop install steam
+
+scoop install rambox
+scoop install telegram
+scoop install slack
+
+scoop install hyper	<span style=color:#60a0b0;font-style:italic># admin</span>
+scoop install vscode-insider
+
+scoop install latex
+
+scoop install nginx
+scoop install tomcat
+scoop install postman
+scoop install redis
+scoop install maven
+scoop install go
+</code></pre></div><h1 id=常用命令>常用命令</h1>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic># 查看已安装程序</span>
+scoop list
+<span style=color:#60a0b0;font-style:italic># 查看已经添加的库</span>
+scoop bucket list
+<span style=color:#60a0b0;font-style:italic># 查看其他库</span>
+scoop bucket known
+<span style=color:#60a0b0;font-style:italic># 移除已经添加的库</span>
+scoop bucket rm nerd
+
+<span style=color:#60a0b0;font-style:italic># 查找软件</span>
+scoop search &lt;app&gt;
+<span style=color:#60a0b0;font-style:italic># 显示软件信息（含必要配置说明）</span>
+scoop info &lt;app&gt;
+
+<span style=color:#60a0b0;font-style:italic># 查看更新</span>
+scoop status
+<span style=color:#60a0b0;font-style:italic># 自身诊断</span>
+scoop checkup
+<span style=color:#60a0b0;font-style:italic># 更新scoop, 更新指定软件</span>
+scoop update *
+
+<span style=color:#60a0b0;font-style:italic># 卸载程序并移除所有配置文件</span>
+scoop uninstall &lt;app&gt; -p
+<span style=color:#60a0b0;font-style:italic># 删除所有缓存</span>
+scoop cache rm *
+scoop cleanup *
+
+<span style=color:#60a0b0;font-style:italic># 卸载 Scoop</span>
+scoop uninstall scoop
+</code></pre></div>
+</section>
+<div class=post-tags>
+<nav class="nav tags">
+<ul class=tags>
+<li><a href=/tags/development-tool>development-tool</a></li>
+<li><a href=/tags/scoop>scoop</a></li>
+</ul>
+</nav>
+</div>
+</article>
+</main>
+<footer>
+<hr><a class=soc href=https://www.linkedin.com/in/yuedongwoo/ title=LinkedIn><i data-feather=linkedin></i></a>|<a class=soc href=https://github.com/lunarwhite title=GitHub><i data-feather=github></i></a>|<a class=soc href title=Twitter><i data-feather=twitter></i></a>|<a class=soc href title=Instagram><i data-feather=instagram></i></a>|<a class=soc href title=Bilibili><i data-feather=tv></i></a>|<a class=soc href=https://www.zhihu.com/people/wydnlz title=Zhihu><i data-feather=link></i></a>|⚡️
+2021 © lunarwhite | <a href=https://github.com/athul/archie>Archie Theme</a> | Built with <a href=https://gohugo.io>Hugo</a>
+</footer>
+<script>feather.replace()</script>
+<script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
+</body>
+</html>

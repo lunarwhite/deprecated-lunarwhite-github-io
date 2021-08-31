@@ -1,0 +1,234 @@
+<!doctype html><html><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge"><title>[MIT-missing] 04 Version Control (Git) - lunarwhite</title><link rel=icon type=image/png href=favicon/favicon.ico><meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="Notes for awesome courses offered by the top universities.">
+<meta property="og:image" content>
+<meta property="og:title" content="[MIT-missing] 04 Version Control (Git)">
+<meta property="og:description" content="Notes for awesome courses offered by the top universities.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lunarwhite.github.io/posts/notes/mitmissing4/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-07-25T22:11:48+00:00">
+<meta property="article:modified_time" content="2021-07-25T22:11:48+00:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="[MIT-missing] 04 Version Control (Git)">
+<meta name=twitter:description content="Notes for awesome courses offered by the top universities.">
+<script src=https://lunarwhite.github.iojs/feather.min.js></script>
+<link href=https://lunarwhite.github.io/css/fonts.b685ac6f654695232de7b82a9143a46f9e049c8e3af3a21d9737b01f4be211d1.css rel=stylesheet>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+</head>
+<body>
+<div class=content><header>
+<div class=main>
+<a href=https://lunarwhite.github.io>lunarwhite</a>
+</div>
+<nav>
+<a href=/>Home</a>
+<a href=/posts>Posts</a>
+<a href=/tags>Tags</a>
+<a href=/about>About</a>
+</nav>
+</header>
+<main>
+<article>
+<div class=title>
+<h1 class=title>[MIT-missing] 04 Version Control (Git)</h1>
+<div class=meta>Posted on Jul 25, 2021</div>
+</div>
+<section class=body>
+<blockquote>
+<p><a href=https://missing.csail.mit.edu/2020/version-control/>Version Control (Git) - missing-semester</a></p>
+</blockquote>
+<h2 id=1-gits-data-model>1 git’s data model</h2>
+<h3 id=11-snapshots>1.1 snapshots</h3>
+<ul>
+<li>Git models the history of a collection of files and folders within some top-level directory as a series of snapshots.</li>
+<li>In Git terminology, a file is called a “blob”, and it’s just a bunch of bytes. A directory is called a “tree”, and it maps names to blobs or trees (so directories can contain other directories). A snapshot is the top-level tree that is being tracked.</li>
+<li>For example, we might have a tree as follows:</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>&lt;root&gt; (tree)
+|
++- foo (tree)
+|  |
+|  + bar.txt (blob, contents = &#34;hello world&#34;)
+|
++- baz.txt (blob, contents = &#34;git is wonderful&#34;)
+</code></pre></div><h3 id=12-modeling-history-relating-snapshots>1.2 modeling history: relating snapshots</h3>
+<ul>
+<li>In Git, a history is a directed acyclic graph (DAG) of snapshots.</li>
+<li>All this means is that each snapshot in Git refers to a set of “parents”, the snapshots that preceded it. It’s a set of parents rather than a single parent (as would be the case in a linear history) because a snapshot might descend from multiple parents.</li>
+<li>Git calls these snapshots “commit”s. Visualizing a commit history might look something like this:</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>o &lt;-- o &lt;-- o &lt;-- o
+            ^
+             \
+              --- o &lt;-- o
+</code></pre></div><ul>
+<li>In the ASCII art above, the <code>o</code>s correspond to individual commits (snapshots). The arrows point to the parent of each commit.</li>
+<li>After the third commit, the history branches into two separate branches. This might correspond to, for example, two separate features being developed in parallel, independently from each other. In the future, these branches may be merged to create a new snapshot that incorporates both of the features, producing a new history that looks like this, with the newly created merge commit shown in bold:</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>o &lt;-- o &lt;-- o &lt;-- o &lt;---- o
+            ^            /
+             \          v
+              --- o &lt;-- o
+</code></pre></div><ul>
+<li>Commits in Git are immutable. This doesn’t mean that mistakes can’t be corrected, however; it’s just that “edits” to the commit history are actually creating entirely new commits.</li>
+</ul>
+<h3 id=13-data-model-as-pseudocode>1.3 data model, as pseudocode</h3>
+<ul>
+<li>It may be instructive to see Git’s data model written down in pseudocode:</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>// a file is a bunch of bytes
+type blob = array&lt;byte&gt;
+
+// a directory contains named files and directories
+type tree = map&lt;string, tree | blob&gt;
+
+// a commit has parents, metadata, and the top-level tree
+type commit = struct {
+    parents: array&lt;commit&gt;
+    author: string
+    message: string
+    snapshot: tree
+}
+</code></pre></div><h3 id=14-objects-and-content-addressing>1.4 objects and content-addressing</h3>
+<ul>
+<li>An “object” is a blob, tree, or commit:</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>type object = blob | tree | commit
+</code></pre></div><ul>
+<li>In Git data store, all objects are content-addressed by their <a href=https://en.wikipedia.org/wiki/SHA-1>SHA-1 hash</a>.</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>objects = map&lt;string, object&gt;
+
+def store(object):
+    id = sha1(object)
+    objects[id] = object
+
+def load(id):
+    return objects[id]
+</code></pre></div><ul>
+<li>Blobs, trees, and commits are unified in this way: they are all objects. When they reference other objects, they don’t actually <em>contain</em> them in their on-disk representation, but have a reference to them by their hash.</li>
+</ul>
+<h3 id=15-references>1.5 references</h3>
+<ul>
+<li>Now, all snapshots can be identified by their SHA-1 hash. That’s inconvenient, because humans aren’t good at remembering strings of 40 hexadecimal characters.</li>
+<li>Git’s solution to this problem is human-readable names for SHA-1 hashes, called “references”.</li>
+<li>References are pointers to commits. Unlike objects, which are immutable, references are mutable (can be updated to point to a new commit).</li>
+<li>For example, the <code>master</code> reference usually points to the latest commit in the main branch of development.</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>references = map&lt;string, string&gt;
+
+def update_reference(name, id):
+    references[name] = id
+
+def read_reference(name):
+    return references[name]
+
+def load_reference(name_or_id):
+    if name_or_id in references:
+        return load(references[name_or_id])
+    else:
+        return load(name_or_id)
+</code></pre></div><ul>
+<li>With this, Git can use human-readable names like “master” to refer to a particular snapshot in the history, instead of a long hexadecimal string.</li>
+<li>One detail is that we often want a notion of “where we currently are” in the history, so that when we take a new snapshot, we know what it is relative to (how we set the <code>parents</code> field of the commit). In Git, that “where we currently are” is a special reference called “HEAD”.</li>
+</ul>
+<h3 id=16-repositories>1.6 repositories</h3>
+<ul>
+<li>Finally, we can define what (roughly) is a Git <em>repository</em>: it is the data <code>objects</code> and <code>references</code>.</li>
+<li>On disk, all Git stores are objects and references: that’s all there is to Git’s data model. All <code>git</code> commands map to some manipulation of the commit DAG by adding objects and adding/updating references.</li>
+</ul>
+<h2 id=2-staging-area>2 staging area</h2>
+<ul>
+<li>This is another concept that’s orthogonal to the data model, but it’s a part of the interface to create commits.</li>
+<li>One way you might imagine implementing snapshotting as described above is to have a “create snapshot” command that creates a new snapshot based on the <em>current state</em> of the working directory. Some version control tools work like this, but not Git.</li>
+<li>We want clean snapshots, and it might not always be ideal to make a snapshot from the current state. For example, imagine a scenario where you’ve implemented two separate features, and you want to create two separate commits, where the first introduces the first feature, and the next introduces the second feature.</li>
+<li>Git accommodates such scenarios by allowing you to specify which modifications should be included in the next snapshot through a mechanism called the “staging area”.</li>
+</ul>
+<h2 id=3-git-command-line-interface>3 git command-line interface</h2>
+<h3 id=31-basics>3.1 basics</h3>
+<ul>
+<li><code>git help &lt;command></code>: get help for a git command</li>
+<li><code>git init</code>: creates a new git repo, with data stored in the <code>.git</code> directory</li>
+<li><code>git status</code>: tells you what’s going on</li>
+<li><code>git add &lt;filename></code>: adds files to staging area</li>
+<li><code>git commit</code>: creates a new commit
+<ul>
+<li>Write <a href=https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html>good commit messages</a>!</li>
+<li>Even more reasons to write <a href=https://chris.beams.io/posts/git-commit/>good commit messages</a>!</li>
+</ul>
+</li>
+<li><code>git log</code>: shows a flattened log of history</li>
+<li><code>git log --all --graph --decorate</code>: visualizes history as a DAG</li>
+<li><code>git diff &lt;filename></code>: show changes you made relative to the staging area</li>
+<li><code>git diff &lt;revision> &lt;filename></code>: shows differences in a file between snapshots</li>
+<li><code>git checkout &lt;revision></code>: updates HEAD and current branch</li>
+</ul>
+<h3 id=32-branching-and-merging>3.2 branching and merging</h3>
+<ul>
+<li><code>git branch</code>: shows branches</li>
+<li><code>git branch &lt;name></code>: creates a branch</li>
+<li><code>git checkout -b &lt;name></code>: creates a branch and switches to it
+<ul>
+<li>same as <code>git branch &lt;name>; git checkout &lt;name></code></li>
+</ul>
+</li>
+<li><code>git merge &lt;revision></code>: merges into current branch</li>
+<li><code>git mergetool</code>: use a fancy tool to help resolve merge conflicts</li>
+<li><code>git rebase</code>: rebase set of patches onto a new base</li>
+</ul>
+<h3 id=33-remotes>3.3 remotes</h3>
+<ul>
+<li><code>git remote</code>: list remotes</li>
+<li><code>git remote add &lt;name> &lt;url></code>: add a remote</li>
+<li><code>git push &lt;remote> &lt;local branch>:&lt;remote branch></code>: send objects to remote, and update remote reference</li>
+<li><code>git branch --set-upstream-to=&lt;remote>/&lt;remote branch></code>: set up correspondence between local and remote branch</li>
+<li><code>git fetch</code>: retrieve objects/references from a remote</li>
+<li><code>git pull</code>: same as <code>git fetch; git merge</code></li>
+<li><code>git clone</code>: download repository from remote</li>
+</ul>
+<h3 id=34-undo>3.4 undo</h3>
+<ul>
+<li><code>git commit --amend</code>: edit a commit’s contents/message</li>
+<li><code>git reset HEAD &lt;file></code>: unstage a file</li>
+<li><code>git checkout -- &lt;file></code>: discard changes</li>
+</ul>
+<h2 id=4-advanced-git>4 advanced git</h2>
+<ul>
+<li><code>git config</code>: Git is <a href=https://git-scm.com/docs/git-config>highly customizable</a></li>
+<li><code>git clone --depth=1</code>: shallow clone, without entire version history</li>
+<li><code>git add -p</code>: interactive staging</li>
+<li><code>git rebase -i</code>: interactive rebasing</li>
+<li><code>git blame</code>: show who last edited which line</li>
+<li><code>git stash</code>: temporarily remove modifications to working directory</li>
+<li><code>git bisect</code>: binary search history (e.g. for regressions)</li>
+<li><code>.gitignore</code>: <a href=https://git-scm.com/docs/gitignore>specify</a> intentionally untracked files to ignore</li>
+</ul>
+<h2 id=5-resources>5 resources</h2>
+<ul>
+<li><a href=https://git-scm.com/book/en/v2>Pro Git</a> is <strong>highly recommended reading</strong>. Going through Chapters 1–5 should teach you most of what you need to use Git proficiently, now that you understand the data model. The later chapters have some interesting, advanced material.</li>
+<li><a href=https://ohshitgit.com/>Oh Shit, Git!?!</a> is a short guide on how to recover from some common Git mistakes.</li>
+<li><a href=https://eagain.net/articles/git-for-computer-scientists/>Git for Computer Scientists</a> is a short explanation of Git’s data model, with less pseudocode and more fancy diagrams than these lecture notes.</li>
+<li><a href=https://jwiegley.github.io/git-from-the-bottom-up/>Git from the Bottom Up</a> is a detailed explanation of Git’s implementation details beyond just the data model, for the curious.</li>
+<li><a href=https://smusamashah.github.io/blog/2017/10/14/explain-git-in-simple-words>How to explain git in simple words</a></li>
+<li><a href=https://learngitbranching.js.org/>Learn Git Branching</a> is a browser-based game that teaches you Git.</li>
+</ul>
+</section>
+<div class=post-tags>
+<nav class="nav tags">
+<ul class=tags>
+<li><a href=/tags/awesome-course>awesome-course</a></li>
+<li><a href=/tags/git>git</a></li>
+</ul>
+</nav>
+</div>
+</article>
+</main>
+<footer>
+<hr><a class=soc href=https://www.linkedin.com/in/yuedongwoo/ title=LinkedIn><i data-feather=linkedin></i></a>|<a class=soc href=https://github.com/lunarwhite title=GitHub><i data-feather=github></i></a>|<a class=soc href title=Twitter><i data-feather=twitter></i></a>|<a class=soc href title=Instagram><i data-feather=instagram></i></a>|<a class=soc href title=Bilibili><i data-feather=tv></i></a>|<a class=soc href=https://www.zhihu.com/people/wydnlz title=Zhihu><i data-feather=link></i></a>|⚡️
+2021 © lunarwhite | <a href=https://github.com/athul/archie>Archie Theme</a> | Built with <a href=https://gohugo.io>Hugo</a>
+</footer>
+<script>feather.replace()</script>
+<script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
+</body>
+</html>

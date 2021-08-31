@@ -1,0 +1,950 @@
+<!doctype html><html><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge"><title>Tiny zhihu-like web - deploy doc - lunarwhite</title><link rel=icon type=image/png href=favicon/favicon.ico><meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="summary for in-class assignments in SDU.">
+<meta property="og:image" content>
+<meta property="og:title" content="Tiny zhihu-like web - deploy doc">
+<meta property="og:description" content="summary for in-class assignments in SDU.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lunarwhite.github.io/posts/assigns/db-tiny-zh2/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-06-01T11:12:00+00:00">
+<meta property="article:modified_time" content="2021-06-01T11:12:00+00:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="Tiny zhihu-like web - deploy doc">
+<meta name=twitter:description content="summary for in-class assignments in SDU.">
+<script src=https://lunarwhite.github.iojs/feather.min.js></script>
+<link href=https://lunarwhite.github.io/css/fonts.b685ac6f654695232de7b82a9143a46f9e049c8e3af3a21d9737b01f4be211d1.css rel=stylesheet>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+</head>
+<body>
+<div class=content><header>
+<div class=main>
+<a href=https://lunarwhite.github.io>lunarwhite</a>
+</div>
+<nav>
+<a href=/>Home</a>
+<a href=/posts>Posts</a>
+<a href=/tags>Tags</a>
+<a href=/about>About</a>
+</nav>
+</header>
+<main>
+<article>
+<div class=title>
+<h1 class=title>Tiny zhihu-like web - deploy doc</h1>
+<div class=meta>Posted on Jun 1, 2021</div>
+</div>
+<section class=body>
+<blockquote>
+<p>本项目为数据库课程设计的<strong>开发文档</strong></p>
+<p>设计文档<a href=/posts/assigns/db-tiny-zh1/>在这里</a>，代码仓库<a href=https://github.com/lunarwhite/tiny-zhihu-web>在这里</a></p>
+<p>欢迎交流拍砖~</p>
+</blockquote>
+<h2 id=1-云服务器>1 云服务器</h2>
+<h3 id=11-连接>1.1 连接</h3>
+<ul>
+<li>服务器信息
+<ul>
+<li>操作系统：Ubuntu Server 18.04 LTS</li>
+<li>配置：标准型S5/1核/2GB/1Mbps</li>
+<li>系统盘：高效云硬盘/50GB</li>
+</ul>
+</li>
+</ul>
+<h3 id=12-域名>1.2 域名</h3>
+<ul>
+<li>备案
+<ul>
+<li>ID证、地址、手机号、Email</li>
+</ul>
+</li>
+<li>解析
+<ul>
+<li>管理： <a href=https://console.cloud.tencent.com/cns>解析控制台</a></li>
+<li>二级域名：blog / demo / &mldr;</li>
+</ul>
+</li>
+<li>端口
+<ul>
+<li>管理：<a href="https://console.cloud.tencent.com/vpc/securitygroup?rid=8&rid=8">配置安全组</a></li>
+</ul>
+</li>
+<li>SSL
+<ul>
+<li>支持二级、三级域名，同一主域最多20张免费证书</li>
+<li>有效期一年，到期后需要重新申请并安装</li>
+<li>TrustAsia TLS RSA CA证书（年限：1年）</li>
+<li>管理：<a href=https://console.cloud.tencent.com/certoverview>证书管理控制台</a></li>
+<li>域名验证方式：<a href=https://cloud.tencent.com/document/product/400/54500>DNS 验证</a></li>
+</ul>
+</li>
+<li>SSL部署
+<ul>
+<li>官方文档：<a href=https://cloud.tencent.com/document/product/400/35244>Nginx 服务器 SSL 证书安装部署</a></li>
+<li>下载证书，解压之后选择Nginx文件夹，重命名为<code>cert</code>
+<ul>
+<li><code>.crt</code>文件：是证书文件，crt是pem文件的扩展名</li>
+<li><code>.key</code>文件：证书的私钥文件</li>
+</ul>
+</li>
+<li>在Nginx的安装目录下创建<code>cert</code>目录，将本地证书文件和密钥文件上传</li>
+</ul>
+</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo mkdir /etc/nginx/cert
+sudo chmod <span style=color:#40a070>777</span> /etc/nginx/cert
+</code></pre></div><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo scp -r 1_lunarwhite.cn_bundle.crt ubuntu@49.233.27.54:/etc/nginx/cert
+sudo scp -r 2_lunarwhite.cn.key ubuntu@49.233.27.54:/etc/nginx/cert
+sudo scp -r 1_blog.lunarwhite.cn_bundle.crt ubuntu@49.233.27.54:/etc/nginx/cert
+sudo scp -r 2_blog.lunarwhite.cn.key ubuntu@49.233.27.54:/etc/nginx/cert
+sudo scp -r 1_demo.lunarwhite.cn_bundle.crt ubuntu@49.233.27.54:/etc/nginx/cert
+sudo scp -r 2_demo.lunarwhite.cn.key ubuntu@49.233.27.54:/etc/nginx/cert
+</code></pre></div><ul>
+<li>编辑Nginx配置文件</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo vi /etc/nginx/nginx.conf
+</code></pre></div><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>server {
+    listen 443;
+    server_name lunarwhite.cn www.lunarwhite.cn;
+    ssl on;
+    ssl_certificate cert/1_lunarwhite.cn_bundle.crt;
+    ssl_certificate_key cert/2_lunarwhite.cn.key;
+    ssl_session_timeout 5m;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;
+    ssl_prefer_server_ciphers on;
+
+    location / {
+        root html;
+        index  index.html index.htm;
+    }
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>server {
+    listen 443;
+    ssl on
+    server_name demo.lunarwhite.cn;
+    ssl_certificate cert/1_demo.lunarwhite.cn_bundle.crt;
+    ssl_certificate_key cert/2_demo.lunarwhite.cn.key;
+    ssl_session_timeout 5m;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;
+    ssl_prefer_server_ciphers on;
+
+    location / {
+        include uwsgi_params;
+      uwsgi_pass unix:/home/ubuntu/tiny-zhihu-web/izhihu.sock;
+    }
+}
+
+server {
+    listen 443;
+    ssl on
+    server_name blog.lunarwhite.cn;
+    ssl_certificate cert/1_blog.lunarwhite.cn_bundle.crt;
+    ssl_certificate_key cert/2_blog.lunarwhite.cn.key;
+    ssl_session_timeout 5m;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;
+    ssl_prefer_server_ciphers on;
+
+    location / {
+        root html;
+        index  index.html index.htm;
+    }
+}
+</code></pre></div><ul>
+<li>重启Nginx</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo nginx -s reload
+</code></pre></div><h2 id=2-环境准备>2 环境准备</h2>
+<h3 id=20-技术栈>2.0 技术栈</h3>
+<ul>
+<li>
+<p>软件</p>
+<ul>
+<li>MobaXterm（√） # ssh工具</li>
+<li>Ubuntu-Server（√） # 操作系统</li>
+<li>SQL-Server（√） # 数据库</li>
+<li>VSCode+Git（√） # 编辑器</li>
+<li>Python、Flask、uwsgi（√） # 开发语言</li>
+<li>Nginx（√） # web服务器</li>
+</ul>
+</li>
+<li>
+<p>依赖</p>
+<ul>
+<li>生成<code>tree</code>文件结构</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo apt install tree
+
+tree -L <span style=color:#40a070>2</span> &gt;&gt; README.md
+</code></pre></div><ul>
+<li>为环境创建<code>requirements.txt</code></li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic># 创建</span>
+pip3 freeze &gt; requirements.txt
+
+<span style=color:#60a0b0;font-style:italic># 接受项目副本，需要跑</span>
+pip3 install -r requirements.txt
+</code></pre></div></li>
+</ul>
+<h3 id=21-部署ubuntu-server>2.1 部署Ubuntu-Server</h3>
+<ul>
+<li>升级</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo su
+
+sudo apt update
+sudo apt upgrade
+
+sudo apt autoremove
+</code></pre></div><h3 id=22-安装部署sql-server>2.2 安装部署SQL-Server</h3>
+<ul>
+<li>安装：<a href="https://docs.microsoft.com/zh-cn/sql/linux/quickstart-install-connect-ubuntu?view=sql-server-ver15">快速入门：安装 SQL Server 并在 Ubuntu 上创建数据库</a></li>
+<li>内存限制：</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#007020>cd</span> /opt/mssql/bin/ <span style=color:#60a0b0;font-style:italic># 进入目录</span>
+sudo mv sqlservr sqlservr.old <span style=color:#60a0b0;font-style:italic># 保存备份文件</span>
+sudo python <span style=color:#60a0b0;font-style:italic># 使用python修改内存限制代码</span>
+
+&gt;&gt;&gt;oldfile <span style=color:#666>=</span> open<span style=color:#666>(</span><span style=color:#4070a0>&#34;/opt/mssql/bin/sqlservr.old&#34;</span>, <span style=color:#4070a0>&#34;rb&#34;</span><span style=color:#666>)</span>.read<span style=color:#666>()</span>
+&gt;&gt;&gt;newfile <span style=color:#666>=</span> oldfile.replace<span style=color:#666>(</span><span style=color:#4070a0>&#34;\x00\x94\x35\x77&#34;</span>, <span style=color:#4070a0>&#34;\x00\x80\x84\x1e&#34;</span><span style=color:#666>)</span>
+&gt;&gt;&gt;open<span style=color:#666>(</span><span style=color:#4070a0>&#34;/opt/mssql/bin/sqlservr&#34;</span>, <span style=color:#4070a0>&#34;wb&#34;</span><span style=color:#666>)</span>.write<span style=color:#666>(</span>newfile<span style=color:#666>)</span>
+&gt;&gt;&gt;exit<span style=color:#666>()</span>
+
+chmod <span style=color:#40a070>777</span> sqlservr
+</code></pre></div><ul>
+<li>版本：Express (free)</li>
+<li>密码：<code>&lt;password></code></li>
+<li>创建：</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sqlcmd -S localhost -U SA -P &lt;password&gt; <span style=color:#60a0b0;font-style:italic># 启动</span>
+QUIT <span style=color:#60a0b0;font-style:italic># 退出</span>
+</code></pre></div><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#60a0b0;font-style:italic>-- 以下步骤创建一个名为 TestDB 的新数据库
+</span><span style=color:#60a0b0;font-style:italic></span><span style=color:#007020;font-weight:700>CREATE</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>DATABASE</span><span style=color:#bbb> </span>TestDB<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>SELECT</span><span style=color:#bbb> </span>Name<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>from</span><span style=color:#bbb> </span>sys.Databases<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>GO</span><span style=color:#bbb>
+</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#60a0b0;font-style:italic>-- 接下来创建一个新表 Inventory，然后插入两个新行
+</span><span style=color:#60a0b0;font-style:italic></span>USE<span style=color:#bbb> </span>TestDB<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>CREATE</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>TABLE</span><span style=color:#bbb> </span>Inventory<span style=color:#bbb> </span>(id<span style=color:#bbb> </span><span style=color:#007020>INT</span>,<span style=color:#bbb> </span>name<span style=color:#bbb> </span>NVARCHAR(<span style=color:#40a070>50</span>),<span style=color:#bbb> </span>quantity<span style=color:#bbb> </span><span style=color:#007020>INT</span>)<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>INSERT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>INTO</span><span style=color:#bbb> </span>Inventory<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>VALUES</span><span style=color:#bbb> </span>(<span style=color:#40a070>1</span>,<span style=color:#bbb> </span><span style=color:#4070a0>&#39;banana&#39;</span>,<span style=color:#bbb> </span><span style=color:#40a070>150</span>);<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>INSERT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>INTO</span><span style=color:#bbb> </span>Inventory<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>VALUES</span><span style=color:#bbb> </span>(<span style=color:#40a070>2</span>,<span style=color:#bbb> </span><span style=color:#4070a0>&#39;orange&#39;</span>,<span style=color:#bbb> </span><span style=color:#40a070>154</span>);<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>GO</span><span style=color:#bbb>
+</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#60a0b0;font-style:italic>-- 运行查询以从 Inventory 表返回数据
+</span><span style=color:#60a0b0;font-style:italic></span><span style=color:#007020;font-weight:700>SELECT</span><span style=color:#bbb> </span><span style=color:#666>*</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>FROM</span><span style=color:#bbb> </span>Inventory<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>WHERE</span><span style=color:#bbb> </span>quantity<span style=color:#bbb> </span><span style=color:#666>&gt;</span><span style=color:#bbb> </span><span style=color:#40a070>152</span>;<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>GO</span><span style=color:#bbb>
+</span></code></pre></div><ul>
+<li>从Windows远程连接：<a href="https://docs.microsoft.com/zh-cn/sql/linux/sql-server-linux-manage-ssms?view=sql-server-ver15">使用 Windows 上的 SQL Server Management Studio 管理 Linux 上的 SQL Server</a></li>
+<li>还原数据库备份文件：</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic># 传输</span>
+scp izhihu.bak ubuntu@49.233.27.54:./
+
+<span style=color:#60a0b0;font-style:italic># 移动</span>
+ssh ubuntu@49.233.27.54
+sudo su
+mkdir -p /var/opt/mssql/backup
+mv /home/ubuntu/izhihu.bak /var/opt/mssql/backup/
+chmod <span style=color:#40a070>777</span> /var/opt/mssql
+chmod <span style=color:#40a070>777</span> /var/opt/mssql/backup/izhihu.bak
+<span style=color:#007020>exit</span>
+
+<span style=color:#60a0b0;font-style:italic># 还原</span>
+sqlcmd -S localhost -U SA -P &lt;password&gt;
+</code></pre></div><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#60a0b0;font-style:italic>-- 还原
+</span><span style=color:#60a0b0;font-style:italic></span>RESTORE<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>DATABASE</span><span style=color:#bbb> </span>izhihu<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>FROM</span><span style=color:#bbb> </span>DISK<span style=color:#bbb> </span><span style=color:#666>=</span><span style=color:#bbb> </span><span style=color:#4070a0>&#39;/var/opt/mssql/backup/izhihu.bak&#39;</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>WITH</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>MOVE</span><span style=color:#bbb> </span><span style=color:#4070a0>&#39;izhihu&#39;</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>TO</span><span style=color:#bbb> </span><span style=color:#4070a0>&#39;/var/opt/mssql/data/izhihu.mdf&#39;</span>,<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>MOVE</span><span style=color:#bbb> </span><span style=color:#4070a0>&#39;izhihu_Log&#39;</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>TO</span><span style=color:#bbb> </span><span style=color:#4070a0>&#39;/var/opt/mssql/data/izhihu_Log.ldf&#39;</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>GO</span><span style=color:#bbb>
+</span><span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#60a0b0;font-style:italic>-- 验证
+</span><span style=color:#60a0b0;font-style:italic></span><span style=color:#007020;font-weight:700>SELECT</span><span style=color:#bbb> </span>Name<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>FROM</span><span style=color:#bbb> </span>sys.Databases<span style=color:#bbb>
+</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>GO</span><span style=color:#bbb>
+</span></code></pre></div><ul>
+<li>其他设置：开启</li>
+</ul>
+<h3 id=23-部署vscodegit>2.3 部署VSCode+Git</h3>
+<ul>
+<li>连接</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>ssh ubuntu@49.233.27.54
+</code></pre></div><ul>
+<li>github访问加速</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic># 提速</span>
+nslookup github.global.ssl.fastly.Net
+nslookup github.com
+
+<span style=color:#60a0b0;font-style:italic># 找到下面的IP Non-authoritative answer</span>
+<span style=color:#60a0b0;font-style:italic># 修改host为下面下面的ip，格式如下</span>
+<span style=color:#60a0b0;font-style:italic># 13.250.177.223 github.com</span>
+<span style=color:#60a0b0;font-style:italic># 108.160.170.43 github.global.ssl.fastly.Net</span>
+<span style=color:#60a0b0;font-style:italic># 2001::a27d:205 github.global.ssl.fastly.Net</span>
+
+<span style=color:#60a0b0;font-style:italic># 按下 i 进入编辑</span>
+sudo vi /etc/hosts
+
+<span style=color:#60a0b0;font-style:italic># 安装nscd来刷新DNS</span>
+sudo apt install nscd
+sudo /etc/init.d/nscd restart
+
+<span style=color:#60a0b0;font-style:italic># set-proxy</span>
+env|grep -i proxy
+git config -l | grep -i proxy
+
+<span style=color:#60a0b0;font-style:italic># reset-proxy</span>
+git config --global  --unset https.https://github.com.proxy
+git config --global  --unset http.https://github.com.proxy
+</code></pre></div><ul>
+<li>在VSCode中git-clone</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic># 设置用户</span>
+git config --global user.email <span style=color:#4070a0>&#34;dwcn22@outlook.com&#34;</span>
+git config --global user.name <span style=color:#4070a0>&#34;lunarwhite&#34;</span>
+
+<span style=color:#60a0b0;font-style:italic># 设置缓冲区</span>
+git config --global pack.threads <span style=color:#40a070>1</span>
+git config --global pack.windowMemory 256m
+git config --global http.postbuffer <span style=color:#40a070>52428800</span>
+</code></pre></div><h3 id=24-部署python>2.4 部署Python</h3>
+<ul>
+<li>更新pip3</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>pip3 install --upgrade pip
+</code></pre></div><ul>
+<li>创建虚拟环境</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo apt install python3-venv
+python3 -m venv env
+</code></pre></div><ul>
+<li>select interpreters</li>
+<li>激活env：<code>Python: Create Terminal</code></li>
+</ul>
+<h3 id=25-安装部署pymssql>2.5 安装部署pymssql</h3>
+<ul>
+<li>官方文档：<a href="https://docs.microsoft.com/zh-cn/sql/connect/python/pymssql/python-sql-driver-pymssql?view=sql-server-ver15">Python SQL Driver - pymssql</a></li>
+<li>安装</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>pip3 install pymssql
+</code></pre></div><ul>
+<li>获取端口号</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#007020;font-weight:700>exec</span><span style=color:#bbb> </span>sys.sp_readerrorlog<span style=color:#bbb> </span><span style=color:#40a070>0</span>,<span style=color:#bbb> </span><span style=color:#40a070>1</span>,<span style=color:#bbb> </span><span style=color:#4070a0>&#39;listening&#39;</span><span style=color:#bbb>
+</span></code></pre></div><ul>
+<li>连接</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python>conn <span style=color:#666>=</span> pymssql<span style=color:#666>.</span>connect(
+    host<span style=color:#666>=</span><span style=color:#4070a0>&#39;127.0.0.1:1433&#39;</span>,
+    user<span style=color:#666>=</span><span style=color:#4070a0>&#39;sa&#39;</span>,
+    password<span style=color:#666>=</span> <span style=color:#666>&lt;</span>password<span style=color:#666>&gt;</span>,
+    database<span style=color:#666>=</span><span style=color:#4070a0>&#39;izhihu&#39;</span>
+)
+</code></pre></div><h3 id=26-安装部署flask>2.6 安装部署Flask</h3>
+<ul>
+<li>官方文档：<a href=https://code.visualstudio.com/docs/python/tutorial-flask>Flask Tutorial in Visual Studio Code</a></li>
+<li>安装</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>pip3 install flask
+pip3 install wheel
+</code></pre></div><ul>
+<li>Hello-World</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#007020;font-weight:700>from</span> <span style=color:#0e84b5;font-weight:700>flask</span> <span style=color:#007020;font-weight:700>import</span> Flask
+app <span style=color:#666>=</span> Flask(__name__)
+
+<span style=color:#555;font-weight:700>@app</span><span style=color:#666>.</span>route(<span style=color:#4070a0>&#34;/&#34;</span>)
+<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>home</span>():
+    <span style=color:#007020;font-weight:700>return</span> <span style=color:#4070a0>&#39;Hello, Flask!&#39;</span>
+
+<span style=color:#007020;font-weight:700>if</span> __name__ <span style=color:#666>==</span> <span style=color:#4070a0>&#39;__main__&#39;</span>:
+    app<span style=color:#666>.</span>run()
+</code></pre></div><ul>
+<li>从host上传文件</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo scp -r templates ubuntu@49.233.27.54:/home/ubuntu/tiny-zhihu-web
+
+sudo scp -r static ubuntu@49.233.27.54:/home/ubuntu/tiny-zhihu-web
+</code></pre></div><h3 id=27-安装部署uwsgi>2.7 安装部署uwsgi</h3>
+<ul>
+<li>系统</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo apt install libssl-dev libffi-dev
+</code></pre></div><ul>
+<li>安装</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>pip3 install uwsgi
+</code></pre></div><ul>
+<li>创建WSGI入口点文件<code>wsgi.py</code>，运行测试</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#007020;font-weight:700>from</span> <span style=color:#0e84b5;font-weight:700>izhihu</span> <span style=color:#007020;font-weight:700>import</span> app
+
+<span style=color:#007020;font-weight:700>if</span> __name__ <span style=color:#666>==</span> <span style=color:#4070a0>&#34;__main__&#34;</span>:
+    app<span style=color:#666>.</span>run()
+</code></pre></div><ul>
+<li>长期配置，在项目中新建<code>izhihu.ini</code></li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ini data-lang=ini><span style=color:#007020;font-weight:700>[uwsgi]</span>
+<span style=color:#4070a0>module</span> <span style=color:#666>=</span> <span style=color:#4070a0>wsgi:app</span>
+
+<span style=color:#4070a0>master</span> <span style=color:#666>=</span> <span style=color:#4070a0>true</span>
+<span style=color:#4070a0>processes</span> <span style=color:#666>=</span> <span style=color:#4070a0>5</span>
+
+<span style=color:#4070a0>socket</span> <span style=color:#666>=</span> <span style=color:#4070a0>/home/ubuntu/tiny-zhihu-web/izhihu.sock</span>
+<span style=color:#4070a0>chmod-socket</span> <span style=color:#666>=</span> <span style=color:#4070a0>660</span>
+<span style=color:#4070a0>vacuum</span> <span style=color:#666>=</span> <span style=color:#4070a0>true</span>
+
+<span style=color:#4070a0>die-on-term</span> <span style=color:#666>=</span> <span style=color:#4070a0>true</span>
+</code></pre></div><ul>
+<li>在<code>(env)/home/ubuntu/tiny-zhihu-web</code>中启动<code>uwsgi</code></li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>uwsgi izhihu.ini
+</code></pre></div><h3 id=28-安装部署nginx>2.8 安装部署Nginx</h3>
+<ul>
+<li>安装</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo apt install nginx
+
+<span style=color:#60a0b0;font-style:italic># 启动</span>
+service nginx start
+
+<span style=color:#60a0b0;font-style:italic># 配置文件</span>
+sudo vi /etc/nginx/nginx.conf
+</code></pre></div><ul>
+<li>将Nginx配置为代理请求</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo vi /etc/nginx/sites-available/izhihu
+</code></pre></div><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>server {
+  listen 80;
+  server_name demo.lunarwhite.cn;
+
+  access_log /home/ubuntu/tiny-zhihu-web/log/access.log;
+  error_log /home/ubuntu/tiny-zhihu-web/log/error.log;
+
+  location / {
+    include uwsgi_params;
+    uwsgi_pass unix:/home/ubuntu/tiny-zhihu-web/izhihu.sock;
+  }
+}
+</code></pre></div><ul>
+<li>将文件链接到<code>sites-enabled</code>目录</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo ln -s /etc/nginx/sites-available/izhihu /etc/nginx/sites-enabled
+
+<span style=color:#60a0b0;font-style:italic># 测试语法错误</span>
+sudo nginx -t
+</code></pre></div><ul>
+<li>重新启动Nginx进程以读取新配置</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo systemctl restart nginx
+</code></pre></div><ul>
+<li>调整防火墙</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo ufw delete allow <span style=color:#40a070>5000</span>
+sudo ufw allow <span style=color:#4070a0>&#39;Nginx Full&#39;</span>
+</code></pre></div><ul>
+<li>检查error</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#007020>cd</span> /var/log/nginx <span style=color:#60a0b0;font-style:italic>#错误日志 error.log</span>
+<span style=color:#007020>cd</span> /var/log/nginx <span style=color:#60a0b0;font-style:italic>#访问日志 access.log</span>
+sudo journalctl -u nginx <span style=color:#60a0b0;font-style:italic># 检查Nginx进程日志</span>
+sudo journalctl -u myproject <span style=color:#60a0b0;font-style:italic># 检查Flask应用程序的uWSGI日志</span>
+</code></pre></div><ul>
+<li>命令</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>nginx -h <span style=color:#60a0b0;font-style:italic>#查看帮助信息</span>
+nginx -v <span style=color:#60a0b0;font-style:italic>#查看Nginx版本</span>
+
+sudo nginx -s stop <span style=color:#60a0b0;font-style:italic># 停用Nginx</span>
+sudo nginx -s quit <span style=color:#60a0b0;font-style:italic>#优雅的停用Nginx（处理完正在进行中请求后</span>
+
+sudo nginx -s reload <span style=color:#60a0b0;font-style:italic># 重新加载配置，并优雅的重启进程</span>
+sudo nginx -s reopen <span style=color:#60a0b0;font-style:italic># 重启日志文件</span>
+</code></pre></div><h2 id=3-项目结构>3 项目结构</h2>
+<h3 id=30-总体结构>3.0 总体结构</h3>
+<ul>
+<li>目录</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>.
+├── config.py # 配置数据库
+├── dbOper.py # 操作数据库
+├── env # 环境
+│   ├── bin
+│   ├── include
+│   ├── lib
+│   ├── lib64 -&gt; lib
+│   ├── pyvenv.cfg
+│   └── share
+├── izhihu.ini # 项目初始化
+├── izhihu.py # 项目主入口
+├── izhihu.sock # 配置Nginx
+├── LICENSE # 开源条款
+├── log # 日志文件
+│   ├── access.log # 访问日志
+│   └── error.log # 错误日志
+├── README.md # 说明文件
+├── requirements.txt # python依赖库
+├── static # 前端css文件、img文件
+│   ├── css
+│   └── images
+├── templates # HTML文件
+│   ├── about.html # 关于
+│   ├── answer.html # 回答界面
+│   ├── base.html # 父界面，由其他界面继承
+│   ├── changeInfo.html # 修改信息界面
+│   ├── comment.html # 评论界面
+│   ├── error.html # 提示错误界面
+│   ├── index.html # 主界面
+│   ├── login.html # 登陆界面
+│   ├── question.html # 问题界面
+│   ├── regist.html # 注册界面
+│   └── user.html # 用户个人界面
+└── wsgi.py # 运行
+
+12 directories, 27 files
+</code></pre></div><h3 id=31-前端>3.1 前端</h3>
+<ul>
+<li>文件
+<ul>
+<li><code>about.html</code>关于页面</li>
+<li><code>Base.html</code>编写一个导航栏，将一些通用的组件结合起来</li>
+<li><code>Index.html</code>主页面，主要进行问题的展示</li>
+<li><code>Login.html</code>登陆页面，主要进行表单提交</li>
+<li><code>Question.html</code>问题页面，主要进行问题发布</li>
+<li><code>Answer.html</code>回答页面，主要进行回答发布</li>
+<li><code>Comment.html</code>评论页面，主要进行评论</li>
+<li><code>Reigst.html</code>注册页面，主要进行表单提交</li>
+<li><code>User.html</code>用户页面，查看自己的信息</li>
+<li><code>Admin.html</code>管理员页面，主要将信息展示给管理员进行筛选</li>
+<li><code>Error.html</code>报错页面，运行上有错误时使用</li>
+</ul>
+</li>
+<li>思路
+<ul>
+<li>编写前端页面时，主要用<code>html+css+js</code>以及利用<code>python+Flask</code>中的很多语法，在编写<code>base.html</code>时也用了<code>bootstrap</code>中的一些语法。加入一个<code>toobar</code>到主页面中。</li>
+<li>描述各个页面的跳转，简单描述了网页的功能。因为网页之间的跳转比较复杂，这里只将一个闭环写出来，其中红色标记代表我们页面开始跳转，一个页面的全部跳转只出现一次，在后面出现时将不再把所有的跳转画出。</li>
+</ul>
+</li>
+</ul>
+<h3 id=32-后端>3.2 后端</h3>
+<ul>
+<li>思路
+<ul>
+<li>利用<code>python</code>在编写时，主要是在完成两部分内容。一是程序化编程和跟数据库进行交互；二是将网页上的各种信息返回给后端，后端处理后再返回给数据库或者前端页面进行保存和显示。</li>
+<li>后端代码基于<code>python3+flask</code>，将设计好的<code>html</code>代码和<code>static</code>静态文件配置到<code>flask</code>的特殊框架下，并且进行路由配置，保证其能够正常访问。根据<code>flask</code>的设置我们将<code>html</code>放置到<code>templates</code>文件下，<code>css</code>等静态文件放置到<code>static</code>文件夹下。</li>
+</ul>
+</li>
+<li>与前端交互
+<ul>
+<li>通过<code>app.route(‘/’)</code>添加路由，将<code>index.html</code>中需要展示的内容，连接到数据库进行提取。再对提取的进行处理。通过<code>context</code>，传参给前端页面。</li>
+<li>例如，在<code>index.html</code>中的<code>question</code>信息，我们是动态传递的，我们通过一个<code>list</code>将所有的信息都传递给前端，然后在前端利用<code>for</code>循环进行展示。</li>
+</ul>
+</li>
+</ul>
+<h3 id=33-数据库端>3.3 数据库端</h3>
+<ul>
+<li>数据库连接
+<ul>
+<li>通过查看文档，了解到数据在本地的端口为1433，利用python的第三方库pymssql 进行连接SQL-Server数据库，配置文件如下：</li>
+</ul>
+</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#007020;font-weight:700>import</span>  <span style=color:#0e84b5;font-weight:700>os</span>
+
+HOSTNAME <span style=color:#666>=</span> <span style=color:#4070a0>&#39;127.0.0.1&#39;</span> <span style=color:#60a0b0;font-style:italic># 主机内网ip</span>
+PORT     <span style=color:#666>=</span> <span style=color:#4070a0>&#39;1433&#39;</span> <span style=color:#60a0b0;font-style:italic># 端口</span>
+DATABASE <span style=color:#666>=</span> <span style=color:#4070a0>&#39;izhihu&#39;</span> <span style=color:#60a0b0;font-style:italic># 数据库名称</span>
+USERNAME <span style=color:#666>=</span> <span style=color:#4070a0>&#39;sa&#39;</span> <span style=color:#60a0b0;font-style:italic># 用户名</span>
+PASSWORD <span style=color:#666>=</span> <span style=color:#666>&lt;</span>password<span style=color:#666>&gt;</span> <span style=color:#60a0b0;font-style:italic># 密码</span>
+
+DB_URI <span style=color:#666>=</span> <span style=color:#4070a0>&#39;mssql+pymssql://</span><span style=color:#70a0d0;font-style:italic>{}</span><span style=color:#4070a0>:</span><span style=color:#70a0d0;font-style:italic>{}</span><span style=color:#4070a0>@</span><span style=color:#70a0d0;font-style:italic>{}</span><span style=color:#4070a0>:</span><span style=color:#70a0d0;font-style:italic>{}</span><span style=color:#4070a0>/</span><span style=color:#70a0d0;font-style:italic>{}</span><span style=color:#4070a0>?charset=utf8&#39;</span><span style=color:#666>.</span>format(USERNAME, PASSWORD, HOSTNAME, PORT, DATABASE)
+
+SQLALCHEMY_DATABASE_URI <span style=color:#666>=</span> DB_URI
+SQLALCHEMY_TRACK_MODIFICATIONS <span style=color:#666>=</span> <span style=color:#007020;font-weight:700>True</span>
+DEBUG <span style=color:#666>=</span> <span style=color:#007020;font-weight:700>True</span>
+
+SECRET_KEY <span style=color:#666>=</span> os<span style=color:#666>.</span>urandom(<span style=color:#40a070>24</span>) <span style=color:#60a0b0;font-style:italic># 生成24位随机字符</span>
+</code></pre></div><ul>
+<li>创建一个<code>cur = conn.cursor()</code>，利用<code>execute()</code>进行执行。如果有<code>insert</code>，<code>delete</code>，<code>update</code>等操作，要进行<code>commit()</code>，不然服务器端不会进行上传到数据库。</li>
+<li>数据库编程
+<ul>
+<li>嵌入式数据库查询操作，利用python中的format语法进行传参，总共写了35个函数来转化SQL查询、插入、修改和删除等常用操作。下面选取有代表性的展示：</li>
+</ul>
+</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#60a0b0;font-style:italic># insertUser插入用户信息</span>
+<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>insertUser</span>(cur, user_name, mobile, Email, Passwd, SEX, SignDetail):
+    insertAccount(cur, Passwd, mobile)
+    sql_insert <span style=color:#666>=</span> <span style=color:#4070a0>&#39;&#39;&#39;
+</span><span style=color:#4070a0>    INSERT INTO user_info(username,mobile,Email,SEX,Regtime,signDetail)
+</span><span style=color:#4070a0>    VALUES (</span><span style=color:#70a0d0;font-style:italic>%s</span><span style=color:#4070a0>,</span><span style=color:#70a0d0;font-style:italic>%d</span><span style=color:#4070a0>,</span><span style=color:#70a0d0;font-style:italic>%s</span><span style=color:#4070a0>,</span><span style=color:#70a0d0;font-style:italic>%s</span><span style=color:#4070a0>,</span><span style=color:#70a0d0;font-style:italic>%s</span><span style=color:#4070a0>,</span><span style=color:#70a0d0;font-style:italic>%s</span><span style=color:#4070a0>);
+</span><span style=color:#4070a0>    &#39;&#39;&#39;</span>
+    dt <span style=color:#666>=</span> datetime<span style=color:#666>.</span>datetime<span style=color:#666>.</span>now()<span style=color:#666>.</span>strftime(<span style=color:#4070a0>&#34;%Y-%m-</span><span style=color:#70a0d0;font-style:italic>%d</span><span style=color:#4070a0> %H:%M:%S&#34;</span>)
+    cur<span style=color:#666>.</span>execute(sql_insert, (user_name, mobile, Email, SEX, dt, SignDetail))
+
+
+<span style=color:#60a0b0;font-style:italic># deleteCollection删除收藏表</span>
+<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>deleteCollection</span>(cur, Q_ID, user_ID):
+    sql_insert <span style=color:#666>=</span> <span style=color:#4070a0>&#39;&#39;&#39;
+</span><span style=color:#4070a0>    delete from Collection_info
+</span><span style=color:#4070a0>    where Q_ID = &#39;</span><span style=color:#70a0d0;font-style:italic>{}</span><span style=color:#4070a0>&#39; and U_ID = &#39;</span><span style=color:#70a0d0;font-style:italic>{}</span><span style=color:#4070a0>&#39;;
+</span><span style=color:#4070a0>    &#39;&#39;&#39;</span><span style=color:#666>.</span>format(Q_ID,user_ID)
+    cur<span style=color:#666>.</span>execute(sql_insert)
+
+<span style=color:#60a0b0;font-style:italic># selectUIDOnUsername按用户名查询UID</span>
+<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>selectUIDOnUsername</span>(cur, username):
+    sql <span style=color:#666>=</span> <span style=color:#4070a0>&#39;&#39;&#39;
+</span><span style=color:#4070a0>    SELECT U_ID FROM user_info
+</span><span style=color:#4070a0>    WHERE username = &#39;</span><span style=color:#70a0d0;font-style:italic>{}</span><span style=color:#4070a0>&#39;
+</span><span style=color:#4070a0>    &#39;&#39;&#39;</span><span style=color:#666>.</span>format(username)
+    cur<span style=color:#666>.</span>execute(sql)
+    data <span style=color:#666>=</span> cur<span style=color:#666>.</span>fetchall()
+    <span style=color:#007020;font-weight:700>return</span> tupleToList(data)[<span style=color:#40a070>0</span>]
+
+<span style=color:#60a0b0;font-style:italic># updateAnswerOfCNumber更新回答的数目</span>
+<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>updateAnswerOfCNumber</span>(cur, A_ID):
+    sql <span style=color:#666>=</span> <span style=color:#4070a0>&#39;&#39;&#39;
+</span><span style=color:#4070a0>    update Answer_info set C_Number = C_Number + 1
+</span><span style=color:#4070a0>    where A_ID = (</span><span style=color:#70a0d0;font-style:italic>%d</span><span style=color:#4070a0>)
+</span><span style=color:#4070a0>    &#39;&#39;&#39;</span>
+    cur<span style=color:#666>.</span>execute(sql, (A_ID))
+</code></pre></div><h2 id=4-项目思路>4 项目思路</h2>
+<h3 id=41-功能设计>4.1 功能设计</h3>
+<ul>
+<li>登陆认证
+<ul>
+<li>当用户在访问的时候,可以选择进行登陆。只有登陆成功才能进行一系列列收藏，关注，发布，评论等操作。我们再编写后端代码时可以要求登陆，判断这时的<code>session</code>是否有登陆信息，如果有进行操作，操作用户可以用<code>session</code>上取，如果没有登陆，再很多不被允许的操作上，我们网页就会自动跳到登陆界面。</li>
+</ul>
+</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>login_required</span>(func):
+    <span style=color:#555;font-weight:700>@wraps</span>(func)
+    <span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>wrapper</span>(<span style=color:#666>*</span>args, <span style=color:#666>**</span>kwargs):
+        <span style=color:#007020;font-weight:700>if</span> <span style=color:#007020>hasattr</span>(flask<span style=color:#666>.</span>g, <span style=color:#4070a0>&#39;user&#39;</span>):
+            <span style=color:#007020;font-weight:700>return</span> func(<span style=color:#666>*</span>args, <span style=color:#666>**</span>kwargs)
+        <span style=color:#007020;font-weight:700>else</span>:
+            <span style=color:#007020;font-weight:700>return</span> flask<span style=color:#666>.</span>redirect(flask<span style=color:#666>.</span>url_for(<span style=color:#4070a0>&#39;login&#39;</span>))
+    <span style=color:#007020;font-weight:700>return</span> wrapper
+</code></pre></div><ul>
+<li>上面的代码展示了对登陆需求的判断，例如发布回答是一个需要登陆的操作，我们可以利用<code>@login_required</code>来使用。</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#555;font-weight:700>@app</span><span style=color:#666>.</span>route(<span style=color:#4070a0>&#39;/answer/&#39;</span>, methods<span style=color:#666>=</span>[<span style=color:#4070a0>&#39;POST&#39;</span>])
+<span style=color:#555;font-weight:700>@login_required</span>
+<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>postAnswer</span>():
+    question_id <span style=color:#666>=</span> flask<span style=color:#666>.</span>request<span style=color:#666>.</span>form<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;question_id&#39;</span>)
+    A_content <span style=color:#666>=</span> flask<span style=color:#666>.</span>request<span style=color:#666>.</span>form<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;content&#39;</span>)
+    user_id <span style=color:#666>=</span> flask<span style=color:#666>.</span>session<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;user_id&#39;</span>)
+    insertAnswer(cur, question_id, user_id, A_content)
+    conn<span style=color:#666>.</span>commit()
+    <span style=color:#007020;font-weight:700>return</span> flask<span style=color:#666>.</span>redirect(flask<span style=color:#666>.</span>url_for(<span style=color:#4070a0>&#39;answer&#39;</span>, <span style=color:#007020>id</span><span style=color:#666>=</span>question_id))
+</code></pre></div><ul>
+<li>发布问题
+<ul>
+<li>用户通过点击导航栏上面的发布问题按钮，后端接收到跳转请求，利用<code>post</code>，<code>get</code>语法将前端设计好的表单进行传输给后端处理。</li>
+</ul>
+</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#555;font-weight:700>@app</span><span style=color:#666>.</span>route(<span style=color:#4070a0>&#39;/question/&#39;</span>, methods<span style=color:#666>=</span>[<span style=color:#4070a0>&#39;GET&#39;</span>, <span style=color:#4070a0>&#39;POST&#39;</span>])
+<span style=color:#555;font-weight:700>@login_required</span>
+<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>question</span>():
+    <span style=color:#007020;font-weight:700>if</span> flask<span style=color:#666>.</span>request<span style=color:#666>.</span>method <span style=color:#666>==</span> <span style=color:#4070a0>&#39;GET&#39;</span>:
+        <span style=color:#007020;font-weight:700>return</span> flask<span style=color:#666>.</span>render_template(<span style=color:#4070a0>&#39;question.html&#39;</span>)
+    <span style=color:#007020;font-weight:700>else</span>:
+        title <span style=color:#666>=</span> flask<span style=color:#666>.</span>request<span style=color:#666>.</span>form<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;title&#39;</span>)
+        content <span style=color:#666>=</span> flask<span style=color:#666>.</span>request<span style=color:#666>.</span>form<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;content&#39;</span>)
+        user_id <span style=color:#666>=</span> flask<span style=color:#666>.</span>session<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;user_id&#39;</span>)
+        insertQuestion(cur, user_id, title, content)
+        conn<span style=color:#666>.</span>commit()
+        <span style=color:#007020;font-weight:700>return</span> flask<span style=color:#666>.</span>redirect(flask<span style=color:#666>.</span>url_for(<span style=color:#4070a0>&#39;index&#39;</span>))
+</code></pre></div><ul>
+<li>通过上述代码我们可以看到，发布问题是一个需要登陆的操作，临时用户将无法发布问题，正好利用<code>@login_required</code>。再将发布的问题上传到数据库时，我们不仅需要问题的信息，更需要是那个用户发表的，即<code>U_ID</code>.这里我们利用<code>session</code>技术将登陆信息进行保存。<code>Login</code>时上<code>flask</code>后端维持一个<code>session</code>来保存登陆状态。如果需要注销，直接将<code>session</code>清空。</li>
+<li>当我们发布问题结束后，会进入到主页，通过刷新主页，即能查看到最新发布的问题。</li>
+<li>index页
+<ul>
+<li>后端代码如下：</li>
+</ul>
+</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#555;font-weight:700>@app</span><span style=color:#666>.</span>route(<span style=color:#4070a0>&#39;/&#39;</span>)
+<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>index</span>():
+    questions <span style=color:#666>=</span> selectAllQuestion(cur)
+    user_id <span style=color:#666>=</span> flask<span style=color:#666>.</span>session<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;user_id&#39;</span>)
+    username <span style=color:#666>=</span> flask<span style=color:#666>.</span>session<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;name&#39;</span>)
+    <span style=color:#007020;font-weight:700>if</span> user_id:
+        <span style=color:#007020;font-weight:700>for</span> i <span style=color:#007020;font-weight:700>in</span> <span style=color:#007020>range</span>(<span style=color:#007020>len</span>(questions)):
+            Q_id <span style=color:#666>=</span> questions[i][<span style=color:#40a070>0</span>]
+            temp <span style=color:#666>=</span> selectCollectionOfUser(cur,user_id,Q_id)
+            <span style=color:#007020;font-weight:700>if</span> <span style=color:#007020>len</span>(temp)<span style=color:#666>!=</span><span style=color:#40a070>0</span>:
+                questions[i]<span style=color:#666>.</span>append(<span style=color:#40a070>1</span>)
+    context <span style=color:#666>=</span> {
+        <span style=color:#4070a0>&#39;questions&#39;</span>: questions,
+        <span style=color:#4070a0>&#39;username&#39;</span>:username
+    }
+    <span style=color:#007020;font-weight:700>return</span> flask<span style=color:#666>.</span>render_template(<span style=color:#4070a0>&#39;index.html&#39;</span>, <span style=color:#666>**</span>context)
+</code></pre></div><ul>
+<li>点赞回答
+<ul>
+<li>在回答页面中，我们可以看到不同用户的回答详情，用户可以通过自己的喜好进行点赞，收藏等操作。这里的点赞是针对回答进行的，不再需要登陆，点赞是所有用户可以进行的操作。由于我们在建表是没有维护点赞表，只是在回答表中加了一个属性，所有我们没能将点赞用户区分开来。也就说明我们的点赞是不记名的可以重复进行的操作，一个用户可以给同一问题点赞多次。</li>
+<li>我们在处理点赞请求时，将点赞设置为一个<code>button</code>，然后在点击之后，<code>update</code>回答表的点赞选项。使<code>zNumber + 1</code>。 然后将更新之后的信息刷新。</li>
+<li>我们点击赞同按钮之后，将会链接到givelike（）函数中。进行识别。可以看到，givelike函数是不需要登陆的。通过update函数给数据库进行更新。</li>
+</ul>
+</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#555;font-weight:700>@app</span><span style=color:#666>.</span>route(<span style=color:#4070a0>&#39;/like/&#39;</span>, methods<span style=color:#666>=</span>[<span style=color:#4070a0>&#39;POST&#39;</span>])
+<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>giveLike</span>():
+    question_id <span style=color:#666>=</span> flask<span style=color:#666>.</span>request<span style=color:#666>.</span>form<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;question_id&#39;</span>)
+    answer_id <span style=color:#666>=</span> flask<span style=color:#666>.</span>request<span style=color:#666>.</span>form<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;answer_id&#39;</span>)
+    updateAnswerOfZNumber(cur, answer_id)
+    conn<span style=color:#666>.</span>commit()
+    <span style=color:#007020;font-weight:700>return</span> flask<span style=color:#666>.</span>redirect(flask<span style=color:#666>.</span>url_for(<span style=color:#4070a0>&#39;answer&#39;</span>, <span style=color:#007020>id</span><span style=color:#666>=</span>question_id))
+</code></pre></div><ul>
+<li>评论实现
+<ul>
+<li>我们再点击评论详情后会跳转到评论页面。显示的评论条数也是我们通过统计评论表对应的数量统计出来的。评论的实现主要也是跟post，get方法链接。然后通过跟发布问题一样的按钮机制进行实现</li>
+</ul>
+</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#555;font-weight:700>@app</span><span style=color:#666>.</span>route(<span style=color:#4070a0>&#39;/comment/&#39;</span>, methods<span style=color:#666>=</span>[<span style=color:#4070a0>&#39;POST&#39;</span>])
+<span style=color:#555;font-weight:700>@login_required</span>
+<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>postComment</span>():
+    answer_id <span style=color:#666>=</span> flask<span style=color:#666>.</span>request<span style=color:#666>.</span>form<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;answer_id&#39;</span>)
+    content <span style=color:#666>=</span> flask<span style=color:#666>.</span>request<span style=color:#666>.</span>form<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;content&#39;</span>)
+    user_id <span style=color:#666>=</span> flask<span style=color:#666>.</span>session<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;user_id&#39;</span>)
+    insertComment(cur, answer_id, user_id, content)
+    updateAnswerOfCNumber(cur, answer_id)
+    conn<span style=color:#666>.</span>commit()
+    <span style=color:#007020;font-weight:700>return</span> flask<span style=color:#666>.</span>redirect(flask<span style=color:#666>.</span>url_for(<span style=color:#4070a0>&#39;comment&#39;</span>, <span style=color:#007020>id</span><span style=color:#666>=</span>answer_id))
+</code></pre></div><ul>
+<li>收藏问题
+<ul>
+<li>在满足这一需求时，我们将对每一个要收藏的信息，添加一个收藏按钮，然后通过点击来触发它，进行收藏，同样收藏也需要<code>@login_required</code>。这里需要注意的是，当点击过一次时，就将按钮置为不可触发，因为一个用户只能对一个信息收藏一次。</li>
+<li>如下所示，这里利用在查收藏表的方法，针对每一个用户显示的收藏信息是不同的。对于尚未收藏的用户，将显示可以收藏，对已经收藏的用户，点击将取消收藏。</li>
+<li>利用一个<code>{{if}}</code>来进行判断。显示哪一个主题的按钮。点击不同的按钮对应的操作也将不同。利用flag 来判断是否为添加<code>collection</code>，还是删除<code>collection</code></li>
+<li>这是将是否收藏的信息从收藏表中拿出来进行配备，后端代码如下：</li>
+</ul>
+</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#555;font-weight:700>@app</span><span style=color:#666>.</span>route(<span style=color:#4070a0>&#39;/Collection/&#39;</span>, methods<span style=color:#666>=</span>[<span style=color:#4070a0>&#39;POST&#39;</span>])
+<span style=color:#555;font-weight:700>@login_required</span>
+<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>giveCollection</span>():
+    question_id <span style=color:#666>=</span> flask<span style=color:#666>.</span>request<span style=color:#666>.</span>form<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;question_id&#39;</span>)
+    flag <span style=color:#666>=</span> flask<span style=color:#666>.</span>request<span style=color:#666>.</span>form<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;flag&#39;</span>)
+    user_id <span style=color:#666>=</span> flask<span style=color:#666>.</span>session<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;user_id&#39;</span>)
+    <span style=color:#007020;font-weight:700>if</span> flag <span style=color:#666>==</span> <span style=color:#4070a0>&#39;1&#39;</span>:
+        deleteCollection(cur,question_id,user_id)
+        conn<span style=color:#666>.</span>commit()
+        <span style=color:#007020;font-weight:700>return</span> flask<span style=color:#666>.</span>redirect(flask<span style=color:#666>.</span>url_for(<span style=color:#4070a0>&#39;index&#39;</span>))
+    insertCollection(cur, question_id, user_id)
+    conn<span style=color:#666>.</span>commit()
+    <span style=color:#007020;font-weight:700>return</span> flask<span style=color:#666>.</span>redirect(flask<span style=color:#666>.</span>url_for(<span style=color:#4070a0>&#39;index&#39;</span>))
+</code></pre></div><ul>
+<li>管理员删除
+<ul>
+<li>管理员在登陆后进行对不合法的信息进行删除。我们在登陆之后设置一个管理员特权，特判一下是不是管理员，如果是就可以将删除按钮显示出来共其进行删除，后端代码如下：</li>
+</ul>
+</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#555;font-weight:700>@app</span><span style=color:#666>.</span>route(<span style=color:#4070a0>&#39;/adminDelete/&#39;</span>, methods<span style=color:#666>=</span>[<span style=color:#4070a0>&#39;POST&#39;</span>])
+<span style=color:#555;font-weight:700>@login_required</span>
+<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>adminDelete</span>():
+    question_id <span style=color:#666>=</span> flask<span style=color:#666>.</span>request<span style=color:#666>.</span>form<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;question_id&#39;</span>)
+    deleteQuestionOnQ_ID(cur,question_id)
+    conn<span style=color:#666>.</span>commit()
+    <span style=color:#007020;font-weight:700>return</span> flask<span style=color:#666>.</span>redirect(flask<span style=color:#666>.</span>url_for(<span style=color:#4070a0>&#39;index&#39;</span>))
+</code></pre></div><ul>
+<li>搜索匹配
+<ul>
+<li>通过输入关键字进行匹配。如果有相关选项，则进行相关选项的显示，如果没有则跳转到<code>error.html</code>，后端代码如下：</li>
+</ul>
+</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#555;font-weight:700>@app</span><span style=color:#666>.</span>route(<span style=color:#4070a0>&#39;/search/&#39;</span>)
+<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>search</span>():
+    q <span style=color:#666>=</span> flask<span style=color:#666>.</span>request<span style=color:#666>.</span>args<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;q&#39;</span>)
+    questions <span style=color:#666>=</span> selectAllQuestion(cur)
+    user_id <span style=color:#666>=</span> flask<span style=color:#666>.</span>session<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;user_id&#39;</span>)
+    <span style=color:#007020;font-weight:700>if</span> user_id:
+        <span style=color:#007020;font-weight:700>for</span> i <span style=color:#007020;font-weight:700>in</span> <span style=color:#007020>range</span>(<span style=color:#007020>len</span>(questions)):
+            Q_id <span style=color:#666>=</span> questions[i][<span style=color:#40a070>0</span>]
+            temp <span style=color:#666>=</span> selectCollectionOfUser(cur,user_id,Q_id)
+            <span style=color:#007020;font-weight:700>if</span> <span style=color:#007020>len</span>(temp)<span style=color:#666>!=</span><span style=color:#40a070>0</span>:
+                questions[i]<span style=color:#666>.</span>append(<span style=color:#40a070>1</span>)
+    question_of_q <span style=color:#666>=</span> []
+    <span style=color:#007020;font-weight:700>for</span> i <span style=color:#007020;font-weight:700>in</span> questions:
+        <span style=color:#007020;font-weight:700>if</span> i[<span style=color:#40a070>2</span>]<span style=color:#666>.</span>find(q) <span style=color:#666>!=</span> <span style=color:#666>-</span><span style=color:#40a070>1</span> <span style=color:#007020;font-weight:700>or</span> i[<span style=color:#40a070>3</span>]<span style=color:#666>.</span>find(q) <span style=color:#666>!=</span> <span style=color:#666>-</span><span style=color:#40a070>1</span>:
+            question_of_q<span style=color:#666>.</span>append(i)
+    <span style=color:#007020;font-weight:700>if</span> <span style=color:#007020>len</span>(question_of_q)<span style=color:#666>==</span><span style=color:#40a070>0</span>:
+        context <span style=color:#666>=</span> {
+            <span style=color:#4070a0>&#39;error&#39;</span>:<span style=color:#4070a0>&#39;没有相关搜索&#39;</span>
+        }
+        <span style=color:#007020;font-weight:700>return</span> flask<span style=color:#666>.</span>render_template(<span style=color:#4070a0>&#39;error.html&#39;</span>, <span style=color:#666>**</span>context)
+    context <span style=color:#666>=</span> {
+        <span style=color:#4070a0>&#39;questions&#39;</span>: question_of_q
+    }
+    <span style=color:#007020;font-weight:700>return</span> flask<span style=color:#666>.</span>render_template(<span style=color:#4070a0>&#39;index.html&#39;</span>, <span style=color:#666>**</span>context)
+</code></pre></div><ul>
+<li>新用户注册
+<ul>
+<li>输入信息进行提交，提交成功后后端会对注册的信息进行处理，如果两次密码不一致，或者其他信息不合法，将返回错误到错误<code>error.html</code>页面，后端代码如下：</li>
+</ul>
+</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#555;font-weight:700>@app</span><span style=color:#666>.</span>route(<span style=color:#4070a0>&#39;/regist/&#39;</span>, methods<span style=color:#666>=</span>[<span style=color:#4070a0>&#39;GET&#39;</span>, <span style=color:#4070a0>&#39;POST&#39;</span>])
+<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>regist</span>():
+    <span style=color:#007020;font-weight:700>if</span> flask<span style=color:#666>.</span>request<span style=color:#666>.</span>method <span style=color:#666>==</span> <span style=color:#4070a0>&#39;GET&#39;</span>:
+        <span style=color:#007020;font-weight:700>return</span> flask<span style=color:#666>.</span>render_template(<span style=color:#4070a0>&#39;regist.html&#39;</span>)
+    <span style=color:#007020;font-weight:700>else</span>:
+        telephone <span style=color:#666>=</span> <span style=color:#007020>int</span>(flask<span style=color:#666>.</span>request<span style=color:#666>.</span>form<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;telephone&#39;</span>))
+        username <span style=color:#666>=</span> flask<span style=color:#666>.</span>request<span style=color:#666>.</span>form<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;username&#39;</span>)
+        password1 <span style=color:#666>=</span> flask<span style=color:#666>.</span>request<span style=color:#666>.</span>form<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;password1&#39;</span>)
+        password2 <span style=color:#666>=</span> flask<span style=color:#666>.</span>request<span style=color:#666>.</span>form<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;password2&#39;</span>)
+        email <span style=color:#666>=</span> flask<span style=color:#666>.</span>request<span style=color:#666>.</span>form<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;email&#39;</span>)
+        sex <span style=color:#666>=</span> flask<span style=color:#666>.</span>request<span style=color:#666>.</span>form<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;sex&#39;</span>)
+        signDetail <span style=color:#666>=</span> flask<span style=color:#666>.</span>request<span style=color:#666>.</span>form<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;signDetail&#39;</span>)
+        <span style=color:#007020>print</span>(<span style=color:#007020>len</span>(password1))
+        d <span style=color:#666>=</span> selectUserToReg(cur, telephone)
+        <span style=color:#007020;font-weight:700>if</span> <span style=color:#007020>len</span>(d) <span style=color:#666>!=</span> <span style=color:#40a070>0</span>:
+            <span style=color:#007020;font-weight:700>return</span> <span style=color:#4070a0>u</span><span style=color:#4070a0>&#39;手机号已经注册过&#39;</span>
+        <span style=color:#007020;font-weight:700>else</span>:
+            <span style=color:#007020;font-weight:700>if</span> password2 <span style=color:#666>!=</span> password1 <span style=color:#007020;font-weight:700>or</span> <span style=color:#007020>len</span>(password1) <span style=color:#666>==</span> <span style=color:#40a070>0</span>  :
+                <span style=color:#007020;font-weight:700>return</span> <span style=color:#4070a0>u</span><span style=color:#4070a0>&#39;两次密码不一致&#39;</span>
+            <span style=color:#007020;font-weight:700>else</span>:
+                insertUser(cur, username, telephone, email, password1, sex, signDetail)
+                conn<span style=color:#666>.</span>commit()
+                <span style=color:#007020;font-weight:700>return</span> flask<span style=color:#666>.</span>redirect(flask<span style=color:#666>.</span>url_for(<span style=color:#4070a0>&#39;login&#39;</span>))
+</code></pre></div><ul>
+<li>用户个人问题删除
+<ul>
+<li>建立好个人主页后，用户可以进行对自己发布的问题进行删除的操作。通过点击个人删除的按钮，进行级联删除，将删除这条信息后面所有的外键索引。</li>
+</ul>
+</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#555;font-weight:700>@app</span><span style=color:#666>.</span>route(<span style=color:#4070a0>&#39;/delete/&#39;</span>, methods<span style=color:#666>=</span>[<span style=color:#4070a0>&#39;POST&#39;</span>])
+<span style=color:#555;font-weight:700>@login_required</span>
+<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>deleteQuestion</span>():
+    question_id <span style=color:#666>=</span> flask<span style=color:#666>.</span>request<span style=color:#666>.</span>form<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;question_id&#39;</span>)
+    uid <span style=color:#666>=</span> flask<span style=color:#666>.</span>request<span style=color:#666>.</span>form<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;uid&#39;</span>)
+    deleteQuestionOnQ_ID(cur,question_id)
+    conn<span style=color:#666>.</span>commit()
+    <span style=color:#007020;font-weight:700>return</span> flask<span style=color:#666>.</span>redirect(flask<span style=color:#666>.</span>url_for(<span style=color:#4070a0>&#39;user&#39;</span>,<span style=color:#007020>id</span><span style=color:#666>=</span>uid))
+</code></pre></div><ul>
+<li>用户主页
+<ul>
+<li>用户主页主要用来展示用户信息和修改用户信息。主要含义三个模块，一是个人信息展示，二是收藏集展示，三是自己发布的问题展示。用户个人信息可以同所有人查看，如果是本人登陆，将可以修改个人信息和删除发布，如果是别人访问主页将可以进行关注和进行查看ta的一些信息。</li>
+<li>我们可以看到用户页面，可以进行取消对已经收藏问题的收藏，删除自己发布的问题，以及修改个人资料，包括个性签名，用户名等信息。</li>
+</ul>
+</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#555;font-weight:700>@app</span><span style=color:#666>.</span>route(<span style=color:#4070a0>&#39;/user/&lt;id&gt;/&#39;</span>)
+<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>user</span>(<span style=color:#007020>id</span>):
+    B_username <span style=color:#666>=</span> <span style=color:#007020>id</span>
+    A_username <span style=color:#666>=</span> flask<span style=color:#666>.</span>session<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;name&#39;</span>)
+    <span style=color:#007020;font-weight:700>if</span> B_username <span style=color:#666>==</span> A_username <span style=color:#007020;font-weight:700>or</span> B_username <span style=color:#666>==</span><span style=color:#4070a0>&#39;0&#39;</span>:
+        user_id <span style=color:#666>=</span> flask<span style=color:#666>.</span>session<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;user_id&#39;</span>)
+        username <span style=color:#666>=</span> flask<span style=color:#666>.</span>session<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;name&#39;</span>)
+        flag <span style=color:#666>=</span> <span style=color:#40a070>1</span>
+    <span style=color:#007020;font-weight:700>else</span>:
+        username <span style=color:#666>=</span> B_username
+        user_id <span style=color:#666>=</span> selectUIDOnUsername(cur, username)[<span style=color:#40a070>0</span>]
+        flag <span style=color:#666>=</span> <span style=color:#40a070>0</span>
+    sign <span style=color:#666>=</span> selectuserOfdetail(cur, user_id)[<span style=color:#40a070>0</span>][<span style=color:#40a070>0</span>]
+    questions <span style=color:#666>=</span> []
+    collection <span style=color:#666>=</span> selectCollection(cur, user_id)
+    <span style=color:#007020;font-weight:700>for</span> i <span style=color:#007020;font-weight:700>in</span> collection:
+        question <span style=color:#666>=</span> selectQuestionOfQ_ID(cur, i[<span style=color:#40a070>0</span>])[<span style=color:#40a070>0</span>]
+        question<span style=color:#666>.</span>append(<span style=color:#40a070>1</span>)
+        questions<span style=color:#666>.</span>append(question)
+    myquestions <span style=color:#666>=</span> selectquestionOnU_ID(cur,user_id)
+    context <span style=color:#666>=</span> {
+        <span style=color:#4070a0>&#39;questions&#39;</span>: questions,
+        <span style=color:#4070a0>&#39;name&#39;</span>: username,
+        <span style=color:#4070a0>&#39;myquestions&#39;</span>:myquestions,
+        <span style=color:#4070a0>&#39;sign&#39;</span>:sign,
+        <span style=color:#4070a0>&#39;flag&#39;</span>:flag
+    }
+    <span style=color:#007020;font-weight:700>return</span> flask<span style=color:#666>.</span>render_template(<span style=color:#4070a0>&#39;user.html&#39;</span>,<span style=color:#666>**</span>context)
+</code></pre></div><ul>
+<li>Hash加盐加密存储
+<ul>
+<li>用户在注册后，通过前端将密码<code>hash</code>后再提交，这样子数据库中保存的密码是经过<code>hash</code>的，但未加盐。加盐这一步放在登录时使用。前端代码如下：</li>
+</ul>
+</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#666>&lt;</span>script <span style=color:#007020>type</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;text/javascript&#34;</span> src<span style=color:#666>=</span><span style=color:#4070a0>&#34;../static/sha256.js&#34;</span><span style=color:#666>&gt;&lt;/</span>script<span style=color:#666>&gt;</span>
+<span style=color:#666>&lt;</span>script<span style=color:#666>&gt;</span>
+    function register() {
+    var regform <span style=color:#666>=</span> document<span style=color:#666>.</span>getElementById(<span style=color:#4070a0>&#34;regform&#34;</span>);
+    <span style=color:#007020;font-weight:700>if</span> (regform<span style=color:#666>.</span>password<span style=color:#666>.</span>value <span style=color:#666>!=</span>  regform<span style=color:#666>.</span>password2<span style=color:#666>.</span>value) {
+        alert(<span style=color:#4070a0>&#34;确认密码与密码不符合，请重新输入&#34;</span>);
+    }
+    <span style=color:#007020;font-weight:700>else</span>{
+        regform<span style=color:#666>.</span>password<span style=color:#666>.</span>value <span style=color:#666>=</span> sha256_digest(regform<span style=color:#666>.</span>password<span style=color:#666>.</span>value);
+
+        <span style=color:#666>//</span> 提交之前把password的值hash<span>，</span>
+        <span style=color:#666>//</span> 这样子后端数据库中的password就是经过hash的密码
+        regform<span style=color:#666>.</span>submit();
+    }
+}
+<span style=color:#666>&lt;/</span>script<span style=color:#666>&gt;</span>
+</code></pre></div><ul>
+<li>再登录时，利用<code>python hashlib.sha256()</code>进行加盐，这样数据库中存储的密码也时<code>hash</code>过的，极大程度保证了用户数据的安全性。后端代码如下：</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#555;font-weight:700>@app</span><span style=color:#666>.</span>route(<span style=color:#4070a0>&#39;/login/&#39;</span>, methods<span style=color:#666>=</span>[<span style=color:#4070a0>&#39;GET&#39;</span>, <span style=color:#4070a0>&#39;POST&#39;</span>])
+<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>login</span>():
+    <span style=color:#007020;font-weight:700>if</span> flask<span style=color:#666>.</span>request<span style=color:#666>.</span>method <span style=color:#666>==</span> <span style=color:#4070a0>&#39;GET&#39;</span>:
+        <span style=color:#007020;font-weight:700>return</span> flask<span style=color:#666>.</span>render_template(<span style=color:#4070a0>&#39;login.html&#39;</span>)
+    <span style=color:#007020;font-weight:700>else</span>:
+        telephone <span style=color:#666>=</span> flask<span style=color:#666>.</span>request<span style=color:#666>.</span>form<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;telephone&#39;</span>)
+        password <span style=color:#666>=</span> flask<span style=color:#666>.</span>request<span style=color:#666>.</span>form<span style=color:#666>.</span>get(<span style=color:#4070a0>&#39;password&#39;</span>)
+        mobile <span style=color:#666>=</span> selectAccountTologin(cur, telephone, password)[<span style=color:#40a070>0</span>][<span style=color:#40a070>0</span>]
+        u <span style=color:#666>=</span> selectUserOnMobile(cur, mobile)
+        <span style=color:#007020;font-weight:700>if</span> <span style=color:#007020>len</span>(u) <span style=color:#666>!=</span> <span style=color:#40a070>0</span>:
+            flask<span style=color:#666>.</span>session[<span style=color:#4070a0>&#39;name&#39;</span>] <span style=color:#666>=</span> u[<span style=color:#40a070>0</span>][<span style=color:#40a070>1</span>]
+            flask<span style=color:#666>.</span>session[<span style=color:#4070a0>&#39;user_id&#39;</span>] <span style=color:#666>=</span> u[<span style=color:#40a070>0</span>][<span style=color:#40a070>0</span>]
+            <span style=color:#007020;font-weight:700>return</span> flask<span style=color:#666>.</span>redirect(flask<span style=color:#666>.</span>url_for(<span style=color:#4070a0>&#39;index&#39;</span>))
+        <span style=color:#007020;font-weight:700>else</span>:
+            <span style=color:#007020;font-weight:700>return</span> <span style=color:#4070a0>u</span><span style=color:#4070a0>&#39;用户名或密码错误！&#39;</span>
+</code></pre></div><h3 id=42-运行测试>4.2 运行测试</h3>
+<ul>
+<li>启动
+<ul>
+<li>刷新Nginx</li>
+</ul>
+</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo systemctl restart nginx
+</code></pre></div><ul>
+<li>启动uwsgi</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>uwsgi izhihu.ini
+</code></pre></div><ul>
+<li>改进
+<ul>
+<li>todo：打包程序，方便部署</li>
+<li>todo：软件测试，结合软工</li>
+<li>todo：前端UI美化，迁移框架</li>
+<li>todo：提高系统健壮性、网页运行安全性</li>
+</ul>
+</li>
+</ul>
+</section>
+<div class=post-tags>
+<nav class="nav tags">
+<ul class=tags>
+<li><a href=/tags/assginment>assginment</a></li>
+<li><a href=/tags/database>database</a></li>
+<li><a href=/tags/web-service>web-service</a></li>
+</ul>
+</nav>
+</div>
+</article>
+</main>
+<footer>
+<hr><a class=soc href=https://www.linkedin.com/in/yuedongwoo/ title=LinkedIn><i data-feather=linkedin></i></a>|<a class=soc href=https://github.com/lunarwhite title=GitHub><i data-feather=github></i></a>|<a class=soc href title=Twitter><i data-feather=twitter></i></a>|<a class=soc href title=Instagram><i data-feather=instagram></i></a>|<a class=soc href title=Bilibili><i data-feather=tv></i></a>|<a class=soc href=https://www.zhihu.com/people/wydnlz title=Zhihu><i data-feather=link></i></a>|⚡️
+2021 © lunarwhite | <a href=https://github.com/athul/archie>Archie Theme</a> | Built with <a href=https://gohugo.io>Hugo</a>
+</footer>
+<script>feather.replace()</script>
+<script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
+</body>
+</html>

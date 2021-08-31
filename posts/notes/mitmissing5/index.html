@@ -1,0 +1,95 @@
+<!doctype html><html><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge"><title>[MIT-missing] 05 Metaprogramming - lunarwhite</title><link rel=icon type=image/png href=favicon/favicon.ico><meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="Notes for awesome courses offered by the top universities.">
+<meta property="og:image" content>
+<meta property="og:title" content="[MIT-missing] 05 Metaprogramming">
+<meta property="og:description" content="Notes for awesome courses offered by the top universities.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lunarwhite.github.io/posts/notes/mitmissing5/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-07-27T21:01:18+00:00">
+<meta property="article:modified_time" content="2021-07-27T21:01:18+00:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="[MIT-missing] 05 Metaprogramming">
+<meta name=twitter:description content="Notes for awesome courses offered by the top universities.">
+<script src=https://lunarwhite.github.iojs/feather.min.js></script>
+<link href=https://lunarwhite.github.io/css/fonts.b685ac6f654695232de7b82a9143a46f9e049c8e3af3a21d9737b01f4be211d1.css rel=stylesheet>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+</head>
+<body>
+<div class=content><header>
+<div class=main>
+<a href=https://lunarwhite.github.io>lunarwhite</a>
+</div>
+<nav>
+<a href=/>Home</a>
+<a href=/posts>Posts</a>
+<a href=/tags>Tags</a>
+<a href=/about>About</a>
+</nav>
+</header>
+<main>
+<article>
+<div class=title>
+<h1 class=title>[MIT-missing] 05 Metaprogramming</h1>
+<div class=meta>Posted on Jul 27, 2021</div>
+</div>
+<section class=body>
+<blockquote>
+<p><a href=https://missing.csail.mit.edu/2020/metaprogramming/>Metaprogramming - missing-semester</a></p>
+</blockquote>
+<h2 id=1-build-systems>1 build systems</h2>
+<ul>
+<li><code>make</code> is one of the most common build systems out there. When you run <code>make</code>, it consults a file called <code>Makefile</code> in the current directory. All the targets, their dependencies, and the rules are defined in that file. Let’s take a look at one:</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-makefile data-lang=makefile><span style=color:#06287e>paper.pdf</span><span style=color:#666>:</span> paper.tex plot-data.png
+	pdflatex paper.tex
+
+<span style=color:#06287e>plot-%.png</span><span style=color:#666>:</span> %.dat plot.py
+	./plot.py -i <span style=color:#bb60d5>$*</span>.dat -o <span style=color:#bb60d5>$@</span>
+</code></pre></div><ul>
+<li>Each directive in this file is a rule for how to produce the left-hand side using the right-hand side. Or, phrased differently, the things named on the right-hand side are dependencies, and the left-hand side is the target.</li>
+<li>The indented block is a sequence of programs to produce the target from those dependencies. In <code>make</code>, the first directive also defines the default goal. If you run <code>make</code> with no arguments, this is the target it will build. Alternatively, you can run something like <code>make plot-data.png</code>, and it will build that target instead.</li>
+<li>The <code>%</code> in a rule is a “pattern”, and will match the same string on the left and on the right.</li>
+<li>For example, if the target <code>plot-foo.png</code> is requested, <code>make</code> will look for the dependencies <code>foo.dat</code> and <code>plot.py</code>. Now let’s look at what happens if we run <code>make</code> with an empty source directory.</li>
+</ul>
+<h2 id=2-dependency-management>2 dependency management</h2>
+<ul>
+<li>The exact meaning of each one varies between projects, but one relatively common standard is <a href=https://semver.org/>semantic versioning</a>. With semantic versioning, every version number is of the form: major.minor.patch. The rules are:
+<ul>
+<li>If a new release does not change the API, increase the <code>patch</code> version.</li>
+<li>If you add to your API in a backwards-compatible way, increase the <code>minor</code> version.</li>
+<li>If you change the API in a non-backwards-compatible way, increase the <code>major</code> version.</li>
+</ul>
+</li>
+<li>This already provides some major advantages. Now, if my project depends on your project, it <em>should</em> be safe to use the latest release with the same major version as the one I built against when I developed it, as long as its minor version is at least what it was back then.</li>
+<li>In other words, if I depend on your library at version <code>1.3.7</code>, then it <em>should</em> be fine to build it with <code>1.3.8</code>, <code>1.6.1</code>, or even <code>1.3.0</code>. Version <code>2.2.4</code> would probably not be okay, because the major version was increased.</li>
+<li>When working with dependency management systems, you may also come across the notion of <em>lock files</em>. A lock file is simply a file that lists the exact version you are <em>currently</em> depending on of each dependency. Usually, you need to explicitly run an update program to upgrade to newer versions of your dependencies.</li>
+<li>There are many reasons for this, such as avoiding unnecessary recompiles, having reproducible builds, or not automatically updating to the latest version (which may be broken).</li>
+</ul>
+<h2 id=3-continuous-integration-systems>3 continuous integration systems</h2>
+<ul>
+<li>As you work on larger and larger projects, you’ll find that there are often additional tasks you have to do whenever you make a change to it. You might have to upload a new version of the documentation, upload a compiled version somewhere, release the code to pypi, run your test suite, and all sort of other things.</li>
+<li>Continuous integration, or CI, is an umbrella term for “stuff that runs whenever your code changes”.</li>
+<li>They all work in roughly the same way: you add a file to your repository that describes what should happen when various things happen to that repository.</li>
+<li>By far the most common one is a rule like “when someone pushes code, run the test suite”. When the event triggers, the CI provider spins up a virtual machines (or more), runs the commands in your “recipe”, and then usually notes down the results somewhere. You might set it up so that you are notified if the test suite stops passing, or so that a little badge appears on your repository as long as the tests pass.</li>
+</ul>
+</section>
+<div class=post-tags>
+<nav class="nav tags">
+<ul class=tags>
+<li><a href=/tags/awesome-course>awesome-course</a></li>
+<li><a href=/tags/metaprogramming>metaprogramming</a></li>
+</ul>
+</nav>
+</div>
+</article>
+</main>
+<footer>
+<hr><a class=soc href=https://www.linkedin.com/in/yuedongwoo/ title=LinkedIn><i data-feather=linkedin></i></a>|<a class=soc href=https://github.com/lunarwhite title=GitHub><i data-feather=github></i></a>|<a class=soc href title=Twitter><i data-feather=twitter></i></a>|<a class=soc href title=Instagram><i data-feather=instagram></i></a>|<a class=soc href title=Bilibili><i data-feather=tv></i></a>|<a class=soc href=https://www.zhihu.com/people/wydnlz title=Zhihu><i data-feather=link></i></a>|⚡️
+2021 © lunarwhite | <a href=https://github.com/athul/archie>Archie Theme</a> | Built with <a href=https://gohugo.io>Hugo</a>
+</footer>
+<script>feather.replace()</script>
+<script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
+</body>
+</html>

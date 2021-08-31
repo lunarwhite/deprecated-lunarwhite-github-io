@@ -1,0 +1,305 @@
+<!doctype html><html><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge"><title>HPC - MPI - lunarwhite</title><link rel=icon type=image/png href=favicon/favicon.ico><meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="summary for in-class assignments in SDU.">
+<meta property="og:image" content>
+<meta property="og:title" content="HPC - MPI">
+<meta property="og:description" content="summary for in-class assignments in SDU.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lunarwhite.github.io/posts/guides/hpc-mpi/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-04-02T18:18:49+00:00">
+<meta property="article:modified_time" content="2021-04-02T18:18:49+00:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="HPC - MPI">
+<meta name=twitter:description content="summary for in-class assignments in SDU.">
+<script src=https://lunarwhite.github.iojs/feather.min.js></script>
+<link href=https://lunarwhite.github.io/css/fonts.b685ac6f654695232de7b82a9143a46f9e049c8e3af3a21d9737b01f4be211d1.css rel=stylesheet>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+</head>
+<body>
+<div class=content><header>
+<div class=main>
+<a href=https://lunarwhite.github.io>lunarwhite</a>
+</div>
+<nav>
+<a href=/>Home</a>
+<a href=/posts>Posts</a>
+<a href=/tags>Tags</a>
+<a href=/about>About</a>
+</nav>
+</header>
+<main>
+<article>
+<div class=title>
+<h1 class=title>HPC - MPI</h1>
+<div class=meta>Posted on Apr 2, 2021</div>
+</div>
+<section class=body>
+<h2 id=1-初识与mpi>1 初识与MPI</h2>
+<h3 id=11-hello-world>1.1 hello-world</h3>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#007020>#include</span><span style=color:#007020>&#34;mpi.h&#34;</span><span style=color:#007020>
+</span><span style=color:#007020>#include</span><span style=color:#007020>&lt;stdio.h&gt;</span><span style=color:#007020>
+</span><span style=color:#007020>#include</span><span style=color:#007020>&lt;math.h&gt;</span><span style=color:#007020>
+</span><span style=color:#007020></span><span style=color:#902000>void</span> <span style=color:#06287e>main</span>(<span style=color:#902000>int</span> argc, <span style=color:#902000>char</span> <span style=color:#666>*</span>argv[]){
+    <span style=color:#60a0b0;font-style:italic>// 相关变量声明
+</span><span style=color:#60a0b0;font-style:italic></span>    <span style=color:#902000>int</span> numprocs;
+    <span style=color:#902000>int</span> procnum;
+    <span style=color:#902000>int</span> namelen;
+    <span style=color:#902000>char</span> pro_name[MPI_MAX_PROCESSOR_NAME];
+
+    <span style=color:#60a0b0;font-style:italic>// 初始化MPI环境
+</span><span style=color:#60a0b0;font-style:italic></span>    MPI_Init(<span style=color:#666>&amp;</span>argc, <span style=color:#666>&amp;</span>argv);
+
+    <span style=color:#60a0b0;font-style:italic>// MPI程序体
+</span><span style=color:#60a0b0;font-style:italic></span>    MPI_Comm_rank(MPI_COMM_WORLD, <span style=color:#666>&amp;</span>procnum);
+    MPI_Comm_size(MPI_COMM_WORLD, <span style=color:#666>&amp;</span>numprocs);
+    MPI_Get_processor_name(pro_name, <span style=color:#666>&amp;</span>namelen);
+
+    printf(<span style=color:#4070a0>&#34;Hello World! Hello HPC! Processor %d of %d on %s </span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>, procnum, numprocs, pro_name);
+
+    <span style=color:#60a0b0;font-style:italic>// 退出MPI环境
+</span><span style=color:#60a0b0;font-style:italic></span>    MPI_Finalize();
+}
+
+</code></pre></div><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#60a0b0;font-style:italic>// MPI并行程序的编译
+</span><span style=color:#60a0b0;font-style:italic></span>mpicc <span style=color:#666>-</span>o <span style=color:#40a070>1</span><span style=color:#666>-</span><span style=color:#40a070>1</span> <span style=color:#40a070>1</span><span style=color:#666>-</span><span style=color:#40a070>1.</span>c
+
+<span style=color:#60a0b0;font-style:italic>// MPI程序运行，-np 或 -n 用来指定运行程序的进程数目
+</span><span style=color:#60a0b0;font-style:italic></span>mpirun <span style=color:#666>-</span>np <span style=color:#40a070>4</span> <span style=color:#40a070>1</span><span style=color:#666>-</span><span style=color:#40a070>1</span>
+</code></pre></div><h3 id=12-简单的发送和接收>1.2 简单的发送和接收</h3>
+<ul>
+<li>进程0向进程1发送一个整数，进程接收到后，将其打印到屏幕</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#007020>#include</span><span style=color:#007020>&lt;stdio.h&gt;</span><span style=color:#007020>
+</span><span style=color:#007020>#include</span><span style=color:#007020>&#34;mpi.h&#34;</span><span style=color:#007020>
+</span><span style=color:#007020></span><span style=color:#902000>int</span> <span style=color:#06287e>main</span>(<span style=color:#902000>int</span> argc,<span style=color:#902000>char</span> <span style=color:#666>*</span>argv[]){
+<span style=color:#902000>int</span> myid,size,value;
+MPI_Status status;
+
+MPI_Init(<span style=color:#666>&amp;</span>argc,<span style=color:#666>&amp;</span>argv);
+MPI_Comm_rank(MPI_COMM_WORLD,<span style=color:#666>&amp;</span>myid);
+MPI_Comm_size(MPI_COMM_WORLD,<span style=color:#666>&amp;</span>size);
+    <span style=color:#007020;font-weight:700>if</span>(<span style=color:#40a070>0</span><span style=color:#666>==</span>myid){
+    fprintf(stderr,<span style=color:#4070a0>&#34;please input a value -&gt;&#34;</span>);
+        scanf(<span style=color:#4070a0>&#34;%d&#34;</span>,<span style=color:#666>&amp;</span>value);
+        fprintf(stderr,<span style=color:#4070a0>&#34;Process %d read from user %d</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>,myid,value);
+
+        MPI_Send(<span style=color:#666>&amp;</span>value,<span style=color:#40a070>1</span>,MPI_INT,<span style=color:#40a070>1</span>,<span style=color:#40a070>0</span>,MPI_COMM_WORLD);
+        fprintf(stderr,<span style=color:#4070a0>&#34;Process %d send %d to Process %d </span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>,myid,value,myid<span style=color:#666>+</span><span style=color:#40a070>1</span>);
+    }
+    <span style=color:#007020;font-weight:700>else</span> <span style=color:#007020;font-weight:700>if</span>( <span style=color:#40a070>1</span><span style=color:#666>==</span>myid ){
+        MPI_Recv(<span style=color:#666>&amp;</span>value,<span style=color:#40a070>1</span>,MPI_INT,<span style=color:#40a070>0</span>,<span style=color:#40a070>0</span>,MPI_COMM_WORLD,<span style=color:#666>&amp;</span>status);
+        fprintf(stderr,<span style=color:#4070a0>&#34;Process %d receive %d from Process %d</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>,myid,value,myid<span style=color:#666>-</span><span style=color:#40a070>1</span>);
+    }
+
+    MPI_Finalize();
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>mpicc <span style=color:#666>-</span>o <span style=color:#40a070>1</span><span style=color:#666>-</span><span style=color:#40a070>2</span> <span style=color:#40a070>1</span><span style=color:#666>-</span><span style=color:#40a070>2.</span>c
+mpirun <span style=color:#666>-</span>np <span style=color:#40a070>3</span> <span style=color:#40a070>1</span><span style=color:#666>-</span><span style=color:#40a070>2</span>
+</code></pre></div><h3 id=13-多进程间的发送和接收>1.3 多进程间的发送和接收</h3>
+<ul>
+<li>进程0向进程1发送一个整数，进程1接收到后，将其打印到屏幕上并向进程2发送该整数</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#007020>#include</span> <span style=color:#007020>&lt;stdio.h&gt;</span><span style=color:#007020>
+</span><span style=color:#007020>#include</span> <span style=color:#007020>&#34;mpi.h&#34;</span><span style=color:#007020>
+</span><span style=color:#007020></span><span style=color:#902000>int</span> <span style=color:#06287e>main</span>(<span style=color:#902000>int</span> argc, <span style=color:#902000>char</span> <span style=color:#666>*</span>argv[]){
+    <span style=color:#902000>int</span> rank, value, size;
+
+    MPI_Status status;
+    MPI_Init(<span style=color:#666>&amp;</span>argc, <span style=color:#666>&amp;</span>argv);
+    MPI_Comm_rank(MPI_COMM_WORLD, <span style=color:#666>&amp;</span>rank);
+    MPI_Comm_size(MPI_COMM_WORLD, <span style=color:#666>&amp;</span>size);
+
+    <span style=color:#007020;font-weight:700>do</span> {
+        <span style=color:#007020;font-weight:700>if</span> (rank<span style=color:#666>==</span><span style=color:#40a070>0</span>) {
+            fprintf(stderr, <span style=color:#4070a0>&#34;</span><span style=color:#4070a0;font-weight:700>\n\n</span><span style=color:#4070a0>Please give new value = &#34;</span>);
+            scanf(<span style=color:#4070a0>&#34;%d&#34;</span>,<span style=color:#666>&amp;</span>value);
+            fprintf(stderr, <span style=color:#4070a0>&#34;</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>%d read &lt;-from ( %d )&#34;</span>,rank,value);
+            <span style=color:#007020;font-weight:700>if</span> (size<span style=color:#666>&gt;</span><span style=color:#40a070>1</span>) {
+                MPI_Send(<span style=color:#666>&amp;</span>value, <span style=color:#40a070>1</span>, MPI_INT, rank<span style=color:#666>+</span><span style=color:#40a070>1</span>, <span style=color:#40a070>0</span>, MPI_COMM_WORLD);
+                fprintf(stderr, <span style=color:#4070a0>&#34;</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>%d send ( %d ) to-&gt; %d&#34;</span>, rank,value,rank<span style=color:#666>+</span><span style=color:#40a070>1</span>);
+            }
+        } <span style=color:#007020;font-weight:700>else</span> {
+            MPI_Recv(<span style=color:#666>&amp;</span>value, <span style=color:#40a070>1</span>, MPI_INT, rank<span style=color:#666>-</span><span style=color:#40a070>1</span>, <span style=color:#40a070>0</span>, MPI_COMM_WORLD, <span style=color:#666>&amp;</span>status);
+            fprintf(stderr, <span style=color:#4070a0>&#34;</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>%d receive( %d )&lt;-from %d&#34;</span>,rank, value, rank<span style=color:#666>-</span><span style=color:#40a070>1</span>);
+            <span style=color:#007020;font-weight:700>if</span> (rank<span style=color:#666>&lt;</span>size<span style=color:#666>-</span><span style=color:#40a070>1</span>) {
+                MPI_Send(<span style=color:#666>&amp;</span>value, <span style=color:#40a070>1</span>, MPI_INT, rank<span style=color:#666>+</span><span style=color:#40a070>1</span>, <span style=color:#40a070>0</span>, MPI_COMM_WORLD);
+                fprintf(stderr, <span style=color:#4070a0>&#34;</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>%d send ( %d ) to-&gt; %d&#34;</span>, rank, value, rank<span style=color:#666>+</span><span style=color:#40a070>1</span>);
+            }
+        }
+        MPI_Barrier(MPI_COMM_WORLD);
+    } <span style=color:#007020;font-weight:700>while</span> (value<span style=color:#666>&gt;</span><span style=color:#40a070>0</span>);
+
+    MPI_Finalize();
+    printf(<span style=color:#4070a0>&#34;</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>);
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>mpicc <span style=color:#666>-</span>o <span style=color:#40a070>1</span><span style=color:#666>-</span><span style=color:#40a070>3</span> <span style=color:#40a070>1</span><span style=color:#666>-</span><span style=color:#40a070>3.</span>c
+mpirun <span style=color:#666>-</span>np <span style=color:#40a070>4</span> <span style=color:#40a070>1</span><span style=color:#666>-</span><span style=color:#40a070>3</span>
+</code></pre></div><h3 id=14-任意源和任意标识>1.4 任意源和任意标识</h3>
+<ul>
+<li>对<code>status</code>的使用</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#007020>#include</span> <span style=color:#007020>&#34;mpi.h&#34;</span><span style=color:#007020>
+</span><span style=color:#007020>#include</span> <span style=color:#007020>&lt;stdio.h&gt;</span><span style=color:#007020>
+</span><span style=color:#007020></span>
+<span style=color:#902000>int</span> <span style=color:#06287e>main</span>(<span style=color:#902000>int</span> argc, <span style=color:#902000>char</span> <span style=color:#666>**</span>argv){
+    <span style=color:#902000>int</span> myid, size, i, buf[<span style=color:#40a070>1</span>];
+    MPI_Status status;
+    MPI_Init( <span style=color:#666>&amp;</span>argc, <span style=color:#666>&amp;</span>argv );
+    MPI_Comm_rank( MPI_COMM_WORLD, <span style=color:#666>&amp;</span>myid );
+    MPI_Comm_size( MPI_COMM_WORLD, <span style=color:#666>&amp;</span>size );
+
+    <span style=color:#007020;font-weight:700>if</span> (myid <span style=color:#666>==</span> <span style=color:#40a070>0</span>) {
+        <span style=color:#007020;font-weight:700>for</span> (i<span style=color:#666>=</span><span style=color:#40a070>0</span>; i<span style=color:#666>&lt;</span><span style=color:#40a070>10</span><span style=color:#666>*</span>(size<span style=color:#666>-</span><span style=color:#40a070>1</span>); i<span style=color:#666>++</span>) {
+            MPI_Recv( buf, <span style=color:#40a070>1</span>, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, <span style=color:#666>&amp;</span>status );
+            fprintf(stderr, <span style=color:#4070a0>&#34;Msg=%d from Process %d with tag %d</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>, buf[<span style=color:#40a070>0</span>], status.MPI_SOURCE, status.MPI_TAG );
+        }
+    } <span style=color:#007020;font-weight:700>else</span> {
+        <span style=color:#007020;font-weight:700>for</span> (i<span style=color:#666>=</span><span style=color:#40a070>0</span>; i<span style=color:#666>&lt;</span><span style=color:#40a070>10</span>; i<span style=color:#666>++</span>){
+            buf[<span style=color:#40a070>0</span>]<span style=color:#666>=</span><span style=color:#40a070>10</span><span style=color:#666>*</span>myid<span style=color:#666>+</span>i;
+            MPI_Send( buf, <span style=color:#40a070>1</span>, MPI_INT, <span style=color:#40a070>0</span>, i, MPI_COMM_WORLD );
+        }
+    }
+    MPI_Finalize();
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>mpicc <span style=color:#666>-</span>o <span style=color:#40a070>1</span><span style=color:#666>-</span><span style=color:#40a070>4</span> <span style=color:#40a070>1</span><span style=color:#666>-</span><span style=color:#40a070>4.</span>c
+mpirun <span style=color:#666>-</span>np <span style=color:#40a070>3</span> <span style=color:#40a070>1</span><span style=color:#666>-</span><span style=color:#40a070>4</span>
+</code></pre></div><h2 id=2-mpi微进阶>2 MPI微进阶</h2>
+<h3 id=21-一对多集合通信函数mpi_bcast>2.1 一对多集合通信函数MPI_Bcast</h3>
+<ul>
+<li><code>int MPI_Bcast(void *buf, int count, MPI_Datatype datatype, int root, MPI_Comm comm)</code></li>
+<li>在一个通信域内，以其中一个进程为根进程，向其他所有进程（包括该进程自身）发送数据。所有进程都使用同一个通信域<code>comm</code>和根标示<code>root</code>。其他进程指定的通信元素个数、数据类型必须与根进程指定的通信元素个数、数据类型保持一致</li>
+<li>一对多集合通信函数还有<code>MPI_Scatter</code></li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#007020>#include</span> <span style=color:#007020>&#34;mpi.h&#34;</span><span style=color:#007020>
+</span><span style=color:#007020>#include</span> <span style=color:#007020>&lt;stdio.h&gt;</span><span style=color:#007020>
+</span><span style=color:#007020>#include</span> <span style=color:#007020>&lt;stdlib.h&gt;</span><span style=color:#007020>
+</span><span style=color:#007020></span>
+<span style=color:#902000>int</span> <span style=color:#06287e>main</span>(<span style=color:#902000>int</span> argc, <span style=color:#902000>char</span> <span style=color:#666>*</span>argv[]){
+    <span style=color:#902000>int</span> rank, value<span style=color:#666>=</span><span style=color:#40a070>1</span>;
+    MPI_Init(<span style=color:#666>&amp;</span>argc, <span style=color:#666>&amp;</span>argv);
+    MPI_Comm_rank(MPI_COMM_WORLD, <span style=color:#666>&amp;</span>rank);
+
+    <span style=color:#007020;font-weight:700>while</span>(value<span style=color:#666>&gt;</span><span style=color:#40a070>0</span>){
+        <span style=color:#007020;font-weight:700>if</span> (<span style=color:#40a070>0</span><span style=color:#666>==</span>rank){
+            printf(<span style=color:#4070a0>&#34;Please input a positive value: 0 to exit</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>);
+            scanf(<span style=color:#4070a0>&#34;%d&#34;</span>, <span style=color:#666>&amp;</span>value);
+        }
+
+        <span style=color:#60a0b0;font-style:italic>// 1是通信元素个数，0是root进程
+</span><span style=color:#60a0b0;font-style:italic></span>        MPI_Bcast(<span style=color:#666>&amp;</span>value, <span style=color:#40a070>1</span>, MPI_INT, <span style=color:#40a070>0</span>, MPI_COMM_WORLD);
+        printf(<span style=color:#4070a0>&#34;Process %d got value %d</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>, rank, value);
+    }
+
+    MPI_Finalize();
+    <span style=color:#007020;font-weight:700>return</span> <span style=color:#40a070>0</span>;
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>mpicc <span style=color:#666>-</span>o <span style=color:#40a070>2</span><span style=color:#666>-</span><span style=color:#40a070>1</span> <span style=color:#40a070>2</span><span style=color:#666>-</span><span style=color:#40a070>1.</span>c
+
+<span style=color:#60a0b0;font-style:italic>//  -np后面指定的是进程数
+</span><span style=color:#60a0b0;font-style:italic></span>mpirun <span style=color:#666>-</span>np <span style=color:#40a070>6</span> <span style=color:#40a070>2</span><span style=color:#666>-</span><span style=color:#40a070>1</span>
+</code></pre></div><h3 id=22-多对一集合通信函数mpi_reduce>2.2 多对一集合通信函数MPI_Reduce</h3>
+<ul>
+<li><code>int MPI_Reduce(void* sendbuf, void* recvbuf, int count, MPI_Datatype datatype, MPI_Op op, int root, MPI_Comm comm)</code></li>
+<li>在<code>MPI_Reduce</code>操作中，每个进程，包括根进程，将其缓冲区中的消息发送至<code>root</code>进程，<code>root</code>进程按照操作<code>op</code>对接收到的数据进行计算，将计算结果返回<code>root</code>进程的缓冲区。所有进程提供长度及元素类型相同缓冲区</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#007020>#include</span> <span style=color:#007020>&#34;mpi.h&#34;</span><span style=color:#007020>
+</span><span style=color:#007020>#include</span> <span style=color:#007020>&lt;stdio.h&gt;</span><span style=color:#007020>
+</span><span style=color:#007020>#include</span> <span style=color:#007020>&lt;stdlib.h&gt;</span><span style=color:#007020>
+</span><span style=color:#007020></span>
+<span style=color:#902000>double</span> <span style=color:#06287e>f</span>(<span style=color:#902000>double</span> x){
+    <span style=color:#007020;font-weight:700>return</span> <span style=color:#40a070>4.0</span><span style=color:#666>/</span>(<span style=color:#40a070>1.0</span><span style=color:#666>+</span>x<span style=color:#666>*</span>x);
+}
+
+<span style=color:#902000>int</span> <span style=color:#06287e>main</span>(<span style=color:#902000>int</span> argc, <span style=color:#902000>char</span> <span style=color:#666>*</span>argv[]){
+    <span style=color:#902000>int</span> rank, size;
+    <span style=color:#902000>int</span> n_rectangle;
+    <span style=color:#902000>double</span> pi;
+
+    MPI_Init(<span style=color:#666>&amp;</span>argc, <span style=color:#666>&amp;</span>argv);
+    MPI_Comm_size(MPI_COMM_WORLD, <span style=color:#666>&amp;</span>size); <span style=color:#60a0b0;font-style:italic>//获取进程数
+</span><span style=color:#60a0b0;font-style:italic></span>    MPI_Comm_rank(MPI_COMM_WORLD, <span style=color:#666>&amp;</span>rank); <span style=color:#60a0b0;font-style:italic>//获取进程号
+</span><span style=color:#60a0b0;font-style:italic></span>
+    <span style=color:#007020;font-weight:700>if</span> (<span style=color:#40a070>0</span><span style=color:#666>==</span>rank){
+        printf(<span style=color:#4070a0>&#34;number of small rectangle:</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>);
+        scanf(<span style=color:#4070a0>&#34;%d&#34;</span>,<span style=color:#666>&amp;</span>n_rectangle);
+    }
+    MPI_Bcast(<span style=color:#666>&amp;</span>n_rectangle, <span style=color:#40a070>1</span>, MPI_INT, <span style=color:#40a070>0</span>, MPI_COMM_WORLD);
+
+    <span style=color:#902000>int</span> i;
+    <span style=color:#902000>double</span> x, h, sum<span style=color:#666>=</span><span style=color:#40a070>0.0</span>;
+    <span style=color:#007020;font-weight:700>for</span> (i<span style=color:#666>=</span>rank<span style=color:#666>+</span><span style=color:#40a070>1</span>; i<span style=color:#666>&lt;=</span>n_rectangle; i<span style=color:#666>+=</span>size){
+        x <span style=color:#666>=</span> (i<span style=color:#666>-</span><span style=color:#40a070>0.5</span>)<span style=color:#666>/</span>(<span style=color:#902000>double</span>)n_rectangle;
+        sum <span style=color:#666>+=</span> f(x);
+    }
+    sum <span style=color:#666>=</span> sum<span style=color:#666>/</span>n;
+
+    MPI_Reduce(<span style=color:#666>&amp;</span>sum, <span style=color:#666>&amp;</span>pi, <span style=color:#40a070>1</span>, MPI_DOUBLE, MPI_SUM, <span style=color:#40a070>0</span>, MPI_COMM_WORLD);
+    <span style=color:#007020;font-weight:700>if</span> (<span style=color:#40a070>0</span><span style=color:#666>==</span>rank){
+        printf(<span style=color:#4070a0>&#34;Approximately of pi is : %.16f</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>,pi);
+        fflush(stdout);
+    }
+
+    MPI_Finalize();
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>mpicc <span style=color:#666>-</span>o <span style=color:#40a070>2</span><span style=color:#666>-</span><span style=color:#40a070>2</span> <span style=color:#40a070>2</span><span style=color:#666>-</span><span style=color:#40a070>2.</span>c
+mpirun <span style=color:#666>-</span>np <span style=color:#40a070>6</span> <span style=color:#40a070>2</span><span style=color:#666>-</span><span style=color:#40a070>2</span>
+</code></pre></div><h3 id=23-组通信的同步功能>2.3 组通信的同步功能</h3>
+<ul>
+<li><code>MPI_Barrier(MPI_Comm，comm)</code></li>
+<li>在组中建立一个同步栅栏，当每个进程都到达MPI_Barrier调用后，程序才接着往下执行</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#007020>#include</span> <span style=color:#007020>&#34;mpi.h&#34;</span><span style=color:#007020>
+</span><span style=color:#007020>#include</span> <span style=color:#007020>&lt;stdio.h&gt;</span><span style=color:#007020>
+</span><span style=color:#007020></span>
+<span style=color:#902000>int</span> <span style=color:#06287e>main</span>(<span style=color:#902000>int</span> argc, <span style=color:#902000>char</span> <span style=color:#666>*</span>argv[]){
+    <span style=color:#902000>int</span> rank, value, size;
+
+    MPI_Status status;
+    MPI_Init(<span style=color:#666>&amp;</span>argc, <span style=color:#666>&amp;</span>argv);
+    MPI_Comm_rank(MPI_COMM_WORLD, <span style=color:#666>&amp;</span>rank);
+    MPI_Comm_size(MPI_COMM_WORLD, <span style=color:#666>&amp;</span>size);
+
+    <span style=color:#007020;font-weight:700>do</span>{
+        <span style=color:#007020;font-weight:700>if</span>(rank<span style=color:#666>==</span><span style=color:#40a070>0</span>){
+            fprintf(stderr, <span style=color:#4070a0>&#34;</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>Please give new value=&#34;</span>);
+            scanf(<span style=color:#4070a0>&#34;%d&#34;</span>,<span style=color:#666>&amp;</span>value);
+            fprintf(stderr, <span style=color:#4070a0>&#34;%d read &lt;-from (%d)</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>,rank,value);
+            <span style=color:#007020;font-weight:700>if</span>(size<span style=color:#666>&gt;</span><span style=color:#40a070>1</span>){
+                MPI_Send(<span style=color:#666>&amp;</span>value, <span style=color:#40a070>1</span>, MPI_INT, rank<span style=color:#666>+</span><span style=color:#40a070>1</span>, <span style=color:#40a070>0</span>, MPI_COMM_WORLD);
+                fprintf(stderr, <span style=color:#4070a0>&#34;%d send (%d) to-&gt; %d</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>, rank,value,rank<span style=color:#666>+</span><span style=color:#40a070>1</span>);
+            }
+        }<span style=color:#007020;font-weight:700>else</span>{
+            MPI_Recv(<span style=color:#666>&amp;</span>value, <span style=color:#40a070>1</span>, MPI_INT, rank<span style=color:#666>-</span><span style=color:#40a070>1</span>, <span style=color:#40a070>0</span>, MPI_COMM_WORLD, <span style=color:#666>&amp;</span>status);
+            fprintf(stderr, <span style=color:#4070a0>&#34;%d receive(%d)&lt;-from %d</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>,rank, value, rank<span style=color:#666>-</span><span style=color:#40a070>1</span>);
+            <span style=color:#007020;font-weight:700>if</span>(rank<span style=color:#666>&lt;</span>size<span style=color:#666>-</span><span style=color:#40a070>1</span>){
+                MPI_Send(<span style=color:#666>&amp;</span>value, <span style=color:#40a070>1</span>, MPI_INT, rank<span style=color:#666>+</span><span style=color:#40a070>1</span>, <span style=color:#40a070>0</span>, MPI_COMM_WORLD);
+                fprintf(stderr, <span style=color:#4070a0>&#34;%d send (%d) to-&gt; %d</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>, rank, value, rank<span style=color:#666>+</span><span style=color:#40a070>1</span>);
+            }
+        }
+        MPI_Barrier(MPI_COMM_WORLD);
+    }<span style=color:#007020;font-weight:700>while</span>(value<span style=color:#666>&gt;</span><span style=color:#40a070>0</span>);
+    MPI_Finalize();
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>mpicc <span style=color:#666>-</span>o <span style=color:#40a070>2</span><span style=color:#666>-</span><span style=color:#40a070>3</span> <span style=color:#40a070>2</span><span style=color:#666>-</span><span style=color:#40a070>3.</span>c
+mpirun <span style=color:#666>-</span>np <span style=color:#40a070>2</span> <span style=color:#40a070>2</span><span style=color:#666>-</span><span style=color:#40a070>3</span>
+</code></pre></div>
+</section>
+<div class=post-tags>
+<nav class="nav tags">
+<ul class=tags>
+<li><a href=/tags/self-tutorial>self-tutorial</a></li>
+<li><a href=/tags/high-performance-computing>high-performance-computing</a></li>
+</ul>
+</nav>
+</div>
+</article>
+</main>
+<footer>
+<hr><a class=soc href=https://www.linkedin.com/in/yuedongwoo/ title=LinkedIn><i data-feather=linkedin></i></a>|<a class=soc href=https://github.com/lunarwhite title=GitHub><i data-feather=github></i></a>|<a class=soc href title=Twitter><i data-feather=twitter></i></a>|<a class=soc href title=Instagram><i data-feather=instagram></i></a>|<a class=soc href title=Bilibili><i data-feather=tv></i></a>|<a class=soc href=https://www.zhihu.com/people/wydnlz title=Zhihu><i data-feather=link></i></a>|⚡️
+2021 © lunarwhite | <a href=https://github.com/athul/archie>Archie Theme</a> | Built with <a href=https://gohugo.io>Hugo</a>
+</footer>
+<script>feather.replace()</script>
+<script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
+</body>
+</html>

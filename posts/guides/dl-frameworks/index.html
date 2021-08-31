@@ -1,0 +1,110 @@
+<!doctype html><html><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge"><title>Deeplearning frameworks - lunarwhite</title><link rel=icon type=image/png href=favicon/favicon.ico><meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="Brief and customised manuals for me to check.">
+<meta property="og:image" content>
+<meta property="og:title" content="Deeplearning frameworks">
+<meta property="og:description" content="Brief and customised manuals for me to check.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lunarwhite.github.io/posts/guides/dl-frameworks/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-04-24T20:20:48+00:00">
+<meta property="article:modified_time" content="2021-04-24T20:20:48+00:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="Deeplearning frameworks">
+<meta name=twitter:description content="Brief and customised manuals for me to check.">
+<script src=https://lunarwhite.github.iojs/feather.min.js></script>
+<link href=https://lunarwhite.github.io/css/fonts.b685ac6f654695232de7b82a9143a46f9e049c8e3af3a21d9737b01f4be211d1.css rel=stylesheet>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+</head>
+<body>
+<div class=content><header>
+<div class=main>
+<a href=https://lunarwhite.github.io>lunarwhite</a>
+</div>
+<nav>
+<a href=/>Home</a>
+<a href=/posts>Posts</a>
+<a href=/tags>Tags</a>
+<a href=/about>About</a>
+</nav>
+</header>
+<main>
+<article>
+<div class=title>
+<h1 class=title>Deeplearning frameworks</h1>
+<div class=meta>Posted on Apr 24, 2021</div>
+</div>
+<section class=body>
+<h2 id=1-sklearn>1 SkLearn</h2>
+<h3 id=11-参考>1.1 参考</h3>
+<ul>
+<li><a href=https://sklearn.apachecn.org/>https://sklearn.apachecn.org/</a></li>
+<li><a href=https://scikit-learn.org/stable/user_guide.html>https://scikit-learn.org/stable/user_guide.html</a></li>
+</ul>
+<h2 id=2-keras>2 Keras</h2>
+<h3 id=21-参考>2.1 参考</h3>
+<ul>
+<li><a href=https://keras.io/zh/>https://keras.io/zh/</a></li>
+</ul>
+<h3 id=22-损失函数>2.2 损失函数</h3>
+<ul>
+<li>二分类
+<ul>
+<li><code>binary_crossentropy</code></li>
+</ul>
+</li>
+<li>多分类
+<ul>
+<li><code>categorical_crossentropy</code> one-hot编码</li>
+<li><code>sparse_categorical_crossentropy</code> 数字编码</li>
+<li><code>kullback_leibler_divergence</code></li>
+<li><code>hinge</code> 多用于SVM</li>
+<li><code>categorical_hinge</code></li>
+<li><code>squared_hinge</code></li>
+<li><code>poisson</code></li>
+</ul>
+</li>
+<li>回归
+<ul>
+<li><code>mean_squared_error</code></li>
+<li><code>mean_absolute_error</code></li>
+<li><code>mean_absolute_percentage_error</code></li>
+<li><code>mean_squared_logarithmic_error</code></li>
+<li><code>logcosh</code></li>
+<li><code>cosine_proximity</code></li>
+</ul>
+</li>
+</ul>
+<h3 id=23-优化方法>2.3 优化方法</h3>
+<ul>
+<li>列表
+<ul>
+<li><code>SGD()</code></li>
+<li><code>RMSprop()</code></li>
+<li><code>Adagrad()</code></li>
+<li><code>Adadelta()</code></li>
+<li><code>Adam()</code></li>
+<li><code>Adamax()</code></li>
+<li><code>Nadam()</code></li>
+</ul>
+</li>
+</ul>
+</section>
+<div class=post-tags>
+<nav class="nav tags">
+<ul class=tags>
+<li><a href=/tags/deep-learning>deep-learning</a></li>
+<li><a href=/tags/self-tutorial>self-tutorial</a></li>
+</ul>
+</nav>
+</div>
+</article>
+</main>
+<footer>
+<hr><a class=soc href=https://www.linkedin.com/in/yuedongwoo/ title=LinkedIn><i data-feather=linkedin></i></a>|<a class=soc href=https://github.com/lunarwhite title=GitHub><i data-feather=github></i></a>|<a class=soc href title=Twitter><i data-feather=twitter></i></a>|<a class=soc href title=Instagram><i data-feather=instagram></i></a>|<a class=soc href title=Bilibili><i data-feather=tv></i></a>|<a class=soc href=https://www.zhihu.com/people/wydnlz title=Zhihu><i data-feather=link></i></a>|⚡️
+2021 © lunarwhite | <a href=https://github.com/athul/archie>Archie Theme</a> | Built with <a href=https://gohugo.io>Hugo</a>
+</footer>
+<script>feather.replace()</script>
+<script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
+</body>
+</html>
