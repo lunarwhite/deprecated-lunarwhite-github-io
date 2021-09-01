@@ -16,7 +16,8 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel=stylesheet>
-<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.f2d7282a0f5a7f5b27e43ccc9c3448ef92651f88fde45a8bac6c6e2a6ba2d01b.css>
+<link disabled id=dark-mode-theme rel=stylesheet href=https://lunarwhite.github.io/css/dark.80b2eb1f37be2454ead72ba0f2662f3022d939734e00b0909a04541420aa9d6c.css>
 </head>
 <body>
 <div class=content><header>
@@ -28,6 +29,7 @@
 <a href=/posts>Posts</a>
 <a href=/tags>Tags</a>
 <a href=/about>About</a>
+/ <a id=dark-mode-toggle><i data-feather=sun></i></a>
 </nav>
 </header>
 <main>
@@ -108,59 +110,59 @@
 </li>
 </ul>
 <h2 id=2-实现>2 实现</h2>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>sys</span>
-<span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>re</span>
-<span style=color:#007020;font-weight:700>from</span> <span style=color:#0e84b5;font-weight:700>string</span> <span style=color:#007020;font-weight:700>import</span> punctuation
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#f92672>import</span> sys
+<span style=color:#f92672>import</span> re
+<span style=color:#f92672>from</span> string <span style=color:#f92672>import</span> punctuation
 
-<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>create_file</span>(name, msg):
-    partial_path <span style=color:#666>=</span> <span style=color:#4070a0>&#34;D:</span><span style=color:#4070a0;font-weight:700>\\</span><span style=color:#4070a0>MEDESKTOP</span><span style=color:#4070a0;font-weight:700>\\</span><span style=color:#4070a0>&#34;</span>
-    full_path <span style=color:#666>=</span> partial_path <span style=color:#666>+</span> name <span style=color:#666>+</span> <span style=color:#4070a0>&#39;.txt&#39;</span>
-    <span style=color:#007020;font-weight:700>global</span> full_name
-    full_name <span style=color:#666>=</span> full_path
-    file <span style=color:#666>=</span> <span style=color:#007020>open</span>(full_path, <span style=color:#4070a0>&#39;w&#39;</span>)
-    file<span style=color:#666>.</span>write(msg)
-    <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;File created successfully</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>)
-    <span style=color:#007020>print</span>(full_name)
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>create_file</span>(name, msg):
+    partial_path <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;D:</span><span style=color:#ae81ff>\\</span><span style=color:#e6db74>MEDESKTOP</span><span style=color:#ae81ff>\\</span><span style=color:#e6db74>&#34;</span>
+    full_path <span style=color:#f92672>=</span> partial_path <span style=color:#f92672>+</span> name <span style=color:#f92672>+</span> <span style=color:#e6db74>&#39;.txt&#39;</span>
+    <span style=color:#66d9ef>global</span> full_name
+    full_name <span style=color:#f92672>=</span> full_path
+    file <span style=color:#f92672>=</span> open(full_path, <span style=color:#e6db74>&#39;w&#39;</span>)
+    file<span style=color:#f92672>.</span>write(msg)
+    print(<span style=color:#e6db74>&#34;File created successfully</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>)
+    print(full_name)
 
-<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>run_query</span>(wanted):
-    word_total <span style=color:#666>=</span> <span style=color:#40a070>0</span>
-    <span style=color:#007020;font-weight:700>for</span> each <span style=color:#007020;font-weight:700>in</span> one_word_list:
-        <span style=color:#007020;font-weight:700>if</span> each <span style=color:#666>==</span> wanted:
-            word_total <span style=color:#666>+=</span> <span style=color:#40a070>1</span>
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>run_query</span>(wanted):
+    word_total <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
+    <span style=color:#66d9ef>for</span> each <span style=color:#f92672>in</span> one_word_list:
+        <span style=color:#66d9ef>if</span> each <span style=color:#f92672>==</span> wanted:
+            word_total <span style=color:#f92672>+=</span> <span style=color:#ae81ff>1</span>
 
-    <span style=color:#007020>print</span>(<span style=color:#4070a0>&#39;&#34;</span><span style=color:#70a0d0;font-style:italic>{}</span><span style=color:#4070a0>&#34; occurs </span><span style=color:#70a0d0;font-style:italic>{}</span><span style=color:#4070a0> times&#39;</span><span style=color:#666>.</span>format(wanted, word_total))
+    print(<span style=color:#e6db74>&#39;&#34;</span><span style=color:#e6db74>{}</span><span style=color:#e6db74>&#34; occurs </span><span style=color:#e6db74>{}</span><span style=color:#e6db74> times&#39;</span><span style=color:#f92672>.</span>format(wanted, word_total))
 
-    line_number <span style=color:#666>=</span> <span style=color:#40a070>0</span>
-    <span style=color:#007020;font-weight:700>for</span> line <span style=color:#007020;font-weight:700>in</span> text_list:
-        line_plain <span style=color:#666>=</span> re<span style=color:#666>.</span>sub(<span style=color:#4070a0>r</span><span style=color:#4070a0>&#39;[</span><span style=color:#70a0d0;font-style:italic>{}</span><span style=color:#4070a0>]&#39;</span><span style=color:#666>.</span>format(punctuation), <span style=color:#4070a0>&#39;&#39;</span>, line)
-        word_list <span style=color:#666>=</span> [word<span style=color:#666>.</span>lower() <span style=color:#007020;font-weight:700>for</span> word <span style=color:#007020;font-weight:700>in</span> line_plain<span style=color:#666>.</span>split()]
-        line_number <span style=color:#666>+=</span> <span style=color:#40a070>1</span>
-        <span style=color:#007020;font-weight:700>if</span> wanted <span style=color:#007020;font-weight:700>in</span> word_list:
-            <span style=color:#007020>print</span>(<span style=color:#4070a0>&#39;</span><span style=color:#4070a0;font-weight:700>\t</span><span style=color:#4070a0>line </span><span style=color:#70a0d0;font-style:italic>{}</span><span style=color:#4070a0>: </span><span style=color:#70a0d0;font-style:italic>{}</span><span style=color:#4070a0>&#39;</span><span style=color:#666>.</span>format(line_number, text_list[line_number <span style=color:#666>-</span> <span style=color:#40a070>1</span>]), end<span style=color:#666>=</span><span style=color:#4070a0>&#39;&#39;</span>)
+    line_number <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
+    <span style=color:#66d9ef>for</span> line <span style=color:#f92672>in</span> text_list:
+        line_plain <span style=color:#f92672>=</span> re<span style=color:#f92672>.</span>sub(<span style=color:#e6db74>r</span><span style=color:#e6db74>&#39;[</span><span style=color:#e6db74>{}</span><span style=color:#e6db74>]&#39;</span><span style=color:#f92672>.</span>format(punctuation), <span style=color:#e6db74>&#39;&#39;</span>, line)
+        word_list <span style=color:#f92672>=</span> [word<span style=color:#f92672>.</span>lower() <span style=color:#66d9ef>for</span> word <span style=color:#f92672>in</span> line_plain<span style=color:#f92672>.</span>split()]
+        line_number <span style=color:#f92672>+=</span> <span style=color:#ae81ff>1</span>
+        <span style=color:#66d9ef>if</span> wanted <span style=color:#f92672>in</span> word_list:
+            print(<span style=color:#e6db74>&#39;</span><span style=color:#ae81ff>\t</span><span style=color:#e6db74>line </span><span style=color:#e6db74>{}</span><span style=color:#e6db74>: </span><span style=color:#e6db74>{}</span><span style=color:#e6db74>&#39;</span><span style=color:#f92672>.</span>format(line_number, text_list[line_number <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>]), end<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;&#39;</span>)
 
-<span style=color:#007020;font-weight:700>if</span> __name__ <span style=color:#666>==</span> <span style=color:#4070a0>&#39;__main__&#39;</span>:
-    <span style=color:#007020;font-weight:700>while</span> <span style=color:#007020;font-weight:700>True</span>:
-        <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;1.create file</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>2.count and locate</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>3.quit</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>)
-        choice <span style=color:#666>=</span> <span style=color:#007020>input</span>(<span style=color:#4070a0>&#34;Please enter the choice number:</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>)
+<span style=color:#66d9ef>if</span> __name__ <span style=color:#f92672>==</span> <span style=color:#e6db74>&#39;__main__&#39;</span>:
+    <span style=color:#66d9ef>while</span> <span style=color:#66d9ef>True</span>:
+        print(<span style=color:#e6db74>&#34;1.create file</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>2.count and locate</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>3.quit</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>)
+        choice <span style=color:#f92672>=</span> input(<span style=color:#e6db74>&#34;Please enter the choice number:</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>)
 
-        <span style=color:#007020;font-weight:700>if</span> choice <span style=color:#666>==</span> <span style=color:#4070a0>&#34;1&#34;</span>:
-            name <span style=color:#666>=</span> <span style=color:#007020>input</span>(<span style=color:#4070a0>&#34;Please enter the name of file:</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>)
-            msg <span style=color:#666>=</span> <span style=color:#007020>input</span>(<span style=color:#4070a0>&#34;Please enter the contents:</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>)
+        <span style=color:#66d9ef>if</span> choice <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;1&#34;</span>:
+            name <span style=color:#f92672>=</span> input(<span style=color:#e6db74>&#34;Please enter the name of file:</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>)
+            msg <span style=color:#f92672>=</span> input(<span style=color:#e6db74>&#34;Please enter the contents:</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>)
             create_file(name, msg)
 
-        <span style=color:#007020;font-weight:700>elif</span> choice <span style=color:#666>==</span> <span style=color:#4070a0>&#34;2&#34;</span>:
-            wanted <span style=color:#666>=</span> <span style=color:#007020>input</span>(<span style=color:#4070a0>&#34;Please enter the word:</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>)
-            text <span style=color:#666>=</span> <span style=color:#007020>open</span>(full_name, <span style=color:#4070a0>&#39;r&#39;</span>)
-            text_list <span style=color:#666>=</span> text<span style=color:#666>.</span>readlines()
-            text_plain <span style=color:#666>=</span> re<span style=color:#666>.</span>sub(<span style=color:#4070a0>r</span><span style=color:#4070a0>&#39;[</span><span style=color:#70a0d0;font-style:italic>{}</span><span style=color:#4070a0>]&#39;</span><span style=color:#666>.</span>format(punctuation), <span style=color:#4070a0>&#39;&#39;</span>, <span style=color:#4070a0>&#39;&#39;</span><span style=color:#666>.</span>join(text_list))
-            one_word_list <span style=color:#666>=</span> [word<span style=color:#666>.</span>lower() <span style=color:#007020;font-weight:700>for</span> word <span style=color:#007020;font-weight:700>in</span> text_plain<span style=color:#666>.</span>split()]
-            <span style=color:#007020>print</span>(one_word_list)
+        <span style=color:#66d9ef>elif</span> choice <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;2&#34;</span>:
+            wanted <span style=color:#f92672>=</span> input(<span style=color:#e6db74>&#34;Please enter the word:</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>)
+            text <span style=color:#f92672>=</span> open(full_name, <span style=color:#e6db74>&#39;r&#39;</span>)
+            text_list <span style=color:#f92672>=</span> text<span style=color:#f92672>.</span>readlines()
+            text_plain <span style=color:#f92672>=</span> re<span style=color:#f92672>.</span>sub(<span style=color:#e6db74>r</span><span style=color:#e6db74>&#39;[</span><span style=color:#e6db74>{}</span><span style=color:#e6db74>]&#39;</span><span style=color:#f92672>.</span>format(punctuation), <span style=color:#e6db74>&#39;&#39;</span>, <span style=color:#e6db74>&#39;&#39;</span><span style=color:#f92672>.</span>join(text_list))
+            one_word_list <span style=color:#f92672>=</span> [word<span style=color:#f92672>.</span>lower() <span style=color:#66d9ef>for</span> word <span style=color:#f92672>in</span> text_plain<span style=color:#f92672>.</span>split()]
+            print(one_word_list)
             run_query(wanted)
-            <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>)
+            print(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>)
 
-        <span style=color:#007020;font-weight:700>else</span>:
-            <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;Thanks for using!</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>Bye~&#34;</span>)
-            sys<span style=color:#666>.</span>exit(<span style=color:#40a070>0</span>)
+        <span style=color:#66d9ef>else</span>:
+            print(<span style=color:#e6db74>&#34;Thanks for using!</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>Bye~&#34;</span>)
+            sys<span style=color:#f92672>.</span>exit(<span style=color:#ae81ff>0</span>)
 </code></pre></div><h2 id=3-后续>3 后续</h2>
 <h3 id=31-文件形式>3.1 文件形式</h3>
 <ul>
@@ -192,6 +194,7 @@
 </footer>
 <script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-80H8N7NN50','auto'),ga('send','pageview'))</script>
 <script async src=https://www.google-analytics.com/analytics.js></script>
+<script src=https://lunarwhite.github.iojs/toggle.dark.js></script>
 <script>feather.replace()</script>
 <script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
 </body>

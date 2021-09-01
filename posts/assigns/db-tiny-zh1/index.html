@@ -16,7 +16,8 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel=stylesheet>
-<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.f2d7282a0f5a7f5b27e43ccc9c3448ef92651f88fde45a8bac6c6e2a6ba2d01b.css>
+<link disabled id=dark-mode-theme rel=stylesheet href=https://lunarwhite.github.io/css/dark.80b2eb1f37be2454ead72ba0f2662f3022d939734e00b0909a04541420aa9d6c.css>
 </head>
 <body>
 <div class=content><header>
@@ -28,6 +29,7 @@
 <a href=/posts>Posts</a>
 <a href=/tags>Tags</a>
 <a href=/about>About</a>
+/ <a id=dark-mode-toggle><i data-feather=sun></i></a>
 </nav>
 </header>
 <main>
@@ -615,121 +617,121 @@
 </li>
 <li>部分示例代码体现</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#007020;font-weight:700>go</span><span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>CREATE</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>TABLE</span><span style=color:#bbb> </span>User_info(<span style=color:#bbb>
-</span><span style=color:#bbb>    </span>U_id<span style=color:#bbb> </span><span style=color:#007020>int</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>identity</span>(<span style=color:#40a070>1</span>,<span style=color:#40a070>1</span>)<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NOT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NULL</span>,<span style=color:#bbb>
-</span><span style=color:#bbb>    </span>UserName<span style=color:#bbb> </span><span style=color:#007020>VARCHAR</span>(<span style=color:#40a070>20</span>)<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NOT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NULL</span>,<span style=color:#bbb>
-</span><span style=color:#bbb>    </span>Mobile<span style=color:#bbb> </span><span style=color:#007020>bigint</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NOT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NULL</span>,<span style=color:#bbb>
-</span><span style=color:#bbb>    </span>Email<span style=color:#bbb> </span><span style=color:#007020>VARCHAR</span>(<span style=color:#40a070>20</span>)<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NOT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NULL</span>,<span style=color:#bbb>
-</span><span style=color:#bbb>    </span>Sex<span style=color:#bbb> </span><span style=color:#007020>VARCHAR</span>(<span style=color:#40a070>20</span>)<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>default</span><span style=color:#bbb> </span>(<span style=color:#4070a0>&#39;男&#39;</span>),<span style=color:#bbb>
-</span><span style=color:#bbb>    </span>RegTime<span style=color:#bbb> </span>datetime,<span style=color:#bbb>
-</span><span style=color:#bbb>    </span>SignDetail<span style=color:#bbb> </span><span style=color:#007020>text</span>,<span style=color:#bbb>
-</span><span style=color:#bbb>    </span><span style=color:#007020;font-weight:700>CHECK</span><span style=color:#bbb> </span>(Mobile<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>BETWEEN</span><span style=color:#bbb> </span><span style=color:#40a070>10000000000</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>AND</span><span style=color:#bbb> </span><span style=color:#40a070>19999999999</span>),<span style=color:#bbb>
-</span><span style=color:#bbb>    </span><span style=color:#007020;font-weight:700>primary</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>key</span>(U_id),<span style=color:#bbb>
-</span><span style=color:#bbb>    </span><span style=color:#007020;font-weight:700>CONSTRAINT</span><span style=color:#bbb> </span>c_1<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>UNIQUE</span><span style=color:#bbb> </span>(Mobile)<span style=color:#bbb>
-</span><span style=color:#bbb></span>)<span style=color:#bbb>
-</span><span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>go</span><span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>CREATE</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>TABLE</span><span style=color:#bbb> </span>Question_info(<span style=color:#bbb>
-</span><span style=color:#bbb>    </span>Q_ID<span style=color:#bbb> </span><span style=color:#007020>int</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>identity</span>(<span style=color:#40a070>1</span>,<span style=color:#40a070>1</span>)<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NOT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NULL</span>,<span style=color:#bbb>
-</span><span style=color:#bbb>    </span>U_id<span style=color:#bbb> </span><span style=color:#007020>int</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NOT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NULL</span>,<span style=color:#bbb>
-</span><span style=color:#bbb>    </span>Q_title<span style=color:#bbb> </span><span style=color:#007020>text</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NOT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NULL</span>,<span style=color:#bbb>
-</span><span style=color:#bbb>    </span>Q_text<span style=color:#bbb> </span><span style=color:#007020>text</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NOT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NULL</span>,<span style=color:#bbb>
-</span><span style=color:#bbb>    </span>postTime<span style=color:#bbb> </span>datetime<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NOT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NULL</span>,<span style=color:#bbb>
-</span><span style=color:#bbb>    </span><span style=color:#007020;font-weight:700>primary</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>key</span>(Q_ID),<span style=color:#bbb>
-</span><span style=color:#bbb>    </span><span style=color:#007020;font-weight:700>CONSTRAINT</span><span style=color:#bbb> </span>user_fk_1<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>FOREIGN</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>KEY</span>(U_id)<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>REFERENCES</span><span style=color:#bbb> </span>user_info(U_id)<span style=color:#bbb>
-</span><span style=color:#bbb></span>)<span style=color:#bbb>
-</span><span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>go</span><span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>CREATE</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>TABLE</span><span style=color:#bbb> </span>Answer_info(<span style=color:#bbb>
-</span><span style=color:#bbb>    </span>A_ID<span style=color:#bbb> </span><span style=color:#007020>int</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>identity</span>(<span style=color:#40a070>1</span>,<span style=color:#40a070>1</span>)<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NOT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NULL</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>PRIMARY</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>KEY</span>,<span style=color:#bbb>
-</span><span style=color:#bbb>    </span>Q_ID<span style=color:#bbb> </span><span style=color:#007020>int</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NOT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NULL</span>,<span style=color:#bbb>
-</span><span style=color:#bbb>    </span>U_id<span style=color:#bbb> </span><span style=color:#007020>int</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NOT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NULL</span>,<span style=color:#bbb>
-</span><span style=color:#bbb>    </span>A_text<span style=color:#bbb> </span><span style=color:#007020>text</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NOT</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>NULL</span>,<span style=color:#bbb>
-</span><span style=color:#bbb>    </span>C_Number<span style=color:#bbb> </span><span style=color:#007020>bigint</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>default</span><span style=color:#bbb> </span><span style=color:#4070a0>&#39; 0&#39;</span>,<span style=color:#bbb>
-</span><span style=color:#bbb>    </span>Z_Number<span style=color:#bbb> </span><span style=color:#007020>bigint</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>default</span><span style=color:#bbb> </span><span style=color:#4070a0>&#39; 0&#39;</span>,<span style=color:#bbb>
-</span><span style=color:#bbb>    </span><span style=color:#007020;font-weight:700>CONSTRAINT</span><span style=color:#bbb> </span>user_fk_2<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>FOREIGN</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>KEY</span>(U_id)<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>REFERENCES</span><span style=color:#bbb> </span>user_info(U_id),<span style=color:#bbb>
-</span><span style=color:#bbb>    </span><span style=color:#007020;font-weight:700>CONSTRAINT</span><span style=color:#bbb> </span>Q_fk<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>FOREIGN</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>KEY</span>(Q_ID)<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>REFERENCES</span><span style=color:#bbb> </span>Question_info(Q_id),<span style=color:#bbb>
-</span><span style=color:#bbb></span>)<span style=color:#bbb>
-</span><span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#60a0b0;font-style:italic>--级联删除
-</span><span style=color:#60a0b0;font-style:italic></span><span style=color:#007020;font-weight:700>alter</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>table</span><span style=color:#bbb> </span>question_info<span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>add</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>constraint</span><span style=color:#bbb> </span>user_fk_1<span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>foreign</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>key</span><span style=color:#bbb> </span>(U_id)<span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>references</span><span style=color:#bbb> </span>user_info(U_id)<span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>ON</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>DELETE</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>CASCADE</span><span style=color:#bbb>
-</span><span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>alter</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>table</span><span style=color:#bbb> </span>collection_info<span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>add</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>CONSTRAINT</span><span style=color:#bbb> </span>Q_fk_1<span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>FOREIGN</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>KEY</span><span style=color:#bbb>  </span>(Q_ID)<span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>REFERENCES</span><span style=color:#bbb>  </span>Question_info(Q_id)<span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>ON</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>DELETE</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>CASCADE</span><span style=color:#bbb>
-</span><span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#60a0b0;font-style:italic>--级联更新
-</span><span style=color:#60a0b0;font-style:italic></span><span style=color:#007020;font-weight:700>alter</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>table</span><span style=color:#bbb> </span>Answer_info<span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>add</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>CONSTRAINT</span><span style=color:#bbb> </span>Q_fk<span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>FOREIGN</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>KEY</span><span style=color:#bbb>  </span>(Q_ID)<span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>REFERENCES</span><span style=color:#bbb>  </span>Questio<span style=color:#bbb>
-</span></code></pre></div><h3 id=53-视图索引>5.3 视图&索引</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#66d9ef>go</span>
+<span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> User_info(
+    U_id int <span style=color:#66d9ef>identity</span>(<span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>1</span>) <span style=color:#66d9ef>NOT</span> <span style=color:#66d9ef>NULL</span>,
+    UserName VARCHAR(<span style=color:#ae81ff>20</span>) <span style=color:#66d9ef>NOT</span> <span style=color:#66d9ef>NULL</span>,
+    Mobile bigint <span style=color:#66d9ef>NOT</span> <span style=color:#66d9ef>NULL</span>,
+    Email VARCHAR(<span style=color:#ae81ff>20</span>) <span style=color:#66d9ef>NOT</span> <span style=color:#66d9ef>NULL</span>,
+    Sex VARCHAR(<span style=color:#ae81ff>20</span>) <span style=color:#66d9ef>default</span> (<span style=color:#e6db74>&#39;男&#39;</span>),
+    RegTime datetime,
+    SignDetail text,
+    <span style=color:#66d9ef>CHECK</span> (Mobile <span style=color:#66d9ef>BETWEEN</span> <span style=color:#ae81ff>10000000000</span> <span style=color:#66d9ef>AND</span> <span style=color:#ae81ff>19999999999</span>),
+    <span style=color:#66d9ef>primary</span> <span style=color:#66d9ef>key</span>(U_id),
+    <span style=color:#66d9ef>CONSTRAINT</span> c_1 <span style=color:#66d9ef>UNIQUE</span> (Mobile)
+)
+
+<span style=color:#66d9ef>go</span>
+<span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> Question_info(
+    Q_ID int <span style=color:#66d9ef>identity</span>(<span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>1</span>) <span style=color:#66d9ef>NOT</span> <span style=color:#66d9ef>NULL</span>,
+    U_id int <span style=color:#66d9ef>NOT</span> <span style=color:#66d9ef>NULL</span>,
+    Q_title text <span style=color:#66d9ef>NOT</span> <span style=color:#66d9ef>NULL</span>,
+    Q_text text <span style=color:#66d9ef>NOT</span> <span style=color:#66d9ef>NULL</span>,
+    postTime datetime <span style=color:#66d9ef>NOT</span> <span style=color:#66d9ef>NULL</span>,
+    <span style=color:#66d9ef>primary</span> <span style=color:#66d9ef>key</span>(Q_ID),
+    <span style=color:#66d9ef>CONSTRAINT</span> user_fk_1 <span style=color:#66d9ef>FOREIGN</span> <span style=color:#66d9ef>KEY</span>(U_id) <span style=color:#66d9ef>REFERENCES</span> user_info(U_id)
+)
+
+<span style=color:#66d9ef>go</span>
+<span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>TABLE</span> Answer_info(
+    A_ID int <span style=color:#66d9ef>identity</span>(<span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>1</span>) <span style=color:#66d9ef>NOT</span> <span style=color:#66d9ef>NULL</span> <span style=color:#66d9ef>PRIMARY</span> <span style=color:#66d9ef>KEY</span>,
+    Q_ID int <span style=color:#66d9ef>NOT</span> <span style=color:#66d9ef>NULL</span>,
+    U_id int <span style=color:#66d9ef>NOT</span> <span style=color:#66d9ef>NULL</span>,
+    A_text text <span style=color:#66d9ef>NOT</span> <span style=color:#66d9ef>NULL</span>,
+    C_Number bigint <span style=color:#66d9ef>default</span> <span style=color:#e6db74>&#39; 0&#39;</span>,
+    Z_Number bigint <span style=color:#66d9ef>default</span> <span style=color:#e6db74>&#39; 0&#39;</span>,
+    <span style=color:#66d9ef>CONSTRAINT</span> user_fk_2 <span style=color:#66d9ef>FOREIGN</span> <span style=color:#66d9ef>KEY</span>(U_id) <span style=color:#66d9ef>REFERENCES</span> user_info(U_id),
+    <span style=color:#66d9ef>CONSTRAINT</span> Q_fk <span style=color:#66d9ef>FOREIGN</span> <span style=color:#66d9ef>KEY</span>(Q_ID) <span style=color:#66d9ef>REFERENCES</span> Question_info(Q_id),
+)
+
+<span style=color:#75715e>--级联删除
+</span><span style=color:#75715e></span><span style=color:#66d9ef>alter</span> <span style=color:#66d9ef>table</span> question_info
+<span style=color:#66d9ef>add</span> <span style=color:#66d9ef>constraint</span> user_fk_1
+<span style=color:#66d9ef>foreign</span> <span style=color:#66d9ef>key</span> (U_id)
+<span style=color:#66d9ef>references</span> user_info(U_id)
+<span style=color:#66d9ef>ON</span> <span style=color:#66d9ef>DELETE</span> <span style=color:#66d9ef>CASCADE</span>
+
+<span style=color:#66d9ef>alter</span> <span style=color:#66d9ef>table</span> collection_info
+<span style=color:#66d9ef>add</span> <span style=color:#66d9ef>CONSTRAINT</span> Q_fk_1
+<span style=color:#66d9ef>FOREIGN</span> <span style=color:#66d9ef>KEY</span>  (Q_ID)
+<span style=color:#66d9ef>REFERENCES</span>  Question_info(Q_id)
+<span style=color:#66d9ef>ON</span> <span style=color:#66d9ef>DELETE</span> <span style=color:#66d9ef>CASCADE</span>
+
+<span style=color:#75715e>--级联更新
+</span><span style=color:#75715e></span><span style=color:#66d9ef>alter</span> <span style=color:#66d9ef>table</span> Answer_info
+<span style=color:#66d9ef>add</span> <span style=color:#66d9ef>CONSTRAINT</span> Q_fk
+<span style=color:#66d9ef>FOREIGN</span> <span style=color:#66d9ef>KEY</span>  (Q_ID)
+<span style=color:#66d9ef>REFERENCES</span>  Questio
+</code></pre></div><h3 id=53-视图索引>5.3 视图&索引</h3>
 <ul>
 <li>创建视图SQL代码举例：创建用户等级、用户信息的视图</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#60a0b0;font-style:italic>--建立视图
-</span><span style=color:#60a0b0;font-style:italic></span><span style=color:#007020;font-weight:700>go</span><span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>create</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>view</span><span style=color:#bbb> </span>user_account(mobile,passwd)<span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>as</span><span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>select</span><span style=color:#bbb> </span>Mobile,passwd<span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>from</span><span style=color:#bbb> </span>Account_info<span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>with</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>check</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>option</span><span style=color:#bbb>
-</span><span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>go</span><span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>create</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>view</span><span style=color:#bbb> </span>user_level(U_id,U_level)<span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>as</span><span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>select</span><span style=color:#bbb> </span>U_id,<span style=color:#007020;font-weight:700>day</span>(getdate()<span style=color:#666>-</span>RegTime)<span style=color:#666>/</span><span style=color:#40a070>100</span><span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>from</span><span style=color:#bbb> </span>User_info<span style=color:#bbb>
-</span></code></pre></div><ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#75715e>--建立视图
+</span><span style=color:#75715e></span><span style=color:#66d9ef>go</span>
+<span style=color:#66d9ef>create</span> <span style=color:#66d9ef>view</span> user_account(mobile,passwd)
+<span style=color:#66d9ef>as</span>
+<span style=color:#66d9ef>select</span> Mobile,passwd
+<span style=color:#66d9ef>from</span> Account_info
+<span style=color:#66d9ef>with</span> <span style=color:#66d9ef>check</span> <span style=color:#66d9ef>option</span>
+
+<span style=color:#66d9ef>go</span>
+<span style=color:#66d9ef>create</span> <span style=color:#66d9ef>view</span> user_level(U_id,U_level)
+<span style=color:#66d9ef>as</span>
+<span style=color:#66d9ef>select</span> U_id,<span style=color:#66d9ef>day</span>(getdate()<span style=color:#f92672>-</span>RegTime)<span style=color:#f92672>/</span><span style=color:#ae81ff>100</span>
+<span style=color:#66d9ef>from</span> User_info
+</code></pre></div><ul>
 <li>创建索引SQL代码举例：对回答信息表和评论信息表Comment_info添加index索引</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#60a0b0;font-style:italic>--建立索引
-</span><span style=color:#60a0b0;font-style:italic></span><span style=color:#007020;font-weight:700>go</span><span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>create</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>index</span><span style=color:#bbb> </span>idx_l<span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>on</span><span style=color:#bbb> </span>comment_info(A_ID)<span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>create</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>index</span><span style=color:#bbb> </span>idx_2<span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>on</span><span style=color:#bbb> </span>Answer_info(Q_ID)<span style=color:#bbb>
-</span></code></pre></div><h3 id=54-触发器函数存储过程>5.4 触发器&函数&存储过程</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#75715e>--建立索引
+</span><span style=color:#75715e></span><span style=color:#66d9ef>go</span>
+<span style=color:#66d9ef>create</span> <span style=color:#66d9ef>index</span> idx_l
+<span style=color:#66d9ef>on</span> comment_info(A_ID)
+<span style=color:#66d9ef>create</span> <span style=color:#66d9ef>index</span> idx_2
+<span style=color:#66d9ef>on</span> Answer_info(Q_ID)
+</code></pre></div><h3 id=54-触发器函数存储过程>5.4 触发器&函数&存储过程</h3>
 <ul>
 <li>在回答信息表Answer_info创建触发器，实现当用户发布回答时计数器Z_Number自动+1</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#60a0b0;font-style:italic>--建立触发器
-</span><span style=color:#60a0b0;font-style:italic></span><span style=color:#007020;font-weight:700>go</span><span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>create</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>trigger</span><span style=color:#bbb> </span>t1<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>on</span><span style=color:#bbb> </span>Answer_info<span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>for</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>insert</span><span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>as</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>update</span><span style=color:#bbb> </span>Answer_info<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>set</span><span style=color:#bbb> </span>Z_Number<span style=color:#666>=</span><span style=color:#bbb> </span><span style=color:#40a070>1</span><span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>where</span><span style=color:#bbb> </span>Z_Number<span style=color:#bbb> </span><span style=color:#666>=</span><span style=color:#bbb> </span><span style=color:#40a070>0</span><span style=color:#bbb>
-</span></code></pre></div><ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#75715e>--建立触发器
+</span><span style=color:#75715e></span><span style=color:#66d9ef>go</span>
+<span style=color:#66d9ef>create</span> <span style=color:#66d9ef>trigger</span> t1 <span style=color:#66d9ef>on</span> Answer_info
+<span style=color:#66d9ef>for</span> <span style=color:#66d9ef>insert</span>
+<span style=color:#66d9ef>as</span> <span style=color:#66d9ef>update</span> Answer_info <span style=color:#66d9ef>set</span> Z_Number<span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>
+<span style=color:#66d9ef>where</span> Z_Number <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
+</code></pre></div><ul>
 <li>创建函数实现自动计算某个回答的累计赞同数</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#60a0b0;font-style:italic>--建立函数
-</span><span style=color:#60a0b0;font-style:italic></span><span style=color:#007020;font-weight:700>go</span><span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>create</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>function</span><span style=color:#bbb> </span>countZAN<span style=color:#bbb> </span>(<span style=color:#666>@</span>Q_ID<span style=color:#bbb> </span><span style=color:#007020>int</span><span style=color:#bbb> </span>)<span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>returns</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>table</span><span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>as</span><span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>return</span>(<span style=color:#bbb>
-</span><span style=color:#bbb>    </span><span style=color:#007020;font-weight:700>select</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>sum</span>(Z_number)<span style=color:#bbb>
-</span><span style=color:#bbb>    </span><span style=color:#007020;font-weight:700>from</span><span style=color:#bbb>  </span>Answer_info<span style=color:#bbb>
-</span><span style=color:#bbb>    </span><span style=color:#007020;font-weight:700>where</span><span style=color:#bbb> </span>Q_ID<span style=color:#bbb> </span><span style=color:#666>=</span><span style=color:#bbb> </span><span style=color:#666>@</span>Q_ID<span style=color:#bbb>
-</span><span style=color:#bbb></span>)<span style=color:#bbb>
-</span></code></pre></div><ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#75715e>--建立函数
+</span><span style=color:#75715e></span><span style=color:#66d9ef>go</span>
+<span style=color:#66d9ef>create</span> <span style=color:#66d9ef>function</span> countZAN (<span style=color:#f92672>@</span>Q_ID int )
+<span style=color:#66d9ef>returns</span> <span style=color:#66d9ef>table</span>
+<span style=color:#66d9ef>as</span>
+<span style=color:#66d9ef>return</span>(
+    <span style=color:#66d9ef>select</span> <span style=color:#66d9ef>sum</span>(Z_number)
+    <span style=color:#66d9ef>from</span>  Answer_info
+    <span style=color:#66d9ef>where</span> Q_ID <span style=color:#f92672>=</span> <span style=color:#f92672>@</span>Q_ID
+)
+</code></pre></div><ul>
 <li>本系统按以下模式创立了存储过程：提出问题（提问者用户ID，标题，描述，标签）、回答问题（回答者用户ID，对应问题ID，回答内容）、评论问题/回答/文章（评论者用户ID，对应问题/回答/文章ID，评论内容）、发表文章（发表者用户ID，文章标题，文章内容）、收藏问题/文章（收藏者用户ID，被收藏文章/回答的ID）、点赞问题/回答/评论/文章（点赞者用户ID，被点赞问题/回答/评论/文章的ID）和评论问题/回答/文章（评论者用户ID，被评论问题/回答/文章的ID），示例SQL代码如下</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#60a0b0;font-style:italic>--建立存储过程
-</span><span style=color:#60a0b0;font-style:italic></span><span style=color:#007020;font-weight:700>go</span><span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>CREATE</span><span style=color:#bbb> </span><span style=color:#007020;font-weight:700>PROCEDURE</span><span style=color:#bbb> </span>Question_Answer<span style=color:#bbb> </span><span style=color:#666>@</span>Q_ID<span style=color:#bbb> </span><span style=color:#007020>int</span><span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>AS</span><span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>select</span><span style=color:#bbb> </span>A_id,Q_title,Q_text<span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>from</span><span style=color:#bbb> </span>Question_info<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>as</span><span style=color:#bbb> </span>Q<span style=color:#bbb> </span>,Answer_info<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>as</span><span style=color:#bbb> </span>A<span style=color:#bbb>
-</span><span style=color:#bbb></span><span style=color:#007020;font-weight:700>where</span><span style=color:#bbb> </span>Q.Q_ID<span style=color:#bbb> </span><span style=color:#666>=</span><span style=color:#bbb> </span><span style=color:#666>@</span>Q_ID<span style=color:#bbb> </span><span style=color:#007020;font-weight:700>and</span><span style=color:#bbb> </span><span style=color:#666>@</span>Q_ID<span style=color:#bbb> </span><span style=color:#666>=</span>A.Q_ID<span style=color:#bbb>
-</span></code></pre></div><h2 id=6-总结感想与收获>6 总结、感想与收获</h2>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=color:#75715e>--建立存储过程
+</span><span style=color:#75715e></span><span style=color:#66d9ef>go</span>
+<span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>PROCEDURE</span> Question_Answer <span style=color:#f92672>@</span>Q_ID int
+<span style=color:#66d9ef>AS</span>
+<span style=color:#66d9ef>select</span> A_id,Q_title,Q_text
+<span style=color:#66d9ef>from</span> Question_info <span style=color:#66d9ef>as</span> Q ,Answer_info <span style=color:#66d9ef>as</span> A
+<span style=color:#66d9ef>where</span> Q.Q_ID <span style=color:#f92672>=</span> <span style=color:#f92672>@</span>Q_ID <span style=color:#66d9ef>and</span> <span style=color:#f92672>@</span>Q_ID <span style=color:#f92672>=</span>A.Q_ID
+</code></pre></div><h2 id=6-总结感想与收获>6 总结、感想与收获</h2>
 <h3 id=61-系统的特点>6.1 系统的特点</h3>
 <ul>
 <li>系统实现：采用Sql Server数据库管理系统，所有创建工作用SQL语句建立；前端基于HTML+CSS+Javascript；后端选择Python作为开发语言，选用Flask作为框架搭建；采用Browser/Server架构，目标设计并实现简化版仿知乎web端。</li>
@@ -771,6 +773,7 @@
 </footer>
 <script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-80H8N7NN50','auto'),ga('send','pageview'))</script>
 <script async src=https://www.google-analytics.com/analytics.js></script>
+<script src=https://lunarwhite.github.iojs/toggle.dark.js></script>
 <script>feather.replace()</script>
 <script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
 </body>

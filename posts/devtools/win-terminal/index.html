@@ -16,7 +16,8 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel=stylesheet>
-<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.f2d7282a0f5a7f5b27e43ccc9c3448ef92651f88fde45a8bac6c6e2a6ba2d01b.css>
+<link disabled id=dark-mode-theme rel=stylesheet href=https://lunarwhite.github.io/css/dark.80b2eb1f37be2454ead72ba0f2662f3022d939734e00b0909a04541420aa9d6c.css>
 </head>
 <body>
 <div class=content><header>
@@ -28,6 +29,7 @@
 <a href=/posts>Posts</a>
 <a href=/tags>Tags</a>
 <a href=/about>About</a>
+/ <a id=dark-mode-toggle><i data-feather=sun></i></a>
 </nav>
 </header>
 <main>
@@ -57,343 +59,343 @@
 </li>
 </ul>
 <h2 id=3-添加到右键菜单>3 添加到右键菜单</h2>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-reg data-lang=reg>Windows Registry Editor Version 5.00
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-reg data-lang=reg>Windows Registry Editor Version 5.00
 
-<span style=color:#007020;font-weight:700>[</span><span style=color:#007020>HKEY_CLASSES_ROOT</span><span style=color:#007020;font-weight:700>\Directory\Background\shell\wt]</span>
-<span style=color:#4070a0>@</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;Terminal Here&#34;</span>
-<span style=color:#4070a0>&#34;Icon&#34;</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;C:\\Users\\mewin\\scoop\\apps\\windows-terminal\\current\\wt.exe&#34;</span>
+<span style=color:#66d9ef>[</span>HKEY_CLASSES_ROOT<span style=color:#66d9ef>\Directory\Background\shell\wt]</span>
+<span style=color:#a6e22e>@</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;Terminal Here&#34;</span>
+<span style=color:#a6e22e>&#34;Icon&#34;</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;C:\\Users\\mewin\\scoop\\apps\\windows-terminal\\current\\wt.exe&#34;</span>
 
-<span style=color:#007020;font-weight:700>[</span><span style=color:#007020>HKEY_CLASSES_ROOT</span><span style=color:#007020;font-weight:700>\Directory\Background\shell\wt\command]</span>
-<span style=color:#4070a0>@</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;C:\\Users\\mewin\\scoop\\apps\\windows-terminal\\current\\wt.exe&#34;</span>
+<span style=color:#66d9ef>[</span>HKEY_CLASSES_ROOT<span style=color:#66d9ef>\Directory\Background\shell\wt\command]</span>
+<span style=color:#a6e22e>@</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;C:\\Users\\mewin\\scoop\\apps\\windows-terminal\\current\\wt.exe&#34;</span>
 </code></pre></div><h2 id=4-配置>4 配置</h2>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json>{
-    <span style=color:#062873;font-weight:700>&#34;$schema&#34;</span>: <span style=color:#4070a0>&#34;https://aka.ms/terminal-profiles-schema&#34;</span>,
-    <span>//</span> <span>Add</span> <span>custom</span> <span>actions</span> <span>and</span> <span>keybindings</span> <span>to</span> <span>this</span> <span>array.</span>
-    <span>//</span> <span>To</span> <span>unbind</span> <span>a</span> <span>key</span> <span>combination</span> <span>from</span> <span>your</span> <span>defaults.json,</span> <span>set</span> <span>the</span> <span>command</span> <span>to</span> <span style=color:#062873;font-weight:700>&#34;unbound&#34;</span><span>.</span>
-    <span>//</span> <span>To</span> <span>learn</span> <span>more</span> <span>about</span> <span>actions</span> <span>and</span> <span>keybindings</span>, <span>visit</span> <span>https://aka.ms/terminal-keybindings</span>
-    <span style=color:#062873;font-weight:700>&#34;actions&#34;</span>:
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json>{
+    <span style=color:#f92672>&#34;$schema&#34;</span>: <span style=color:#e6db74>&#34;https://aka.ms/terminal-profiles-schema&#34;</span>,
+    <span style=color:#960050;background-color:#1e0010>//</span> <span style=color:#960050;background-color:#1e0010>Add</span> <span style=color:#960050;background-color:#1e0010>custom</span> <span style=color:#960050;background-color:#1e0010>actions</span> <span style=color:#960050;background-color:#1e0010>and</span> <span style=color:#960050;background-color:#1e0010>keybindings</span> <span style=color:#960050;background-color:#1e0010>to</span> <span style=color:#960050;background-color:#1e0010>this</span> <span style=color:#960050;background-color:#1e0010>array.</span>
+    <span style=color:#960050;background-color:#1e0010>//</span> <span style=color:#960050;background-color:#1e0010>To</span> <span style=color:#960050;background-color:#1e0010>unbind</span> <span style=color:#960050;background-color:#1e0010>a</span> <span style=color:#960050;background-color:#1e0010>key</span> <span style=color:#960050;background-color:#1e0010>combination</span> <span style=color:#960050;background-color:#1e0010>from</span> <span style=color:#960050;background-color:#1e0010>your</span> <span style=color:#960050;background-color:#1e0010>defaults.json,</span> <span style=color:#960050;background-color:#1e0010>set</span> <span style=color:#960050;background-color:#1e0010>the</span> <span style=color:#960050;background-color:#1e0010>command</span> <span style=color:#960050;background-color:#1e0010>to</span> <span style=color:#f92672>&#34;unbound&#34;</span><span style=color:#960050;background-color:#1e0010>.</span>
+    <span style=color:#960050;background-color:#1e0010>//</span> <span style=color:#960050;background-color:#1e0010>To</span> <span style=color:#960050;background-color:#1e0010>learn</span> <span style=color:#960050;background-color:#1e0010>more</span> <span style=color:#960050;background-color:#1e0010>about</span> <span style=color:#960050;background-color:#1e0010>actions</span> <span style=color:#960050;background-color:#1e0010>and</span> <span style=color:#960050;background-color:#1e0010>keybindings</span>, <span style=color:#960050;background-color:#1e0010>visit</span> <span style=color:#960050;background-color:#1e0010>https://aka.ms/terminal-keybindings</span>
+    <span style=color:#f92672>&#34;actions&#34;</span>:
     [
-        <span>//</span> <span>Copy</span> <span>and</span> <span>paste</span> <span>are</span> <span>bound</span> <span>to</span> <span>Ctrl+Shift+C</span> <span>and</span> <span>Ctrl+Shift+V</span> <span>in</span> <span>your</span> <span>defaults.json.</span>
-        <span>//</span> <span>These</span> <span>two</span> <span>lines</span> <span>additionally</span> <span>bind</span> <span>them</span> <span>to</span> <span>Ctrl+C</span> <span>and</span> <span>Ctrl+V.</span>
-        <span>//</span> <span>To</span> <span>learn</span> <span>more</span> <span>about</span> <span>selection</span>, <span>visit</span> <span>https://aka.ms/terminal-selection</span>
+        <span style=color:#960050;background-color:#1e0010>//</span> <span style=color:#960050;background-color:#1e0010>Copy</span> <span style=color:#960050;background-color:#1e0010>and</span> <span style=color:#960050;background-color:#1e0010>paste</span> <span style=color:#960050;background-color:#1e0010>are</span> <span style=color:#960050;background-color:#1e0010>bound</span> <span style=color:#960050;background-color:#1e0010>to</span> <span style=color:#960050;background-color:#1e0010>Ctrl+Shift+C</span> <span style=color:#960050;background-color:#1e0010>and</span> <span style=color:#960050;background-color:#1e0010>Ctrl+Shift+V</span> <span style=color:#960050;background-color:#1e0010>in</span> <span style=color:#960050;background-color:#1e0010>your</span> <span style=color:#960050;background-color:#1e0010>defaults.json.</span>
+        <span style=color:#960050;background-color:#1e0010>//</span> <span style=color:#960050;background-color:#1e0010>These</span> <span style=color:#960050;background-color:#1e0010>two</span> <span style=color:#960050;background-color:#1e0010>lines</span> <span style=color:#960050;background-color:#1e0010>additionally</span> <span style=color:#960050;background-color:#1e0010>bind</span> <span style=color:#960050;background-color:#1e0010>them</span> <span style=color:#960050;background-color:#1e0010>to</span> <span style=color:#960050;background-color:#1e0010>Ctrl+C</span> <span style=color:#960050;background-color:#1e0010>and</span> <span style=color:#960050;background-color:#1e0010>Ctrl+V.</span>
+        <span style=color:#960050;background-color:#1e0010>//</span> <span style=color:#960050;background-color:#1e0010>To</span> <span style=color:#960050;background-color:#1e0010>learn</span> <span style=color:#960050;background-color:#1e0010>more</span> <span style=color:#960050;background-color:#1e0010>about</span> <span style=color:#960050;background-color:#1e0010>selection</span>, <span style=color:#960050;background-color:#1e0010>visit</span> <span style=color:#960050;background-color:#1e0010>https://aka.ms/terminal-selection</span>
         {
-            <span style=color:#062873;font-weight:700>&#34;command&#34;</span>:
+            <span style=color:#f92672>&#34;command&#34;</span>:
             {
-                <span style=color:#062873;font-weight:700>&#34;action&#34;</span>: <span style=color:#4070a0>&#34;copy&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;singleLine&#34;</span>: <span style=color:#007020;font-weight:700>false</span>
+                <span style=color:#f92672>&#34;action&#34;</span>: <span style=color:#e6db74>&#34;copy&#34;</span>,
+                <span style=color:#f92672>&#34;singleLine&#34;</span>: <span style=color:#66d9ef>false</span>
             },
-            <span style=color:#062873;font-weight:700>&#34;keys&#34;</span>: <span style=color:#4070a0>&#34;ctrl+c&#34;</span>
+            <span style=color:#f92672>&#34;keys&#34;</span>: <span style=color:#e6db74>&#34;ctrl+c&#34;</span>
         },
         {
-            <span style=color:#062873;font-weight:700>&#34;command&#34;</span>: <span style=color:#4070a0>&#34;paste&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;keys&#34;</span>: <span style=color:#4070a0>&#34;ctrl+v&#34;</span>
+            <span style=color:#f92672>&#34;command&#34;</span>: <span style=color:#e6db74>&#34;paste&#34;</span>,
+            <span style=color:#f92672>&#34;keys&#34;</span>: <span style=color:#e6db74>&#34;ctrl+v&#34;</span>
         },
-        <span>//</span> <span>Press</span> <span>Ctrl+Shift+F</span> <span>to</span> <span>open</span> <span>the</span> <span>search</span> <span>box</span>
+        <span style=color:#960050;background-color:#1e0010>//</span> <span style=color:#960050;background-color:#1e0010>Press</span> <span style=color:#960050;background-color:#1e0010>Ctrl+Shift+F</span> <span style=color:#960050;background-color:#1e0010>to</span> <span style=color:#960050;background-color:#1e0010>open</span> <span style=color:#960050;background-color:#1e0010>the</span> <span style=color:#960050;background-color:#1e0010>search</span> <span style=color:#960050;background-color:#1e0010>box</span>
         {
-            <span style=color:#062873;font-weight:700>&#34;command&#34;</span>: <span style=color:#4070a0>&#34;find&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;keys&#34;</span>: <span style=color:#4070a0>&#34;ctrl+shift+f&#34;</span>
+            <span style=color:#f92672>&#34;command&#34;</span>: <span style=color:#e6db74>&#34;find&#34;</span>,
+            <span style=color:#f92672>&#34;keys&#34;</span>: <span style=color:#e6db74>&#34;ctrl+shift+f&#34;</span>
         },
-        <span>//</span> <span>Press</span> <span>Alt+Shift+D</span> <span>to</span> <span>open</span> <span>a</span> <span>new</span> <span>pane.</span>
-        <span>//</span> <span>-</span> <span style=color:#4070a0>&#34;split&#34;</span><span>:</span> <span style=color:#4070a0>&#34;auto&#34;</span> <span>makes</span> <span>this</span> <span>pane</span> <span>open</span> <span>in</span> <span>the</span> <span>direction</span> <span>that</span> <span>provides</span> <span>the</span> <span>most</span> <span>surface</span> <span>area.</span>
-        <span>//</span> <span>-</span> <span style=color:#4070a0>&#34;splitMode&#34;</span><span>:</span> <span style=color:#4070a0>&#34;duplicate&#34;</span> <span>makes</span> <span>the</span> <span>new</span> <span>pane</span> <span>use</span> <span>the</span> <span>focused</span> <span>pane&#39;s</span> <span>profile.</span>
-        <span>//</span> <span>To</span> <span>learn</span> <span>more</span> <span>about</span> <span>panes</span>, <span>visit</span> <span>https://aka.ms/terminal-panes</span>
+        <span style=color:#960050;background-color:#1e0010>//</span> <span style=color:#960050;background-color:#1e0010>Press</span> <span style=color:#960050;background-color:#1e0010>Alt+Shift+D</span> <span style=color:#960050;background-color:#1e0010>to</span> <span style=color:#960050;background-color:#1e0010>open</span> <span style=color:#960050;background-color:#1e0010>a</span> <span style=color:#960050;background-color:#1e0010>new</span> <span style=color:#960050;background-color:#1e0010>pane.</span>
+        <span style=color:#960050;background-color:#1e0010>//</span> <span style=color:#960050;background-color:#1e0010>-</span> <span style=color:#e6db74>&#34;split&#34;</span><span style=color:#960050;background-color:#1e0010>:</span> <span style=color:#e6db74>&#34;auto&#34;</span> <span style=color:#960050;background-color:#1e0010>makes</span> <span style=color:#960050;background-color:#1e0010>this</span> <span style=color:#960050;background-color:#1e0010>pane</span> <span style=color:#960050;background-color:#1e0010>open</span> <span style=color:#960050;background-color:#1e0010>in</span> <span style=color:#960050;background-color:#1e0010>the</span> <span style=color:#960050;background-color:#1e0010>direction</span> <span style=color:#960050;background-color:#1e0010>that</span> <span style=color:#960050;background-color:#1e0010>provides</span> <span style=color:#960050;background-color:#1e0010>the</span> <span style=color:#960050;background-color:#1e0010>most</span> <span style=color:#960050;background-color:#1e0010>surface</span> <span style=color:#960050;background-color:#1e0010>area.</span>
+        <span style=color:#960050;background-color:#1e0010>//</span> <span style=color:#960050;background-color:#1e0010>-</span> <span style=color:#e6db74>&#34;splitMode&#34;</span><span style=color:#960050;background-color:#1e0010>:</span> <span style=color:#e6db74>&#34;duplicate&#34;</span> <span style=color:#960050;background-color:#1e0010>makes</span> <span style=color:#960050;background-color:#1e0010>the</span> <span style=color:#960050;background-color:#1e0010>new</span> <span style=color:#960050;background-color:#1e0010>pane</span> <span style=color:#960050;background-color:#1e0010>use</span> <span style=color:#960050;background-color:#1e0010>the</span> <span style=color:#960050;background-color:#1e0010>focused</span> <span style=color:#960050;background-color:#1e0010>pane&#39;s</span> <span style=color:#960050;background-color:#1e0010>profile.</span>
+        <span style=color:#960050;background-color:#1e0010>//</span> <span style=color:#960050;background-color:#1e0010>To</span> <span style=color:#960050;background-color:#1e0010>learn</span> <span style=color:#960050;background-color:#1e0010>more</span> <span style=color:#960050;background-color:#1e0010>about</span> <span style=color:#960050;background-color:#1e0010>panes</span>, <span style=color:#960050;background-color:#1e0010>visit</span> <span style=color:#960050;background-color:#1e0010>https://aka.ms/terminal-panes</span>
         {
-            <span style=color:#062873;font-weight:700>&#34;command&#34;</span>:
+            <span style=color:#f92672>&#34;command&#34;</span>:
             {
-                <span style=color:#062873;font-weight:700>&#34;action&#34;</span>: <span style=color:#4070a0>&#34;splitPane&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;split&#34;</span>: <span style=color:#4070a0>&#34;auto&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;splitMode&#34;</span>: <span style=color:#4070a0>&#34;duplicate&#34;</span>
+                <span style=color:#f92672>&#34;action&#34;</span>: <span style=color:#e6db74>&#34;splitPane&#34;</span>,
+                <span style=color:#f92672>&#34;split&#34;</span>: <span style=color:#e6db74>&#34;auto&#34;</span>,
+                <span style=color:#f92672>&#34;splitMode&#34;</span>: <span style=color:#e6db74>&#34;duplicate&#34;</span>
             },
-            <span style=color:#062873;font-weight:700>&#34;keys&#34;</span>: <span style=color:#4070a0>&#34;alt+shift+d&#34;</span>
+            <span style=color:#f92672>&#34;keys&#34;</span>: <span style=color:#e6db74>&#34;alt+shift+d&#34;</span>
         }
     ],
-    <span style=color:#062873;font-weight:700>&#34;alwaysOnTop&#34;</span>: <span style=color:#007020;font-weight:700>false</span>,
-    <span style=color:#062873;font-weight:700>&#34;alwaysShowTabs&#34;</span>: <span style=color:#007020;font-weight:700>true</span>,
-    <span style=color:#062873;font-weight:700>&#34;copyFormatting&#34;</span>: <span style=color:#4070a0>&#34;none&#34;</span>,
-    <span style=color:#062873;font-weight:700>&#34;copyOnSelect&#34;</span>: <span style=color:#007020;font-weight:700>false</span>,
-    <span style=color:#062873;font-weight:700>&#34;defaultProfile&#34;</span>: <span style=color:#4070a0>&#34;{61c54bbd-c2c6-5271-96e7-009a87ff44bf}&#34;</span>,
-    <span style=color:#062873;font-weight:700>&#34;disableAnimations&#34;</span>: <span style=color:#007020;font-weight:700>true</span>,
-    <span style=color:#062873;font-weight:700>&#34;focusFollowMouse&#34;</span>: <span style=color:#007020;font-weight:700>false</span>,
-    <span style=color:#062873;font-weight:700>&#34;initialCols&#34;</span>: <span style=color:#40a070>100</span>,
-    <span style=color:#062873;font-weight:700>&#34;initialPosition&#34;</span>: <span style=color:#4070a0>&#34;60,50&#34;</span>,
-    <span style=color:#062873;font-weight:700>&#34;initialRows&#34;</span>: <span style=color:#40a070>40</span>,
-    <span style=color:#062873;font-weight:700>&#34;profiles&#34;</span>:
+    <span style=color:#f92672>&#34;alwaysOnTop&#34;</span>: <span style=color:#66d9ef>false</span>,
+    <span style=color:#f92672>&#34;alwaysShowTabs&#34;</span>: <span style=color:#66d9ef>true</span>,
+    <span style=color:#f92672>&#34;copyFormatting&#34;</span>: <span style=color:#e6db74>&#34;none&#34;</span>,
+    <span style=color:#f92672>&#34;copyOnSelect&#34;</span>: <span style=color:#66d9ef>false</span>,
+    <span style=color:#f92672>&#34;defaultProfile&#34;</span>: <span style=color:#e6db74>&#34;{61c54bbd-c2c6-5271-96e7-009a87ff44bf}&#34;</span>,
+    <span style=color:#f92672>&#34;disableAnimations&#34;</span>: <span style=color:#66d9ef>true</span>,
+    <span style=color:#f92672>&#34;focusFollowMouse&#34;</span>: <span style=color:#66d9ef>false</span>,
+    <span style=color:#f92672>&#34;initialCols&#34;</span>: <span style=color:#ae81ff>100</span>,
+    <span style=color:#f92672>&#34;initialPosition&#34;</span>: <span style=color:#e6db74>&#34;60,50&#34;</span>,
+    <span style=color:#f92672>&#34;initialRows&#34;</span>: <span style=color:#ae81ff>40</span>,
+    <span style=color:#f92672>&#34;profiles&#34;</span>:
     {
-        <span style=color:#062873;font-weight:700>&#34;defaults&#34;</span>: {},
-        <span style=color:#062873;font-weight:700>&#34;list&#34;</span>:
+        <span style=color:#f92672>&#34;defaults&#34;</span>: {},
+        <span style=color:#f92672>&#34;list&#34;</span>:
         [
             {
-                <span style=color:#062873;font-weight:700>&#34;acrylicOpacity&#34;</span>: <span style=color:#40a070>0.75</span>,
-                <span style=color:#062873;font-weight:700>&#34;antialiasingMode&#34;</span>: <span style=color:#4070a0>&#34;grayscale&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;backgroundImage&#34;</span>: <span style=color:#4070a0>&#34;C:\\Users\\mewin\\scoop\\aimage\\Windows2.png&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;backgroundImageAlignment&#34;</span>: <span style=color:#4070a0>&#34;bottomRight&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;backgroundImageOpacity&#34;</span>: <span style=color:#40a070>0.40000000000000002</span>,
-                <span style=color:#062873;font-weight:700>&#34;backgroundImageStretchMode&#34;</span>: <span style=color:#4070a0>&#34;none&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;bellStyle&#34;</span>: <span style=color:#4070a0>&#34;none&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;colorScheme&#34;</span>: <span style=color:#4070a0>&#34;Campbell&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;commandline&#34;</span>: <span style=color:#4070a0>&#34;powershell.exe&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;cursorShape&#34;</span>: <span style=color:#4070a0>&#34;vintage&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;experimental.retroTerminalEffect&#34;</span>: <span style=color:#007020;font-weight:700>false</span>,
-                <span style=color:#062873;font-weight:700>&#34;fontFace&#34;</span>: <span style=color:#4070a0>&#34;ubuntu mono&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;fontSize&#34;</span>: <span style=color:#40a070>12</span>,
-                <span style=color:#062873;font-weight:700>&#34;fontWeight&#34;</span>: <span style=color:#4070a0>&#34;normal&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;guid&#34;</span>: <span style=color:#4070a0>&#34;{61c54bbd-c2c6-5271-96e7-009a87ff44bf}&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;hidden&#34;</span>: <span style=color:#007020;font-weight:700>false</span>,
-                <span style=color:#062873;font-weight:700>&#34;name&#34;</span>: <span style=color:#4070a0>&#34;Shell&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;scrollbarState&#34;</span>: <span style=color:#4070a0>&#34;hidden&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;startingDirectory&#34;</span>: <span style=color:#4070a0>&#34;./&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;useAcrylic&#34;</span>: <span style=color:#007020;font-weight:700>true</span>
+                <span style=color:#f92672>&#34;acrylicOpacity&#34;</span>: <span style=color:#ae81ff>0.75</span>,
+                <span style=color:#f92672>&#34;antialiasingMode&#34;</span>: <span style=color:#e6db74>&#34;grayscale&#34;</span>,
+                <span style=color:#f92672>&#34;backgroundImage&#34;</span>: <span style=color:#e6db74>&#34;C:\\Users\\mewin\\scoop\\aimage\\Windows2.png&#34;</span>,
+                <span style=color:#f92672>&#34;backgroundImageAlignment&#34;</span>: <span style=color:#e6db74>&#34;bottomRight&#34;</span>,
+                <span style=color:#f92672>&#34;backgroundImageOpacity&#34;</span>: <span style=color:#ae81ff>0.40000000000000002</span>,
+                <span style=color:#f92672>&#34;backgroundImageStretchMode&#34;</span>: <span style=color:#e6db74>&#34;none&#34;</span>,
+                <span style=color:#f92672>&#34;bellStyle&#34;</span>: <span style=color:#e6db74>&#34;none&#34;</span>,
+                <span style=color:#f92672>&#34;colorScheme&#34;</span>: <span style=color:#e6db74>&#34;Campbell&#34;</span>,
+                <span style=color:#f92672>&#34;commandline&#34;</span>: <span style=color:#e6db74>&#34;powershell.exe&#34;</span>,
+                <span style=color:#f92672>&#34;cursorShape&#34;</span>: <span style=color:#e6db74>&#34;vintage&#34;</span>,
+                <span style=color:#f92672>&#34;experimental.retroTerminalEffect&#34;</span>: <span style=color:#66d9ef>false</span>,
+                <span style=color:#f92672>&#34;fontFace&#34;</span>: <span style=color:#e6db74>&#34;ubuntu mono&#34;</span>,
+                <span style=color:#f92672>&#34;fontSize&#34;</span>: <span style=color:#ae81ff>12</span>,
+                <span style=color:#f92672>&#34;fontWeight&#34;</span>: <span style=color:#e6db74>&#34;normal&#34;</span>,
+                <span style=color:#f92672>&#34;guid&#34;</span>: <span style=color:#e6db74>&#34;{61c54bbd-c2c6-5271-96e7-009a87ff44bf}&#34;</span>,
+                <span style=color:#f92672>&#34;hidden&#34;</span>: <span style=color:#66d9ef>false</span>,
+                <span style=color:#f92672>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;Shell&#34;</span>,
+                <span style=color:#f92672>&#34;scrollbarState&#34;</span>: <span style=color:#e6db74>&#34;hidden&#34;</span>,
+                <span style=color:#f92672>&#34;startingDirectory&#34;</span>: <span style=color:#e6db74>&#34;./&#34;</span>,
+                <span style=color:#f92672>&#34;useAcrylic&#34;</span>: <span style=color:#66d9ef>true</span>
             },
             {
-                <span style=color:#062873;font-weight:700>&#34;acrylicOpacity&#34;</span>: <span style=color:#40a070>0.75</span>,
-                <span style=color:#062873;font-weight:700>&#34;antialiasingMode&#34;</span>: <span style=color:#4070a0>&#34;grayscale&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;backgroundImage&#34;</span>: <span style=color:#4070a0>&#34;C:\\Users\\mewin\\scoop\\aimage\\Windows1.png&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;backgroundImageAlignment&#34;</span>: <span style=color:#4070a0>&#34;bottomRight&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;backgroundImageOpacity&#34;</span>: <span style=color:#40a070>0.40000000000000002</span>,
-                <span style=color:#062873;font-weight:700>&#34;backgroundImageStretchMode&#34;</span>: <span style=color:#4070a0>&#34;none&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;bellStyle&#34;</span>: <span style=color:#4070a0>&#34;none&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;colorScheme&#34;</span>: <span style=color:#4070a0>&#34;Campbell&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;commandline&#34;</span>: <span style=color:#4070a0>&#34;cmd.exe&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;cursorShape&#34;</span>: <span style=color:#4070a0>&#34;vintage&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;experimental.retroTerminalEffect&#34;</span>: <span style=color:#007020;font-weight:700>false</span>,
-                <span style=color:#062873;font-weight:700>&#34;fontFace&#34;</span>: <span style=color:#4070a0>&#34;ubuntu mono&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;fontSize&#34;</span>: <span style=color:#40a070>12</span>,
-                <span style=color:#062873;font-weight:700>&#34;fontWeight&#34;</span>: <span style=color:#4070a0>&#34;normal&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;guid&#34;</span>: <span style=color:#4070a0>&#34;{0caa0dad-35be-5f56-a8ff-afceeeaa6101}&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;hidden&#34;</span>: <span style=color:#007020;font-weight:700>false</span>,
-                <span style=color:#062873;font-weight:700>&#34;name&#34;</span>: <span style=color:#4070a0>&#34;Cmd&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;scrollbarState&#34;</span>: <span style=color:#4070a0>&#34;hidden&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;startingDirectory&#34;</span>: <span style=color:#4070a0>&#34;./&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;useAcrylic&#34;</span>: <span style=color:#007020;font-weight:700>true</span>
+                <span style=color:#f92672>&#34;acrylicOpacity&#34;</span>: <span style=color:#ae81ff>0.75</span>,
+                <span style=color:#f92672>&#34;antialiasingMode&#34;</span>: <span style=color:#e6db74>&#34;grayscale&#34;</span>,
+                <span style=color:#f92672>&#34;backgroundImage&#34;</span>: <span style=color:#e6db74>&#34;C:\\Users\\mewin\\scoop\\aimage\\Windows1.png&#34;</span>,
+                <span style=color:#f92672>&#34;backgroundImageAlignment&#34;</span>: <span style=color:#e6db74>&#34;bottomRight&#34;</span>,
+                <span style=color:#f92672>&#34;backgroundImageOpacity&#34;</span>: <span style=color:#ae81ff>0.40000000000000002</span>,
+                <span style=color:#f92672>&#34;backgroundImageStretchMode&#34;</span>: <span style=color:#e6db74>&#34;none&#34;</span>,
+                <span style=color:#f92672>&#34;bellStyle&#34;</span>: <span style=color:#e6db74>&#34;none&#34;</span>,
+                <span style=color:#f92672>&#34;colorScheme&#34;</span>: <span style=color:#e6db74>&#34;Campbell&#34;</span>,
+                <span style=color:#f92672>&#34;commandline&#34;</span>: <span style=color:#e6db74>&#34;cmd.exe&#34;</span>,
+                <span style=color:#f92672>&#34;cursorShape&#34;</span>: <span style=color:#e6db74>&#34;vintage&#34;</span>,
+                <span style=color:#f92672>&#34;experimental.retroTerminalEffect&#34;</span>: <span style=color:#66d9ef>false</span>,
+                <span style=color:#f92672>&#34;fontFace&#34;</span>: <span style=color:#e6db74>&#34;ubuntu mono&#34;</span>,
+                <span style=color:#f92672>&#34;fontSize&#34;</span>: <span style=color:#ae81ff>12</span>,
+                <span style=color:#f92672>&#34;fontWeight&#34;</span>: <span style=color:#e6db74>&#34;normal&#34;</span>,
+                <span style=color:#f92672>&#34;guid&#34;</span>: <span style=color:#e6db74>&#34;{0caa0dad-35be-5f56-a8ff-afceeeaa6101}&#34;</span>,
+                <span style=color:#f92672>&#34;hidden&#34;</span>: <span style=color:#66d9ef>false</span>,
+                <span style=color:#f92672>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;Cmd&#34;</span>,
+                <span style=color:#f92672>&#34;scrollbarState&#34;</span>: <span style=color:#e6db74>&#34;hidden&#34;</span>,
+                <span style=color:#f92672>&#34;startingDirectory&#34;</span>: <span style=color:#e6db74>&#34;./&#34;</span>,
+                <span style=color:#f92672>&#34;useAcrylic&#34;</span>: <span style=color:#66d9ef>true</span>
             },
             {
-                <span style=color:#062873;font-weight:700>&#34;bellStyle&#34;</span>: <span style=color:#4070a0>&#34;none&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;colorScheme&#34;</span>: <span style=color:#4070a0>&#34;Campbell&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;cursorShape&#34;</span>: <span style=color:#4070a0>&#34;vintage&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;experimental.retroTerminalEffect&#34;</span>: <span style=color:#007020;font-weight:700>false</span>,
-                <span style=color:#062873;font-weight:700>&#34;fontFace&#34;</span>: <span style=color:#4070a0>&#34;ubuntu mono&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;fontSize&#34;</span>: <span style=color:#40a070>12</span>,
-                <span style=color:#062873;font-weight:700>&#34;guid&#34;</span>: <span style=color:#4070a0>&#34;{b453ae62-4e3d-5e58-b989-0a998ec441b8}&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;hidden&#34;</span>: <span style=color:#007020;font-weight:700>false</span>,
-                <span style=color:#062873;font-weight:700>&#34;name&#34;</span>: <span style=color:#4070a0>&#34;Azure&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;source&#34;</span>: <span style=color:#4070a0>&#34;Windows.Terminal.Azure&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;startingDirectory&#34;</span>: <span style=color:#4070a0>&#34;./&#34;</span>,
-                <span style=color:#062873;font-weight:700>&#34;useAcrylic&#34;</span>: <span style=color:#007020;font-weight:700>false</span>
+                <span style=color:#f92672>&#34;bellStyle&#34;</span>: <span style=color:#e6db74>&#34;none&#34;</span>,
+                <span style=color:#f92672>&#34;colorScheme&#34;</span>: <span style=color:#e6db74>&#34;Campbell&#34;</span>,
+                <span style=color:#f92672>&#34;cursorShape&#34;</span>: <span style=color:#e6db74>&#34;vintage&#34;</span>,
+                <span style=color:#f92672>&#34;experimental.retroTerminalEffect&#34;</span>: <span style=color:#66d9ef>false</span>,
+                <span style=color:#f92672>&#34;fontFace&#34;</span>: <span style=color:#e6db74>&#34;ubuntu mono&#34;</span>,
+                <span style=color:#f92672>&#34;fontSize&#34;</span>: <span style=color:#ae81ff>12</span>,
+                <span style=color:#f92672>&#34;guid&#34;</span>: <span style=color:#e6db74>&#34;{b453ae62-4e3d-5e58-b989-0a998ec441b8}&#34;</span>,
+                <span style=color:#f92672>&#34;hidden&#34;</span>: <span style=color:#66d9ef>false</span>,
+                <span style=color:#f92672>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;Azure&#34;</span>,
+                <span style=color:#f92672>&#34;source&#34;</span>: <span style=color:#e6db74>&#34;Windows.Terminal.Azure&#34;</span>,
+                <span style=color:#f92672>&#34;startingDirectory&#34;</span>: <span style=color:#e6db74>&#34;./&#34;</span>,
+                <span style=color:#f92672>&#34;useAcrylic&#34;</span>: <span style=color:#66d9ef>false</span>
             }
         ]
     },
-    <span style=color:#062873;font-weight:700>&#34;schemes&#34;</span>:
+    <span style=color:#f92672>&#34;schemes&#34;</span>:
     [
         {
-            <span style=color:#062873;font-weight:700>&#34;background&#34;</span>: <span style=color:#4070a0>&#34;#0C0C0C&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;black&#34;</span>: <span style=color:#4070a0>&#34;#0C0C0C&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;blue&#34;</span>: <span style=color:#4070a0>&#34;#0037DA&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightBlack&#34;</span>: <span style=color:#4070a0>&#34;#767676&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightBlue&#34;</span>: <span style=color:#4070a0>&#34;#3B78FF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightCyan&#34;</span>: <span style=color:#4070a0>&#34;#61D6D6&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightGreen&#34;</span>: <span style=color:#4070a0>&#34;#16C60C&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightPurple&#34;</span>: <span style=color:#4070a0>&#34;#B4009E&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightRed&#34;</span>: <span style=color:#4070a0>&#34;#E74856&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightWhite&#34;</span>: <span style=color:#4070a0>&#34;#F2F2F2&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightYellow&#34;</span>: <span style=color:#4070a0>&#34;#F9F1A5&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;cursorColor&#34;</span>: <span style=color:#4070a0>&#34;#FFFFFF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;cyan&#34;</span>: <span style=color:#4070a0>&#34;#3A96DD&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;foreground&#34;</span>: <span style=color:#4070a0>&#34;#CCCCCC&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;green&#34;</span>: <span style=color:#4070a0>&#34;#13A10E&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;name&#34;</span>: <span style=color:#4070a0>&#34;Campbell&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;purple&#34;</span>: <span style=color:#4070a0>&#34;#881798&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;red&#34;</span>: <span style=color:#4070a0>&#34;#C50F1F&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;selectionBackground&#34;</span>: <span style=color:#4070a0>&#34;#FFFFFF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;white&#34;</span>: <span style=color:#4070a0>&#34;#CCCCCC&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;yellow&#34;</span>: <span style=color:#4070a0>&#34;#C19C00&#34;</span>
+            <span style=color:#f92672>&#34;background&#34;</span>: <span style=color:#e6db74>&#34;#0C0C0C&#34;</span>,
+            <span style=color:#f92672>&#34;black&#34;</span>: <span style=color:#e6db74>&#34;#0C0C0C&#34;</span>,
+            <span style=color:#f92672>&#34;blue&#34;</span>: <span style=color:#e6db74>&#34;#0037DA&#34;</span>,
+            <span style=color:#f92672>&#34;brightBlack&#34;</span>: <span style=color:#e6db74>&#34;#767676&#34;</span>,
+            <span style=color:#f92672>&#34;brightBlue&#34;</span>: <span style=color:#e6db74>&#34;#3B78FF&#34;</span>,
+            <span style=color:#f92672>&#34;brightCyan&#34;</span>: <span style=color:#e6db74>&#34;#61D6D6&#34;</span>,
+            <span style=color:#f92672>&#34;brightGreen&#34;</span>: <span style=color:#e6db74>&#34;#16C60C&#34;</span>,
+            <span style=color:#f92672>&#34;brightPurple&#34;</span>: <span style=color:#e6db74>&#34;#B4009E&#34;</span>,
+            <span style=color:#f92672>&#34;brightRed&#34;</span>: <span style=color:#e6db74>&#34;#E74856&#34;</span>,
+            <span style=color:#f92672>&#34;brightWhite&#34;</span>: <span style=color:#e6db74>&#34;#F2F2F2&#34;</span>,
+            <span style=color:#f92672>&#34;brightYellow&#34;</span>: <span style=color:#e6db74>&#34;#F9F1A5&#34;</span>,
+            <span style=color:#f92672>&#34;cursorColor&#34;</span>: <span style=color:#e6db74>&#34;#FFFFFF&#34;</span>,
+            <span style=color:#f92672>&#34;cyan&#34;</span>: <span style=color:#e6db74>&#34;#3A96DD&#34;</span>,
+            <span style=color:#f92672>&#34;foreground&#34;</span>: <span style=color:#e6db74>&#34;#CCCCCC&#34;</span>,
+            <span style=color:#f92672>&#34;green&#34;</span>: <span style=color:#e6db74>&#34;#13A10E&#34;</span>,
+            <span style=color:#f92672>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;Campbell&#34;</span>,
+            <span style=color:#f92672>&#34;purple&#34;</span>: <span style=color:#e6db74>&#34;#881798&#34;</span>,
+            <span style=color:#f92672>&#34;red&#34;</span>: <span style=color:#e6db74>&#34;#C50F1F&#34;</span>,
+            <span style=color:#f92672>&#34;selectionBackground&#34;</span>: <span style=color:#e6db74>&#34;#FFFFFF&#34;</span>,
+            <span style=color:#f92672>&#34;white&#34;</span>: <span style=color:#e6db74>&#34;#CCCCCC&#34;</span>,
+            <span style=color:#f92672>&#34;yellow&#34;</span>: <span style=color:#e6db74>&#34;#C19C00&#34;</span>
         },
         {
-            <span style=color:#062873;font-weight:700>&#34;background&#34;</span>: <span style=color:#4070a0>&#34;#012456&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;black&#34;</span>: <span style=color:#4070a0>&#34;#0C0C0C&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;blue&#34;</span>: <span style=color:#4070a0>&#34;#0037DA&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightBlack&#34;</span>: <span style=color:#4070a0>&#34;#767676&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightBlue&#34;</span>: <span style=color:#4070a0>&#34;#3B78FF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightCyan&#34;</span>: <span style=color:#4070a0>&#34;#61D6D6&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightGreen&#34;</span>: <span style=color:#4070a0>&#34;#16C60C&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightPurple&#34;</span>: <span style=color:#4070a0>&#34;#B4009E&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightRed&#34;</span>: <span style=color:#4070a0>&#34;#E74856&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightWhite&#34;</span>: <span style=color:#4070a0>&#34;#F2F2F2&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightYellow&#34;</span>: <span style=color:#4070a0>&#34;#F9F1A5&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;cursorColor&#34;</span>: <span style=color:#4070a0>&#34;#FFFFFF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;cyan&#34;</span>: <span style=color:#4070a0>&#34;#3A96DD&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;foreground&#34;</span>: <span style=color:#4070a0>&#34;#CCCCCC&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;green&#34;</span>: <span style=color:#4070a0>&#34;#13A10E&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;name&#34;</span>: <span style=color:#4070a0>&#34;Campbell Powershell&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;purple&#34;</span>: <span style=color:#4070a0>&#34;#881798&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;red&#34;</span>: <span style=color:#4070a0>&#34;#C50F1F&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;selectionBackground&#34;</span>: <span style=color:#4070a0>&#34;#FFFFFF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;white&#34;</span>: <span style=color:#4070a0>&#34;#CCCCCC&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;yellow&#34;</span>: <span style=color:#4070a0>&#34;#C19C00&#34;</span>
+            <span style=color:#f92672>&#34;background&#34;</span>: <span style=color:#e6db74>&#34;#012456&#34;</span>,
+            <span style=color:#f92672>&#34;black&#34;</span>: <span style=color:#e6db74>&#34;#0C0C0C&#34;</span>,
+            <span style=color:#f92672>&#34;blue&#34;</span>: <span style=color:#e6db74>&#34;#0037DA&#34;</span>,
+            <span style=color:#f92672>&#34;brightBlack&#34;</span>: <span style=color:#e6db74>&#34;#767676&#34;</span>,
+            <span style=color:#f92672>&#34;brightBlue&#34;</span>: <span style=color:#e6db74>&#34;#3B78FF&#34;</span>,
+            <span style=color:#f92672>&#34;brightCyan&#34;</span>: <span style=color:#e6db74>&#34;#61D6D6&#34;</span>,
+            <span style=color:#f92672>&#34;brightGreen&#34;</span>: <span style=color:#e6db74>&#34;#16C60C&#34;</span>,
+            <span style=color:#f92672>&#34;brightPurple&#34;</span>: <span style=color:#e6db74>&#34;#B4009E&#34;</span>,
+            <span style=color:#f92672>&#34;brightRed&#34;</span>: <span style=color:#e6db74>&#34;#E74856&#34;</span>,
+            <span style=color:#f92672>&#34;brightWhite&#34;</span>: <span style=color:#e6db74>&#34;#F2F2F2&#34;</span>,
+            <span style=color:#f92672>&#34;brightYellow&#34;</span>: <span style=color:#e6db74>&#34;#F9F1A5&#34;</span>,
+            <span style=color:#f92672>&#34;cursorColor&#34;</span>: <span style=color:#e6db74>&#34;#FFFFFF&#34;</span>,
+            <span style=color:#f92672>&#34;cyan&#34;</span>: <span style=color:#e6db74>&#34;#3A96DD&#34;</span>,
+            <span style=color:#f92672>&#34;foreground&#34;</span>: <span style=color:#e6db74>&#34;#CCCCCC&#34;</span>,
+            <span style=color:#f92672>&#34;green&#34;</span>: <span style=color:#e6db74>&#34;#13A10E&#34;</span>,
+            <span style=color:#f92672>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;Campbell Powershell&#34;</span>,
+            <span style=color:#f92672>&#34;purple&#34;</span>: <span style=color:#e6db74>&#34;#881798&#34;</span>,
+            <span style=color:#f92672>&#34;red&#34;</span>: <span style=color:#e6db74>&#34;#C50F1F&#34;</span>,
+            <span style=color:#f92672>&#34;selectionBackground&#34;</span>: <span style=color:#e6db74>&#34;#FFFFFF&#34;</span>,
+            <span style=color:#f92672>&#34;white&#34;</span>: <span style=color:#e6db74>&#34;#CCCCCC&#34;</span>,
+            <span style=color:#f92672>&#34;yellow&#34;</span>: <span style=color:#e6db74>&#34;#C19C00&#34;</span>
         },
         {
-            <span style=color:#062873;font-weight:700>&#34;background&#34;</span>: <span style=color:#4070a0>&#34;#282C34&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;black&#34;</span>: <span style=color:#4070a0>&#34;#282C34&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;blue&#34;</span>: <span style=color:#4070a0>&#34;#61AFEF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightBlack&#34;</span>: <span style=color:#4070a0>&#34;#5A6374&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightBlue&#34;</span>: <span style=color:#4070a0>&#34;#61AFEF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightCyan&#34;</span>: <span style=color:#4070a0>&#34;#56B6C2&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightGreen&#34;</span>: <span style=color:#4070a0>&#34;#98C379&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightPurple&#34;</span>: <span style=color:#4070a0>&#34;#C678DD&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightRed&#34;</span>: <span style=color:#4070a0>&#34;#E06C75&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightWhite&#34;</span>: <span style=color:#4070a0>&#34;#DCDFE4&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightYellow&#34;</span>: <span style=color:#4070a0>&#34;#E5C07B&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;cursorColor&#34;</span>: <span style=color:#4070a0>&#34;#FFFFFF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;cyan&#34;</span>: <span style=color:#4070a0>&#34;#56B6C2&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;foreground&#34;</span>: <span style=color:#4070a0>&#34;#DCDFE4&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;green&#34;</span>: <span style=color:#4070a0>&#34;#98C379&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;name&#34;</span>: <span style=color:#4070a0>&#34;One Half Dark&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;purple&#34;</span>: <span style=color:#4070a0>&#34;#C678DD&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;red&#34;</span>: <span style=color:#4070a0>&#34;#E06C75&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;selectionBackground&#34;</span>: <span style=color:#4070a0>&#34;#FFFFFF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;white&#34;</span>: <span style=color:#4070a0>&#34;#DCDFE4&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;yellow&#34;</span>: <span style=color:#4070a0>&#34;#E5C07B&#34;</span>
+            <span style=color:#f92672>&#34;background&#34;</span>: <span style=color:#e6db74>&#34;#282C34&#34;</span>,
+            <span style=color:#f92672>&#34;black&#34;</span>: <span style=color:#e6db74>&#34;#282C34&#34;</span>,
+            <span style=color:#f92672>&#34;blue&#34;</span>: <span style=color:#e6db74>&#34;#61AFEF&#34;</span>,
+            <span style=color:#f92672>&#34;brightBlack&#34;</span>: <span style=color:#e6db74>&#34;#5A6374&#34;</span>,
+            <span style=color:#f92672>&#34;brightBlue&#34;</span>: <span style=color:#e6db74>&#34;#61AFEF&#34;</span>,
+            <span style=color:#f92672>&#34;brightCyan&#34;</span>: <span style=color:#e6db74>&#34;#56B6C2&#34;</span>,
+            <span style=color:#f92672>&#34;brightGreen&#34;</span>: <span style=color:#e6db74>&#34;#98C379&#34;</span>,
+            <span style=color:#f92672>&#34;brightPurple&#34;</span>: <span style=color:#e6db74>&#34;#C678DD&#34;</span>,
+            <span style=color:#f92672>&#34;brightRed&#34;</span>: <span style=color:#e6db74>&#34;#E06C75&#34;</span>,
+            <span style=color:#f92672>&#34;brightWhite&#34;</span>: <span style=color:#e6db74>&#34;#DCDFE4&#34;</span>,
+            <span style=color:#f92672>&#34;brightYellow&#34;</span>: <span style=color:#e6db74>&#34;#E5C07B&#34;</span>,
+            <span style=color:#f92672>&#34;cursorColor&#34;</span>: <span style=color:#e6db74>&#34;#FFFFFF&#34;</span>,
+            <span style=color:#f92672>&#34;cyan&#34;</span>: <span style=color:#e6db74>&#34;#56B6C2&#34;</span>,
+            <span style=color:#f92672>&#34;foreground&#34;</span>: <span style=color:#e6db74>&#34;#DCDFE4&#34;</span>,
+            <span style=color:#f92672>&#34;green&#34;</span>: <span style=color:#e6db74>&#34;#98C379&#34;</span>,
+            <span style=color:#f92672>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;One Half Dark&#34;</span>,
+            <span style=color:#f92672>&#34;purple&#34;</span>: <span style=color:#e6db74>&#34;#C678DD&#34;</span>,
+            <span style=color:#f92672>&#34;red&#34;</span>: <span style=color:#e6db74>&#34;#E06C75&#34;</span>,
+            <span style=color:#f92672>&#34;selectionBackground&#34;</span>: <span style=color:#e6db74>&#34;#FFFFFF&#34;</span>,
+            <span style=color:#f92672>&#34;white&#34;</span>: <span style=color:#e6db74>&#34;#DCDFE4&#34;</span>,
+            <span style=color:#f92672>&#34;yellow&#34;</span>: <span style=color:#e6db74>&#34;#E5C07B&#34;</span>
         },
         {
-            <span style=color:#062873;font-weight:700>&#34;background&#34;</span>: <span style=color:#4070a0>&#34;#FAFAFA&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;black&#34;</span>: <span style=color:#4070a0>&#34;#383A42&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;blue&#34;</span>: <span style=color:#4070a0>&#34;#0184BC&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightBlack&#34;</span>: <span style=color:#4070a0>&#34;#4F525D&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightBlue&#34;</span>: <span style=color:#4070a0>&#34;#61AFEF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightCyan&#34;</span>: <span style=color:#4070a0>&#34;#56B5C1&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightGreen&#34;</span>: <span style=color:#4070a0>&#34;#98C379&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightPurple&#34;</span>: <span style=color:#4070a0>&#34;#C577DD&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightRed&#34;</span>: <span style=color:#4070a0>&#34;#DF6C75&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightWhite&#34;</span>: <span style=color:#4070a0>&#34;#FFFFFF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightYellow&#34;</span>: <span style=color:#4070a0>&#34;#E4C07A&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;cursorColor&#34;</span>: <span style=color:#4070a0>&#34;#4F525D&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;cyan&#34;</span>: <span style=color:#4070a0>&#34;#0997B3&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;foreground&#34;</span>: <span style=color:#4070a0>&#34;#383A42&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;green&#34;</span>: <span style=color:#4070a0>&#34;#50A14F&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;name&#34;</span>: <span style=color:#4070a0>&#34;One Half Light&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;purple&#34;</span>: <span style=color:#4070a0>&#34;#A626A4&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;red&#34;</span>: <span style=color:#4070a0>&#34;#E45649&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;selectionBackground&#34;</span>: <span style=color:#4070a0>&#34;#FFFFFF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;white&#34;</span>: <span style=color:#4070a0>&#34;#FAFAFA&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;yellow&#34;</span>: <span style=color:#4070a0>&#34;#C18301&#34;</span>
+            <span style=color:#f92672>&#34;background&#34;</span>: <span style=color:#e6db74>&#34;#FAFAFA&#34;</span>,
+            <span style=color:#f92672>&#34;black&#34;</span>: <span style=color:#e6db74>&#34;#383A42&#34;</span>,
+            <span style=color:#f92672>&#34;blue&#34;</span>: <span style=color:#e6db74>&#34;#0184BC&#34;</span>,
+            <span style=color:#f92672>&#34;brightBlack&#34;</span>: <span style=color:#e6db74>&#34;#4F525D&#34;</span>,
+            <span style=color:#f92672>&#34;brightBlue&#34;</span>: <span style=color:#e6db74>&#34;#61AFEF&#34;</span>,
+            <span style=color:#f92672>&#34;brightCyan&#34;</span>: <span style=color:#e6db74>&#34;#56B5C1&#34;</span>,
+            <span style=color:#f92672>&#34;brightGreen&#34;</span>: <span style=color:#e6db74>&#34;#98C379&#34;</span>,
+            <span style=color:#f92672>&#34;brightPurple&#34;</span>: <span style=color:#e6db74>&#34;#C577DD&#34;</span>,
+            <span style=color:#f92672>&#34;brightRed&#34;</span>: <span style=color:#e6db74>&#34;#DF6C75&#34;</span>,
+            <span style=color:#f92672>&#34;brightWhite&#34;</span>: <span style=color:#e6db74>&#34;#FFFFFF&#34;</span>,
+            <span style=color:#f92672>&#34;brightYellow&#34;</span>: <span style=color:#e6db74>&#34;#E4C07A&#34;</span>,
+            <span style=color:#f92672>&#34;cursorColor&#34;</span>: <span style=color:#e6db74>&#34;#4F525D&#34;</span>,
+            <span style=color:#f92672>&#34;cyan&#34;</span>: <span style=color:#e6db74>&#34;#0997B3&#34;</span>,
+            <span style=color:#f92672>&#34;foreground&#34;</span>: <span style=color:#e6db74>&#34;#383A42&#34;</span>,
+            <span style=color:#f92672>&#34;green&#34;</span>: <span style=color:#e6db74>&#34;#50A14F&#34;</span>,
+            <span style=color:#f92672>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;One Half Light&#34;</span>,
+            <span style=color:#f92672>&#34;purple&#34;</span>: <span style=color:#e6db74>&#34;#A626A4&#34;</span>,
+            <span style=color:#f92672>&#34;red&#34;</span>: <span style=color:#e6db74>&#34;#E45649&#34;</span>,
+            <span style=color:#f92672>&#34;selectionBackground&#34;</span>: <span style=color:#e6db74>&#34;#FFFFFF&#34;</span>,
+            <span style=color:#f92672>&#34;white&#34;</span>: <span style=color:#e6db74>&#34;#FAFAFA&#34;</span>,
+            <span style=color:#f92672>&#34;yellow&#34;</span>: <span style=color:#e6db74>&#34;#C18301&#34;</span>
         },
         {
-            <span style=color:#062873;font-weight:700>&#34;background&#34;</span>: <span style=color:#4070a0>&#34;#002B36&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;black&#34;</span>: <span style=color:#4070a0>&#34;#002B36&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;blue&#34;</span>: <span style=color:#4070a0>&#34;#268BD2&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightBlack&#34;</span>: <span style=color:#4070a0>&#34;#073642&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightBlue&#34;</span>: <span style=color:#4070a0>&#34;#839496&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightCyan&#34;</span>: <span style=color:#4070a0>&#34;#93A1A1&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightGreen&#34;</span>: <span style=color:#4070a0>&#34;#586E75&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightPurple&#34;</span>: <span style=color:#4070a0>&#34;#6C71C4&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightRed&#34;</span>: <span style=color:#4070a0>&#34;#CB4B16&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightWhite&#34;</span>: <span style=color:#4070a0>&#34;#FDF6E3&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightYellow&#34;</span>: <span style=color:#4070a0>&#34;#657B83&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;cursorColor&#34;</span>: <span style=color:#4070a0>&#34;#FFFFFF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;cyan&#34;</span>: <span style=color:#4070a0>&#34;#2AA198&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;foreground&#34;</span>: <span style=color:#4070a0>&#34;#839496&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;green&#34;</span>: <span style=color:#4070a0>&#34;#859900&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;name&#34;</span>: <span style=color:#4070a0>&#34;Solarized Dark&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;purple&#34;</span>: <span style=color:#4070a0>&#34;#D33682&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;red&#34;</span>: <span style=color:#4070a0>&#34;#DC322F&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;selectionBackground&#34;</span>: <span style=color:#4070a0>&#34;#FFFFFF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;white&#34;</span>: <span style=color:#4070a0>&#34;#EEE8D5&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;yellow&#34;</span>: <span style=color:#4070a0>&#34;#B58900&#34;</span>
+            <span style=color:#f92672>&#34;background&#34;</span>: <span style=color:#e6db74>&#34;#002B36&#34;</span>,
+            <span style=color:#f92672>&#34;black&#34;</span>: <span style=color:#e6db74>&#34;#002B36&#34;</span>,
+            <span style=color:#f92672>&#34;blue&#34;</span>: <span style=color:#e6db74>&#34;#268BD2&#34;</span>,
+            <span style=color:#f92672>&#34;brightBlack&#34;</span>: <span style=color:#e6db74>&#34;#073642&#34;</span>,
+            <span style=color:#f92672>&#34;brightBlue&#34;</span>: <span style=color:#e6db74>&#34;#839496&#34;</span>,
+            <span style=color:#f92672>&#34;brightCyan&#34;</span>: <span style=color:#e6db74>&#34;#93A1A1&#34;</span>,
+            <span style=color:#f92672>&#34;brightGreen&#34;</span>: <span style=color:#e6db74>&#34;#586E75&#34;</span>,
+            <span style=color:#f92672>&#34;brightPurple&#34;</span>: <span style=color:#e6db74>&#34;#6C71C4&#34;</span>,
+            <span style=color:#f92672>&#34;brightRed&#34;</span>: <span style=color:#e6db74>&#34;#CB4B16&#34;</span>,
+            <span style=color:#f92672>&#34;brightWhite&#34;</span>: <span style=color:#e6db74>&#34;#FDF6E3&#34;</span>,
+            <span style=color:#f92672>&#34;brightYellow&#34;</span>: <span style=color:#e6db74>&#34;#657B83&#34;</span>,
+            <span style=color:#f92672>&#34;cursorColor&#34;</span>: <span style=color:#e6db74>&#34;#FFFFFF&#34;</span>,
+            <span style=color:#f92672>&#34;cyan&#34;</span>: <span style=color:#e6db74>&#34;#2AA198&#34;</span>,
+            <span style=color:#f92672>&#34;foreground&#34;</span>: <span style=color:#e6db74>&#34;#839496&#34;</span>,
+            <span style=color:#f92672>&#34;green&#34;</span>: <span style=color:#e6db74>&#34;#859900&#34;</span>,
+            <span style=color:#f92672>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;Solarized Dark&#34;</span>,
+            <span style=color:#f92672>&#34;purple&#34;</span>: <span style=color:#e6db74>&#34;#D33682&#34;</span>,
+            <span style=color:#f92672>&#34;red&#34;</span>: <span style=color:#e6db74>&#34;#DC322F&#34;</span>,
+            <span style=color:#f92672>&#34;selectionBackground&#34;</span>: <span style=color:#e6db74>&#34;#FFFFFF&#34;</span>,
+            <span style=color:#f92672>&#34;white&#34;</span>: <span style=color:#e6db74>&#34;#EEE8D5&#34;</span>,
+            <span style=color:#f92672>&#34;yellow&#34;</span>: <span style=color:#e6db74>&#34;#B58900&#34;</span>
         },
         {
-            <span style=color:#062873;font-weight:700>&#34;background&#34;</span>: <span style=color:#4070a0>&#34;#FDF6E3&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;black&#34;</span>: <span style=color:#4070a0>&#34;#002B36&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;blue&#34;</span>: <span style=color:#4070a0>&#34;#268BD2&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightBlack&#34;</span>: <span style=color:#4070a0>&#34;#073642&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightBlue&#34;</span>: <span style=color:#4070a0>&#34;#839496&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightCyan&#34;</span>: <span style=color:#4070a0>&#34;#93A1A1&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightGreen&#34;</span>: <span style=color:#4070a0>&#34;#586E75&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightPurple&#34;</span>: <span style=color:#4070a0>&#34;#6C71C4&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightRed&#34;</span>: <span style=color:#4070a0>&#34;#CB4B16&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightWhite&#34;</span>: <span style=color:#4070a0>&#34;#FDF6E3&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightYellow&#34;</span>: <span style=color:#4070a0>&#34;#657B83&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;cursorColor&#34;</span>: <span style=color:#4070a0>&#34;#002B36&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;cyan&#34;</span>: <span style=color:#4070a0>&#34;#2AA198&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;foreground&#34;</span>: <span style=color:#4070a0>&#34;#657B83&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;green&#34;</span>: <span style=color:#4070a0>&#34;#859900&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;name&#34;</span>: <span style=color:#4070a0>&#34;Solarized Light&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;purple&#34;</span>: <span style=color:#4070a0>&#34;#D33682&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;red&#34;</span>: <span style=color:#4070a0>&#34;#DC322F&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;selectionBackground&#34;</span>: <span style=color:#4070a0>&#34;#FFFFFF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;white&#34;</span>: <span style=color:#4070a0>&#34;#EEE8D5&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;yellow&#34;</span>: <span style=color:#4070a0>&#34;#B58900&#34;</span>
+            <span style=color:#f92672>&#34;background&#34;</span>: <span style=color:#e6db74>&#34;#FDF6E3&#34;</span>,
+            <span style=color:#f92672>&#34;black&#34;</span>: <span style=color:#e6db74>&#34;#002B36&#34;</span>,
+            <span style=color:#f92672>&#34;blue&#34;</span>: <span style=color:#e6db74>&#34;#268BD2&#34;</span>,
+            <span style=color:#f92672>&#34;brightBlack&#34;</span>: <span style=color:#e6db74>&#34;#073642&#34;</span>,
+            <span style=color:#f92672>&#34;brightBlue&#34;</span>: <span style=color:#e6db74>&#34;#839496&#34;</span>,
+            <span style=color:#f92672>&#34;brightCyan&#34;</span>: <span style=color:#e6db74>&#34;#93A1A1&#34;</span>,
+            <span style=color:#f92672>&#34;brightGreen&#34;</span>: <span style=color:#e6db74>&#34;#586E75&#34;</span>,
+            <span style=color:#f92672>&#34;brightPurple&#34;</span>: <span style=color:#e6db74>&#34;#6C71C4&#34;</span>,
+            <span style=color:#f92672>&#34;brightRed&#34;</span>: <span style=color:#e6db74>&#34;#CB4B16&#34;</span>,
+            <span style=color:#f92672>&#34;brightWhite&#34;</span>: <span style=color:#e6db74>&#34;#FDF6E3&#34;</span>,
+            <span style=color:#f92672>&#34;brightYellow&#34;</span>: <span style=color:#e6db74>&#34;#657B83&#34;</span>,
+            <span style=color:#f92672>&#34;cursorColor&#34;</span>: <span style=color:#e6db74>&#34;#002B36&#34;</span>,
+            <span style=color:#f92672>&#34;cyan&#34;</span>: <span style=color:#e6db74>&#34;#2AA198&#34;</span>,
+            <span style=color:#f92672>&#34;foreground&#34;</span>: <span style=color:#e6db74>&#34;#657B83&#34;</span>,
+            <span style=color:#f92672>&#34;green&#34;</span>: <span style=color:#e6db74>&#34;#859900&#34;</span>,
+            <span style=color:#f92672>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;Solarized Light&#34;</span>,
+            <span style=color:#f92672>&#34;purple&#34;</span>: <span style=color:#e6db74>&#34;#D33682&#34;</span>,
+            <span style=color:#f92672>&#34;red&#34;</span>: <span style=color:#e6db74>&#34;#DC322F&#34;</span>,
+            <span style=color:#f92672>&#34;selectionBackground&#34;</span>: <span style=color:#e6db74>&#34;#FFFFFF&#34;</span>,
+            <span style=color:#f92672>&#34;white&#34;</span>: <span style=color:#e6db74>&#34;#EEE8D5&#34;</span>,
+            <span style=color:#f92672>&#34;yellow&#34;</span>: <span style=color:#e6db74>&#34;#B58900&#34;</span>
         },
         {
-            <span style=color:#062873;font-weight:700>&#34;background&#34;</span>: <span style=color:#4070a0>&#34;#000000&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;black&#34;</span>: <span style=color:#4070a0>&#34;#000000&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;blue&#34;</span>: <span style=color:#4070a0>&#34;#3465A4&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightBlack&#34;</span>: <span style=color:#4070a0>&#34;#555753&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightBlue&#34;</span>: <span style=color:#4070a0>&#34;#729FCF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightCyan&#34;</span>: <span style=color:#4070a0>&#34;#34E2E2&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightGreen&#34;</span>: <span style=color:#4070a0>&#34;#8AE234&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightPurple&#34;</span>: <span style=color:#4070a0>&#34;#AD7FA8&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightRed&#34;</span>: <span style=color:#4070a0>&#34;#EF2929&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightWhite&#34;</span>: <span style=color:#4070a0>&#34;#EEEEEC&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightYellow&#34;</span>: <span style=color:#4070a0>&#34;#FCE94F&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;cursorColor&#34;</span>: <span style=color:#4070a0>&#34;#FFFFFF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;cyan&#34;</span>: <span style=color:#4070a0>&#34;#06989A&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;foreground&#34;</span>: <span style=color:#4070a0>&#34;#D3D7CF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;green&#34;</span>: <span style=color:#4070a0>&#34;#4E9A06&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;name&#34;</span>: <span style=color:#4070a0>&#34;Tango Dark&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;purple&#34;</span>: <span style=color:#4070a0>&#34;#75507B&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;red&#34;</span>: <span style=color:#4070a0>&#34;#CC0000&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;selectionBackground&#34;</span>: <span style=color:#4070a0>&#34;#FFFFFF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;white&#34;</span>: <span style=color:#4070a0>&#34;#D3D7CF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;yellow&#34;</span>: <span style=color:#4070a0>&#34;#C4A000&#34;</span>
+            <span style=color:#f92672>&#34;background&#34;</span>: <span style=color:#e6db74>&#34;#000000&#34;</span>,
+            <span style=color:#f92672>&#34;black&#34;</span>: <span style=color:#e6db74>&#34;#000000&#34;</span>,
+            <span style=color:#f92672>&#34;blue&#34;</span>: <span style=color:#e6db74>&#34;#3465A4&#34;</span>,
+            <span style=color:#f92672>&#34;brightBlack&#34;</span>: <span style=color:#e6db74>&#34;#555753&#34;</span>,
+            <span style=color:#f92672>&#34;brightBlue&#34;</span>: <span style=color:#e6db74>&#34;#729FCF&#34;</span>,
+            <span style=color:#f92672>&#34;brightCyan&#34;</span>: <span style=color:#e6db74>&#34;#34E2E2&#34;</span>,
+            <span style=color:#f92672>&#34;brightGreen&#34;</span>: <span style=color:#e6db74>&#34;#8AE234&#34;</span>,
+            <span style=color:#f92672>&#34;brightPurple&#34;</span>: <span style=color:#e6db74>&#34;#AD7FA8&#34;</span>,
+            <span style=color:#f92672>&#34;brightRed&#34;</span>: <span style=color:#e6db74>&#34;#EF2929&#34;</span>,
+            <span style=color:#f92672>&#34;brightWhite&#34;</span>: <span style=color:#e6db74>&#34;#EEEEEC&#34;</span>,
+            <span style=color:#f92672>&#34;brightYellow&#34;</span>: <span style=color:#e6db74>&#34;#FCE94F&#34;</span>,
+            <span style=color:#f92672>&#34;cursorColor&#34;</span>: <span style=color:#e6db74>&#34;#FFFFFF&#34;</span>,
+            <span style=color:#f92672>&#34;cyan&#34;</span>: <span style=color:#e6db74>&#34;#06989A&#34;</span>,
+            <span style=color:#f92672>&#34;foreground&#34;</span>: <span style=color:#e6db74>&#34;#D3D7CF&#34;</span>,
+            <span style=color:#f92672>&#34;green&#34;</span>: <span style=color:#e6db74>&#34;#4E9A06&#34;</span>,
+            <span style=color:#f92672>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;Tango Dark&#34;</span>,
+            <span style=color:#f92672>&#34;purple&#34;</span>: <span style=color:#e6db74>&#34;#75507B&#34;</span>,
+            <span style=color:#f92672>&#34;red&#34;</span>: <span style=color:#e6db74>&#34;#CC0000&#34;</span>,
+            <span style=color:#f92672>&#34;selectionBackground&#34;</span>: <span style=color:#e6db74>&#34;#FFFFFF&#34;</span>,
+            <span style=color:#f92672>&#34;white&#34;</span>: <span style=color:#e6db74>&#34;#D3D7CF&#34;</span>,
+            <span style=color:#f92672>&#34;yellow&#34;</span>: <span style=color:#e6db74>&#34;#C4A000&#34;</span>
         },
         {
-            <span style=color:#062873;font-weight:700>&#34;background&#34;</span>: <span style=color:#4070a0>&#34;#FFFFFF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;black&#34;</span>: <span style=color:#4070a0>&#34;#000000&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;blue&#34;</span>: <span style=color:#4070a0>&#34;#3465A4&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightBlack&#34;</span>: <span style=color:#4070a0>&#34;#555753&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightBlue&#34;</span>: <span style=color:#4070a0>&#34;#729FCF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightCyan&#34;</span>: <span style=color:#4070a0>&#34;#34E2E2&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightGreen&#34;</span>: <span style=color:#4070a0>&#34;#8AE234&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightPurple&#34;</span>: <span style=color:#4070a0>&#34;#AD7FA8&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightRed&#34;</span>: <span style=color:#4070a0>&#34;#EF2929&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightWhite&#34;</span>: <span style=color:#4070a0>&#34;#EEEEEC&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightYellow&#34;</span>: <span style=color:#4070a0>&#34;#FCE94F&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;cursorColor&#34;</span>: <span style=color:#4070a0>&#34;#000000&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;cyan&#34;</span>: <span style=color:#4070a0>&#34;#06989A&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;foreground&#34;</span>: <span style=color:#4070a0>&#34;#555753&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;green&#34;</span>: <span style=color:#4070a0>&#34;#4E9A06&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;name&#34;</span>: <span style=color:#4070a0>&#34;Tango Light&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;purple&#34;</span>: <span style=color:#4070a0>&#34;#75507B&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;red&#34;</span>: <span style=color:#4070a0>&#34;#CC0000&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;selectionBackground&#34;</span>: <span style=color:#4070a0>&#34;#FFFFFF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;white&#34;</span>: <span style=color:#4070a0>&#34;#D3D7CF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;yellow&#34;</span>: <span style=color:#4070a0>&#34;#C4A000&#34;</span>
+            <span style=color:#f92672>&#34;background&#34;</span>: <span style=color:#e6db74>&#34;#FFFFFF&#34;</span>,
+            <span style=color:#f92672>&#34;black&#34;</span>: <span style=color:#e6db74>&#34;#000000&#34;</span>,
+            <span style=color:#f92672>&#34;blue&#34;</span>: <span style=color:#e6db74>&#34;#3465A4&#34;</span>,
+            <span style=color:#f92672>&#34;brightBlack&#34;</span>: <span style=color:#e6db74>&#34;#555753&#34;</span>,
+            <span style=color:#f92672>&#34;brightBlue&#34;</span>: <span style=color:#e6db74>&#34;#729FCF&#34;</span>,
+            <span style=color:#f92672>&#34;brightCyan&#34;</span>: <span style=color:#e6db74>&#34;#34E2E2&#34;</span>,
+            <span style=color:#f92672>&#34;brightGreen&#34;</span>: <span style=color:#e6db74>&#34;#8AE234&#34;</span>,
+            <span style=color:#f92672>&#34;brightPurple&#34;</span>: <span style=color:#e6db74>&#34;#AD7FA8&#34;</span>,
+            <span style=color:#f92672>&#34;brightRed&#34;</span>: <span style=color:#e6db74>&#34;#EF2929&#34;</span>,
+            <span style=color:#f92672>&#34;brightWhite&#34;</span>: <span style=color:#e6db74>&#34;#EEEEEC&#34;</span>,
+            <span style=color:#f92672>&#34;brightYellow&#34;</span>: <span style=color:#e6db74>&#34;#FCE94F&#34;</span>,
+            <span style=color:#f92672>&#34;cursorColor&#34;</span>: <span style=color:#e6db74>&#34;#000000&#34;</span>,
+            <span style=color:#f92672>&#34;cyan&#34;</span>: <span style=color:#e6db74>&#34;#06989A&#34;</span>,
+            <span style=color:#f92672>&#34;foreground&#34;</span>: <span style=color:#e6db74>&#34;#555753&#34;</span>,
+            <span style=color:#f92672>&#34;green&#34;</span>: <span style=color:#e6db74>&#34;#4E9A06&#34;</span>,
+            <span style=color:#f92672>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;Tango Light&#34;</span>,
+            <span style=color:#f92672>&#34;purple&#34;</span>: <span style=color:#e6db74>&#34;#75507B&#34;</span>,
+            <span style=color:#f92672>&#34;red&#34;</span>: <span style=color:#e6db74>&#34;#CC0000&#34;</span>,
+            <span style=color:#f92672>&#34;selectionBackground&#34;</span>: <span style=color:#e6db74>&#34;#FFFFFF&#34;</span>,
+            <span style=color:#f92672>&#34;white&#34;</span>: <span style=color:#e6db74>&#34;#D3D7CF&#34;</span>,
+            <span style=color:#f92672>&#34;yellow&#34;</span>: <span style=color:#e6db74>&#34;#C4A000&#34;</span>
         },
         {
-            <span style=color:#062873;font-weight:700>&#34;background&#34;</span>: <span style=color:#4070a0>&#34;#000000&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;black&#34;</span>: <span style=color:#4070a0>&#34;#000000&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;blue&#34;</span>: <span style=color:#4070a0>&#34;#000080&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightBlack&#34;</span>: <span style=color:#4070a0>&#34;#808080&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightBlue&#34;</span>: <span style=color:#4070a0>&#34;#0000FF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightCyan&#34;</span>: <span style=color:#4070a0>&#34;#00FFFF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightGreen&#34;</span>: <span style=color:#4070a0>&#34;#00FF00&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightPurple&#34;</span>: <span style=color:#4070a0>&#34;#FF00FF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightRed&#34;</span>: <span style=color:#4070a0>&#34;#FF0000&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightWhite&#34;</span>: <span style=color:#4070a0>&#34;#FFFFFF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;brightYellow&#34;</span>: <span style=color:#4070a0>&#34;#FFFF00&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;cursorColor&#34;</span>: <span style=color:#4070a0>&#34;#FFFFFF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;cyan&#34;</span>: <span style=color:#4070a0>&#34;#008080&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;foreground&#34;</span>: <span style=color:#4070a0>&#34;#C0C0C0&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;green&#34;</span>: <span style=color:#4070a0>&#34;#008000&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;name&#34;</span>: <span style=color:#4070a0>&#34;Vintage&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;purple&#34;</span>: <span style=color:#4070a0>&#34;#800080&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;red&#34;</span>: <span style=color:#4070a0>&#34;#800000&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;selectionBackground&#34;</span>: <span style=color:#4070a0>&#34;#FFFFFF&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;white&#34;</span>: <span style=color:#4070a0>&#34;#C0C0C0&#34;</span>,
-            <span style=color:#062873;font-weight:700>&#34;yellow&#34;</span>: <span style=color:#4070a0>&#34;#808000&#34;</span>
+            <span style=color:#f92672>&#34;background&#34;</span>: <span style=color:#e6db74>&#34;#000000&#34;</span>,
+            <span style=color:#f92672>&#34;black&#34;</span>: <span style=color:#e6db74>&#34;#000000&#34;</span>,
+            <span style=color:#f92672>&#34;blue&#34;</span>: <span style=color:#e6db74>&#34;#000080&#34;</span>,
+            <span style=color:#f92672>&#34;brightBlack&#34;</span>: <span style=color:#e6db74>&#34;#808080&#34;</span>,
+            <span style=color:#f92672>&#34;brightBlue&#34;</span>: <span style=color:#e6db74>&#34;#0000FF&#34;</span>,
+            <span style=color:#f92672>&#34;brightCyan&#34;</span>: <span style=color:#e6db74>&#34;#00FFFF&#34;</span>,
+            <span style=color:#f92672>&#34;brightGreen&#34;</span>: <span style=color:#e6db74>&#34;#00FF00&#34;</span>,
+            <span style=color:#f92672>&#34;brightPurple&#34;</span>: <span style=color:#e6db74>&#34;#FF00FF&#34;</span>,
+            <span style=color:#f92672>&#34;brightRed&#34;</span>: <span style=color:#e6db74>&#34;#FF0000&#34;</span>,
+            <span style=color:#f92672>&#34;brightWhite&#34;</span>: <span style=color:#e6db74>&#34;#FFFFFF&#34;</span>,
+            <span style=color:#f92672>&#34;brightYellow&#34;</span>: <span style=color:#e6db74>&#34;#FFFF00&#34;</span>,
+            <span style=color:#f92672>&#34;cursorColor&#34;</span>: <span style=color:#e6db74>&#34;#FFFFFF&#34;</span>,
+            <span style=color:#f92672>&#34;cyan&#34;</span>: <span style=color:#e6db74>&#34;#008080&#34;</span>,
+            <span style=color:#f92672>&#34;foreground&#34;</span>: <span style=color:#e6db74>&#34;#C0C0C0&#34;</span>,
+            <span style=color:#f92672>&#34;green&#34;</span>: <span style=color:#e6db74>&#34;#008000&#34;</span>,
+            <span style=color:#f92672>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;Vintage&#34;</span>,
+            <span style=color:#f92672>&#34;purple&#34;</span>: <span style=color:#e6db74>&#34;#800080&#34;</span>,
+            <span style=color:#f92672>&#34;red&#34;</span>: <span style=color:#e6db74>&#34;#800000&#34;</span>,
+            <span style=color:#f92672>&#34;selectionBackground&#34;</span>: <span style=color:#e6db74>&#34;#FFFFFF&#34;</span>,
+            <span style=color:#f92672>&#34;white&#34;</span>: <span style=color:#e6db74>&#34;#C0C0C0&#34;</span>,
+            <span style=color:#f92672>&#34;yellow&#34;</span>: <span style=color:#e6db74>&#34;#808000&#34;</span>
         }
     ],
-    <span style=color:#062873;font-weight:700>&#34;tabSwitcherMode&#34;</span>: <span style=color:#4070a0>&#34;inOrder&#34;</span>,
-    <span style=color:#062873;font-weight:700>&#34;theme&#34;</span>: <span style=color:#4070a0>&#34;system&#34;</span>
+    <span style=color:#f92672>&#34;tabSwitcherMode&#34;</span>: <span style=color:#e6db74>&#34;inOrder&#34;</span>,
+    <span style=color:#f92672>&#34;theme&#34;</span>: <span style=color:#e6db74>&#34;system&#34;</span>
 }
 </code></pre></div>
 </section>
@@ -413,6 +415,7 @@
 </footer>
 <script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-80H8N7NN50','auto'),ga('send','pageview'))</script>
 <script async src=https://www.google-analytics.com/analytics.js></script>
+<script src=https://lunarwhite.github.iojs/toggle.dark.js></script>
 <script>feather.replace()</script>
 <script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
 </body>

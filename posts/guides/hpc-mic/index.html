@@ -16,7 +16,8 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel=stylesheet>
-<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.f2d7282a0f5a7f5b27e43ccc9c3448ef92651f88fde45a8bac6c6e2a6ba2d01b.css>
+<link disabled id=dark-mode-theme rel=stylesheet href=https://lunarwhite.github.io/css/dark.80b2eb1f37be2454ead72ba0f2662f3022d939734e00b0909a04541420aa9d6c.css>
 </head>
 <body>
 <div class=content><header>
@@ -28,6 +29,7 @@
 <a href=/posts>Posts</a>
 <a href=/tags>Tags</a>
 <a href=/about>About</a>
+/ <a id=dark-mode-toggle><i data-feather=sun></i></a>
 </nav>
 </header>
 <main>
@@ -47,151 +49,151 @@
 <li>native：MIC原生模式</li>
 </ul>
 <h3 id=11-offload-pi>1.1 offload, pi</h3>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#007020>#include</span><span style=color:#007020>&lt;stdio.h&gt;</span><span style=color:#007020>
-</span><span style=color:#007020>#include</span><span style=color:#007020>&lt;stdlib.h&gt;</span><span style=color:#007020>
-</span><span style=color:#007020>#include</span><span style=color:#007020>&lt;math.h&gt;</span><span style=color:#007020>
-</span><span style=color:#007020></span>
-<span style=color:#902000>int</span> <span style=color:#06287e>main</span>(){
-    <span style=color:#902000>float</span> pi<span style=color:#666>=</span><span style=color:#40a070>0.0f</span>;
-    <span style=color:#902000>int</span> count<span style=color:#666>=</span><span style=color:#40a070>10000</span>;
-    <span style=color:#902000>int</span> i;
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;stdlib.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;math.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(){
+    <span style=color:#66d9ef>float</span> pi<span style=color:#f92672>=</span><span style=color:#ae81ff>0.0f</span>;
+    <span style=color:#66d9ef>int</span> count<span style=color:#f92672>=</span><span style=color:#ae81ff>10000</span>;
+    <span style=color:#66d9ef>int</span> i;
 
-    <span style=color:#007020>#pragma offload target (mic)
-</span><span style=color:#007020></span>    <span style=color:#007020>#pragma omp parallel for reduction(+:pi)
-</span><span style=color:#007020></span>    <span style=color:#007020;font-weight:700>for</span>(i<span style=color:#666>=</span><span style=color:#40a070>0</span>;i<span style=color:#666>&lt;</span>count;i<span style=color:#666>++</span>){
-        <span style=color:#902000>float</span> t<span style=color:#666>=</span>(<span style=color:#902000>float</span>)((i<span style=color:#666>+</span><span style=color:#40a070>0.5f</span>)<span style=color:#666>/</span>count);
-        pi<span style=color:#666>+=</span><span style=color:#40a070>4.0f</span><span style=color:#666>/</span>(<span style=color:#40a070>1.0f</span><span style=color:#666>+</span>t<span style=color:#666>*</span>t);
+    <span style=color:#75715e>#pragma offload target (mic)
+</span><span style=color:#75715e></span>    <span style=color:#75715e>#pragma omp parallel for reduction(+:pi)
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>for</span>(i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>;i<span style=color:#f92672>&lt;</span>count;i<span style=color:#f92672>++</span>){
+        <span style=color:#66d9ef>float</span> t<span style=color:#f92672>=</span>(<span style=color:#66d9ef>float</span>)((i<span style=color:#f92672>+</span><span style=color:#ae81ff>0.5f</span>)<span style=color:#f92672>/</span>count);
+        pi<span style=color:#f92672>+=</span><span style=color:#ae81ff>4.0f</span><span style=color:#f92672>/</span>(<span style=color:#ae81ff>1.0f</span><span style=color:#f92672>+</span>t<span style=color:#f92672>*</span>t);
     }
-    pi<span style=color:#666>/=</span>count;
+    pi<span style=color:#f92672>/=</span>count;
 
-    printf(<span style=color:#4070a0>&#34;PI=%f</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>,pi);
-    <span style=color:#007020;font-weight:700>return</span> <span style=color:#40a070>0</span>;
+    printf(<span style=color:#e6db74>&#34;PI=%f</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>,pi);
+    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
 }
-</code></pre></div><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>icc <span style=color:#666>-</span>openmp <span style=color:#40a070>6</span><span style=color:#666>-</span><span style=color:#40a070>1.</span>c <span style=color:#666>-</span>o <span style=color:#40a070>6</span><span style=color:#666>-</span><span style=color:#40a070>1.</span>out <span style=color:#666>-</span>limf <span style=color:#666>-</span>lm
-.<span style=color:#666>/</span><span style=color:#40a070>6</span><span style=color:#666>-</span><span style=color:#40a070>1.</span>out
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>icc <span style=color:#f92672>-</span>openmp <span style=color:#ae81ff>6</span><span style=color:#f92672>-</span><span style=color:#ae81ff>1.</span>c <span style=color:#f92672>-</span>o <span style=color:#ae81ff>6</span><span style=color:#f92672>-</span><span style=color:#ae81ff>1.</span>out <span style=color:#f92672>-</span>limf <span style=color:#f92672>-</span>lm
+.<span style=color:#f92672>/</span><span style=color:#ae81ff>6</span><span style=color:#f92672>-</span><span style=color:#ae81ff>1.</span>out
 </code></pre></div><h3 id=12-offload-in>1.2 offload, in</h3>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#007020>#include</span><span style=color:#007020>&lt;stdio.h&gt;</span><span style=color:#007020>
-</span><span style=color:#007020>#include</span><span style=color:#007020>&lt;stdlib.h&gt;</span><span style=color:#007020>
-</span><span style=color:#007020>#include</span><span style=color:#007020>&lt;math.h&gt;</span><span style=color:#007020>
-</span><span style=color:#007020>#define LEN (10)
-</span><span style=color:#007020></span>
-<span style=color:#902000>int</span> <span style=color:#06287e>main</span>(){
-    <span style=color:#902000>float</span><span style=color:#666>*</span> arr;
-    <span style=color:#902000>int</span> i;
-    arr<span style=color:#666>=</span>(<span style=color:#902000>float</span><span style=color:#666>*</span>)malloc(LEN<span style=color:#666>*</span><span style=color:#007020;font-weight:700>sizeof</span>(<span style=color:#902000>float</span>));
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;stdlib.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;math.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#define LEN (10)
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(){
+    <span style=color:#66d9ef>float</span><span style=color:#f92672>*</span> arr;
+    <span style=color:#66d9ef>int</span> i;
+    arr<span style=color:#f92672>=</span>(<span style=color:#66d9ef>float</span><span style=color:#f92672>*</span>)malloc(LEN<span style=color:#f92672>*</span><span style=color:#66d9ef>sizeof</span>(<span style=color:#66d9ef>float</span>));
 
-    <span style=color:#007020;font-weight:700>for</span>(i<span style=color:#666>=</span><span style=color:#40a070>0</span>;i<span style=color:#666>&lt;</span>LEN;<span style=color:#666>++</span>i){
-        arr[i]<span style=color:#666>=</span>i;
+    <span style=color:#66d9ef>for</span>(i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>;i<span style=color:#f92672>&lt;</span>LEN;<span style=color:#f92672>++</span>i){
+        arr[i]<span style=color:#f92672>=</span>i;
     }
 
-    i<span style=color:#666>=</span><span style=color:#40a070>0</span>;
+    i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>;
 
-    <span style=color:#007020>#pragma offload target(mic) in(arr:length(LEN))
-</span><span style=color:#007020></span>    <span style=color:#007020;font-weight:700>for</span>(i<span style=color:#666>=</span><span style=color:#40a070>0</span>;i<span style=color:#666>&lt;</span>LEN;<span style=color:#666>++</span>i){
-        printf(<span style=color:#4070a0>&#34;on mic: arr[%d]=%f</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>,i,arr[i]);
-        arr[i]<span style=color:#666>=</span><span style=color:#40a070>0</span>;
+    <span style=color:#75715e>#pragma offload target(mic) in(arr:length(LEN))
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>for</span>(i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>;i<span style=color:#f92672>&lt;</span>LEN;<span style=color:#f92672>++</span>i){
+        printf(<span style=color:#e6db74>&#34;on mic: arr[%d]=%f</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>,i,arr[i]);
+        arr[i]<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>;
     }
-    <span style=color:#007020;font-weight:700>for</span>(i<span style=color:#666>=</span><span style=color:#40a070>0</span>;i<span style=color:#666>&lt;</span>LEN;<span style=color:#666>++</span>i){
-        printf(<span style=color:#4070a0>&#34;on cpu: arr[%d]=%f</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>,i,arr[i]);
+    <span style=color:#66d9ef>for</span>(i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>;i<span style=color:#f92672>&lt;</span>LEN;<span style=color:#f92672>++</span>i){
+        printf(<span style=color:#e6db74>&#34;on cpu: arr[%d]=%f</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>,i,arr[i]);
     }
 
-    <span style=color:#007020;font-weight:700>return</span> <span style=color:#40a070>0</span>;
+    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
 }
-</code></pre></div><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>icc <span style=color:#40a070>6</span><span style=color:#666>-</span><span style=color:#40a070>2.</span>c <span style=color:#666>-</span>o <span style=color:#40a070>6</span><span style=color:#666>-</span><span style=color:#40a070>2.</span>out <span style=color:#666>-</span>limf <span style=color:#666>-</span>lm
-.<span style=color:#666>/</span><span style=color:#40a070>6</span><span style=color:#666>-</span><span style=color:#40a070>2.</span>out
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>icc <span style=color:#ae81ff>6</span><span style=color:#f92672>-</span><span style=color:#ae81ff>2.</span>c <span style=color:#f92672>-</span>o <span style=color:#ae81ff>6</span><span style=color:#f92672>-</span><span style=color:#ae81ff>2.</span>out <span style=color:#f92672>-</span>limf <span style=color:#f92672>-</span>lm
+.<span style=color:#f92672>/</span><span style=color:#ae81ff>6</span><span style=color:#f92672>-</span><span style=color:#ae81ff>2.</span>out
 </code></pre></div><h3 id=13-offload-out>1.3 offload, out</h3>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#007020>#include</span><span style=color:#007020>&lt;stdio.h&gt;</span><span style=color:#007020>
-</span><span style=color:#007020>#include</span><span style=color:#007020>&lt;stdlib.h&gt;</span><span style=color:#007020>
-</span><span style=color:#007020>#include</span><span style=color:#007020>&lt;math.h&gt;</span><span style=color:#007020>
-</span><span style=color:#007020>#define LEN (10)
-</span><span style=color:#007020></span>
-<span style=color:#902000>int</span> <span style=color:#06287e>main</span>(){
-    <span style=color:#902000>float</span><span style=color:#666>*</span> arr;
-    <span style=color:#902000>int</span> i;
-    arr<span style=color:#666>=</span>(<span style=color:#902000>float</span><span style=color:#666>*</span>)malloc(LEN<span style=color:#666>*</span><span style=color:#007020;font-weight:700>sizeof</span>(<span style=color:#902000>float</span>));
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;stdlib.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;math.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#define LEN (10)
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(){
+    <span style=color:#66d9ef>float</span><span style=color:#f92672>*</span> arr;
+    <span style=color:#66d9ef>int</span> i;
+    arr<span style=color:#f92672>=</span>(<span style=color:#66d9ef>float</span><span style=color:#f92672>*</span>)malloc(LEN<span style=color:#f92672>*</span><span style=color:#66d9ef>sizeof</span>(<span style=color:#66d9ef>float</span>));
 
-    <span style=color:#007020;font-weight:700>for</span>(i<span style=color:#666>=</span><span style=color:#40a070>0</span>;i<span style=color:#666>&lt;</span>LEN;<span style=color:#666>++</span>i){
-        arr[i]<span style=color:#666>=</span>i;
+    <span style=color:#66d9ef>for</span>(i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>;i<span style=color:#f92672>&lt;</span>LEN;<span style=color:#f92672>++</span>i){
+        arr[i]<span style=color:#f92672>=</span>i;
     }
 
-    i<span style=color:#666>=</span><span style=color:#40a070>0</span>;
+    i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>;
 
-    <span style=color:#007020>#pragma offload target(mic) out(arr:length(LEN))
-</span><span style=color:#007020></span>    <span style=color:#007020;font-weight:700>for</span>(i<span style=color:#666>=</span><span style=color:#40a070>0</span>;i<span style=color:#666>&lt;</span>LEN;<span style=color:#666>++</span>i){
-        printf(<span style=color:#4070a0>&#34;on mic: arr[%d]=%f</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>,i,arr[i]);
-        arr[i]<span style=color:#666>=</span>i<span style=color:#666>+</span>i;
+    <span style=color:#75715e>#pragma offload target(mic) out(arr:length(LEN))
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>for</span>(i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>;i<span style=color:#f92672>&lt;</span>LEN;<span style=color:#f92672>++</span>i){
+        printf(<span style=color:#e6db74>&#34;on mic: arr[%d]=%f</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>,i,arr[i]);
+        arr[i]<span style=color:#f92672>=</span>i<span style=color:#f92672>+</span>i;
     }
 
-    <span style=color:#007020;font-weight:700>for</span>(i<span style=color:#666>=</span><span style=color:#40a070>0</span>;i<span style=color:#666>&lt;</span>LEN;<span style=color:#666>++</span>i){
-        printf(<span style=color:#4070a0>&#34;on cpu: arr[%d]=%f</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>,i,arr[i]);
+    <span style=color:#66d9ef>for</span>(i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>;i<span style=color:#f92672>&lt;</span>LEN;<span style=color:#f92672>++</span>i){
+        printf(<span style=color:#e6db74>&#34;on cpu: arr[%d]=%f</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>,i,arr[i]);
     }
-    <span style=color:#007020;font-weight:700>return</span> <span style=color:#40a070>0</span>;
+    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
 }
-</code></pre></div><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>icc <span style=color:#40a070>6</span><span style=color:#666>-</span><span style=color:#40a070>3.</span>c <span style=color:#666>-</span>o <span style=color:#40a070>6</span><span style=color:#666>-</span><span style=color:#40a070>3.</span>out <span style=color:#666>-</span>limf <span style=color:#666>-</span>lm
-.<span style=color:#666>/</span><span style=color:#40a070>6</span><span style=color:#666>-</span><span style=color:#40a070>3.</span>out
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>icc <span style=color:#ae81ff>6</span><span style=color:#f92672>-</span><span style=color:#ae81ff>3.</span>c <span style=color:#f92672>-</span>o <span style=color:#ae81ff>6</span><span style=color:#f92672>-</span><span style=color:#ae81ff>3.</span>out <span style=color:#f92672>-</span>limf <span style=color:#f92672>-</span>lm
+.<span style=color:#f92672>/</span><span style=color:#ae81ff>6</span><span style=color:#f92672>-</span><span style=color:#ae81ff>3.</span>out
 </code></pre></div><h3 id=14-offload-alloc>1.4 offload, alloc</h3>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#007020>#include</span><span style=color:#007020>&lt;stdio.h&gt;</span><span style=color:#007020>
-</span><span style=color:#007020>#include</span><span style=color:#007020>&lt;stdlib.h&gt;</span><span style=color:#007020>
-</span><span style=color:#007020>#include</span><span style=color:#007020>&lt;math.h&gt;</span><span style=color:#007020>
-</span><span style=color:#007020>#define LEN (10)
-</span><span style=color:#007020></span>
-<span style=color:#902000>int</span> <span style=color:#06287e>main</span>(){
-    <span style=color:#902000>float</span><span style=color:#666>*</span> arr;
-    <span style=color:#902000>float</span><span style=color:#666>*</span> arrl;
-    <span style=color:#902000>int</span> i;
-    arr<span style=color:#666>=</span>(<span style=color:#902000>float</span><span style=color:#666>*</span>)malloc(LEN<span style=color:#666>*</span><span style=color:#007020;font-weight:700>sizeof</span>(<span style=color:#902000>float</span>));
-    arrl<span style=color:#666>=</span>(<span style=color:#902000>float</span><span style=color:#666>*</span>)malloc(LEN<span style=color:#666>*</span><span style=color:#007020;font-weight:700>sizeof</span>(<span style=color:#902000>float</span>));
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;stdlib.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;math.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#define LEN (10)
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(){
+    <span style=color:#66d9ef>float</span><span style=color:#f92672>*</span> arr;
+    <span style=color:#66d9ef>float</span><span style=color:#f92672>*</span> arrl;
+    <span style=color:#66d9ef>int</span> i;
+    arr<span style=color:#f92672>=</span>(<span style=color:#66d9ef>float</span><span style=color:#f92672>*</span>)malloc(LEN<span style=color:#f92672>*</span><span style=color:#66d9ef>sizeof</span>(<span style=color:#66d9ef>float</span>));
+    arrl<span style=color:#f92672>=</span>(<span style=color:#66d9ef>float</span><span style=color:#f92672>*</span>)malloc(LEN<span style=color:#f92672>*</span><span style=color:#66d9ef>sizeof</span>(<span style=color:#66d9ef>float</span>));
 
-    <span style=color:#007020;font-weight:700>for</span>(i<span style=color:#666>=</span><span style=color:#40a070>0</span>;i<span style=color:#666>&lt;</span>LEN;<span style=color:#666>++</span>i){
-        arr[i]<span style=color:#666>=</span>i;
-        arrl[i]<span style=color:#666>=</span>i;
+    <span style=color:#66d9ef>for</span>(i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>;i<span style=color:#f92672>&lt;</span>LEN;<span style=color:#f92672>++</span>i){
+        arr[i]<span style=color:#f92672>=</span>i;
+        arrl[i]<span style=color:#f92672>=</span>i;
     }
 
-    i<span style=color:#666>=</span><span style=color:#40a070>0</span>;
+    i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>;
 
-    <span style=color:#007020>#pragma offload target(mic) out(arr[5:2]:alloc(arr[4:5]))
-</span><span style=color:#007020></span>    <span style=color:#007020;font-weight:700>for</span>(i<span style=color:#666>=</span><span style=color:#40a070>0</span>;i<span style=color:#666>&lt;</span>LEN;<span style=color:#666>++</span>i){
-        arr[i]<span style=color:#666>=</span>i<span style=color:#666>*</span>i;
+    <span style=color:#75715e>#pragma offload target(mic) out(arr[5:2]:alloc(arr[4:5]))
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>for</span>(i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>;i<span style=color:#f92672>&lt;</span>LEN;<span style=color:#f92672>++</span>i){
+        arr[i]<span style=color:#f92672>=</span>i<span style=color:#f92672>*</span>i;
     }
 
-    <span style=color:#007020;font-weight:700>for</span>(i<span style=color:#666>=</span><span style=color:#40a070>0</span>;i<span style=color:#666>&lt;</span>LEN;<span style=color:#666>++</span>i){
-        printf(<span style=color:#4070a0>&#34;on host: arr[%d]=%f</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>,i,arr[i]);
-        printf(<span style=color:#4070a0>&#34;on host: arrl[%d]=%f</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>,i,arrl[i]);
+    <span style=color:#66d9ef>for</span>(i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>;i<span style=color:#f92672>&lt;</span>LEN;<span style=color:#f92672>++</span>i){
+        printf(<span style=color:#e6db74>&#34;on host: arr[%d]=%f</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>,i,arr[i]);
+        printf(<span style=color:#e6db74>&#34;on host: arrl[%d]=%f</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>,i,arrl[i]);
     }
-    <span style=color:#007020;font-weight:700>return</span> <span style=color:#40a070>0</span>;
+    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
 }
-</code></pre></div><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>icc <span style=color:#40a070>6</span><span style=color:#666>-</span><span style=color:#40a070>4.</span>c <span style=color:#666>-</span>o <span style=color:#40a070>6</span><span style=color:#666>-</span><span style=color:#40a070>4.</span>out <span style=color:#666>-</span>limf <span style=color:#666>-</span>lm
-.<span style=color:#666>/</span><span style=color:#40a070>6</span><span style=color:#666>-</span><span style=color:#40a070>4.</span>out
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>icc <span style=color:#ae81ff>6</span><span style=color:#f92672>-</span><span style=color:#ae81ff>4.</span>c <span style=color:#f92672>-</span>o <span style=color:#ae81ff>6</span><span style=color:#f92672>-</span><span style=color:#ae81ff>4.</span>out <span style=color:#f92672>-</span>limf <span style=color:#f92672>-</span>lm
+.<span style=color:#f92672>/</span><span style=color:#ae81ff>6</span><span style=color:#f92672>-</span><span style=color:#ae81ff>4.</span>out
 </code></pre></div><h3 id=15-offload-inout>1.5 offload, inout</h3>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#007020>#include</span><span style=color:#007020>&lt;stdio.h&gt;</span><span style=color:#007020>
-</span><span style=color:#007020>#include</span><span style=color:#007020>&lt;stdlib.h&gt;</span><span style=color:#007020>
-</span><span style=color:#007020>#include</span><span style=color:#007020>&lt;math.h&gt;</span><span style=color:#007020>
-</span><span style=color:#007020>#define LEN (10)
-</span><span style=color:#007020></span>
-<span style=color:#902000>int</span> <span style=color:#06287e>main</span>(){
-    <span style=color:#902000>float</span><span style=color:#666>*</span> arr;
-    <span style=color:#902000>int</span> i;
-    arr<span style=color:#666>=</span>(<span style=color:#902000>float</span><span style=color:#666>*</span>)malloc(LEN<span style=color:#666>*</span><span style=color:#007020;font-weight:700>sizeof</span>(<span style=color:#902000>float</span>));
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;stdio.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;stdlib.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;math.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#define LEN (10)
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(){
+    <span style=color:#66d9ef>float</span><span style=color:#f92672>*</span> arr;
+    <span style=color:#66d9ef>int</span> i;
+    arr<span style=color:#f92672>=</span>(<span style=color:#66d9ef>float</span><span style=color:#f92672>*</span>)malloc(LEN<span style=color:#f92672>*</span><span style=color:#66d9ef>sizeof</span>(<span style=color:#66d9ef>float</span>));
 
-    <span style=color:#007020;font-weight:700>for</span>(i<span style=color:#666>=</span><span style=color:#40a070>0</span>;i<span style=color:#666>&lt;</span>LEN;<span style=color:#666>++</span>i){
-        arr[i]<span style=color:#666>=</span>i;
+    <span style=color:#66d9ef>for</span>(i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>;i<span style=color:#f92672>&lt;</span>LEN;<span style=color:#f92672>++</span>i){
+        arr[i]<span style=color:#f92672>=</span>i;
     }
 
-    i<span style=color:#666>=</span><span style=color:#40a070>0</span>;
+    i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>;
 
-    <span style=color:#007020>#pragma offload target(mic) inout(arr:length(LEN))
-</span><span style=color:#007020></span>    <span style=color:#007020;font-weight:700>for</span>(i<span style=color:#666>=</span><span style=color:#40a070>0</span>;i<span style=color:#666>&lt;</span>LEN;<span style=color:#666>++</span>i){
-        printf(<span style=color:#4070a0>&#34;on mic: arr[%d]=%f</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>,i,arr[i]);
-        arr[i]<span style=color:#666>=</span>i<span style=color:#666>+</span>i;
+    <span style=color:#75715e>#pragma offload target(mic) inout(arr:length(LEN))
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>for</span>(i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>;i<span style=color:#f92672>&lt;</span>LEN;<span style=color:#f92672>++</span>i){
+        printf(<span style=color:#e6db74>&#34;on mic: arr[%d]=%f</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>,i,arr[i]);
+        arr[i]<span style=color:#f92672>=</span>i<span style=color:#f92672>+</span>i;
     }
 
-    <span style=color:#007020;font-weight:700>for</span>(i<span style=color:#666>=</span><span style=color:#40a070>0</span>;i<span style=color:#666>&lt;</span>LEN;<span style=color:#666>++</span>i){
-        printf(<span style=color:#4070a0>&#34;on cpu: arr[%d]=%f</span><span style=color:#4070a0;font-weight:700>\n</span><span style=color:#4070a0>&#34;</span>,i,arr[i]);
+    <span style=color:#66d9ef>for</span>(i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>;i<span style=color:#f92672>&lt;</span>LEN;<span style=color:#f92672>++</span>i){
+        printf(<span style=color:#e6db74>&#34;on cpu: arr[%d]=%f</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>,i,arr[i]);
     }
-    <span style=color:#007020;font-weight:700>return</span> <span style=color:#40a070>0</span>;
+    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
 }
-</code></pre></div><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>icc <span style=color:#40a070>6</span><span style=color:#666>-</span><span style=color:#40a070>5.</span>c <span style=color:#666>-</span>o <span style=color:#40a070>6</span><span style=color:#666>-</span><span style=color:#40a070>5.</span>out <span style=color:#666>-</span>limf <span style=color:#666>-</span>lm
-.<span style=color:#666>/</span><span style=color:#40a070>6</span><span style=color:#666>-</span><span style=color:#40a070>5.</span>out
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>icc <span style=color:#ae81ff>6</span><span style=color:#f92672>-</span><span style=color:#ae81ff>5.</span>c <span style=color:#f92672>-</span>o <span style=color:#ae81ff>6</span><span style=color:#f92672>-</span><span style=color:#ae81ff>5.</span>out <span style=color:#f92672>-</span>limf <span style=color:#f92672>-</span>lm
+.<span style=color:#f92672>/</span><span style=color:#ae81ff>6</span><span style=color:#f92672>-</span><span style=color:#ae81ff>5.</span>out
 </code></pre></div>
 </section>
 <div class=post-tags>
@@ -210,6 +212,7 @@
 </footer>
 <script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-80H8N7NN50','auto'),ga('send','pageview'))</script>
 <script async src=https://www.google-analytics.com/analytics.js></script>
+<script src=https://lunarwhite.github.iojs/toggle.dark.js></script>
 <script>feather.replace()</script>
 <script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
 </body>

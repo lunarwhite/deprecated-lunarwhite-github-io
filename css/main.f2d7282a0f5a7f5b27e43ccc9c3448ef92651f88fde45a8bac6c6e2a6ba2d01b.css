@@ -1,10 +1,11 @@
 /* Markdown */
+/* https://tool.oschina.net/commons?type=3 */
 :root{
 --maincolor: blue;
 --bordercl:rebeccapurple;
 --callouctcolor:dodgerblue;
 --hovercolor:navy;
---darkMaincolor: #50fa7b;
+--darkMaincolor: 	#AB82FF;
 }
 html {
   color: #232333;

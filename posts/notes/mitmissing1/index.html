@@ -16,7 +16,8 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel=stylesheet>
-<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.f2d7282a0f5a7f5b27e43ccc9c3448ef92651f88fde45a8bac6c6e2a6ba2d01b.css>
+<link disabled id=dark-mode-theme rel=stylesheet href=https://lunarwhite.github.io/css/dark.80b2eb1f37be2454ead72ba0f2662f3022d939734e00b0909a04541420aa9d6c.css>
 </head>
 <body>
 <div class=content><header>
@@ -28,6 +29,7 @@
 <a href=/posts>Posts</a>
 <a href=/tags>Tags</a>
 <a href=/about>About</a>
+/ <a id=dark-mode-toggle><i data-feather=sun></i></a>
 </nav>
 </header>
 <main>
@@ -43,13 +45,13 @@
 </blockquote>
 <h2 id=01---intro-some-commands>01 - intro some commands</h2>
 <h3 id=11-which>1.1 which</h3>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>which <span style=color:#007020>echo</span> <span style=color:#60a0b0;font-style:italic># /bin/echo</span>
-which ls <span style=color:#60a0b0;font-style:italic># /usr/bin/ls</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>which echo <span style=color:#75715e># /bin/echo</span>
+which ls <span style=color:#75715e># /usr/bin/ls</span>
 </code></pre></div><h3 id=12-path>1.2 $PATH</h3>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#007020>echo</span> <span style=color:#bb60d5>$PATH</span>
-<span style=color:#60a0b0;font-style:italic># /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>echo $PATH
+<span style=color:#75715e># /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games</span>
 </code></pre></div><h3 id=13-permission>1.3 permission</h3>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>ls -l /home <span style=color:#60a0b0;font-style:italic># drwxr-xr-x 18 himeself65 himeself65 4096 Aug 16 17:53 himeself65</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>ls -l /home <span style=color:#75715e># drwxr-xr-x 18 himeself65 himeself65 4096 Aug 16 17:53 himeself65</span>
 </code></pre></div><ul>
 <li><code>d</code>: tells us that <code>himeself65</code> is a directory.</li>
 <li><code>rwx</code>, <code>r-x</code> and <code>r-x</code>: &ldquo;the owner&rdquo;, &ldquo;the owning group&rdquo; and &ldquo;everyone else&rdquo;.</li>
@@ -58,37 +60,37 @@ which ls <span style=color:#60a0b0;font-style:italic># /usr/bin/ls</span>
 <ul>
 <li>It takes as an argument the name of a program, and shows you its manual page.</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>man ls
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>man ls
 </code></pre></div><h3 id=15-echo--cat>1.5 echo & cat</h3>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#007020>echo</span> hello &gt; hello.txt
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>echo hello &gt; hello.txt
 
 cat &lt; hello.txt
-cat hello.txt <span style=color:#60a0b0;font-style:italic># as same as having &#34;&lt;&#34;</span>
+cat hello.txt <span style=color:#75715e># as same as having &#34;&lt;&#34;</span>
 
 cat &lt; hello.txt &gt; hello2.tx
 </code></pre></div><h3 id=16-find>1.6 find</h3>
 <ul>
 <li>All UNIX-like systems come packaged with <code>find</code>, a great shell tool to find files. <code>find</code> will recursively search for files matching some criteria. Some examples:</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic># Find all directories named src, case insensitive</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># Find all directories named src, case insensitive</span>
 find . -name src -type d -iname
 
-<span style=color:#60a0b0;font-style:italic># Find all python files that have a folder named test in their path</span>
-find . -path <span style=color:#4070a0>&#39;*/test/*.py&#39;</span> -type f
+<span style=color:#75715e># Find all python files that have a folder named test in their path</span>
+find . -path <span style=color:#e6db74>&#39;*/test/*.py&#39;</span> -type f
 
-<span style=color:#60a0b0;font-style:italic># Find all files modified in the last day</span>
+<span style=color:#75715e># Find all files modified in the last day</span>
 find . -mtime -1
 
-<span style=color:#60a0b0;font-style:italic># Find all zip files with size in range 500k to 10M</span>
-find . -size +500k -size -10M -name <span style=color:#4070a0>&#39;*.tar.gz&#39;</span>
+<span style=color:#75715e># Find all zip files with size in range 500k to 10M</span>
+find . -size +500k -size -10M -name <span style=color:#e6db74>&#39;*.tar.gz&#39;</span>
 </code></pre></div><ul>
 <li>Beyond listing files, find can also perform actions over files that match your query. This property can be incredibly helpful to simplify what could be fairly monotonous tasks.</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic># Delete all files with .tmp extension</span>
-find . -name <span style=color:#4070a0>&#39;*.tmp&#39;</span> -exec rm <span style=color:#666>{}</span> <span style=color:#4070a0;font-weight:700>\;</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># Delete all files with .tmp extension</span>
+find . -name <span style=color:#e6db74>&#39;*.tmp&#39;</span> -exec rm <span style=color:#f92672>{}</span> <span style=color:#ae81ff>\;</span>
 
-<span style=color:#60a0b0;font-style:italic># Find all PNG files and convert them to JPG</span>
-find . -name <span style=color:#4070a0>&#39;*.png&#39;</span> -exec convert <span style=color:#666>{}</span> <span style=color:#666>{}</span>.jpg <span style=color:#4070a0;font-weight:700>\;</span>
+<span style=color:#75715e># Find all PNG files and convert them to JPG</span>
+find . -name <span style=color:#e6db74>&#39;*.png&#39;</span> -exec convert <span style=color:#f92672>{}</span> <span style=color:#f92672>{}</span>.jpg <span style=color:#ae81ff>\;</span>
 </code></pre></div><h3 id=17-grep>1.7 grep</h3>
 <ul>
 <li>most UNIX-like systems provide <code>grep</code>, a generic tool for matching patterns from the input text.</li>
@@ -104,8 +106,8 @@ find . -name <span style=color:#4070a0>&#39;*.png&#39;</span> -exec convert <spa
 <ul>
 <li>The <code>history</code> command will let you access your shell history programmatically. It will print your shell history to the standard output.</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic># Print commands that contain the substring “find”</span>
-<span style=color:#007020>history</span> | grep find
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># Print commands that contain the substring “find”</span>
+history | grep find
 </code></pre></div><ul>
 <li>You can modify your shell’s history behavior, like preventing commands with a leading space from being included. This comes in handy when you are typing commands with passwords or other bits of sensitive information.</li>
 <li>To do this, add <code>HISTCONTROL=ignorespace</code> to your <code>.bashrc</code> or <code>setopt HIST_IGNORE_SPACE</code> to your <code>.zshrc</code>. If you make the mistake of not adding the leading space, you can always manually remove the entry by editing your <code>.bash_history</code> or <code>.zhistory</code>.</li>
@@ -117,18 +119,18 @@ find . -name <span style=color:#4070a0>&#39;*.png&#39;</span> -exec convert <spa
 <li>Thus, creating command pipelines, saving results into files, and reading from standard input are primitives in shell scripting, which makes it easier to use than general purpose scripting languages.</li>
 </ul>
 <h3 id=22-variable--function>2.2 variable & function</h3>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#bb60d5>foo</span><span style=color:#666>=</span>bar
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>foo<span style=color:#f92672>=</span>bar
 
-<span style=color:#007020>echo</span> <span style=color:#4070a0>&#34;</span><span style=color:#bb60d5>$foo</span><span style=color:#4070a0>&#34;</span> <span style=color:#60a0b0;font-style:italic># prints bar</span>
-<span style=color:#007020>echo</span> <span style=color:#4070a0>&#39;$foo&#39;</span> <span style=color:#60a0b0;font-style:italic># prints $foo</span>
+echo <span style=color:#e6db74>&#34;</span>$foo<span style=color:#e6db74>&#34;</span> <span style=color:#75715e># prints bar</span>
+echo <span style=color:#e6db74>&#39;$foo&#39;</span> <span style=color:#75715e># prints $foo</span>
 </code></pre></div><ul>
 <li>Strings delimited with <code>'</code> are literal strings and will not substitute variable values whereas <code>"</code> delimited strings will.</li>
 <li>Here is an example of a function that creates a directory and <code>cd</code>s into it.</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>mcd <span style=color:#666>()</span> <span style=color:#666>{</span>
-    mkdir -p <span style=color:#4070a0>&#34;</span><span style=color:#bb60d5>$1</span><span style=color:#4070a0>&#34;</span>
-    <span style=color:#007020>cd</span> <span style=color:#4070a0>&#34;</span><span style=color:#bb60d5>$1</span><span style=color:#4070a0>&#34;</span>
-<span style=color:#666>}</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>mcd <span style=color:#f92672>()</span> <span style=color:#f92672>{</span>
+    mkdir -p <span style=color:#e6db74>&#34;</span>$1<span style=color:#e6db74>&#34;</span>
+    cd <span style=color:#e6db74>&#34;</span>$1<span style=color:#e6db74>&#34;</span>
+<span style=color:#f92672>}</span>
 </code></pre></div><ul>
 <li>Here <code>$1</code> is the first argument to the script/function. Unlike other scripting languages, bash uses a variety of special variables to refer to arguments, error codes, and other relevant variables. Below is a list of some of them.
 <ul>
@@ -145,21 +147,21 @@ find . -name <span style=color:#4070a0>&#39;*.png&#39;</span> -exec convert <spa
 <li>A more comprehensive list can be found <a href=https://tldp.org/LDP/abs/html/special-chars.html>here</a>.</li>
 <li>This example will iterate through the arguments we provide, grep for the string foobar, and append it to the file as a comment if it’s not found.</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#007020>#!/bin/bash
-</span><span style=color:#007020></span>
-<span style=color:#007020>echo</span> <span style=color:#4070a0>&#34;Starting program at </span><span style=color:#007020;font-weight:700>$(</span>date<span style=color:#007020;font-weight:700>)</span><span style=color:#4070a0>&#34;</span> <span style=color:#60a0b0;font-style:italic># Date will be substituted</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e>#!/bin/bash
+</span><span style=color:#75715e></span>
+echo <span style=color:#e6db74>&#34;Starting program at </span><span style=color:#66d9ef>$(</span>date<span style=color:#66d9ef>)</span><span style=color:#e6db74>&#34;</span> <span style=color:#75715e># Date will be substituted</span>
 
-<span style=color:#007020>echo</span> <span style=color:#4070a0>&#34;Running program </span><span style=color:#bb60d5>$0</span><span style=color:#4070a0> with </span><span style=color:#bb60d5>$#</span><span style=color:#4070a0> arguments with pid </span><span style=color:#bb60d5>$$</span><span style=color:#4070a0>&#34;</span>
+echo <span style=color:#e6db74>&#34;Running program </span>$0<span style=color:#e6db74> with </span>$#<span style=color:#e6db74> arguments with pid </span>$$<span style=color:#e6db74>&#34;</span>
 
-<span style=color:#007020;font-weight:700>for</span> file in <span style=color:#4070a0>&#34;</span><span style=color:#bb60d5>$@</span><span style=color:#4070a0>&#34;</span>; <span style=color:#007020;font-weight:700>do</span>
-    grep foobar <span style=color:#4070a0>&#34;</span><span style=color:#bb60d5>$file</span><span style=color:#4070a0>&#34;</span> &gt; /dev/null 2&gt; /dev/null
-    <span style=color:#60a0b0;font-style:italic># When pattern is not found, grep has exit status 1</span>
-    <span style=color:#60a0b0;font-style:italic># We redirect STDOUT and STDERR to a null register since we do not care about them</span>
-    <span style=color:#007020;font-weight:700>if</span> <span style=color:#666>[[</span> <span style=color:#bb60d5>$?</span> -ne <span style=color:#40a070>0</span> <span style=color:#666>]]</span>; <span style=color:#007020;font-weight:700>then</span>
-        <span style=color:#007020>echo</span> <span style=color:#4070a0>&#34;File </span><span style=color:#bb60d5>$file</span><span style=color:#4070a0> does not have any foobar, adding one&#34;</span>
-        <span style=color:#007020>echo</span> <span style=color:#4070a0>&#34;# foobar&#34;</span> &gt;&gt; <span style=color:#4070a0>&#34;</span><span style=color:#bb60d5>$file</span><span style=color:#4070a0>&#34;</span>
-    <span style=color:#007020;font-weight:700>fi</span>
-<span style=color:#007020;font-weight:700>done</span>
+<span style=color:#66d9ef>for</span> file in <span style=color:#e6db74>&#34;</span>$@<span style=color:#e6db74>&#34;</span>; <span style=color:#66d9ef>do</span>
+    grep foobar <span style=color:#e6db74>&#34;</span>$file<span style=color:#e6db74>&#34;</span> &gt; /dev/null 2&gt; /dev/null
+    <span style=color:#75715e># When pattern is not found, grep has exit status 1</span>
+    <span style=color:#75715e># We redirect STDOUT and STDERR to a null register since we do not care about them</span>
+    <span style=color:#66d9ef>if</span> <span style=color:#f92672>[[</span> $? -ne <span style=color:#ae81ff>0</span> <span style=color:#f92672>]]</span>; <span style=color:#66d9ef>then</span>
+        echo <span style=color:#e6db74>&#34;File </span>$file<span style=color:#e6db74> does not have any foobar, adding one&#34;</span>
+        echo <span style=color:#e6db74>&#34;# foobar&#34;</span> &gt;&gt; <span style=color:#e6db74>&#34;</span>$file<span style=color:#e6db74>&#34;</span>
+    <span style=color:#66d9ef>fi</span>
+<span style=color:#66d9ef>done</span>
 </code></pre></div><ul>
 <li>When performing comparisons in bash, try to use double brackets <code>[[ ]]</code> in favor of simple brackets <code>[ ]</code>. Chances of making mistakes are lower although it won’t be portable to <code>sh</code>. A more detailed explanation can be found <a href=http://mywiki.wooledge.org/BashFAQ/031>here</a>.</li>
 </ul>
@@ -178,12 +180,12 @@ find . -name <span style=color:#4070a0>&#39;*.png&#39;</span> -exec convert <spa
 </ul>
 </li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>convert image.<span style=color:#666>{</span>png,jpg<span style=color:#666>}</span> <span style=color:#60a0b0;font-style:italic># Will expand to: convert image.png image.jpg</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>convert image.<span style=color:#f92672>{</span>png,jpg<span style=color:#f92672>}</span> <span style=color:#75715e># Will expand to: convert image.png image.jpg</span>
 
-cp /path/to/project/<span style=color:#666>{</span>foo,bar,baz<span style=color:#666>}</span>.sh /newpath
-<span style=color:#60a0b0;font-style:italic># Will expand to: cp /path/to/project/foo.sh /path/to/project/bar.sh /path/to/project/baz.sh /newpath</span>
+cp /path/to/project/<span style=color:#f92672>{</span>foo,bar,baz<span style=color:#f92672>}</span>.sh /newpath
+<span style=color:#75715e># Will expand to: cp /path/to/project/foo.sh /path/to/project/bar.sh /path/to/project/baz.sh /newpath</span>
 
-mv *<span style=color:#666>{</span>.py,.sh<span style=color:#666>}</span> folder <span style=color:#60a0b0;font-style:italic># Will move: all *.py and *.sh files</span>
+mv *<span style=color:#f92672>{</span>.py,.sh<span style=color:#f92672>}</span> folder <span style=color:#75715e># Will move: all *.py and *.sh files</span>
 </code></pre></div><h3 id=24-scripts>2.4 scripts</h3>
 <ul>
 <li>Some differences between shell functions and scripts:
@@ -212,6 +214,7 @@ mv *<span style=color:#666>{</span>.py,.sh<span style=color:#666>}</span> folder
 </footer>
 <script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-80H8N7NN50','auto'),ga('send','pageview'))</script>
 <script async src=https://www.google-analytics.com/analytics.js></script>
+<script src=https://lunarwhite.github.iojs/toggle.dark.js></script>
 <script>feather.replace()</script>
 <script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
 </body>

@@ -16,7 +16,8 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel=stylesheet>
-<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.f2d7282a0f5a7f5b27e43ccc9c3448ef92651f88fde45a8bac6c6e2a6ba2d01b.css>
+<link disabled id=dark-mode-theme rel=stylesheet href=https://lunarwhite.github.io/css/dark.80b2eb1f37be2454ead72ba0f2662f3022d939734e00b0909a04541420aa9d6c.css>
 </head>
 <body>
 <div class=content><header>
@@ -28,6 +29,7 @@
 <a href=/posts>Posts</a>
 <a href=/tags>Tags</a>
 <a href=/about>About</a>
+/ <a id=dark-mode-toggle><i data-feather=sun></i></a>
 </nav>
 </header>
 <main>
@@ -37,141 +39,141 @@
 <div class=meta>Posted on Apr 24, 2021</div>
 </div>
 <section class=body>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#60a0b0;font-style:italic># 请用逻辑回归预测xtest对应的y值（梯度下降自己实现）。</span>
-<span style=color:#60a0b0;font-style:italic># 并计算输出 accuracy，precision，recall，auc</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#75715e># 请用逻辑回归预测xtest对应的y值（梯度下降自己实现）。</span>
+<span style=color:#75715e># 并计算输出 accuracy，precision，recall，auc</span>
 
-<span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>numpy</span> <span style=color:#007020;font-weight:700>as</span> <span style=color:#0e84b5;font-weight:700>np</span>
-<span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>matplotlib.pyplot</span> <span style=color:#007020;font-weight:700>as</span> <span style=color:#0e84b5;font-weight:700>plt</span>
-<span style=color:#007020;font-weight:700>from</span> <span style=color:#0e84b5;font-weight:700>sklearn.metrics</span> <span style=color:#007020;font-weight:700>import</span> <span style=color:#666>*</span>
+<span style=color:#f92672>import</span> numpy <span style=color:#66d9ef>as</span> np
+<span style=color:#f92672>import</span> matplotlib.pyplot <span style=color:#66d9ef>as</span> plt
+<span style=color:#f92672>from</span> sklearn.metrics <span style=color:#f92672>import</span> <span style=color:#f92672>*</span>
 
-xtrain <span style=color:#666>=</span> np<span style=color:#666>.</span>array([<span style=color:#40a070>8.</span>, <span style=color:#40a070>3.</span>, <span style=color:#40a070>9.</span>, <span style=color:#40a070>7.</span>, <span style=color:#40a070>16.</span>, <span style=color:#40a070>05.</span>, <span style=color:#40a070>3.</span>, <span style=color:#40a070>10.</span>, <span style=color:#40a070>4.</span>, <span style=color:#40a070>6.</span>])<span style=color:#666>.</span>reshape(<span style=color:#666>-</span><span style=color:#40a070>1</span>, <span style=color:#40a070>1</span>)
-ytrain <span style=color:#666>=</span> np<span style=color:#666>.</span>array([<span style=color:#40a070>0</span>, <span style=color:#40a070>0</span>, <span style=color:#40a070>1</span>, <span style=color:#40a070>0</span>, <span style=color:#40a070>1</span>, <span style=color:#40a070>0</span>, <span style=color:#40a070>0</span>, <span style=color:#40a070>1</span>, <span style=color:#40a070>0</span>, <span style=color:#40a070>0</span>])<span style=color:#666>.</span>reshape(<span style=color:#666>-</span><span style=color:#40a070>1</span>, <span style=color:#40a070>1</span>)
-xtest <span style=color:#666>=</span> np<span style=color:#666>.</span>array([<span style=color:#40a070>5.</span>, <span style=color:#40a070>4.5</span>, <span style=color:#40a070>9.8</span>, <span style=color:#40a070>8.</span>, <span style=color:#40a070>22.</span>, <span style=color:#40a070>17.</span>, <span style=color:#40a070>3.</span>, <span style=color:#40a070>19.</span>, <span style=color:#40a070>20</span>, <span style=color:#40a070>30</span>])<span style=color:#666>.</span>reshape(<span style=color:#666>-</span><span style=color:#40a070>1</span>, <span style=color:#40a070>1</span>)
-ytest <span style=color:#666>=</span> np<span style=color:#666>.</span>array([<span style=color:#40a070>0</span>, <span style=color:#40a070>0</span>, <span style=color:#40a070>0</span>, <span style=color:#40a070>1</span>, <span style=color:#40a070>1</span>, <span style=color:#40a070>1</span>, <span style=color:#40a070>0</span>, <span style=color:#40a070>1</span>, <span style=color:#40a070>1</span>, <span style=color:#40a070>1</span>])<span style=color:#666>.</span>reshape(<span style=color:#666>-</span><span style=color:#40a070>1</span>, <span style=color:#40a070>1</span>)
+xtrain <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>array([<span style=color:#ae81ff>8.</span>, <span style=color:#ae81ff>3.</span>, <span style=color:#ae81ff>9.</span>, <span style=color:#ae81ff>7.</span>, <span style=color:#ae81ff>16.</span>, <span style=color:#ae81ff>05.</span>, <span style=color:#ae81ff>3.</span>, <span style=color:#ae81ff>10.</span>, <span style=color:#ae81ff>4.</span>, <span style=color:#ae81ff>6.</span>])<span style=color:#f92672>.</span>reshape(<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>)
+ytrain <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>array([<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>])<span style=color:#f92672>.</span>reshape(<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>)
+xtest <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>array([<span style=color:#ae81ff>5.</span>, <span style=color:#ae81ff>4.5</span>, <span style=color:#ae81ff>9.8</span>, <span style=color:#ae81ff>8.</span>, <span style=color:#ae81ff>22.</span>, <span style=color:#ae81ff>17.</span>, <span style=color:#ae81ff>3.</span>, <span style=color:#ae81ff>19.</span>, <span style=color:#ae81ff>20</span>, <span style=color:#ae81ff>30</span>])<span style=color:#f92672>.</span>reshape(<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>)
+ytest <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>array([<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>])<span style=color:#f92672>.</span>reshape(<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>)
 
-<span style=color:#60a0b0;font-style:italic># init 超参数</span>
-b <span style=color:#666>=</span> <span style=color:#40a070>5</span>
-w <span style=color:#666>=</span> <span style=color:#40a070>1</span>
-lr <span style=color:#666>=</span> <span style=color:#40a070>0.01</span>
-iteration <span style=color:#666>=</span> <span style=color:#40a070>500</span>
-eps <span style=color:#666>=</span> <span style=color:#40a070>1e-10</span>
+<span style=color:#75715e># init 超参数</span>
+b <span style=color:#f92672>=</span> <span style=color:#ae81ff>5</span>
+w <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>
+lr <span style=color:#f92672>=</span> <span style=color:#ae81ff>0.01</span>
+iteration <span style=color:#f92672>=</span> <span style=color:#ae81ff>500</span>
+eps <span style=color:#f92672>=</span> <span style=color:#ae81ff>1e-10</span>
 
-<span style=color:#60a0b0;font-style:italic># functions</span>
-<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>sigmoid</span>(x):
-    <span style=color:#007020;font-weight:700>return</span> <span style=color:#40a070>1.0</span> <span style=color:#666>/</span> (<span style=color:#40a070>1.0</span> <span style=color:#666>+</span> np<span style=color:#666>.</span>exp(<span style=color:#666>-</span>x))
+<span style=color:#75715e># functions</span>
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>sigmoid</span>(x):
+    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>1.0</span> <span style=color:#f92672>/</span> (<span style=color:#ae81ff>1.0</span> <span style=color:#f92672>+</span> np<span style=color:#f92672>.</span>exp(<span style=color:#f92672>-</span>x))
 
-<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>loss_function</span>(b, w, xdata, ydata):
-    loss <span style=color:#666>=</span> <span style=color:#40a070>0.0</span>
-    <span style=color:#007020;font-weight:700>for</span> i <span style=color:#007020;font-weight:700>in</span> <span style=color:#007020>range</span>(<span style=color:#40a070>0</span>, <span style=color:#007020>len</span>(xdata)):
-        theta <span style=color:#666>=</span> <span style=color:#40a070>0.0</span>
-        theta <span style=color:#666>+=</span> xdata[i, <span style=color:#40a070>0</span>] <span style=color:#666>*</span> b <span style=color:#666>+</span> xdata[i, <span style=color:#40a070>1</span>] <span style=color:#666>*</span> w
-        a <span style=color:#666>=</span> sigmoid(theta)
-        loss <span style=color:#666>+=</span> <span style=color:#666>-</span>ydata[i, <span style=color:#40a070>0</span>] <span style=color:#666>*</span> np<span style=color:#666>.</span>log(a) <span style=color:#666>-</span> (<span style=color:#40a070>1</span> <span style=color:#666>-</span> ydata[i, <span style=color:#40a070>0</span>]) <span style=color:#666>*</span> np<span style=color:#666>.</span>log(<span style=color:#40a070>1</span> <span style=color:#666>-</span> a)
-    <span style=color:#007020;font-weight:700>return</span> loss
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>loss_function</span>(b, w, xdata, ydata):
+    loss <span style=color:#f92672>=</span> <span style=color:#ae81ff>0.0</span>
+    <span style=color:#66d9ef>for</span> i <span style=color:#f92672>in</span> range(<span style=color:#ae81ff>0</span>, len(xdata)):
+        theta <span style=color:#f92672>=</span> <span style=color:#ae81ff>0.0</span>
+        theta <span style=color:#f92672>+=</span> xdata[i, <span style=color:#ae81ff>0</span>] <span style=color:#f92672>*</span> b <span style=color:#f92672>+</span> xdata[i, <span style=color:#ae81ff>1</span>] <span style=color:#f92672>*</span> w
+        a <span style=color:#f92672>=</span> sigmoid(theta)
+        loss <span style=color:#f92672>+=</span> <span style=color:#f92672>-</span>ydata[i, <span style=color:#ae81ff>0</span>] <span style=color:#f92672>*</span> np<span style=color:#f92672>.</span>log(a) <span style=color:#f92672>-</span> (<span style=color:#ae81ff>1</span> <span style=color:#f92672>-</span> ydata[i, <span style=color:#ae81ff>0</span>]) <span style=color:#f92672>*</span> np<span style=color:#f92672>.</span>log(<span style=color:#ae81ff>1</span> <span style=color:#f92672>-</span> a)
+    <span style=color:#66d9ef>return</span> loss
 
-<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>gradient_descent</span>(b, w, xdata, ydata, cache_b_w):
-    xdata <span style=color:#666>=</span> np<span style=color:#666>.</span>mat(xdata)
-    ydata <span style=color:#666>=</span> np<span style=color:#666>.</span>mat(ydata)
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>gradient_descent</span>(b, w, xdata, ydata, cache_b_w):
+    xdata <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>mat(xdata)
+    ydata <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>mat(ydata)
 
-    weights <span style=color:#666>=</span> np<span style=color:#666>.</span>ones((<span style=color:#40a070>2</span>, <span style=color:#40a070>1</span>))
-    weights[<span style=color:#40a070>0</span>, <span style=color:#40a070>0</span>] <span style=color:#666>=</span> b
-    weights[<span style=color:#40a070>1</span>, <span style=color:#40a070>0</span>] <span style=color:#666>=</span> w
-    loss_array <span style=color:#666>=</span> []
+    weights <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>ones((<span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>1</span>))
+    weights[<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>] <span style=color:#f92672>=</span> b
+    weights[<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0</span>] <span style=color:#f92672>=</span> w
+    loss_array <span style=color:#f92672>=</span> []
 
-    <span style=color:#007020;font-weight:700>for</span> item <span style=color:#007020;font-weight:700>in</span> <span style=color:#007020>range</span>(iteration):
-        loss <span style=color:#666>=</span> loss_function(weights[<span style=color:#40a070>0</span>, <span style=color:#40a070>0</span>], weights[<span style=color:#40a070>1</span>, <span style=color:#40a070>0</span>], xdata, ydata)
-        theta <span style=color:#666>=</span> sigmoid(xdata <span style=color:#666>*</span> weights)
-        e <span style=color:#666>=</span> theta <span style=color:#666>-</span> ydata
-        new_weights <span style=color:#666>=</span> weights <span style=color:#666>-</span> lr <span style=color:#666>*</span> xdata<span style=color:#666>.</span>T <span style=color:#666>*</span> e
-        new_loss <span style=color:#666>=</span> loss_function(new_weights[<span style=color:#40a070>0</span>, <span style=color:#40a070>0</span>], new_weights[<span style=color:#40a070>1</span>, <span style=color:#40a070>0</span>], xdata, ydata)
-        loss_array<span style=color:#666>.</span>append(new_loss)
+    <span style=color:#66d9ef>for</span> item <span style=color:#f92672>in</span> range(iteration):
+        loss <span style=color:#f92672>=</span> loss_function(weights[<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>], weights[<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0</span>], xdata, ydata)
+        theta <span style=color:#f92672>=</span> sigmoid(xdata <span style=color:#f92672>*</span> weights)
+        e <span style=color:#f92672>=</span> theta <span style=color:#f92672>-</span> ydata
+        new_weights <span style=color:#f92672>=</span> weights <span style=color:#f92672>-</span> lr <span style=color:#f92672>*</span> xdata<span style=color:#f92672>.</span>T <span style=color:#f92672>*</span> e
+        new_loss <span style=color:#f92672>=</span> loss_function(new_weights[<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>], new_weights[<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0</span>], xdata, ydata)
+        loss_array<span style=color:#f92672>.</span>append(new_loss)
 
-        <span style=color:#007020;font-weight:700>if</span> <span style=color:#007020>abs</span>(new_loss <span style=color:#666>-</span> loss) <span style=color:#666>&lt;</span> eps:
-            <span style=color:#007020;font-weight:700>break</span>
-        <span style=color:#007020;font-weight:700>else</span>:
-            weights <span style=color:#666>=</span> new_weights
-        cache_b_w <span style=color:#666>=</span> np<span style=color:#666>.</span>vstack((cache_b_w, [weights[<span style=color:#40a070>0</span>, <span style=color:#40a070>0</span>], weights[<span style=color:#40a070>1</span>, <span style=color:#40a070>0</span>]]))
+        <span style=color:#66d9ef>if</span> abs(new_loss <span style=color:#f92672>-</span> loss) <span style=color:#f92672>&lt;</span> eps:
+            <span style=color:#66d9ef>break</span>
+        <span style=color:#66d9ef>else</span>:
+            weights <span style=color:#f92672>=</span> new_weights
+        cache_b_w <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>vstack((cache_b_w, [weights[<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>], weights[<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0</span>]]))
 
-    b <span style=color:#666>=</span> weights[<span style=color:#40a070>0</span>, <span style=color:#40a070>0</span>]
-    w <span style=color:#666>=</span> weights[<span style=color:#40a070>1</span>, <span style=color:#40a070>0</span>]
-    <span style=color:#007020;font-weight:700>return</span> b, w, loss_array, cache_b_w
+    b <span style=color:#f92672>=</span> weights[<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>]
+    w <span style=color:#f92672>=</span> weights[<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0</span>]
+    <span style=color:#66d9ef>return</span> b, w, loss_array, cache_b_w
 
-<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>draw_contour</span>(cache_b_w):
-    row <span style=color:#666>=</span> np<span style=color:#666>.</span>linspace(<span style=color:#666>-</span><span style=color:#40a070>12</span>, <span style=color:#40a070>12</span>, <span style=color:#40a070>100</span>)
-    col <span style=color:#666>=</span> np<span style=color:#666>.</span>linspace(<span style=color:#666>-</span><span style=color:#40a070>1.5</span>, <span style=color:#40a070>1.5</span>, <span style=color:#40a070>100</span>)
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>draw_contour</span>(cache_b_w):
+    row <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>linspace(<span style=color:#f92672>-</span><span style=color:#ae81ff>12</span>, <span style=color:#ae81ff>12</span>, <span style=color:#ae81ff>100</span>)
+    col <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>linspace(<span style=color:#f92672>-</span><span style=color:#ae81ff>1.5</span>, <span style=color:#ae81ff>1.5</span>, <span style=color:#ae81ff>100</span>)
 
-    B, W <span style=color:#666>=</span> np<span style=color:#666>.</span>meshgrid(row, col)
-    Z <span style=color:#666>=</span> loss_function(B, W, xtrain, ytrain)
+    B, W <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>meshgrid(row, col)
+    Z <span style=color:#f92672>=</span> loss_function(B, W, xtrain, ytrain)
 
-    plt<span style=color:#666>.</span>figure(<span style=color:#40a070>1</span>)
-    plt<span style=color:#666>.</span>subplot(<span style=color:#40a070>1</span>, <span style=color:#40a070>2</span>, <span style=color:#40a070>2</span>)
-    plt<span style=color:#666>.</span>xlabel(<span style=color:#4070a0>&#39;b&#39;</span>)
-    plt<span style=color:#666>.</span>ylabel(<span style=color:#4070a0>&#39;w&#39;</span>)
-    plt<span style=color:#666>.</span>contourf(B, W, Z, <span style=color:#40a070>50</span>, alpha<span style=color:#666>=</span><span style=color:#40a070>0.9</span>)  <span style=color:#60a0b0;font-style:italic># 填充轮廓</span>
+    plt<span style=color:#f92672>.</span>figure(<span style=color:#ae81ff>1</span>)
+    plt<span style=color:#f92672>.</span>subplot(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>2</span>)
+    plt<span style=color:#f92672>.</span>xlabel(<span style=color:#e6db74>&#39;b&#39;</span>)
+    plt<span style=color:#f92672>.</span>ylabel(<span style=color:#e6db74>&#39;w&#39;</span>)
+    plt<span style=color:#f92672>.</span>contourf(B, W, Z, <span style=color:#ae81ff>50</span>, alpha<span style=color:#f92672>=</span><span style=color:#ae81ff>0.9</span>)  <span style=color:#75715e># 填充轮廓</span>
 
-    cache_b <span style=color:#666>=</span> cache_b_w[:, <span style=color:#40a070>0</span>]
-    cache_w <span style=color:#666>=</span> cache_b_w[:, <span style=color:#40a070>1</span>]
+    cache_b <span style=color:#f92672>=</span> cache_b_w[:, <span style=color:#ae81ff>0</span>]
+    cache_w <span style=color:#f92672>=</span> cache_b_w[:, <span style=color:#ae81ff>1</span>]
 
-    plt<span style=color:#666>.</span>plot(cache_b, cache_w)
-    plt<span style=color:#666>.</span>plot(cache_b, cache_w, <span style=color:#4070a0>&#39;*&#39;</span>)
+    plt<span style=color:#f92672>.</span>plot(cache_b, cache_w)
+    plt<span style=color:#f92672>.</span>plot(cache_b, cache_w, <span style=color:#e6db74>&#39;*&#39;</span>)
 
-<span style=color:#60a0b0;font-style:italic># def draw_scatter():</span>
-<span style=color:#60a0b0;font-style:italic>#     plt.figure(1)</span>
-<span style=color:#60a0b0;font-style:italic>#     plt.subplot(1, 2, 1)</span>
-<span style=color:#60a0b0;font-style:italic>#     plt.xlabel(&#39;x&#39;)</span>
-<span style=color:#60a0b0;font-style:italic>#     plt.ylabel(&#39;y&#39;)</span>
-<span style=color:#60a0b0;font-style:italic>#     # plt.xlim((0, 30))</span>
-<span style=color:#60a0b0;font-style:italic>#     plt.ylim((-1, 2))</span>
-<span style=color:#60a0b0;font-style:italic>#     plt.plot(xtrain2, ytrain, &#39;b.&#39;, label=&#39;train&#39;)</span>
-<span style=color:#60a0b0;font-style:italic>#     plt.plot(xtest, ytest, &#39;r.&#39;, label=&#39;test&#39;)</span>
-<span style=color:#60a0b0;font-style:italic>#     plt.plot(xtrain, w * xtrain + b, &#39;k&#39;)</span>
-<span style=color:#60a0b0;font-style:italic>#     plt.legend()</span>
+<span style=color:#75715e># def draw_scatter():</span>
+<span style=color:#75715e>#     plt.figure(1)</span>
+<span style=color:#75715e>#     plt.subplot(1, 2, 1)</span>
+<span style=color:#75715e>#     plt.xlabel(&#39;x&#39;)</span>
+<span style=color:#75715e>#     plt.ylabel(&#39;y&#39;)</span>
+<span style=color:#75715e>#     # plt.xlim((0, 30))</span>
+<span style=color:#75715e>#     plt.ylim((-1, 2))</span>
+<span style=color:#75715e>#     plt.plot(xtrain2, ytrain, &#39;b.&#39;, label=&#39;train&#39;)</span>
+<span style=color:#75715e>#     plt.plot(xtest, ytest, &#39;r.&#39;, label=&#39;test&#39;)</span>
+<span style=color:#75715e>#     plt.plot(xtrain, w * xtrain + b, &#39;k&#39;)</span>
+<span style=color:#75715e>#     plt.legend()</span>
 
-<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>draw_roc</span>(y_pred, y_test):
-    plt<span style=color:#666>.</span>figure(<span style=color:#40a070>1</span>)
-    plt<span style=color:#666>.</span>subplot(<span style=color:#40a070>1</span>, <span style=color:#40a070>2</span>, <span style=color:#40a070>1</span>)
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>draw_roc</span>(y_pred, y_test):
+    plt<span style=color:#f92672>.</span>figure(<span style=color:#ae81ff>1</span>)
+    plt<span style=color:#f92672>.</span>subplot(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>1</span>)
 
-    y_pred <span style=color:#666>=</span> ([<span style=color:#40a070>0</span>, <span style=color:#40a070>0</span>, <span style=color:#40a070>1</span>, <span style=color:#40a070>0</span>, <span style=color:#40a070>1</span>, <span style=color:#40a070>1</span>, <span style=color:#40a070>0</span>, <span style=color:#40a070>1</span>, <span style=color:#40a070>1</span>, <span style=color:#40a070>1</span>])
-    y_test <span style=color:#666>=</span> ([<span style=color:#40a070>0</span>, <span style=color:#40a070>0</span>, <span style=color:#40a070>0</span>, <span style=color:#40a070>1</span>, <span style=color:#40a070>1</span>, <span style=color:#40a070>1</span>, <span style=color:#40a070>0</span>, <span style=color:#40a070>1</span>, <span style=color:#40a070>1</span>, <span style=color:#40a070>1</span>])
+    y_pred <span style=color:#f92672>=</span> ([<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>])
+    y_test <span style=color:#f92672>=</span> ([<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>])
 
-    fpr, tpr, thersholds <span style=color:#666>=</span> roc_curve(y_test, y_pred)
-    roc_auc <span style=color:#666>=</span> auc(fpr, tpr)
-    plt<span style=color:#666>.</span>plot(fpr, tpr, <span style=color:#4070a0>&#39;k--&#39;</span>, label<span style=color:#666>=</span><span style=color:#4070a0>&#39;Mean ROC (area = </span><span style=color:#70a0d0;font-style:italic>{0:.2f}</span><span style=color:#4070a0>)&#39;</span><span style=color:#666>.</span>format(roc_auc))
-    plt<span style=color:#666>.</span>legend(loc<span style=color:#666>=</span><span style=color:#4070a0>&#34;lower right&#34;</span>)
+    fpr, tpr, thersholds <span style=color:#f92672>=</span> roc_curve(y_test, y_pred)
+    roc_auc <span style=color:#f92672>=</span> auc(fpr, tpr)
+    plt<span style=color:#f92672>.</span>plot(fpr, tpr, <span style=color:#e6db74>&#39;k--&#39;</span>, label<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;Mean ROC (area = </span><span style=color:#e6db74>{0:.2f}</span><span style=color:#e6db74>)&#39;</span><span style=color:#f92672>.</span>format(roc_auc))
+    plt<span style=color:#f92672>.</span>legend(loc<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;lower right&#34;</span>)
 
 
-<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>pred</span>(b_pred, w_pred):
-    ypred <span style=color:#666>=</span> ytrain
-    <span style=color:#007020;font-weight:700>for</span> i <span style=color:#007020;font-weight:700>in</span> <span style=color:#007020>range</span>(<span style=color:#40a070>0</span>, <span style=color:#007020>len</span>(xtest)):
-        <span style=color:#007020;font-weight:700>if</span> (b_pred <span style=color:#666>+</span> xtest[i, <span style=color:#40a070>0</span>] <span style=color:#666>*</span> w_pred) <span style=color:#666>&gt;=</span> <span style=color:#40a070>0</span>:
-            ypred[i, <span style=color:#40a070>0</span>] <span style=color:#666>=</span> <span style=color:#40a070>1</span>
-        <span style=color:#007020;font-weight:700>else</span>:
-            ypred[i, <span style=color:#40a070>0</span>] <span style=color:#666>=</span> <span style=color:#40a070>0</span>
-    <span style=color:#007020;font-weight:700>return</span> ypred
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>pred</span>(b_pred, w_pred):
+    ypred <span style=color:#f92672>=</span> ytrain
+    <span style=color:#66d9ef>for</span> i <span style=color:#f92672>in</span> range(<span style=color:#ae81ff>0</span>, len(xtest)):
+        <span style=color:#66d9ef>if</span> (b_pred <span style=color:#f92672>+</span> xtest[i, <span style=color:#ae81ff>0</span>] <span style=color:#f92672>*</span> w_pred) <span style=color:#f92672>&gt;=</span> <span style=color:#ae81ff>0</span>:
+            ypred[i, <span style=color:#ae81ff>0</span>] <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>
+        <span style=color:#66d9ef>else</span>:
+            ypred[i, <span style=color:#ae81ff>0</span>] <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
+    <span style=color:#66d9ef>return</span> ypred
 
-<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>evaluate_model</span>(y_pred, y_test):
-    <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;accuracy: &#34;</span><span style=color:#666>+</span><span style=color:#007020>str</span>(accuracy_score(y_test, y_pred)))
-    <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;precision: &#34;</span><span style=color:#666>+</span><span style=color:#007020>str</span>(precision_score(y_test, y_pred)))
-    <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;recall: &#34;</span><span style=color:#666>+</span><span style=color:#007020>str</span>(recall_score(y_test, y_pred)))
-    <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;auc: &#34;</span><span style=color:#666>+</span><span style=color:#007020>str</span>(roc_auc_score(y_test, y_pred)))
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>evaluate_model</span>(y_pred, y_test):
+    print(<span style=color:#e6db74>&#34;accuracy: &#34;</span><span style=color:#f92672>+</span>str(accuracy_score(y_test, y_pred)))
+    print(<span style=color:#e6db74>&#34;precision: &#34;</span><span style=color:#f92672>+</span>str(precision_score(y_test, y_pred)))
+    print(<span style=color:#e6db74>&#34;recall: &#34;</span><span style=color:#f92672>+</span>str(recall_score(y_test, y_pred)))
+    print(<span style=color:#e6db74>&#34;auc: &#34;</span><span style=color:#f92672>+</span>str(roc_auc_score(y_test, y_pred)))
 
-<span style=color:#007020;font-weight:700>if</span> __name__ <span style=color:#666>==</span> <span style=color:#4070a0>&#39;__main__&#39;</span>:
-    cache_b_w <span style=color:#666>=</span> [[b, w]]
-    xtrain2 <span style=color:#666>=</span> xtrain
-    xtrain <span style=color:#666>=</span> np<span style=color:#666>.</span>insert(xtrain, <span style=color:#40a070>0</span>, <span style=color:#40a070>1</span>, axis<span style=color:#666>=</span><span style=color:#40a070>1</span>)
+<span style=color:#66d9ef>if</span> __name__ <span style=color:#f92672>==</span> <span style=color:#e6db74>&#39;__main__&#39;</span>:
+    cache_b_w <span style=color:#f92672>=</span> [[b, w]]
+    xtrain2 <span style=color:#f92672>=</span> xtrain
+    xtrain <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>insert(xtrain, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>, axis<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>)
 
-    <span style=color:#60a0b0;font-style:italic># gradient descent</span>
-    b, w, loss_array, cache_b_w <span style=color:#666>=</span> gradient_descent(b, w, xtrain, ytrain, cache_b_w)
+    <span style=color:#75715e># gradient descent</span>
+    b, w, loss_array, cache_b_w <span style=color:#f92672>=</span> gradient_descent(b, w, xtrain, ytrain, cache_b_w)
 
-    <span style=color:#60a0b0;font-style:italic># pred and evaluate model</span>
-    ypred <span style=color:#666>=</span> pred(b, w)
+    <span style=color:#75715e># pred and evaluate model</span>
+    ypred <span style=color:#f92672>=</span> pred(b, w)
     evaluate_model(ypred, ytest)
 
-    <span style=color:#60a0b0;font-style:italic># draw plot</span>
-    plt<span style=color:#666>.</span>figure(figsize<span style=color:#666>=</span>(<span style=color:#40a070>12</span>, <span style=color:#40a070>5</span>))
+    <span style=color:#75715e># draw plot</span>
+    plt<span style=color:#f92672>.</span>figure(figsize<span style=color:#f92672>=</span>(<span style=color:#ae81ff>12</span>, <span style=color:#ae81ff>5</span>))
     draw_contour(cache_b_w)
     draw_roc(ypred, ytest)
-    plt<span style=color:#666>.</span>show()
+    plt<span style=color:#f92672>.</span>show()
 
 </code></pre></div>
 </section>
@@ -191,6 +193,7 @@ eps <span style=color:#666>=</span> <span style=color:#40a070>1e-10</span>
 </footer>
 <script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-80H8N7NN50','auto'),ga('send','pageview'))</script>
 <script async src=https://www.google-analytics.com/analytics.js></script>
+<script src=https://lunarwhite.github.iojs/toggle.dark.js></script>
 <script>feather.replace()</script>
 <script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
 </body>

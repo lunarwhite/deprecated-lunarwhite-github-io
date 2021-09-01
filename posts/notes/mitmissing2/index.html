@@ -16,7 +16,8 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel=stylesheet>
-<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.f2d7282a0f5a7f5b27e43ccc9c3448ef92651f88fde45a8bac6c6e2a6ba2d01b.css>
+<link disabled id=dark-mode-theme rel=stylesheet href=https://lunarwhite.github.io/css/dark.80b2eb1f37be2454ead72ba0f2662f3022d939734e00b0909a04541420aa9d6c.css>
 </head>
 <body>
 <div class=content><header>
@@ -28,6 +29,7 @@
 <a href=/posts>Posts</a>
 <a href=/tags>Tags</a>
 <a href=/about>About</a>
+/ <a id=dark-mode-toggle><i data-feather=sun></i></a>
 </nav>
 </header>
 <main>
@@ -45,30 +47,30 @@
 <li>To wrangle data, we need two things: data to wrangle, and something to do with it. Logs often make for a good use-case, because you often want to investigate things about them, and reading the whole thing isn’t feasible.</li>
 <li>Let’s figure out who’s trying to log into my server by looking at my server’s log:</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>ssh myserver journalctl
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>ssh myserver journalctl
 </code></pre></div><ul>
 <li>That’s far too much stuff. Let’s limit it to ssh stuff:</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>ssh myserver journalctl | grep sshd
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>ssh myserver journalctl | grep sshd
 </code></pre></div><ul>
 <li>This is still way more stuff than we wanted though. And pretty hard to read. Let’s do better:</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>ssh myserver <span style=color:#4070a0>&#39;journalctl | grep sshd | grep &#34;Disconnected from&#34;&#39;</span> | less
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>ssh myserver <span style=color:#e6db74>&#39;journalctl | grep sshd | grep &#34;Disconnected from&#34;&#39;</span> | less
 </code></pre></div><ul>
 <li>Well, our logs may be quite large, and it’s wasteful to stream it all to our computer and then do the filtering. Instead, we can do the filtering on the remote server, and then massage the data locally. <code>less</code> gives us a “pager” that allows us to scroll up and down through the long output.</li>
 <li>To save some additional traffic while we debug our command-line, we can even stick the current filtered logs into a file so that we don’t have to access the network while developing:</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>ssh myserver <span style=color:#4070a0>&#39;journalctl | grep sshd | grep &#34;Disconnected from&#34;&#39;</span> &gt; ssh.log
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>ssh myserver <span style=color:#e6db74>&#39;journalctl | grep sshd | grep &#34;Disconnected from&#34;&#39;</span> &gt; ssh.log
 less ssh.log
 </code></pre></div><ul>
 <li>There’s still a lot of noise here. There are <em>a lot</em> of ways to get rid of that, but let’s look at one of the most powerful tools in your toolkit: <code>sed</code>.</li>
 <li><code>sed</code> is a “stream editor” that builds on top of the old <code>ed</code> editor. In it, you basically give short commands for how to modify the file, rather than manipulate its contents directly (although you can do that too).</li>
 <li>There are tons of commands, but one of the most common ones is <code>s</code>: substitution. For example, we can write:</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>ssh myserver journalctl
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>ssh myserver journalctl
  | grep sshd
- | grep <span style=color:#4070a0>&#34;Disconnected from&#34;</span>
- | sed <span style=color:#4070a0>&#39;s/.*Disconnected from //&#39;</span>
+ | grep <span style=color:#e6db74>&#34;Disconnected from&#34;</span>
+ | sed <span style=color:#e6db74>&#39;s/.*Disconnected from //&#39;</span>
 </code></pre></div><ul>
 <li>What we just wrote was a simple <em>regular expression</em>; a powerful construct that lets you match text against patterns. The <code>s</code> command is written on the form: <code>s/REGEX/SUBSTITUTION/</code>, where <code>REGEX</code> is the regular expression you want to search for, and <code>SUBSTITUTION</code> is the text you want to substitute matching text with.</li>
 </ul>
@@ -93,19 +95,19 @@ less ssh.log
 <ul>
 <li>What we have now gives us a list of all the usernames that have attempted to log in. But this is pretty unhelpful. Let’s look for common ones:</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>ssh myserver journalctl
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>ssh myserver journalctl
  | grep sshd
- | grep <span style=color:#4070a0>&#34;Disconnected from&#34;</span>
- | sed -E <span style=color:#4070a0>&#39;s/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/&#39;</span>
+ | grep <span style=color:#e6db74>&#34;Disconnected from&#34;</span>
+ | sed -E <span style=color:#e6db74>&#39;s/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/&#39;</span>
  | sort | uniq -c
 </code></pre></div><ul>
 <li><code>sort</code> will, well, sort its input. <code>uniq -c</code> will collapse consecutive lines that are the same into a single line, prefixed with a count of the number of occurrences.</li>
 <li>We probably want to sort that too and only keep the most common usernames:</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>ssh myserver journalctl
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>ssh myserver journalctl
  | grep sshd
- | grep <span style=color:#4070a0>&#34;Disconnected from&#34;</span>
- | sed -E <span style=color:#4070a0>&#39;s/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/&#39;</span>
+ | grep <span style=color:#e6db74>&#34;Disconnected from&#34;</span>
+ | sed -E <span style=color:#e6db74>&#39;s/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/&#39;</span>
  | sort | uniq -c
  | sort -nk1,1 | tail -n10
 </code></pre></div><ul>
@@ -129,6 +131,7 @@ less ssh.log
 </footer>
 <script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-80H8N7NN50','auto'),ga('send','pageview'))</script>
 <script async src=https://www.google-analytics.com/analytics.js></script>
+<script src=https://lunarwhite.github.iojs/toggle.dark.js></script>
 <script>feather.replace()</script>
 <script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
 </body>

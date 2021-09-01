@@ -16,7 +16,8 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel=stylesheet>
-<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.f2d7282a0f5a7f5b27e43ccc9c3448ef92651f88fde45a8bac6c6e2a6ba2d01b.css>
+<link disabled id=dark-mode-theme rel=stylesheet href=https://lunarwhite.github.io/css/dark.80b2eb1f37be2454ead72ba0f2662f3022d939734e00b0909a04541420aa9d6c.css>
 </head>
 <body>
 <div class=content><header>
@@ -28,6 +29,7 @@
 <a href=/posts>Posts</a>
 <a href=/tags>Tags</a>
 <a href=/about>About</a>
+/ <a id=dark-mode-toggle><i data-feather=sun></i></a>
 </nav>
 </header>
 <main>
@@ -54,11 +56,11 @@
 </li>
 </ul>
 <h1 id=环境部署>环境部署</h1>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>set-executionpolicy remotesigned -scope currentuser
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>set-executionpolicy remotesigned -scope currentuser
 
-iex <span style=color:#666>(</span>new-object net.webclient<span style=color:#666>)</span>.downloadstring<span style=color:#666>(</span><span style=color:#4070a0>&#39;https://raw.githubusercontent.com/lukesampson/scoop/master/bin/install.ps1&#39;</span><span style=color:#666>)</span>
+iex <span style=color:#f92672>(</span>new-object net.webclient<span style=color:#f92672>)</span>.downloadstring<span style=color:#f92672>(</span><span style=color:#e6db74>&#39;https://raw.githubusercontent.com/lukesampson/scoop/master/bin/install.ps1&#39;</span><span style=color:#f92672>)</span>
 
-<span style=color:#60a0b0;font-style:italic># basic</span>
+<span style=color:#75715e># basic</span>
 scoop install 7zip
 scoop install git
 scoop install sudo
@@ -79,73 +81,73 @@ scoop checkup
 <p>软件仓库</p>
 </li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic># 添加第三方库</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># 添加第三方库</span>
 scoop bucket add &lt;bucket&gt; &lt;bucket_url&gt;
 
-<span style=color:#60a0b0;font-style:italic># 添加库</span>
+<span style=color:#75715e># 添加库</span>
 scoop bucket add extras
 scoop bucket add versions
 scoop bucket add java
 </code></pre></div><ul>
 <li>日常</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic># 系统</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># 系统</span>
 scoop install geekuninstaller
 scoop install dismplusplus
 scoop install listary
 scoop install everything
 scoop install motrix
 
-<span style=color:#60a0b0;font-style:italic># 网络</span>
+<span style=color:#75715e># 网络</span>
 scoop install switchhosts
 scoop install psiphon3
 
-<span style=color:#60a0b0;font-style:italic># 日常</span>
+<span style=color:#75715e># 日常</span>
 scoop install chromium
 scoop install hugo-extended
 
-<span style=color:#60a0b0;font-style:italic># 图影</span>
+<span style=color:#75715e># 图影</span>
 scoop install ditto
 scoop install wpsoffice
-scoop install lightshot  <span style=color:#60a0b0;font-style:italic># CTRL+shift+S</span>
+scoop install lightshot  <span style=color:#75715e># CTRL+shift+S</span>
 scoop install imageglass
 scoop install mpv
 </code></pre></div><ul>
 <li>开发</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic>#命令行</span>
-scoop install windows-terminal	<span style=color:#60a0b0;font-style:italic># admin</span>
-scoop install mobaxterm	<span style=color:#60a0b0;font-style:italic># admin, icon</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e>#命令行</span>
+scoop install windows-terminal	<span style=color:#75715e># admin</span>
+scoop install mobaxterm	<span style=color:#75715e># admin, icon</span>
 
-<span style=color:#60a0b0;font-style:italic># 编辑器 / IDE</span>
-scoop install typora	<span style=color:#60a0b0;font-style:italic># theme: github, night, monokai, misty, purple, fluent, drake</span>
+<span style=color:#75715e># 编辑器 / IDE</span>
+scoop install typora	<span style=color:#75715e># theme: github, night, monokai, misty, purple, fluent, drake</span>
 scoop install vscode
 scoop install jetbrains-toolbox
 
 --------------------------
-<span style=color:#60a0b0;font-style:italic># 环境-文本图像</span>
+<span style=color:#75715e># 环境-文本图像</span>
 scoop install pandoc
 scoop install graphviz
 
-<span style=color:#60a0b0;font-style:italic># 环境-数据库</span>
+<span style=color:#75715e># 环境-数据库</span>
 scoop install mysql
 
-<span style=color:#60a0b0;font-style:italic># 环境-C/C++</span>
+<span style=color:#75715e># 环境-C/C++</span>
 scoop install gcc
 scoop install gdb
 
-<span style=color:#60a0b0;font-style:italic># 环境-Java</span>
+<span style=color:#75715e># 环境-Java</span>
 scoop install openjdk8-redhat
 
-<span style=color:#60a0b0;font-style:italic># 环境-Python</span>
+<span style=color:#75715e># 环境-Python</span>
 scoop install miniconda3
 
-<span style=color:#60a0b0;font-style:italic># 环境-front</span>
+<span style=color:#75715e># 环境-front</span>
 scoop install nodejs-lts
 </code></pre></div><ul>
 <li>备用</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>scoop install kms
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>scoop install kms
 scoop install quicklook
 scoop install autohotkey
 
@@ -161,7 +163,7 @@ scoop install rambox
 scoop install telegram
 scoop install slack
 
-scoop install hyper	<span style=color:#60a0b0;font-style:italic># admin</span>
+scoop install hyper	<span style=color:#75715e># admin</span>
 scoop install vscode-insider
 
 scoop install latex
@@ -173,34 +175,34 @@ scoop install redis
 scoop install maven
 scoop install go
 </code></pre></div><h1 id=常用命令>常用命令</h1>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic># 查看已安装程序</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># 查看已安装程序</span>
 scoop list
-<span style=color:#60a0b0;font-style:italic># 查看已经添加的库</span>
+<span style=color:#75715e># 查看已经添加的库</span>
 scoop bucket list
-<span style=color:#60a0b0;font-style:italic># 查看其他库</span>
+<span style=color:#75715e># 查看其他库</span>
 scoop bucket known
-<span style=color:#60a0b0;font-style:italic># 移除已经添加的库</span>
+<span style=color:#75715e># 移除已经添加的库</span>
 scoop bucket rm nerd
 
-<span style=color:#60a0b0;font-style:italic># 查找软件</span>
+<span style=color:#75715e># 查找软件</span>
 scoop search &lt;app&gt;
-<span style=color:#60a0b0;font-style:italic># 显示软件信息（含必要配置说明）</span>
+<span style=color:#75715e># 显示软件信息（含必要配置说明）</span>
 scoop info &lt;app&gt;
 
-<span style=color:#60a0b0;font-style:italic># 查看更新</span>
+<span style=color:#75715e># 查看更新</span>
 scoop status
-<span style=color:#60a0b0;font-style:italic># 自身诊断</span>
+<span style=color:#75715e># 自身诊断</span>
 scoop checkup
-<span style=color:#60a0b0;font-style:italic># 更新scoop, 更新指定软件</span>
+<span style=color:#75715e># 更新scoop, 更新指定软件</span>
 scoop update *
 
-<span style=color:#60a0b0;font-style:italic># 卸载程序并移除所有配置文件</span>
+<span style=color:#75715e># 卸载程序并移除所有配置文件</span>
 scoop uninstall &lt;app&gt; -p
-<span style=color:#60a0b0;font-style:italic># 删除所有缓存</span>
+<span style=color:#75715e># 删除所有缓存</span>
 scoop cache rm *
 scoop cleanup *
 
-<span style=color:#60a0b0;font-style:italic># 卸载 Scoop</span>
+<span style=color:#75715e># 卸载 Scoop</span>
 scoop uninstall scoop
 </code></pre></div>
 </section>
@@ -220,6 +222,7 @@ scoop uninstall scoop
 </footer>
 <script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-80H8N7NN50','auto'),ga('send','pageview'))</script>
 <script async src=https://www.google-analytics.com/analytics.js></script>
+<script src=https://lunarwhite.github.iojs/toggle.dark.js></script>
 <script>feather.replace()</script>
 <script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
 </body>

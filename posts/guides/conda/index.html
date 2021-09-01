@@ -16,7 +16,8 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel=stylesheet>
-<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.f2d7282a0f5a7f5b27e43ccc9c3448ef92651f88fde45a8bac6c6e2a6ba2d01b.css>
+<link disabled id=dark-mode-theme rel=stylesheet href=https://lunarwhite.github.io/css/dark.80b2eb1f37be2454ead72ba0f2662f3022d939734e00b0909a04541420aa9d6c.css>
 </head>
 <body>
 <div class=content><header>
@@ -28,6 +29,7 @@
 <a href=/posts>Posts</a>
 <a href=/tags>Tags</a>
 <a href=/about>About</a>
+/ <a id=dark-mode-toggle><i data-feather=sun></i></a>
 </nav>
 </header>
 <main>
@@ -39,31 +41,31 @@
 <section class=body>
 <h2 id=1-基本环境>1 基本环境</h2>
 <h3 id=11-检查pip>1.1 检查pip</h3>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>python -m ensurepip
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>python -m ensurepip
 python -m pip install --upgrade pip
 </code></pre></div><h3 id=12-换镜像源>1.2 换镜像源</h3>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2
 conda config --set show_channel_urls yes
 </code></pre></div><h3 id=13-其他常用>1.3 其他常用</h3>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic># 创建环境</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># 创建环境</span>
 conda create --name &lt;env_name&gt; &lt;package_names&gt;
 
-<span style=color:#60a0b0;font-style:italic># 切换环境</span>
+<span style=color:#75715e># 切换环境</span>
 activate &lt;env_name&gt;
 deactivate &lt;env_name&gt;
 
-<span style=color:#60a0b0;font-style:italic># 显示已安</span>
+<span style=color:#75715e># 显示已安</span>
 conda info --envs
 
-<span style=color:#60a0b0;font-style:italic># 复制，后删除</span>
+<span style=color:#75715e># 复制，后删除</span>
 conda create --name &lt;new_env_name&gt; --clone &lt;copied_env_name&gt;
 conda remove --name &lt;env_name&gt; --all
 </code></pre></div><h2 id=2-常用包库>2 常用包库</h2>
 <h3 id=21-工具包>2.1 工具包</h3>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>pip3 install numpy
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>pip3 install numpy
 pip3 install opencv-python
 
 pip3 install matplotlib
@@ -73,18 +75,18 @@ pip3 install jupyter
 
 pip3 install scikit-learn
 </code></pre></div><h3 id=22-keras框架>2.2 keras框架</h3>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>conda create -n &lt;env_name&gt; <span style=color:#bb60d5>python</span><span style=color:#666>=</span>3.7 -i https://pypi.doubanio.com/simple
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>conda create -n &lt;env_name&gt; python<span style=color:#f92672>=</span>3.7 -i https://pypi.doubanio.com/simple
 
 conda activate &lt;env_name&gt;
 
-pip install <span style=color:#bb60d5>tensorflow</span><span style=color:#666>==</span>2.2 -i https://pypi.doubanio.com/simple
+pip install tensorflow<span style=color:#f92672>==</span>2.2 -i https://pypi.doubanio.com/simple
 
-pip3 install <span style=color:#bb60d5>keras</span><span style=color:#666>==</span>2.3.1 -i https://pypi.douban.com/simple
+pip3 install keras<span style=color:#f92672>==</span>2.3.1 -i https://pypi.douban.com/simple
 import keras
 
 conda deactivate &lt;env_name&gt;
 </code></pre></div><h3 id=23-keras可视化>2.3 keras可视化</h3>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>pip3 install pydot
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>pip3 install pydot
 pip3 install pydot_ng
 pip3 install graphviz
 </code></pre></div>
@@ -106,6 +108,7 @@ pip3 install graphviz
 </footer>
 <script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-80H8N7NN50','auto'),ga('send','pageview'))</script>
 <script async src=https://www.google-analytics.com/analytics.js></script>
+<script src=https://lunarwhite.github.iojs/toggle.dark.js></script>
 <script>feather.replace()</script>
 <script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
 </body>

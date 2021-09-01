@@ -16,7 +16,8 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel=stylesheet>
-<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.f2d7282a0f5a7f5b27e43ccc9c3448ef92651f88fde45a8bac6c6e2a6ba2d01b.css>
+<link disabled id=dark-mode-theme rel=stylesheet href=https://lunarwhite.github.io/css/dark.80b2eb1f37be2454ead72ba0f2662f3022d939734e00b0909a04541420aa9d6c.css>
 </head>
 <body>
 <div class=content><header>
@@ -28,6 +29,7 @@
 <a href=/posts>Posts</a>
 <a href=/tags>Tags</a>
 <a href=/about>About</a>
+/ <a id=dark-mode-toggle><i data-feather=sun></i></a>
 </nav>
 </header>
 <main>
@@ -50,39 +52,39 @@
 <li>It can become tiresome typing long commands that involve many flags or verbose options. For this reason, most shells support <em>aliasing</em>.</li>
 <li>A shell alias is a short form for another command that your shell will replace automatically for you. For instance, an alias in bash has the following structure:</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#007020>alias</span> <span style=color:#bb60d5>alias_name</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;command_to_alias arg1 arg2&#34;</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>alias alias_name<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;command_to_alias arg1 arg2&#34;</span>
 </code></pre></div><ul>
 <li>Note that there is no space around the equal sign <code>=</code>, because <a href=https://www.man7.org/linux/man-pages/man1/alias.1p.html><code>alias</code></a> is a shell command that takes a single argument.</li>
 <li>Aliases have many convenient features:</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic># Make shorthands for common flags</span>
-<span style=color:#007020>alias</span> <span style=color:#bb60d5>ll</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;ls -lh&#34;</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># Make shorthands for common flags</span>
+alias ll<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;ls -lh&#34;</span>
 
-<span style=color:#60a0b0;font-style:italic># Save a lot of typing for common commands</span>
-<span style=color:#007020>alias</span> <span style=color:#bb60d5>gs</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;git status&#34;</span>
-<span style=color:#007020>alias</span> <span style=color:#bb60d5>gc</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;git commit&#34;</span>
-<span style=color:#007020>alias</span> <span style=color:#bb60d5>v</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;vim&#34;</span>
+<span style=color:#75715e># Save a lot of typing for common commands</span>
+alias gs<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;git status&#34;</span>
+alias gc<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;git commit&#34;</span>
+alias v<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;vim&#34;</span>
 
-<span style=color:#60a0b0;font-style:italic># Save you from mistyping</span>
-<span style=color:#007020>alias</span> <span style=color:#bb60d5>sl</span><span style=color:#666>=</span>ls
+<span style=color:#75715e># Save you from mistyping</span>
+alias sl<span style=color:#f92672>=</span>ls
 
-<span style=color:#60a0b0;font-style:italic># Overwrite existing commands for better defaults</span>
-<span style=color:#007020>alias</span> <span style=color:#bb60d5>mv</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;mv -i&#34;</span>           <span style=color:#60a0b0;font-style:italic># -i prompts before overwrite</span>
-<span style=color:#007020>alias</span> <span style=color:#bb60d5>mkdir</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;mkdir -p&#34;</span>     <span style=color:#60a0b0;font-style:italic># -p make parent dirs as needed</span>
-<span style=color:#007020>alias</span> <span style=color:#bb60d5>df</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;df -h&#34;</span>           <span style=color:#60a0b0;font-style:italic># -h prints human readable format</span>
+<span style=color:#75715e># Overwrite existing commands for better defaults</span>
+alias mv<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;mv -i&#34;</span>           <span style=color:#75715e># -i prompts before overwrite</span>
+alias mkdir<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;mkdir -p&#34;</span>     <span style=color:#75715e># -p make parent dirs as needed</span>
+alias df<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;df -h&#34;</span>           <span style=color:#75715e># -h prints human readable format</span>
 
-<span style=color:#60a0b0;font-style:italic># Alias can be composed</span>
-<span style=color:#007020>alias</span> <span style=color:#bb60d5>la</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;ls -A&#34;</span>
-<span style=color:#007020>alias</span> <span style=color:#bb60d5>lla</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;la -l&#34;</span>
+<span style=color:#75715e># Alias can be composed</span>
+alias la<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;ls -A&#34;</span>
+alias lla<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;la -l&#34;</span>
 
-<span style=color:#60a0b0;font-style:italic># To ignore an alias run it prepended with \</span>
-<span style=color:#4070a0;font-weight:700>\l</span>s
-<span style=color:#60a0b0;font-style:italic># Or disable an alias altogether with unalias</span>
-<span style=color:#007020>unalias</span> la
+<span style=color:#75715e># To ignore an alias run it prepended with \</span>
+<span style=color:#ae81ff>\l</span>s
+<span style=color:#75715e># Or disable an alias altogether with unalias</span>
+unalias la
 
-<span style=color:#60a0b0;font-style:italic># To get an alias definition just call it with alias</span>
-<span style=color:#007020>alias</span> ll
-<span style=color:#60a0b0;font-style:italic># Will print ll=&#39;ls -lh&#39;</span>
+<span style=color:#75715e># To get an alias definition just call it with alias</span>
+alias ll
+<span style=color:#75715e># Will print ll=&#39;ls -lh&#39;</span>
 </code></pre></div><ul>
 <li>Note that aliases do not persist shell sessions by default. To make an alias persistent you need to include it in shell startup files, like <code>.bashrc</code> or <code>.zshrc</code>.</li>
 </ul>
@@ -107,7 +109,7 @@
 <li>If you need to use remote servers in order to deploy backend software or you need a server with higher computational capabilities, you will end up using a Secure Shell (SSH).</li>
 <li>To <code>ssh</code> into a server you execute a command as follows</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>ssh foo@bar.mit.edu
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>ssh foo@bar.mit.edu
 </code></pre></div><h3 id=352-executing-commands>3.5.2 executing commands</h3>
 <ul>
 <li>An often overlooked feature of <code>ssh</code> is the ability to run commands directly. <code>ssh foobar@server ls</code> will execute <code>ls</code> in the home folder of foobar.</li>
@@ -122,7 +124,7 @@
 <ul>
 <li>To generate a pair you can run <a href=https://www.man7.org/linux/man-pages/man1/ssh-keygen.1.html><code>ssh-keygen</code></a>.</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>ssh-keygen -o -a <span style=color:#40a070>100</span> -t ed25519 -f ~/.ssh/id_ed25519
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>ssh-keygen -o -a <span style=color:#ae81ff>100</span> -t ed25519 -f ~/.ssh/id_ed25519
 </code></pre></div><ul>
 <li>You should choose a passphrase, to avoid someone who gets hold of your private key to access authorized servers. Use <a href=https://www.man7.org/linux/man-pages/man1/ssh-agent.1.html><code>ssh-agent</code></a> or <a href=https://linux.die.net/man/1/gpg-agent><code>gpg-agent</code></a> so you do not have to type your passphrase every time.</li>
 <li>To check if you have a passphrase and validate it you can run <code>ssh-keygen -y -f /path/to/key</code>.</li>
@@ -147,11 +149,11 @@
 <ul>
 <li>We have covered many many arguments that we can pass. A tempting alternative is to create shell aliases that look like</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#007020>alias</span> <span style=color:#bb60d5>my_server</span><span style=color:#666>=</span><span style=color:#4070a0>&#34;ssh -i ~/.id_ed25519 --port 2222 -L 9999:localhost:8888 foobar@remote_server
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>alias my_server<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;ssh -i ~/.id_ed25519 --port 2222 -L 9999:localhost:8888 foobar@remote_server
 </span></code></pre></div><ul>
 <li>However, there is a better alternative using <code>~/.ssh/config</code>.</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>Host vm
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>Host vm
     User foobar
     HostName 172.16.174.141
     Port 2222
@@ -183,6 +185,7 @@ Host *.mit.edu
 </footer>
 <script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-80H8N7NN50','auto'),ga('send','pageview'))</script>
 <script async src=https://www.google-analytics.com/analytics.js></script>
+<script src=https://lunarwhite.github.iojs/toggle.dark.js></script>
 <script>feather.replace()</script>
 <script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
 </body>

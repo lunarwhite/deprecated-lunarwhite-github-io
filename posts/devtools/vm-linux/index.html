@@ -16,7 +16,8 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel=stylesheet>
-<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.f2d7282a0f5a7f5b27e43ccc9c3448ef92651f88fde45a8bac6c6e2a6ba2d01b.css>
+<link disabled id=dark-mode-theme rel=stylesheet href=https://lunarwhite.github.io/css/dark.80b2eb1f37be2454ead72ba0f2662f3022d939734e00b0909a04541420aa9d6c.css>
 </head>
 <body>
 <div class=content><header>
@@ -28,6 +29,7 @@
 <a href=/posts>Posts</a>
 <a href=/tags>Tags</a>
 <a href=/about>About</a>
+/ <a id=dark-mode-toggle><i data-feather=sun></i></a>
 </nav>
 </header>
 <main>
@@ -49,19 +51,19 @@
 </li>
 <li>安装VMTool</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic># extract here</span>
-<span style=color:#60a0b0;font-style:italic># open in terminal</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># extract here</span>
+<span style=color:#75715e># open in terminal</span>
 
-<span style=color:#60a0b0;font-style:italic># root</span>
+<span style=color:#75715e># root</span>
 sudo su
 
-<span style=color:#60a0b0;font-style:italic># install</span>
+<span style=color:#75715e># install</span>
 ./vmware-install.pl
 </code></pre></div><ul>
 <li>设置</li>
 </ul>
 <h2 id=2-卸载预装>2 卸载预装</h2>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic># 卸载</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># 卸载</span>
 dpkg -l | grep gnome
 sudo apt-get remove --purge -y gnome-bluetooth
 sudo apt-get remove --purge -y gnome-calculator
@@ -79,85 +81,85 @@ dpkg -l | grep firefox
 sudo apt-get remove --purge -y firefox
 sudo apt-get remove --purge -y firefox-locale-en
 </code></pre></div><h2 id=3-清理空间>3 清理空间</h2>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic># 删除系统不再使用的孤立软件</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># 删除系统不再使用的孤立软件</span>
 sudo apt-get autoremove  --purge
 
-<span style=color:#60a0b0;font-style:italic># 清理旧版本的软件缓存</span>
+<span style=color:#75715e># 清理旧版本的软件缓存</span>
 sudo apt-get autoclean
 
-<span style=color:#60a0b0;font-style:italic># 清理所有软件缓存</span>
+<span style=color:#75715e># 清理所有软件缓存</span>
 sudo apt-get clean
 
-<span style=color:#60a0b0;font-style:italic># 清理缩略图缓存</span>
+<span style=color:#75715e># 清理缩略图缓存</span>
 rm -rf ~/.cache/thumbnails/*
 </code></pre></div><h2 id=4-换源>4 换源</h2>
 <ul>
 <li><a href=https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/>Ubuntu-TUNA</a></li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic># into file</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># into file</span>
 sudo gedit /etc/apt/sources.list
 
-<span style=color:#60a0b0;font-style:italic># update software info</span>
+<span style=color:#75715e># update software info</span>
 sudo apt update
 
-<span style=color:#60a0b0;font-style:italic># upgrade softwore</span>
+<span style=color:#75715e># upgrade softwore</span>
 sudo apt upgrade
 </code></pre></div><h2 id=5-ssh安装>5 ssh安装</h2>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic># 安装openssh</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># 安装openssh</span>
 sudo apt install openssh-server
 
-<span style=color:#60a0b0;font-style:italic># 验证 SSH 是否正在运行</span>
+<span style=color:#75715e># 验证 SSH 是否正在运行</span>
 sudo systemctl status ssh
 
-<span style=color:#60a0b0;font-style:italic># 确保打开了 SSH 端口</span>
+<span style=color:#75715e># 确保打开了 SSH 端口</span>
 sudo ufw allow ssh
 
-<span style=color:#60a0b0;font-style:italic># 查看 ip</span>
+<span style=color:#75715e># 查看 ip</span>
 ip a
 
-<span style=color:#60a0b0;font-style:italic># start sshd</span>
+<span style=color:#75715e># start sshd</span>
 service ssh start
 sudo /etc/init.d/ssh start
 
-<span style=color:#60a0b0;font-style:italic># restart sshd</span>
+<span style=color:#75715e># restart sshd</span>
 sudo service ssh restart
 
-<span style=color:#60a0b0;font-style:italic># check</span>
+<span style=color:#75715e># check</span>
 ps -e | grep ssh
 
-<span style=color:#60a0b0;font-style:italic># 在host terminal连接</span>
+<span style=color:#75715e># 在host terminal连接</span>
 ssh vmlnx@192.168.164.131
 </code></pre></div><h2 id=6-ssh连接>6 ssh连接</h2>
 <ul>
 <li><a href=https://zhuanlan.zhihu.com/p/339012691>https://zhuanlan.zhihu.com/p/339012691</a></li>
 </ul>
 <h2 id=7-ssh测试>7 ssh测试</h2>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo apt-get install python3.6
-<span style=color:#007020>cd</span>  Desktop/
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo apt-get install python3.6
+cd  Desktop/
 nano machine_info.py
 
 import platform
-print<span style=color:#666>(</span><span style=color:#4070a0>&#34;This is&#34;</span>, platform.system<span style=color:#666>())</span>
+print<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;This is&#34;</span>, platform.system<span style=color:#f92672>())</span>
 
 python3 machine_info.py
 </code></pre></div><h2 id=8-其他安装>8 其他安装</h2>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic># tweak-tools</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># tweak-tools</span>
 sudo apt install gnome-tweaks
 
-<span style=color:#60a0b0;font-style:italic># chromium</span>
+<span style=color:#75715e># chromium</span>
 sudo apt install chromium-browser
 
-<span style=color:#60a0b0;font-style:italic># vscodium</span>
-wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg | gpg --dearmor | sudo dd <span style=color:#bb60d5>of</span><span style=color:#666>=</span>/etc/apt/trusted.gpg.d/vscodium.gpg
+<span style=color:#75715e># vscodium</span>
+wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg | gpg --dearmor | sudo dd of<span style=color:#f92672>=</span>/etc/apt/trusted.gpg.d/vscodium.gpg
 
-<span style=color:#007020>echo</span> <span style=color:#4070a0>&#39;deb https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/debs/ vscodium main&#39;</span> | sudo tee --append /etc/apt/sources.list.d/vscodium.list
+echo <span style=color:#e6db74>&#39;deb https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/debs/ vscodium main&#39;</span> | sudo tee --append /etc/apt/sources.list.d/vscodium.list
 
-sudo apt update <span style=color:#666>&amp;&amp;</span> sudo apt install codium
+sudo apt update <span style=color:#f92672>&amp;&amp;</span> sudo apt install codium
 </code></pre></div><ul>
 <li>参考：<a href=https://vscodium.com/>vscodium</a> and <a href=https://www.chromium.org/>chromium</a></li>
 </ul>
 <h2 id=9-其他命令>9 其他命令</h2>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#60a0b0;font-style:italic># 关机</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># 关机</span>
 sudo shutdown -h now
 </code></pre></div>
 </section>
@@ -178,6 +180,7 @@ sudo shutdown -h now
 </footer>
 <script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-80H8N7NN50','auto'),ga('send','pageview'))</script>
 <script async src=https://www.google-analytics.com/analytics.js></script>
+<script src=https://lunarwhite.github.iojs/toggle.dark.js></script>
 <script>feather.replace()</script>
 <script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
 </body>

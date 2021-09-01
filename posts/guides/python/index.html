@@ -16,7 +16,8 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel=stylesheet>
-<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.f2d7282a0f5a7f5b27e43ccc9c3448ef92651f88fde45a8bac6c6e2a6ba2d01b.css>
+<link disabled id=dark-mode-theme rel=stylesheet href=https://lunarwhite.github.io/css/dark.80b2eb1f37be2454ead72ba0f2662f3022d939734e00b0909a04541420aa9d6c.css>
 </head>
 <body>
 <div class=content><header>
@@ -28,6 +29,7 @@
 <a href=/posts>Posts</a>
 <a href=/tags>Tags</a>
 <a href=/about>About</a>
+/ <a id=dark-mode-toggle><i data-feather=sun></i></a>
 </nav>
 </header>
 <main>
@@ -68,40 +70,40 @@
 </ul>
 <h2 id=3-判断与循环>3 判断与循环</h2>
 <h3 id=31-if>3.1 if</h3>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python>hungry<span style=color:#666>=</span><span style=color:#007020;font-weight:700>False</span>
-<span style=color:#007020;font-weight:700>if</span> hungry:
-<span style=color:#666>...</span>     <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;I&#39;m hungry&#34;</span>) <span style=color:#60a0b0;font-style:italic># 需要4个空格缩进4个字符</span>
-<span style=color:#666>...</span> <span style=color:#007020;font-weight:700>else</span>:
-<span style=color:#666>...</span>     <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;I&#39;m not  hungry&#34;</span>)
-<span style=color:#666>...</span>
-<span style=color:#60a0b0;font-style:italic># 输出</span>
-I<span>’</span>m <span style=color:#007020;font-weight:700>not</span> hungry
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python>hungry<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>
+<span style=color:#66d9ef>if</span> hungry:
+<span style=color:#f92672>...</span>     print(<span style=color:#e6db74>&#34;I&#39;m hungry&#34;</span>) <span style=color:#75715e># 需要4个空格缩进4个字符</span>
+<span style=color:#f92672>...</span> <span style=color:#66d9ef>else</span>:
+<span style=color:#f92672>...</span>     print(<span style=color:#e6db74>&#34;I&#39;m not  hungry&#34;</span>)
+<span style=color:#f92672>...</span>
+<span style=color:#75715e># 输出</span>
+I<span style=color:#960050;background-color:#1e0010>’</span>m <span style=color:#f92672>not</span> hungry
 </code></pre></div><h3 id=32-for>3.2 for</h3>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#666>&gt;&gt;&gt;</span> <span style=color:#007020;font-weight:700>for</span> i <span style=color:#007020;font-weight:700>in</span> [<span style=color:#40a070>1</span>,<span style=color:#40a070>2</span>,<span style=color:#40a070>3</span>]:
-<span style=color:#666>...</span>     <span style=color:#007020>print</span>(i) <span style=color:#60a0b0;font-style:italic># 需要4个空格缩进4个字符</span>
-<span style=color:#666>...</span>
-<span style=color:#60a0b0;font-style:italic># 输出</span>
-<span style=color:#40a070>1</span>
-<span style=color:#40a070>2</span>
-<span style=color:#40a070>3</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#f92672>&gt;&gt;&gt;</span> <span style=color:#66d9ef>for</span> i <span style=color:#f92672>in</span> [<span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>2</span>,<span style=color:#ae81ff>3</span>]:
+<span style=color:#f92672>...</span>     print(i) <span style=color:#75715e># 需要4个空格缩进4个字符</span>
+<span style=color:#f92672>...</span>
+<span style=color:#75715e># 输出</span>
+<span style=color:#ae81ff>1</span>
+<span style=color:#ae81ff>2</span>
+<span style=color:#ae81ff>3</span>
 </code></pre></div><h2 id=4-函数与类>4 函数与类</h2>
 <h3 id=41-函数>4.1 函数</h3>
 <ul>
 <li>结构：</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#60a0b0;font-style:italic># 无参数</span>
-<span style=color:#666>&gt;&gt;&gt;</span> <span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>hello</span>():
-<span style=color:#666>...</span>     <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;Hello world!&#34;</span>)
-<span style=color:#666>...</span>
-<span style=color:#666>&gt;&gt;&gt;</span> hello()
-Hello world<span>!</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#75715e># 无参数</span>
+<span style=color:#f92672>&gt;&gt;&gt;</span> <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>hello</span>():
+<span style=color:#f92672>...</span>     print(<span style=color:#e6db74>&#34;Hello world!&#34;</span>)
+<span style=color:#f92672>...</span>
+<span style=color:#f92672>&gt;&gt;&gt;</span> hello()
+Hello world<span style=color:#960050;background-color:#1e0010>!</span>
 
-<span style=color:#60a0b0;font-style:italic># 有参数</span>
-<span style=color:#666>&gt;&gt;&gt;</span> <span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>hello</span>(<span style=color:#007020>object</span>):
-<span style=color:#666>...</span>     <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;Hello &#34;</span><span style=color:#666>+</span><span style=color:#007020>object</span><span style=color:#666>+</span><span style=color:#4070a0>&#34;!&#34;</span>)
-<span style=color:#666>...</span>
-<span style=color:#666>&gt;&gt;&gt;</span> hello(<span style=color:#4070a0>&#34;cat&#34;</span>)
-Hello cat<span>!</span>
+<span style=color:#75715e># 有参数</span>
+<span style=color:#f92672>&gt;&gt;&gt;</span> <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>hello</span>(object):
+<span style=color:#f92672>...</span>     print(<span style=color:#e6db74>&#34;Hello &#34;</span><span style=color:#f92672>+</span>object<span style=color:#f92672>+</span><span style=color:#e6db74>&#34;!&#34;</span>)
+<span style=color:#f92672>...</span>
+<span style=color:#f92672>&gt;&gt;&gt;</span> hello(<span style=color:#e6db74>&#34;cat&#34;</span>)
+Hello cat<span style=color:#960050;background-color:#1e0010>!</span>
 </code></pre></div><ul>
 <li><code>if __name__ == '__main__':</code>
 <ul>
@@ -114,104 +116,104 @@ Hello cat<span>!</span>
 <ul>
 <li>结构：</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#007020;font-weight:700>class</span> <span style=color:#0e84b5;font-weight:700>类名</span>:
-    <span style=color:#007020;font-weight:700>def</span> __init__(self,参数, <span>…</span>): <span style=color:#60a0b0;font-style:italic>#构造函数</span>
-    <span style=color:#007020;font-weight:700>def</span>  <span style=color:#06287e>方法名1</span>(self,参数,<span>…</span>): <span style=color:#60a0b0;font-style:italic>#方法1</span>
-    <span style=color:#007020;font-weight:700>def</span>  <span style=color:#06287e>方法名2</span>(self,参数,<span>…</span>): <span style=color:#60a0b0;font-style:italic>#方法2</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>类名</span>:
+    <span style=color:#66d9ef>def</span> __init__(self,参数, <span style=color:#960050;background-color:#1e0010>…</span>): <span style=color:#75715e>#构造函数</span>
+    <span style=color:#66d9ef>def</span>  <span style=color:#a6e22e>方法名1</span>(self,参数,<span style=color:#960050;background-color:#1e0010>…</span>): <span style=color:#75715e>#方法1</span>
+    <span style=color:#66d9ef>def</span>  <span style=color:#a6e22e>方法名2</span>(self,参数,<span style=color:#960050;background-color:#1e0010>…</span>): <span style=color:#75715e>#方法2</span>
 
-<span style=color:#60a0b0;font-style:italic># 定义</span>
-<span style=color:#007020;font-weight:700>class</span> <span style=color:#0e84b5;font-weight:700>Man</span>:
-    <span style=color:#007020;font-weight:700>def</span> __init__(self,name):
-        self<span style=color:#666>.</span>name<span style=color:#666>=</span>name
-        <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;init success!&#34;</span>)
+<span style=color:#75715e># 定义</span>
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Man</span>:
+    <span style=color:#66d9ef>def</span> __init__(self,name):
+        self<span style=color:#f92672>.</span>name<span style=color:#f92672>=</span>name
+        print(<span style=color:#e6db74>&#34;init success!&#34;</span>)
 
-    <span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>hello</span>(self):
-        <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;hello &#34;</span><span style=color:#666>+</span>self<span style=color:#666>.</span>name<span style=color:#666>+</span><span style=color:#4070a0>&#34;!&#34;</span>)
+    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>hello</span>(self):
+        print(<span style=color:#e6db74>&#34;hello &#34;</span><span style=color:#f92672>+</span>self<span style=color:#f92672>.</span>name<span style=color:#f92672>+</span><span style=color:#e6db74>&#34;!&#34;</span>)
 
-    <span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>goodbye</span>(self):
-        <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;goodbye &#34;</span><span style=color:#666>+</span>self<span style=color:#666>.</span>name<span style=color:#666>+</span><span style=color:#4070a0>&#34;!&#34;</span>)
+    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>goodbye</span>(self):
+        print(<span style=color:#e6db74>&#34;goodbye &#34;</span><span style=color:#f92672>+</span>self<span style=color:#f92672>.</span>name<span style=color:#f92672>+</span><span style=color:#e6db74>&#34;!&#34;</span>)
 
-<span style=color:#60a0b0;font-style:italic># 调用</span>
-m<span style=color:#666>=</span>Man(<span style=color:#4070a0>&#34;David&#34;</span>)
-m<span style=color:#666>.</span>hello()
-m<span style=color:#666>.</span>goodbye()
+<span style=color:#75715e># 调用</span>
+m<span style=color:#f92672>=</span>Man(<span style=color:#e6db74>&#34;David&#34;</span>)
+m<span style=color:#f92672>.</span>hello()
+m<span style=color:#f92672>.</span>goodbye()
 </code></pre></div><ul>
 <li>用户可以定义类，创建数据类型、创建方法和属性</li>
 </ul>
 <h2 id=5-工具包-numpy>5 工具包-Numpy</h2>
 <h3 id=51-一维数组>5.1 一维数组</h3>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>numpy</span> <span style=color:#007020;font-weight:700>as</span> <span style=color:#0e84b5;font-weight:700>np</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#f92672>import</span> numpy <span style=color:#66d9ef>as</span> np
 
-x<span style=color:#666>=</span>np<span style=color:#666>.</span>array([<span style=color:#40a070>1</span>,<span style=color:#40a070>2</span>,<span style=color:#40a070>3</span>])
-y<span style=color:#666>=</span>np<span style=color:#666>.</span>array([<span style=color:#40a070>233</span>,<span style=color:#40a070>46</span>,<span style=color:#40a070>133</span>])
+x<span style=color:#f92672>=</span>np<span style=color:#f92672>.</span>array([<span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>2</span>,<span style=color:#ae81ff>3</span>])
+y<span style=color:#f92672>=</span>np<span style=color:#f92672>.</span>array([<span style=color:#ae81ff>233</span>,<span style=color:#ae81ff>46</span>,<span style=color:#ae81ff>133</span>])
 
-<span style=color:#007020>print</span>(x<span style=color:#666>+</span>y)
-<span style=color:#007020>print</span>(x<span style=color:#666>/</span>y)
-<span style=color:#007020>print</span>(x<span style=color:#666>/</span><span style=color:#40a070>2</span>)
+print(x<span style=color:#f92672>+</span>y)
+print(x<span style=color:#f92672>/</span>y)
+print(x<span style=color:#f92672>/</span><span style=color:#ae81ff>2</span>)
 </code></pre></div><h3 id=52-n维数组>5.2 N维数组</h3>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>numpy</span> <span style=color:#007020;font-weight:700>as</span> <span style=color:#0e84b5;font-weight:700>np</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#f92672>import</span> numpy <span style=color:#66d9ef>as</span> np
 
-A<span style=color:#666>=</span>np<span style=color:#666>.</span>array([[<span style=color:#40a070>1</span>,<span style=color:#40a070>2</span>],[<span style=color:#40a070>3</span>,<span style=color:#40a070>4</span>]])
-B<span style=color:#666>=</span>np<span style=color:#666>.</span>array([[<span style=color:#40a070>3</span>,<span style=color:#40a070>0</span>],[<span style=color:#40a070>0</span>,<span style=color:#40a070>6</span>]])
+A<span style=color:#f92672>=</span>np<span style=color:#f92672>.</span>array([[<span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>2</span>],[<span style=color:#ae81ff>3</span>,<span style=color:#ae81ff>4</span>]])
+B<span style=color:#f92672>=</span>np<span style=color:#f92672>.</span>array([[<span style=color:#ae81ff>3</span>,<span style=color:#ae81ff>0</span>],[<span style=color:#ae81ff>0</span>,<span style=color:#ae81ff>6</span>]])
 
-<span style=color:#007020>print</span>(A<span style=color:#666>*</span>B) <span style=color:#60a0b0;font-style:italic># 此处a*b是对应元素相乘</span>
-np<span style=color:#666>.</span>dot(A,B) <span style=color:#60a0b0;font-style:italic># 这才是矩阵相乘</span>
+print(A<span style=color:#f92672>*</span>B) <span style=color:#75715e># 此处a*b是对应元素相乘</span>
+np<span style=color:#f92672>.</span>dot(A,B) <span style=color:#75715e># 这才是矩阵相乘</span>
 </code></pre></div><h3 id=53-访问元素>5.3 访问元素</h3>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>numpy</span> <span style=color:#007020;font-weight:700>as</span> <span style=color:#0e84b5;font-weight:700>np</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#f92672>import</span> numpy <span style=color:#66d9ef>as</span> np
 
-X<span style=color:#666>=</span>np<span style=color:#666>.</span>array([[<span style=color:#40a070>51</span>,<span style=color:#40a070>55</span>],[<span style=color:#40a070>14</span>,<span style=color:#40a070>19</span>],[<span style=color:#40a070>0</span>,<span style=color:#40a070>4</span>]])
+X<span style=color:#f92672>=</span>np<span style=color:#f92672>.</span>array([[<span style=color:#ae81ff>51</span>,<span style=color:#ae81ff>55</span>],[<span style=color:#ae81ff>14</span>,<span style=color:#ae81ff>19</span>],[<span style=color:#ae81ff>0</span>,<span style=color:#ae81ff>4</span>]])
 
-<span style=color:#60a0b0;font-style:italic># 访问某一行</span>
-<span style=color:#007020>print</span>(X[<span style=color:#40a070>0</span>])
+<span style=color:#75715e># 访问某一行</span>
+print(X[<span style=color:#ae81ff>0</span>])
 
-<span style=color:#60a0b0;font-style:italic># 访问某一个</span>
-<span style=color:#007020>print</span>(X[<span style=color:#40a070>0</span>][<span style=color:#40a070>1</span>])
+<span style=color:#75715e># 访问某一个</span>
+print(X[<span style=color:#ae81ff>0</span>][<span style=color:#ae81ff>1</span>])
 
-<span style=color:#60a0b0;font-style:italic># 循环访问</span>
-<span style=color:#007020;font-weight:700>for</span> row <span style=color:#007020;font-weight:700>in</span> X:
-    <span style=color:#007020>print</span>(row)
+<span style=color:#75715e># 循环访问</span>
+<span style=color:#66d9ef>for</span> row <span style=color:#f92672>in</span> X:
+    print(row)
 </code></pre></div><h3 id=54-其他>5.4 其他</h3>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>numpy</span> <span style=color:#007020;font-weight:700>as</span> <span style=color:#0e84b5;font-weight:700>np</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#f92672>import</span> numpy <span style=color:#66d9ef>as</span> np
 
-X<span style=color:#666>=</span>np<span style=color:#666>.</span>array([[<span style=color:#40a070>51</span>,<span style=color:#40a070>55</span>],[<span style=color:#40a070>14</span>,<span style=color:#40a070>19</span>],[<span style=color:#40a070>0</span>,<span style=color:#40a070>4</span>]])
+X<span style=color:#f92672>=</span>np<span style=color:#f92672>.</span>array([[<span style=color:#ae81ff>51</span>,<span style=color:#ae81ff>55</span>],[<span style=color:#ae81ff>14</span>,<span style=color:#ae81ff>19</span>],[<span style=color:#ae81ff>0</span>,<span style=color:#ae81ff>4</span>]])
 
-X<span style=color:#666>=</span>X<span style=color:#666>.</span>flatten()
-<span style=color:#007020>print</span>(X)
-<span style=color:#60a0b0;font-style:italic># 输出一维</span>
-[<span style=color:#40a070>51</span> <span style=color:#40a070>55</span> <span style=color:#40a070>14</span> <span style=color:#40a070>19</span>  <span style=color:#40a070>0</span>  <span style=color:#40a070>4</span>]
+X<span style=color:#f92672>=</span>X<span style=color:#f92672>.</span>flatten()
+print(X)
+<span style=color:#75715e># 输出一维</span>
+[<span style=color:#ae81ff>51</span> <span style=color:#ae81ff>55</span> <span style=color:#ae81ff>14</span> <span style=color:#ae81ff>19</span>  <span style=color:#ae81ff>0</span>  <span style=color:#ae81ff>4</span>]
 
-<span style=color:#007020>print</span>(X[X<span style=color:#666>&gt;</span><span style=color:#40a070>15</span>])
-<span style=color:#60a0b0;font-style:italic># 输出 X 中 &gt;15 的</span>
-[<span style=color:#40a070>51</span> <span style=color:#40a070>55</span> <span style=color:#40a070>19</span>]
+print(X[X<span style=color:#f92672>&gt;</span><span style=color:#ae81ff>15</span>])
+<span style=color:#75715e># 输出 X 中 &gt;15 的</span>
+[<span style=color:#ae81ff>51</span> <span style=color:#ae81ff>55</span> <span style=color:#ae81ff>19</span>]
 
-<span style=color:#007020>print</span>(X<span style=color:#666>&gt;</span><span style=color:#40a070>15</span>)
-<span style=color:#60a0b0;font-style:italic># 输出 bool 值</span>
-[<span style=color:#007020;font-weight:700>True</span> <span style=color:#007020;font-weight:700>True</span> <span style=color:#007020;font-weight:700>False</span> <span style=color:#007020;font-weight:700>True</span> <span style=color:#007020;font-weight:700>False</span> <span style=color:#007020;font-weight:700>False</span>]
+print(X<span style=color:#f92672>&gt;</span><span style=color:#ae81ff>15</span>)
+<span style=color:#75715e># 输出 bool 值</span>
+[<span style=color:#66d9ef>True</span> <span style=color:#66d9ef>True</span> <span style=color:#66d9ef>False</span> <span style=color:#66d9ef>True</span> <span style=color:#66d9ef>False</span> <span style=color:#66d9ef>False</span>]
 </code></pre></div><h2 id=6-工具包-matplotlib>6 工具包-Matplotlib</h2>
 <h3 id=61-绘制>6.1 绘制</h3>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>matplotlib.pyplot</span> <span style=color:#007020;font-weight:700>as</span> <span style=color:#0e84b5;font-weight:700>plt</span>
-<span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>numpy</span> <span style=color:#007020;font-weight:700>as</span> <span style=color:#0e84b5;font-weight:700>np</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#f92672>import</span> matplotlib.pyplot <span style=color:#66d9ef>as</span> plt
+<span style=color:#f92672>import</span> numpy <span style=color:#66d9ef>as</span> np
 
-x<span style=color:#666>=</span>np<span style=color:#666>.</span>arange(<span style=color:#40a070>0</span>,<span style=color:#40a070>6</span>,<span style=color:#40a070>0.1</span>) <span style=color:#60a0b0;font-style:italic># arange函数用于创建等差数组</span>
-y1<span style=color:#666>=</span>np<span style=color:#666>.</span>sin(x)
-y2<span style=color:#666>=</span>np<span style=color:#666>.</span>cos(x)
+x<span style=color:#f92672>=</span>np<span style=color:#f92672>.</span>arange(<span style=color:#ae81ff>0</span>,<span style=color:#ae81ff>6</span>,<span style=color:#ae81ff>0.1</span>) <span style=color:#75715e># arange函数用于创建等差数组</span>
+y1<span style=color:#f92672>=</span>np<span style=color:#f92672>.</span>sin(x)
+y2<span style=color:#f92672>=</span>np<span style=color:#f92672>.</span>cos(x)
 
-plt<span style=color:#666>.</span>plot(x,y1,label<span style=color:#666>=</span><span style=color:#4070a0>&#34;sin&#34;</span>)
-plt<span style=color:#666>.</span>plot(x,y2,linestyle<span style=color:#666>=</span><span style=color:#4070a0>&#34;--&#34;</span>,label<span style=color:#666>=</span><span style=color:#4070a0>&#34;cos&#34;</span>)
+plt<span style=color:#f92672>.</span>plot(x,y1,label<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;sin&#34;</span>)
+plt<span style=color:#f92672>.</span>plot(x,y2,linestyle<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;--&#34;</span>,label<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;cos&#34;</span>)
 
-plt<span style=color:#666>.</span>xlabel(<span style=color:#4070a0>&#34;x&#34;</span>)
-plt<span style=color:#666>.</span>ylabel(<span style=color:#4070a0>&#34;y&#34;</span>)
-plt<span style=color:#666>.</span>title(<span style=color:#4070a0>&#39;sin &amp; cos&#39;</span>)
+plt<span style=color:#f92672>.</span>xlabel(<span style=color:#e6db74>&#34;x&#34;</span>)
+plt<span style=color:#f92672>.</span>ylabel(<span style=color:#e6db74>&#34;y&#34;</span>)
+plt<span style=color:#f92672>.</span>title(<span style=color:#e6db74>&#39;sin &amp; cos&#39;</span>)
 
-plt<span style=color:#666>.</span>legend()
-plt<span style=color:#666>.</span>show()
+plt<span style=color:#f92672>.</span>legend()
+plt<span style=color:#f92672>.</span>show()
 </code></pre></div><h3 id=62-读取显示>6.2 读取显示</h3>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>matplotlib.pyplot</span> <span style=color:#007020;font-weight:700>as</span> <span style=color:#0e84b5;font-weight:700>plt</span>
-<span style=color:#007020;font-weight:700>from</span> <span style=color:#0e84b5;font-weight:700>matplotlib.image</span> <span style=color:#007020;font-weight:700>import</span> imread
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#f92672>import</span> matplotlib.pyplot <span style=color:#66d9ef>as</span> plt
+<span style=color:#f92672>from</span> matplotlib.image <span style=color:#f92672>import</span> imread
 
-img<span style=color:#666>=</span>imread(<span style=color:#4070a0>&#39;ball.jpg&#39;</span>)
-plt<span style=color:#666>.</span>imshow(img)
-plt<span style=color:#666>.</span>show()
+img<span style=color:#f92672>=</span>imread(<span style=color:#e6db74>&#39;ball.jpg&#39;</span>)
+plt<span style=color:#f92672>.</span>imshow(img)
+plt<span style=color:#f92672>.</span>show()
 </code></pre></div>
 </section>
 <div class=post-tags>
@@ -230,6 +232,7 @@ plt<span style=color:#666>.</span>show()
 </footer>
 <script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-80H8N7NN50','auto'),ga('send','pageview'))</script>
 <script async src=https://www.google-analytics.com/analytics.js></script>
+<script src=https://lunarwhite.github.iojs/toggle.dark.js></script>
 <script>feather.replace()</script>
 <script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
 </body>

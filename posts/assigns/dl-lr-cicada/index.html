@@ -16,7 +16,8 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel=stylesheet>
-<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.f2d7282a0f5a7f5b27e43ccc9c3448ef92651f88fde45a8bac6c6e2a6ba2d01b.css>
+<link disabled id=dark-mode-theme rel=stylesheet href=https://lunarwhite.github.io/css/dark.80b2eb1f37be2454ead72ba0f2662f3022d939734e00b0909a04541420aa9d6c.css>
 </head>
 <body>
 <div class=content><header>
@@ -28,6 +29,7 @@
 <a href=/posts>Posts</a>
 <a href=/tags>Tags</a>
 <a href=/about>About</a>
+/ <a id=dark-mode-toggle><i data-feather=sun></i></a>
 </nav>
 </header>
 <main>
@@ -37,52 +39,52 @@
 <div class=meta>Posted on Apr 3, 2021</div>
 </div>
 <section class=body>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>numpy</span> <span style=color:#007020;font-weight:700>as</span> <span style=color:#0e84b5;font-weight:700>np</span>
-<span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>matplotlib.pyplot</span> <span style=color:#007020;font-weight:700>as</span> <span style=color:#0e84b5;font-weight:700>plt</span>
-<span style=color:#007020;font-weight:700>from</span> <span style=color:#0e84b5;font-weight:700>sklearn</span> <span style=color:#007020;font-weight:700>import</span> linear_model
-<span style=color:#007020;font-weight:700>from</span> <span style=color:#0e84b5;font-weight:700>sklearn.metrics</span> <span style=color:#007020;font-weight:700>import</span> mean_squared_error
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#f92672>import</span> numpy <span style=color:#66d9ef>as</span> np
+<span style=color:#f92672>import</span> matplotlib.pyplot <span style=color:#66d9ef>as</span> plt
+<span style=color:#f92672>from</span> sklearn <span style=color:#f92672>import</span> linear_model
+<span style=color:#f92672>from</span> sklearn.metrics <span style=color:#f92672>import</span> mean_squared_error
 
-<span style=color:#60a0b0;font-style:italic># dataset</span>
-xtrain <span style=color:#666>=</span> [<span style=color:#40a070>8.</span>, <span style=color:#40a070>3.</span>, <span style=color:#40a070>9.</span>, <span style=color:#40a070>7.</span>, <span style=color:#40a070>16.</span>, <span style=color:#40a070>5.</span>, <span style=color:#40a070>13.</span>, <span style=color:#40a070>10.</span>, <span style=color:#40a070>4.</span>, <span style=color:#40a070>6.</span>]
-ytrain <span style=color:#666>=</span> [<span style=color:#40a070>30.</span>, <span style=color:#40a070>21.</span>, <span style=color:#40a070>33.</span>, <span style=color:#40a070>27.</span>, <span style=color:#40a070>42.</span>, <span style=color:#40a070>24.</span>, <span style=color:#40a070>36.</span>, <span style=color:#40a070>33.</span>, <span style=color:#40a070>22.</span>, <span style=color:#40a070>25.</span>]
-xtest <span style=color:#666>=</span> [<span style=color:#40a070>4.5</span>, <span style=color:#40a070>6</span>, <span style=color:#40a070>14</span>]
-ytest <span style=color:#666>=</span> [<span style=color:#40a070>24</span>, <span style=color:#40a070>25</span>, <span style=color:#40a070>38</span>]
+<span style=color:#75715e># dataset</span>
+xtrain <span style=color:#f92672>=</span> [<span style=color:#ae81ff>8.</span>, <span style=color:#ae81ff>3.</span>, <span style=color:#ae81ff>9.</span>, <span style=color:#ae81ff>7.</span>, <span style=color:#ae81ff>16.</span>, <span style=color:#ae81ff>5.</span>, <span style=color:#ae81ff>13.</span>, <span style=color:#ae81ff>10.</span>, <span style=color:#ae81ff>4.</span>, <span style=color:#ae81ff>6.</span>]
+ytrain <span style=color:#f92672>=</span> [<span style=color:#ae81ff>30.</span>, <span style=color:#ae81ff>21.</span>, <span style=color:#ae81ff>33.</span>, <span style=color:#ae81ff>27.</span>, <span style=color:#ae81ff>42.</span>, <span style=color:#ae81ff>24.</span>, <span style=color:#ae81ff>36.</span>, <span style=color:#ae81ff>33.</span>, <span style=color:#ae81ff>22.</span>, <span style=color:#ae81ff>25.</span>]
+xtest <span style=color:#f92672>=</span> [<span style=color:#ae81ff>4.5</span>, <span style=color:#ae81ff>6</span>, <span style=color:#ae81ff>14</span>]
+ytest <span style=color:#f92672>=</span> [<span style=color:#ae81ff>24</span>, <span style=color:#ae81ff>25</span>, <span style=color:#ae81ff>38</span>]
 
-xtrain <span style=color:#666>=</span> np<span style=color:#666>.</span>array(xtrain)<span style=color:#666>.</span>reshape(<span style=color:#666>-</span><span style=color:#40a070>1</span>, <span style=color:#40a070>1</span>)
-ytrain <span style=color:#666>=</span> np<span style=color:#666>.</span>array(ytrain)<span style=color:#666>.</span>reshape(<span style=color:#666>-</span><span style=color:#40a070>1</span>, <span style=color:#40a070>1</span>)
-xtest <span style=color:#666>=</span> np<span style=color:#666>.</span>array(xtest)<span style=color:#666>.</span>reshape(<span style=color:#666>-</span><span style=color:#40a070>1</span>, <span style=color:#40a070>1</span>)
-ytest <span style=color:#666>=</span> np<span style=color:#666>.</span>array(ytest)<span style=color:#666>.</span>reshape(<span style=color:#666>-</span><span style=color:#40a070>1</span>, <span style=color:#40a070>1</span>)
+xtrain <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>array(xtrain)<span style=color:#f92672>.</span>reshape(<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>)
+ytrain <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>array(ytrain)<span style=color:#f92672>.</span>reshape(<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>)
+xtest <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>array(xtest)<span style=color:#f92672>.</span>reshape(<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>)
+ytest <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>array(ytest)<span style=color:#f92672>.</span>reshape(<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>)
 
-<span style=color:#60a0b0;font-style:italic># 利用sklearn包中的linear_model.LinearRegression</span>
-<span style=color:#60a0b0;font-style:italic># （1）预测蝉每小时鸣叫次数和温度之间的函数关系</span>
-clf <span style=color:#666>=</span> linear_model<span style=color:#666>.</span>LinearRegression()   <span style=color:#60a0b0;font-style:italic># 实例化</span>
-clf<span style=color:#666>.</span>fit(xtrain, ytrain)                  <span style=color:#60a0b0;font-style:italic># 训练</span>
+<span style=color:#75715e># 利用sklearn包中的linear_model.LinearRegression</span>
+<span style=color:#75715e># （1）预测蝉每小时鸣叫次数和温度之间的函数关系</span>
+clf <span style=color:#f92672>=</span> linear_model<span style=color:#f92672>.</span>LinearRegression()   <span style=color:#75715e># 实例化</span>
+clf<span style=color:#f92672>.</span>fit(xtrain, ytrain)                  <span style=color:#75715e># 训练</span>
 
-<span style=color:#60a0b0;font-style:italic># 画出贯穿的直线</span>
-x <span style=color:#666>=</span> np<span style=color:#666>.</span>arange(<span style=color:#40a070>0</span>, <span style=color:#40a070>20</span>, <span style=color:#40a070>0.1</span>)
-y <span style=color:#666>=</span> np<span style=color:#666>.</span>array(clf<span style=color:#666>.</span>intercept_<span style=color:#666>+</span>clf<span style=color:#666>.</span>coef_<span style=color:#666>*</span>x)<span style=color:#666>.</span>reshape(<span style=color:#666>-</span><span style=color:#40a070>1</span>, <span style=color:#40a070>1</span>)
-plt<span style=color:#666>.</span>plot(x, y, <span style=color:#4070a0>&#39;k&#39;</span>)
+<span style=color:#75715e># 画出贯穿的直线</span>
+x <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>arange(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>20</span>, <span style=color:#ae81ff>0.1</span>)
+y <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>array(clf<span style=color:#f92672>.</span>intercept_<span style=color:#f92672>+</span>clf<span style=color:#f92672>.</span>coef_<span style=color:#f92672>*</span>x)<span style=color:#f92672>.</span>reshape(<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>)
+plt<span style=color:#f92672>.</span>plot(x, y, <span style=color:#e6db74>&#39;k&#39;</span>)
 
-ytrain_pred <span style=color:#666>=</span> clf<span style=color:#666>.</span>predict(xtest)
-ytest_pred <span style=color:#666>=</span> clf<span style=color:#666>.</span>predict(xtrain)
+ytrain_pred <span style=color:#f92672>=</span> clf<span style=color:#f92672>.</span>predict(xtest)
+ytest_pred <span style=color:#f92672>=</span> clf<span style=color:#f92672>.</span>predict(xtrain)
 
-<span style=color:#60a0b0;font-style:italic># （2）检验下列数据是否吻合预测关系，给出训练MSE和测试MSE都是多少</span>
-<span style=color:#007020>print</span>(<span style=color:#4070a0>&#39;Train MSE:&#39;</span>)
-<span style=color:#007020>print</span>(mean_squared_error(ytrain, ytest_pred))
-<span style=color:#007020>print</span>(<span style=color:#4070a0>&#39;Test MSE:&#39;</span>)
-<span style=color:#007020>print</span>(mean_squared_error(ytest, ytrain_pred))
+<span style=color:#75715e># （2）检验下列数据是否吻合预测关系，给出训练MSE和测试MSE都是多少</span>
+print(<span style=color:#e6db74>&#39;Train MSE:&#39;</span>)
+print(mean_squared_error(ytrain, ytest_pred))
+print(<span style=color:#e6db74>&#39;Test MSE:&#39;</span>)
+print(mean_squared_error(ytest, ytrain_pred))
 
-<span style=color:#60a0b0;font-style:italic># （3）将数据以及得到的函数可视化</span>
-plt<span style=color:#666>.</span>scatter(xtrain, ytrain, color<span style=color:#666>=</span><span style=color:#4070a0>&#39;blue&#39;</span>, label<span style=color:#666>=</span><span style=color:#4070a0>&#39;training data&#39;</span>)
-plt<span style=color:#666>.</span>scatter(xtest, ytest, color<span style=color:#666>=</span><span style=color:#4070a0>&#39;red&#39;</span>, label<span style=color:#666>=</span><span style=color:#4070a0>&#39;test data&#39;</span>)
-plt<span style=color:#666>.</span>scatter(xtest, ytrain_pred, color<span style=color:#666>=</span><span style=color:#4070a0>&#39;green&#39;</span>, label<span style=color:#666>=</span><span style=color:#4070a0>&#39;predict&#39;</span>)
+<span style=color:#75715e># （3）将数据以及得到的函数可视化</span>
+plt<span style=color:#f92672>.</span>scatter(xtrain, ytrain, color<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;blue&#39;</span>, label<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;training data&#39;</span>)
+plt<span style=color:#f92672>.</span>scatter(xtest, ytest, color<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;red&#39;</span>, label<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;test data&#39;</span>)
+plt<span style=color:#f92672>.</span>scatter(xtest, ytrain_pred, color<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;green&#39;</span>, label<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;predict&#39;</span>)
 
-plt<span style=color:#666>.</span>title(<span style=color:#4070a0>&#39;assign 2-3&#39;</span>)
-plt<span style=color:#666>.</span>xlabel(<span style=color:#4070a0>&#39;X&#39;</span>)
-plt<span style=color:#666>.</span>ylabel(<span style=color:#4070a0>&#39;Y&#39;</span>)
-plt<span style=color:#666>.</span>legend(loc<span style=color:#666>=</span><span style=color:#40a070>2</span>)
+plt<span style=color:#f92672>.</span>title(<span style=color:#e6db74>&#39;assign 2-3&#39;</span>)
+plt<span style=color:#f92672>.</span>xlabel(<span style=color:#e6db74>&#39;X&#39;</span>)
+plt<span style=color:#f92672>.</span>ylabel(<span style=color:#e6db74>&#39;Y&#39;</span>)
+plt<span style=color:#f92672>.</span>legend(loc<span style=color:#f92672>=</span><span style=color:#ae81ff>2</span>)
 
-plt<span style=color:#666>.</span>show()
+plt<span style=color:#f92672>.</span>show()
 
 </code></pre></div>
 </section>
@@ -102,6 +104,7 @@ plt<span style=color:#666>.</span>show()
 </footer>
 <script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-80H8N7NN50','auto'),ga('send','pageview'))</script>
 <script async src=https://www.google-analytics.com/analytics.js></script>
+<script src=https://lunarwhite.github.iojs/toggle.dark.js></script>
 <script>feather.replace()</script>
 <script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
 </body>

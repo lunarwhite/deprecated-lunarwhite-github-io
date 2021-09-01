@@ -16,7 +16,8 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel=stylesheet>
-<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.f2d7282a0f5a7f5b27e43ccc9c3448ef92651f88fde45a8bac6c6e2a6ba2d01b.css>
+<link disabled id=dark-mode-theme rel=stylesheet href=https://lunarwhite.github.io/css/dark.80b2eb1f37be2454ead72ba0f2662f3022d939734e00b0909a04541420aa9d6c.css>
 </head>
 <body>
 <div class=content><header>
@@ -28,6 +29,7 @@
 <a href=/posts>Posts</a>
 <a href=/tags>Tags</a>
 <a href=/about>About</a>
+/ <a id=dark-mode-toggle><i data-feather=sun></i></a>
 </nav>
 </header>
 <main>
@@ -56,201 +58,201 @@
 <li>PyCharm2020.3.3</li>
 </ul>
 <h3 id=22-代码>2.2 代码</h3>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>os</span>
-<span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>sys</span>
-<span style=color:#007020;font-weight:700>from</span> <span style=color:#0e84b5;font-weight:700>PyQt5</span> <span style=color:#007020;font-weight:700>import</span> QtCore, QtWidgets, QtGui
-<span style=color:#007020;font-weight:700>from</span> <span style=color:#0e84b5;font-weight:700>PyQt5.QtWidgets</span> <span style=color:#007020;font-weight:700>import</span> QMessageBox
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#f92672>import</span> os
+<span style=color:#f92672>import</span> sys
+<span style=color:#f92672>from</span> PyQt5 <span style=color:#f92672>import</span> QtCore, QtWidgets, QtGui
+<span style=color:#f92672>from</span> PyQt5.QtWidgets <span style=color:#f92672>import</span> QMessageBox
 
-path <span style=color:#666>=</span> os<span style=color:#666>.</span>getcwd()
-encoder <span style=color:#666>=</span> {}
-decoder <span style=color:#666>=</span> {}
-
-
-<span style=color:#007020;font-weight:700>class</span> <span style=color:#0e84b5;font-weight:700>Ui_MainWindow</span>(<span style=color:#007020>object</span>):
-    <span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>setupUi</span>(self, MainWindow):
-        MainWindow<span style=color:#666>.</span>setObjectName(<span style=color:#4070a0>&#34;MainWindow&#34;</span>)
-        MainWindow<span style=color:#666>.</span>resize(<span style=color:#40a070>495</span>, <span style=color:#40a070>328</span>)
-
-        self<span style=color:#666>.</span>centralwidget <span style=color:#666>=</span> QtWidgets<span style=color:#666>.</span>QWidget(MainWindow)
-        self<span style=color:#666>.</span>centralwidget<span style=color:#666>.</span>setObjectName(<span style=color:#4070a0>&#34;centralwidget&#34;</span>)
-
-        self<span style=color:#666>.</span>textEdit <span style=color:#666>=</span> QtWidgets<span style=color:#666>.</span>QTextEdit(self<span style=color:#666>.</span>centralwidget)
-        self<span style=color:#666>.</span>textEdit<span style=color:#666>.</span>setGeometry(QtCore<span style=color:#666>.</span>QRect(<span style=color:#40a070>10</span>, <span style=color:#40a070>10</span>, <span style=color:#40a070>341</span>, <span style=color:#40a070>291</span>))
-        self<span style=color:#666>.</span>textEdit<span style=color:#666>.</span>setObjectName(<span style=color:#4070a0>&#34;textEdit&#34;</span>)
-
-        font <span style=color:#666>=</span> QtGui<span style=color:#666>.</span>QFont()
-        font<span style=color:#666>.</span>setFamily(<span style=color:#4070a0>&#34;Consolas&#34;</span>)
-        font<span style=color:#666>.</span>setPointSize(<span style=color:#40a070>16</span>)
-        self<span style=color:#666>.</span>textEdit<span style=color:#666>.</span>setFont(font)
-
-        self<span style=color:#666>.</span>pushButton <span style=color:#666>=</span> QtWidgets<span style=color:#666>.</span>QPushButton(self<span style=color:#666>.</span>centralwidget)
-        self<span style=color:#666>.</span>pushButton<span style=color:#666>.</span>setGeometry(QtCore<span style=color:#666>.</span>QRect(<span style=color:#40a070>360</span>, <span style=color:#40a070>10</span>, <span style=color:#40a070>121</span>, <span style=color:#40a070>51</span>))
-        self<span style=color:#666>.</span>pushButton<span style=color:#666>.</span>setObjectName(<span style=color:#4070a0>&#34;pushButton&#34;</span>)
-        self<span style=color:#666>.</span>pushButton<span style=color:#666>.</span>clicked<span style=color:#666>.</span>connect(self<span style=color:#666>.</span>onButtonClick) <span style=color:#60a0b0;font-style:italic># 初始化</span>
-
-        self<span style=color:#666>.</span>pushButton_3 <span style=color:#666>=</span> QtWidgets<span style=color:#666>.</span>QPushButton(self<span style=color:#666>.</span>centralwidget)
-        self<span style=color:#666>.</span>pushButton_3<span style=color:#666>.</span>setGeometry(QtCore<span style=color:#666>.</span>QRect(<span style=color:#40a070>360</span>, <span style=color:#40a070>70</span>, <span style=color:#40a070>121</span>, <span style=color:#40a070>51</span>))
-        self<span style=color:#666>.</span>pushButton_3<span style=color:#666>.</span>setObjectName(<span style=color:#4070a0>&#34;pushButton_3&#34;</span>)
-        self<span style=color:#666>.</span>pushButton_3<span style=color:#666>.</span>clicked<span style=color:#666>.</span>connect(self<span style=color:#666>.</span>onButtonClick3) <span style=color:#60a0b0;font-style:italic># 编码</span>
-
-        self<span style=color:#666>.</span>pushButton_4 <span style=color:#666>=</span> QtWidgets<span style=color:#666>.</span>QPushButton(self<span style=color:#666>.</span>centralwidget)
-        self<span style=color:#666>.</span>pushButton_4<span style=color:#666>.</span>setGeometry(QtCore<span style=color:#666>.</span>QRect(<span style=color:#40a070>360</span>, <span style=color:#40a070>130</span>, <span style=color:#40a070>121</span>, <span style=color:#40a070>51</span>))
-        self<span style=color:#666>.</span>pushButton_4<span style=color:#666>.</span>setObjectName(<span style=color:#4070a0>&#34;pushButton_4&#34;</span>)
-        self<span style=color:#666>.</span>pushButton_4<span style=color:#666>.</span>clicked<span style=color:#666>.</span>connect(self<span style=color:#666>.</span>onButtonClick4) <span style=color:#60a0b0;font-style:italic># 打开编码结果文件</span>
-
-        self<span style=color:#666>.</span>pushButton_5 <span style=color:#666>=</span> QtWidgets<span style=color:#666>.</span>QPushButton(self<span style=color:#666>.</span>centralwidget)
-        self<span style=color:#666>.</span>pushButton_5<span style=color:#666>.</span>setGeometry(QtCore<span style=color:#666>.</span>QRect(<span style=color:#40a070>360</span>, <span style=color:#40a070>190</span>, <span style=color:#40a070>121</span>, <span style=color:#40a070>51</span>))
-        self<span style=color:#666>.</span>pushButton_5<span style=color:#666>.</span>setObjectName(<span style=color:#4070a0>&#34;pushButton_5&#34;</span>)
-        self<span style=color:#666>.</span>pushButton_5<span style=color:#666>.</span>clicked<span style=color:#666>.</span>connect(self<span style=color:#666>.</span>onButtonClick5) <span style=color:#60a0b0;font-style:italic># 译码</span>
-
-        self<span style=color:#666>.</span>pushButton_6 <span style=color:#666>=</span> QtWidgets<span style=color:#666>.</span>QPushButton(self<span style=color:#666>.</span>centralwidget)
-        self<span style=color:#666>.</span>pushButton_6<span style=color:#666>.</span>setGeometry(QtCore<span style=color:#666>.</span>QRect(<span style=color:#40a070>360</span>, <span style=color:#40a070>250</span>, <span style=color:#40a070>121</span>, <span style=color:#40a070>51</span>))
-        self<span style=color:#666>.</span>pushButton_6<span style=color:#666>.</span>setObjectName(<span style=color:#4070a0>&#34;pushButton_6&#34;</span>)
-        self<span style=color:#666>.</span>pushButton_6<span style=color:#666>.</span>clicked<span style=color:#666>.</span>connect(self<span style=color:#666>.</span>onButtonClick6) <span style=color:#60a0b0;font-style:italic># 打开译码结果文件</span>
-
-        MainWindow<span style=color:#666>.</span>setCentralWidget(self<span style=color:#666>.</span>centralwidget)
-        self<span style=color:#666>.</span>statusbar <span style=color:#666>=</span> QtWidgets<span style=color:#666>.</span>QStatusBar(MainWindow)
-        self<span style=color:#666>.</span>statusbar<span style=color:#666>.</span>setObjectName(<span style=color:#4070a0>&#34;statusbar&#34;</span>)
-        MainWindow<span style=color:#666>.</span>setStatusBar(self<span style=color:#666>.</span>statusbar)
-
-        self<span style=color:#666>.</span>retranslateUi(MainWindow)
-        QtCore<span style=color:#666>.</span>QMetaObject<span style=color:#666>.</span>connectSlotsByName(MainWindow)
+path <span style=color:#f92672>=</span> os<span style=color:#f92672>.</span>getcwd()
+encoder <span style=color:#f92672>=</span> {}
+decoder <span style=color:#f92672>=</span> {}
 
 
-    <span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>onButtonClick</span>(self): <span style=color:#60a0b0;font-style:italic># 初始化</span>
-        myQueue <span style=color:#666>=</span> nodeQueue(countFreq(self<span style=color:#666>.</span>textEdit<span style=color:#666>.</span>toPlainText()))
-        myTree <span style=color:#666>=</span> createTree(myQueue)
-        initCoder(myTree, <span style=color:#4070a0>&#39;&#39;</span>)
-        QMessageBox<span style=color:#666>.</span>information(self<span style=color:#666>.</span>centralwidget, <span style=color:#4070a0>&#39;Huffman-init&#39;</span>, <span style=color:#4070a0>&#39;Big cong！哈夫曼树初始化成功！&#39;</span>)
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Ui_MainWindow</span>(object):
+    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>setupUi</span>(self, MainWindow):
+        MainWindow<span style=color:#f92672>.</span>setObjectName(<span style=color:#e6db74>&#34;MainWindow&#34;</span>)
+        MainWindow<span style=color:#f92672>.</span>resize(<span style=color:#ae81ff>495</span>, <span style=color:#ae81ff>328</span>)
 
-    <span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>onButtonClick3</span>(self):  <span style=color:#60a0b0;font-style:italic># 编码</span>
-        self<span style=color:#666>.</span>enStr <span style=color:#666>=</span> encode(self<span style=color:#666>.</span>textEdit<span style=color:#666>.</span>toPlainText())
-        QMessageBox<span style=color:#666>.</span>information(self<span style=color:#666>.</span>centralwidget, <span style=color:#4070a0>&#39;Huffman-encoding&#39;</span>, <span style=color:#4070a0>&#39;字符编码完成，结果存入文件 codefile.txt 中~&#39;</span>)
+        self<span style=color:#f92672>.</span>centralwidget <span style=color:#f92672>=</span> QtWidgets<span style=color:#f92672>.</span>QWidget(MainWindow)
+        self<span style=color:#f92672>.</span>centralwidget<span style=color:#f92672>.</span>setObjectName(<span style=color:#e6db74>&#34;centralwidget&#34;</span>)
 
-    <span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>onButtonClick4</span>(self):  <span style=color:#60a0b0;font-style:italic># 打开编码结果文件</span>
-        codefile <span style=color:#666>=</span> path <span style=color:#666>+</span> <span style=color:#4070a0>&#34;</span><span style=color:#4070a0;font-weight:700>\\</span><span style=color:#4070a0>codefile.txt&#34;</span>
-        os<span style=color:#666>.</span>startfile(codefile)
+        self<span style=color:#f92672>.</span>textEdit <span style=color:#f92672>=</span> QtWidgets<span style=color:#f92672>.</span>QTextEdit(self<span style=color:#f92672>.</span>centralwidget)
+        self<span style=color:#f92672>.</span>textEdit<span style=color:#f92672>.</span>setGeometry(QtCore<span style=color:#f92672>.</span>QRect(<span style=color:#ae81ff>10</span>, <span style=color:#ae81ff>10</span>, <span style=color:#ae81ff>341</span>, <span style=color:#ae81ff>291</span>))
+        self<span style=color:#f92672>.</span>textEdit<span style=color:#f92672>.</span>setObjectName(<span style=color:#e6db74>&#34;textEdit&#34;</span>)
 
-    <span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>onButtonClick5</span>(self):  <span style=color:#60a0b0;font-style:italic># 译码</span>
-        decode(self<span style=color:#666>.</span>enStr)
-        QMessageBox<span style=color:#666>.</span>information(self<span style=color:#666>.</span>centralwidget, <span style=color:#4070a0>&#39;Huffman-decoding&#39;</span>, <span style=color:#4070a0>&#39;字符译码完成，结果存入文件 textfile.txt 中~&#39;</span>)
+        font <span style=color:#f92672>=</span> QtGui<span style=color:#f92672>.</span>QFont()
+        font<span style=color:#f92672>.</span>setFamily(<span style=color:#e6db74>&#34;Consolas&#34;</span>)
+        font<span style=color:#f92672>.</span>setPointSize(<span style=color:#ae81ff>16</span>)
+        self<span style=color:#f92672>.</span>textEdit<span style=color:#f92672>.</span>setFont(font)
 
-    <span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>onButtonClick6</span>(self):  <span style=color:#60a0b0;font-style:italic># 打开译码结果文件</span>
-        testfile <span style=color:#666>=</span> path <span style=color:#666>+</span> <span style=color:#4070a0>&#34;</span><span style=color:#4070a0;font-weight:700>\\</span><span style=color:#4070a0>textfile.txt&#34;</span>
-        os<span style=color:#666>.</span>startfile(testfile)
+        self<span style=color:#f92672>.</span>pushButton <span style=color:#f92672>=</span> QtWidgets<span style=color:#f92672>.</span>QPushButton(self<span style=color:#f92672>.</span>centralwidget)
+        self<span style=color:#f92672>.</span>pushButton<span style=color:#f92672>.</span>setGeometry(QtCore<span style=color:#f92672>.</span>QRect(<span style=color:#ae81ff>360</span>, <span style=color:#ae81ff>10</span>, <span style=color:#ae81ff>121</span>, <span style=color:#ae81ff>51</span>))
+        self<span style=color:#f92672>.</span>pushButton<span style=color:#f92672>.</span>setObjectName(<span style=color:#e6db74>&#34;pushButton&#34;</span>)
+        self<span style=color:#f92672>.</span>pushButton<span style=color:#f92672>.</span>clicked<span style=color:#f92672>.</span>connect(self<span style=color:#f92672>.</span>onButtonClick) <span style=color:#75715e># 初始化</span>
 
-    <span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>retranslateUi</span>(self, MainWindow):
-        _translate <span style=color:#666>=</span> QtCore<span style=color:#666>.</span>QCoreApplication<span style=color:#666>.</span>translate
-        MainWindow<span style=color:#666>.</span>setWindowTitle(_translate(<span style=color:#4070a0>&#34;MainWindow&#34;</span>, <span style=color:#4070a0>&#34;Huffman by wyd&#34;</span>))
-        self<span style=color:#666>.</span>pushButton<span style=color:#666>.</span>setText(_translate(<span style=color:#4070a0>&#34;MainWindow&#34;</span>, <span style=color:#4070a0>&#34;初始化&#34;</span>))
-        self<span style=color:#666>.</span>pushButton_3<span style=color:#666>.</span>setText(_translate(<span style=color:#4070a0>&#34;MainWindow&#34;</span>, <span style=color:#4070a0>&#34;编码&#34;</span>))
-        self<span style=color:#666>.</span>pushButton_4<span style=color:#666>.</span>setText(_translate(<span style=color:#4070a0>&#34;MainWindow&#34;</span>, <span style=color:#4070a0>&#34;打开编码结果文件&#34;</span>))
-        self<span style=color:#666>.</span>pushButton_5<span style=color:#666>.</span>setText(_translate(<span style=color:#4070a0>&#34;MainWindow&#34;</span>, <span style=color:#4070a0>&#34;译码&#34;</span>))
-        self<span style=color:#666>.</span>pushButton_6<span style=color:#666>.</span>setText(_translate(<span style=color:#4070a0>&#34;MainWindow&#34;</span>, <span style=color:#4070a0>&#34;打开译码结果文件&#34;</span>))
+        self<span style=color:#f92672>.</span>pushButton_3 <span style=color:#f92672>=</span> QtWidgets<span style=color:#f92672>.</span>QPushButton(self<span style=color:#f92672>.</span>centralwidget)
+        self<span style=color:#f92672>.</span>pushButton_3<span style=color:#f92672>.</span>setGeometry(QtCore<span style=color:#f92672>.</span>QRect(<span style=color:#ae81ff>360</span>, <span style=color:#ae81ff>70</span>, <span style=color:#ae81ff>121</span>, <span style=color:#ae81ff>51</span>))
+        self<span style=color:#f92672>.</span>pushButton_3<span style=color:#f92672>.</span>setObjectName(<span style=color:#e6db74>&#34;pushButton_3&#34;</span>)
+        self<span style=color:#f92672>.</span>pushButton_3<span style=color:#f92672>.</span>clicked<span style=color:#f92672>.</span>connect(self<span style=color:#f92672>.</span>onButtonClick3) <span style=color:#75715e># 编码</span>
 
+        self<span style=color:#f92672>.</span>pushButton_4 <span style=color:#f92672>=</span> QtWidgets<span style=color:#f92672>.</span>QPushButton(self<span style=color:#f92672>.</span>centralwidget)
+        self<span style=color:#f92672>.</span>pushButton_4<span style=color:#f92672>.</span>setGeometry(QtCore<span style=color:#f92672>.</span>QRect(<span style=color:#ae81ff>360</span>, <span style=color:#ae81ff>130</span>, <span style=color:#ae81ff>121</span>, <span style=color:#ae81ff>51</span>))
+        self<span style=color:#f92672>.</span>pushButton_4<span style=color:#f92672>.</span>setObjectName(<span style=color:#e6db74>&#34;pushButton_4&#34;</span>)
+        self<span style=color:#f92672>.</span>pushButton_4<span style=color:#f92672>.</span>clicked<span style=color:#f92672>.</span>connect(self<span style=color:#f92672>.</span>onButtonClick4) <span style=color:#75715e># 打开编码结果文件</span>
 
-<span style=color:#007020;font-weight:700>class</span> <span style=color:#0e84b5;font-weight:700>treeNode</span>:
-    <span style=color:#007020;font-weight:700>def</span> __init__(self, data):
-        self<span style=color:#666>.</span>weight <span style=color:#666>=</span> data[<span style=color:#40a070>0</span>]
-        self<span style=color:#666>.</span>frequency <span style=color:#666>=</span> data[<span style=color:#40a070>1</span>]
-        self<span style=color:#666>.</span>left_child <span style=color:#666>=</span> <span style=color:#007020;font-weight:700>None</span>
-        self<span style=color:#666>.</span>right_child <span style=color:#666>=</span> <span style=color:#007020;font-weight:700>None</span>
-        self<span style=color:#666>.</span>code <span style=color:#666>=</span> <span style=color:#4070a0>&#34;&#34;</span>
+        self<span style=color:#f92672>.</span>pushButton_5 <span style=color:#f92672>=</span> QtWidgets<span style=color:#f92672>.</span>QPushButton(self<span style=color:#f92672>.</span>centralwidget)
+        self<span style=color:#f92672>.</span>pushButton_5<span style=color:#f92672>.</span>setGeometry(QtCore<span style=color:#f92672>.</span>QRect(<span style=color:#ae81ff>360</span>, <span style=color:#ae81ff>190</span>, <span style=color:#ae81ff>121</span>, <span style=color:#ae81ff>51</span>))
+        self<span style=color:#f92672>.</span>pushButton_5<span style=color:#f92672>.</span>setObjectName(<span style=color:#e6db74>&#34;pushButton_5&#34;</span>)
+        self<span style=color:#f92672>.</span>pushButton_5<span style=color:#f92672>.</span>clicked<span style=color:#f92672>.</span>connect(self<span style=color:#f92672>.</span>onButtonClick5) <span style=color:#75715e># 译码</span>
 
+        self<span style=color:#f92672>.</span>pushButton_6 <span style=color:#f92672>=</span> QtWidgets<span style=color:#f92672>.</span>QPushButton(self<span style=color:#f92672>.</span>centralwidget)
+        self<span style=color:#f92672>.</span>pushButton_6<span style=color:#f92672>.</span>setGeometry(QtCore<span style=color:#f92672>.</span>QRect(<span style=color:#ae81ff>360</span>, <span style=color:#ae81ff>250</span>, <span style=color:#ae81ff>121</span>, <span style=color:#ae81ff>51</span>))
+        self<span style=color:#f92672>.</span>pushButton_6<span style=color:#f92672>.</span>setObjectName(<span style=color:#e6db74>&#34;pushButton_6&#34;</span>)
+        self<span style=color:#f92672>.</span>pushButton_6<span style=color:#f92672>.</span>clicked<span style=color:#f92672>.</span>connect(self<span style=color:#f92672>.</span>onButtonClick6) <span style=color:#75715e># 打开译码结果文件</span>
 
-<span style=color:#007020;font-weight:700>class</span> <span style=color:#0e84b5;font-weight:700>nodeQueue</span>:
-    <span style=color:#007020;font-weight:700>def</span> __init__(self, codes):
-        self<span style=color:#666>.</span>queue <span style=color:#666>=</span> createNodeQueue(codes)
-        self<span style=color:#666>.</span>length <span style=color:#666>=</span> <span style=color:#007020>len</span>(self<span style=color:#666>.</span>queue)
+        MainWindow<span style=color:#f92672>.</span>setCentralWidget(self<span style=color:#f92672>.</span>centralwidget)
+        self<span style=color:#f92672>.</span>statusbar <span style=color:#f92672>=</span> QtWidgets<span style=color:#f92672>.</span>QStatusBar(MainWindow)
+        self<span style=color:#f92672>.</span>statusbar<span style=color:#f92672>.</span>setObjectName(<span style=color:#e6db74>&#34;statusbar&#34;</span>)
+        MainWindow<span style=color:#f92672>.</span>setStatusBar(self<span style=color:#f92672>.</span>statusbar)
 
-    <span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>addNode</span>(self, node):
-        self<span style=color:#666>.</span>queue <span style=color:#666>=</span> addNodeQueue(self<span style=color:#666>.</span>queue, node)
-        self<span style=color:#666>.</span>length <span style=color:#666>+=</span> <span style=color:#40a070>1</span>
-
-    <span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>deleteNode</span>(self):
-        self<span style=color:#666>.</span>length <span style=color:#666>-=</span> <span style=color:#40a070>1</span>
-        <span style=color:#007020;font-weight:700>return</span> self<span style=color:#666>.</span>queue<span style=color:#666>.</span>pop(<span style=color:#40a070>0</span>)
+        self<span style=color:#f92672>.</span>retranslateUi(MainWindow)
+        QtCore<span style=color:#f92672>.</span>QMetaObject<span style=color:#f92672>.</span>connectSlotsByName(MainWindow)
 
 
-<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>createNodeQueue</span>(codes):
-    que <span style=color:#666>=</span> []
-    <span style=color:#007020;font-weight:700>for</span> code <span style=color:#007020;font-weight:700>in</span> codes:
-        que<span style=color:#666>.</span>append(treeNode(code))
-    <span style=color:#007020;font-weight:700>return</span> que
+    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>onButtonClick</span>(self): <span style=color:#75715e># 初始化</span>
+        myQueue <span style=color:#f92672>=</span> nodeQueue(countFreq(self<span style=color:#f92672>.</span>textEdit<span style=color:#f92672>.</span>toPlainText()))
+        myTree <span style=color:#f92672>=</span> createTree(myQueue)
+        initCoder(myTree, <span style=color:#e6db74>&#39;&#39;</span>)
+        QMessageBox<span style=color:#f92672>.</span>information(self<span style=color:#f92672>.</span>centralwidget, <span style=color:#e6db74>&#39;Huffman-init&#39;</span>, <span style=color:#e6db74>&#39;Big cong！哈夫曼树初始化成功！&#39;</span>)
+
+    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>onButtonClick3</span>(self):  <span style=color:#75715e># 编码</span>
+        self<span style=color:#f92672>.</span>enStr <span style=color:#f92672>=</span> encode(self<span style=color:#f92672>.</span>textEdit<span style=color:#f92672>.</span>toPlainText())
+        QMessageBox<span style=color:#f92672>.</span>information(self<span style=color:#f92672>.</span>centralwidget, <span style=color:#e6db74>&#39;Huffman-encoding&#39;</span>, <span style=color:#e6db74>&#39;字符编码完成，结果存入文件 codefile.txt 中~&#39;</span>)
+
+    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>onButtonClick4</span>(self):  <span style=color:#75715e># 打开编码结果文件</span>
+        codefile <span style=color:#f92672>=</span> path <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\\</span><span style=color:#e6db74>codefile.txt&#34;</span>
+        os<span style=color:#f92672>.</span>startfile(codefile)
+
+    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>onButtonClick5</span>(self):  <span style=color:#75715e># 译码</span>
+        decode(self<span style=color:#f92672>.</span>enStr)
+        QMessageBox<span style=color:#f92672>.</span>information(self<span style=color:#f92672>.</span>centralwidget, <span style=color:#e6db74>&#39;Huffman-decoding&#39;</span>, <span style=color:#e6db74>&#39;字符译码完成，结果存入文件 textfile.txt 中~&#39;</span>)
+
+    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>onButtonClick6</span>(self):  <span style=color:#75715e># 打开译码结果文件</span>
+        testfile <span style=color:#f92672>=</span> path <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\\</span><span style=color:#e6db74>textfile.txt&#34;</span>
+        os<span style=color:#f92672>.</span>startfile(testfile)
+
+    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>retranslateUi</span>(self, MainWindow):
+        _translate <span style=color:#f92672>=</span> QtCore<span style=color:#f92672>.</span>QCoreApplication<span style=color:#f92672>.</span>translate
+        MainWindow<span style=color:#f92672>.</span>setWindowTitle(_translate(<span style=color:#e6db74>&#34;MainWindow&#34;</span>, <span style=color:#e6db74>&#34;Huffman by wyd&#34;</span>))
+        self<span style=color:#f92672>.</span>pushButton<span style=color:#f92672>.</span>setText(_translate(<span style=color:#e6db74>&#34;MainWindow&#34;</span>, <span style=color:#e6db74>&#34;初始化&#34;</span>))
+        self<span style=color:#f92672>.</span>pushButton_3<span style=color:#f92672>.</span>setText(_translate(<span style=color:#e6db74>&#34;MainWindow&#34;</span>, <span style=color:#e6db74>&#34;编码&#34;</span>))
+        self<span style=color:#f92672>.</span>pushButton_4<span style=color:#f92672>.</span>setText(_translate(<span style=color:#e6db74>&#34;MainWindow&#34;</span>, <span style=color:#e6db74>&#34;打开编码结果文件&#34;</span>))
+        self<span style=color:#f92672>.</span>pushButton_5<span style=color:#f92672>.</span>setText(_translate(<span style=color:#e6db74>&#34;MainWindow&#34;</span>, <span style=color:#e6db74>&#34;译码&#34;</span>))
+        self<span style=color:#f92672>.</span>pushButton_6<span style=color:#f92672>.</span>setText(_translate(<span style=color:#e6db74>&#34;MainWindow&#34;</span>, <span style=color:#e6db74>&#34;打开译码结果文件&#34;</span>))
 
 
-<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>addNodeQueue</span>(queue, new_node):
-    <span style=color:#007020;font-weight:700>if</span> <span style=color:#007020>len</span>(queue) <span style=color:#666>==</span> <span style=color:#40a070>0</span>:
-        <span style=color:#007020;font-weight:700>return</span> [new_node]
-    <span style=color:#007020;font-weight:700>for</span> i <span style=color:#007020;font-weight:700>in</span> <span style=color:#007020>range</span>(<span style=color:#007020>len</span>(queue)):
-        <span style=color:#007020;font-weight:700>if</span> queue[i]<span style=color:#666>.</span>frequency <span style=color:#666>&gt;=</span> new_node<span style=color:#666>.</span>frequency:
-            <span style=color:#007020;font-weight:700>return</span> queue[:i] <span style=color:#666>+</span> [new_node] <span style=color:#666>+</span> queue[i:]
-    <span style=color:#007020;font-weight:700>return</span> queue <span style=color:#666>+</span> [new_node]
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>treeNode</span>:
+    <span style=color:#66d9ef>def</span> __init__(self, data):
+        self<span style=color:#f92672>.</span>weight <span style=color:#f92672>=</span> data[<span style=color:#ae81ff>0</span>]
+        self<span style=color:#f92672>.</span>frequency <span style=color:#f92672>=</span> data[<span style=color:#ae81ff>1</span>]
+        self<span style=color:#f92672>.</span>left_child <span style=color:#f92672>=</span> <span style=color:#66d9ef>None</span>
+        self<span style=color:#f92672>.</span>right_child <span style=color:#f92672>=</span> <span style=color:#66d9ef>None</span>
+        self<span style=color:#f92672>.</span>code <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;&#34;</span>
 
 
-<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>countFreq</span>(input_str):
-    match <span style=color:#666>=</span> {}
-    <span style=color:#007020;font-weight:700>for</span> ch <span style=color:#007020;font-weight:700>in</span> input_str:
-        <span style=color:#007020;font-weight:700>if</span> ch <span style=color:#007020;font-weight:700>in</span> match:
-            match[ch] <span style=color:#666>+=</span> <span style=color:#40a070>1</span>
-        <span style=color:#007020;font-weight:700>else</span>:
-            match[ch] <span style=color:#666>=</span> <span style=color:#40a070>1</span>
-    <span style=color:#007020;font-weight:700>return</span> <span style=color:#007020>sorted</span>(match<span style=color:#666>.</span>items(), key<span style=color:#666>=</span><span style=color:#007020;font-weight:700>lambda</span> x: x[<span style=color:#40a070>1</span>])
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>nodeQueue</span>:
+    <span style=color:#66d9ef>def</span> __init__(self, codes):
+        self<span style=color:#f92672>.</span>queue <span style=color:#f92672>=</span> createNodeQueue(codes)
+        self<span style=color:#f92672>.</span>length <span style=color:#f92672>=</span> len(self<span style=color:#f92672>.</span>queue)
+
+    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>addNode</span>(self, node):
+        self<span style=color:#f92672>.</span>queue <span style=color:#f92672>=</span> addNodeQueue(self<span style=color:#f92672>.</span>queue, node)
+        self<span style=color:#f92672>.</span>length <span style=color:#f92672>+=</span> <span style=color:#ae81ff>1</span>
+
+    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>deleteNode</span>(self):
+        self<span style=color:#f92672>.</span>length <span style=color:#f92672>-=</span> <span style=color:#ae81ff>1</span>
+        <span style=color:#66d9ef>return</span> self<span style=color:#f92672>.</span>queue<span style=color:#f92672>.</span>pop(<span style=color:#ae81ff>0</span>)
 
 
-<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>createTree</span>(node_queue):
-    <span style=color:#007020;font-weight:700>while</span> node_queue<span style=color:#666>.</span>length <span style=color:#666>!=</span> <span style=color:#40a070>1</span>:
-        node_lchild <span style=color:#666>=</span> node_queue<span style=color:#666>.</span>deleteNode()
-        node_rchild <span style=color:#666>=</span> node_queue<span style=color:#666>.</span>deleteNode()
-        node_parent <span style=color:#666>=</span> treeNode([<span style=color:#007020;font-weight:700>None</span>, node_lchild<span style=color:#666>.</span>frequency <span style=color:#666>+</span> node_rchild<span style=color:#666>.</span>frequency])
-        node_parent<span style=color:#666>.</span>left_child <span style=color:#666>=</span> node_lchild
-        node_parent<span style=color:#666>.</span>right_child <span style=color:#666>=</span> node_rchild
-        node_queue<span style=color:#666>.</span>addNode(node_parent)
-    <span style=color:#007020;font-weight:700>return</span> node_queue<span style=color:#666>.</span>deleteNode()
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>createNodeQueue</span>(codes):
+    que <span style=color:#f92672>=</span> []
+    <span style=color:#66d9ef>for</span> code <span style=color:#f92672>in</span> codes:
+        que<span style=color:#f92672>.</span>append(treeNode(code))
+    <span style=color:#66d9ef>return</span> que
 
 
-<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>initCoder</span>(node, x):
-    <span style=color:#007020;font-weight:700>global</span> coder
-    <span style=color:#007020;font-weight:700>if</span> node:
-        initCoder(node<span style=color:#666>.</span>left_child, x <span style=color:#666>+</span> <span style=color:#4070a0>&#39;0&#39;</span>)
-        node<span style=color:#666>.</span>code <span style=color:#666>+=</span> x
-        <span style=color:#007020;font-weight:700>if</span> node<span style=color:#666>.</span>weight:
-            decoder[node<span style=color:#666>.</span>code] <span style=color:#666>=</span> node<span style=color:#666>.</span>weight
-            encoder[node<span style=color:#666>.</span>weight] <span style=color:#666>=</span> node<span style=color:#666>.</span>code
-        initCoder(node<span style=color:#666>.</span>right_child, x <span style=color:#666>+</span> <span style=color:#4070a0>&#39;1&#39;</span>)
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>addNodeQueue</span>(queue, new_node):
+    <span style=color:#66d9ef>if</span> len(queue) <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>:
+        <span style=color:#66d9ef>return</span> [new_node]
+    <span style=color:#66d9ef>for</span> i <span style=color:#f92672>in</span> range(len(queue)):
+        <span style=color:#66d9ef>if</span> queue[i]<span style=color:#f92672>.</span>frequency <span style=color:#f92672>&gt;=</span> new_node<span style=color:#f92672>.</span>frequency:
+            <span style=color:#66d9ef>return</span> queue[:i] <span style=color:#f92672>+</span> [new_node] <span style=color:#f92672>+</span> queue[i:]
+    <span style=color:#66d9ef>return</span> queue <span style=color:#f92672>+</span> [new_node]
 
 
-<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>encode</span>(en_str):
-    <span style=color:#007020;font-weight:700>global</span> encoder
-    encode <span style=color:#666>=</span> <span style=color:#4070a0>&#34;&#34;</span>
-    <span style=color:#007020;font-weight:700>for</span> c <span style=color:#007020;font-weight:700>in</span> en_str:
-        encode <span style=color:#666>+=</span> encoder[c]
-    <span style=color:#007020;font-weight:700>with</span> <span style=color:#007020>open</span>(path<span style=color:#666>+</span><span style=color:#4070a0>&#39;</span><span style=color:#4070a0;font-weight:700>\\</span><span style=color:#4070a0>codefile.txt&#39;</span>, <span style=color:#4070a0>&#39;w&#39;</span>) <span style=color:#007020;font-weight:700>as</span> f:
-        f<span style=color:#666>.</span>write(encode)
-    <span style=color:#007020;font-weight:700>return</span> encode
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>countFreq</span>(input_str):
+    match <span style=color:#f92672>=</span> {}
+    <span style=color:#66d9ef>for</span> ch <span style=color:#f92672>in</span> input_str:
+        <span style=color:#66d9ef>if</span> ch <span style=color:#f92672>in</span> match:
+            match[ch] <span style=color:#f92672>+=</span> <span style=color:#ae81ff>1</span>
+        <span style=color:#66d9ef>else</span>:
+            match[ch] <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>
+    <span style=color:#66d9ef>return</span> sorted(match<span style=color:#f92672>.</span>items(), key<span style=color:#f92672>=</span><span style=color:#66d9ef>lambda</span> x: x[<span style=color:#ae81ff>1</span>])
 
 
-<span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>decode</span>(de_str):
-    <span style=color:#007020;font-weight:700>global</span> decoder
-    decode <span style=color:#666>=</span> <span style=color:#4070a0>&#34;&#34;</span>
-    tmp <span style=color:#666>=</span> <span style=color:#4070a0>&#34;&#34;</span>
-    <span style=color:#007020;font-weight:700>for</span> c <span style=color:#007020;font-weight:700>in</span> de_str:
-        tmp <span style=color:#666>+=</span> c
-        <span style=color:#007020;font-weight:700>if</span> tmp <span style=color:#007020;font-weight:700>in</span> decoder:
-            decode <span style=color:#666>+=</span> decoder[tmp]
-            tmp <span style=color:#666>=</span> <span style=color:#4070a0>&#34;&#34;</span>
-    <span style=color:#007020;font-weight:700>with</span> <span style=color:#007020>open</span>(path<span style=color:#666>+</span><span style=color:#4070a0>&#39;</span><span style=color:#4070a0;font-weight:700>\\</span><span style=color:#4070a0>textfile.txt&#39;</span>, <span style=color:#4070a0>&#39;w&#39;</span>) <span style=color:#007020;font-weight:700>as</span> f:
-        f<span style=color:#666>.</span>write(decode)
-    <span style=color:#007020;font-weight:700>return</span> decode
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>createTree</span>(node_queue):
+    <span style=color:#66d9ef>while</span> node_queue<span style=color:#f92672>.</span>length <span style=color:#f92672>!=</span> <span style=color:#ae81ff>1</span>:
+        node_lchild <span style=color:#f92672>=</span> node_queue<span style=color:#f92672>.</span>deleteNode()
+        node_rchild <span style=color:#f92672>=</span> node_queue<span style=color:#f92672>.</span>deleteNode()
+        node_parent <span style=color:#f92672>=</span> treeNode([<span style=color:#66d9ef>None</span>, node_lchild<span style=color:#f92672>.</span>frequency <span style=color:#f92672>+</span> node_rchild<span style=color:#f92672>.</span>frequency])
+        node_parent<span style=color:#f92672>.</span>left_child <span style=color:#f92672>=</span> node_lchild
+        node_parent<span style=color:#f92672>.</span>right_child <span style=color:#f92672>=</span> node_rchild
+        node_queue<span style=color:#f92672>.</span>addNode(node_parent)
+    <span style=color:#66d9ef>return</span> node_queue<span style=color:#f92672>.</span>deleteNode()
 
 
-<span style=color:#007020;font-weight:700>if</span> __name__ <span style=color:#666>==</span> <span style=color:#4070a0>&#39;__main__&#39;</span>:
-    app <span style=color:#666>=</span> QtWidgets<span style=color:#666>.</span>QApplication(sys<span style=color:#666>.</span>argv)
-    MainWindow <span style=color:#666>=</span> QtWidgets<span style=color:#666>.</span>QMainWindow()
-    ui <span style=color:#666>=</span> Ui_MainWindow()
-    ui<span style=color:#666>.</span>setupUi(MainWindow)
-    MainWindow<span style=color:#666>.</span>show()
-    sys<span style=color:#666>.</span>exit(app<span style=color:#666>.</span>exec_())
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>initCoder</span>(node, x):
+    <span style=color:#66d9ef>global</span> coder
+    <span style=color:#66d9ef>if</span> node:
+        initCoder(node<span style=color:#f92672>.</span>left_child, x <span style=color:#f92672>+</span> <span style=color:#e6db74>&#39;0&#39;</span>)
+        node<span style=color:#f92672>.</span>code <span style=color:#f92672>+=</span> x
+        <span style=color:#66d9ef>if</span> node<span style=color:#f92672>.</span>weight:
+            decoder[node<span style=color:#f92672>.</span>code] <span style=color:#f92672>=</span> node<span style=color:#f92672>.</span>weight
+            encoder[node<span style=color:#f92672>.</span>weight] <span style=color:#f92672>=</span> node<span style=color:#f92672>.</span>code
+        initCoder(node<span style=color:#f92672>.</span>right_child, x <span style=color:#f92672>+</span> <span style=color:#e6db74>&#39;1&#39;</span>)
+
+
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>encode</span>(en_str):
+    <span style=color:#66d9ef>global</span> encoder
+    encode <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;&#34;</span>
+    <span style=color:#66d9ef>for</span> c <span style=color:#f92672>in</span> en_str:
+        encode <span style=color:#f92672>+=</span> encoder[c]
+    <span style=color:#66d9ef>with</span> open(path<span style=color:#f92672>+</span><span style=color:#e6db74>&#39;</span><span style=color:#ae81ff>\\</span><span style=color:#e6db74>codefile.txt&#39;</span>, <span style=color:#e6db74>&#39;w&#39;</span>) <span style=color:#66d9ef>as</span> f:
+        f<span style=color:#f92672>.</span>write(encode)
+    <span style=color:#66d9ef>return</span> encode
+
+
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>decode</span>(de_str):
+    <span style=color:#66d9ef>global</span> decoder
+    decode <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;&#34;</span>
+    tmp <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;&#34;</span>
+    <span style=color:#66d9ef>for</span> c <span style=color:#f92672>in</span> de_str:
+        tmp <span style=color:#f92672>+=</span> c
+        <span style=color:#66d9ef>if</span> tmp <span style=color:#f92672>in</span> decoder:
+            decode <span style=color:#f92672>+=</span> decoder[tmp]
+            tmp <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;&#34;</span>
+    <span style=color:#66d9ef>with</span> open(path<span style=color:#f92672>+</span><span style=color:#e6db74>&#39;</span><span style=color:#ae81ff>\\</span><span style=color:#e6db74>textfile.txt&#39;</span>, <span style=color:#e6db74>&#39;w&#39;</span>) <span style=color:#66d9ef>as</span> f:
+        f<span style=color:#f92672>.</span>write(decode)
+    <span style=color:#66d9ef>return</span> decode
+
+
+<span style=color:#66d9ef>if</span> __name__ <span style=color:#f92672>==</span> <span style=color:#e6db74>&#39;__main__&#39;</span>:
+    app <span style=color:#f92672>=</span> QtWidgets<span style=color:#f92672>.</span>QApplication(sys<span style=color:#f92672>.</span>argv)
+    MainWindow <span style=color:#f92672>=</span> QtWidgets<span style=color:#f92672>.</span>QMainWindow()
+    ui <span style=color:#f92672>=</span> Ui_MainWindow()
+    ui<span style=color:#f92672>.</span>setupUi(MainWindow)
+    MainWindow<span style=color:#f92672>.</span>show()
+    sys<span style=color:#f92672>.</span>exit(app<span style=color:#f92672>.</span>exec_())
 
 </code></pre></div><h2 id=3-后续>3 后续</h2>
 <ul>
@@ -273,6 +275,7 @@ decoder <span style=color:#666>=</span> {}
 </footer>
 <script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-80H8N7NN50','auto'),ga('send','pageview'))</script>
 <script async src=https://www.google-analytics.com/analytics.js></script>
+<script src=https://lunarwhite.github.iojs/toggle.dark.js></script>
 <script>feather.replace()</script>
 <script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
 </body>
