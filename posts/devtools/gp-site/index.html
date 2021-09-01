@@ -1,0 +1,166 @@
+<!doctype html><html><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge"><title>Personal static website hosts on Github Pages using Hugo - lunarwhite</title><link rel=icon type=image/png href=favicon/favicon.ico><meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="Brief and customised manuals for me to check.">
+<meta property="og:image" content>
+<meta property="og:title" content="Personal static website hosts on Github Pages using Hugo">
+<meta property="og:description" content="Brief and customised manuals for me to check.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lunarwhite.github.io/posts/devtools/gp-site/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2019-10-14T19:40:48+00:00">
+<meta property="article:modified_time" content="2019-10-14T19:40:48+00:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="Personal static website hosts on Github Pages using Hugo">
+<meta name=twitter:description content="Brief and customised manuals for me to check.">
+<script src=https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel=stylesheet>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel=stylesheet>
+<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel=stylesheet>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2cd813e50a99e0d45695e178eb612f3c1b609d0213e57cffe91396333316436e.css>
+</head>
+<body>
+<div class=content><header>
+<div class=main>
+<a href=https://lunarwhite.github.io>lunarwhite</a>
+</div>
+<nav>
+<a href=/>Home</a>
+<a href=/posts>Posts</a>
+<a href=/tags>Tags</a>
+<a href=/about>About</a>
+</nav>
+</header>
+<main>
+<article>
+<div class=title>
+<h1 class=title>Personal static website hosts on Github Pages using Hugo</h1>
+<div class=meta>Posted on Oct 14, 2019</div>
+</div>
+<section class=body>
+<h2 id=0-quick-start>0 Quick start</h2>
+<ul>
+<li><a href=https://gohugo.io/getting-started/quick-start/>Quick Start - Hugo</a></li>
+<li><a href=https://gohugo.io/hosting-and-deployment/hosting-on-github/>Host on GitHub - Hugo</a></li>
+</ul>
+<h2 id=1-create-hugo-repository>1 Create hugo repository</h2>
+<ul>
+<li>install hugo on Windows: <code>scoop install hugo-extended</code></li>
+<li>create site directory: <code>hugo new site personal-blog-v2</code></li>
+</ul>
+<h2 id=2-add-hugo-theme>2 Add hugo theme</h2>
+<ul>
+<li>choose from <a href=https://themes.gohugo.io/>Hugo Theme Gallery</a></li>
+<li>clone theme repo, like</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>  <span style=color:#007020>cd</span> personal-blog
+  git clone https://github.com/athul/archie.git themes/archie
+</code></pre></div><ul>
+<li>remove <code>.git</code> dependence</li>
+</ul>
+<h2 id=3-add-contents>3 Add contents</h2>
+<ul>
+<li><code>content.md</code> template
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>---
+title: &#34;{{ replace .Name &#34;-&#34; &#34; &#34; | title }}&#34;
+date: {{ .Date }}
+draft: false
+description: temp.
+tags: [temp]
+---
+</code></pre></div></li>
+<li>content directory structure example</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>.
+│   about.md
+│   _index.md
+├───images
+│   ├───db-tiny-zh1
+│   │       01.png
+│   │       02.gif
+│   └───mitmissing1
+│           01.png
+│           02.png
+└───posts
+    ├───assigns
+    │       db-tiny-zh1.md
+    ├───devtools
+    │       chrome-edge.md
+    ├───guides
+    │       conda.md
+    ├───notes
+    │       mitmissing1.md
+    └───thoughts
+            ask-and-answer.md
+</code></pre></div><h2 id=4-test-and-bulid>4 Test and bulid</h2>
+<ul>
+<li>automatically deploy using Github actions
+<ul>
+<li><a href=https://github.com/marketplace/actions/hugo-setup>hugo setup</a></li>
+<li><a href=https://github.com/marketplace/actions/github-pages-action>GitHub pages action</a></li>
+<li><a href=https://www.fournoas.com/posts/deploy-hugo-site-using-github-actions/>使用 GitHub Actions 自动部署 Hugo 站点</a></li>
+</ul>
+</li>
+<li>test on localhost only: <code>hugo server -D</code></li>
+<li>release：<code>hugo --minify</code></li>
+</ul>
+<h2 id=5-theme-features>5 Theme features</h2>
+<ul>
+<li>modify config files
+<ul>
+<li><a href=https://github.com/athul/archie/>config.toml</a></li>
+</ul>
+</li>
+<li>basic settings
+<ul>
+<li>dark mode(√)</li>
+<li>mobile view(√)</li>
+<li>syntax highlight(√)</li>
+<li>web-site icon(√)</li>
+<li>add personal links(√)</li>
+<li>comment system</li>
+<li>friend links</li>
+</ul>
+</li>
+<li>advanced settings
+<ul>
+<li>CDN</li>
+<li>SEO
+<ul>
+<li><a href=https://www.bing.com/webmasters>https://www.bing.com/webmasters</a></li>
+<li><a href=https://developers.google.com/search>https://developers.google.com/search</a></li>
+<li><a href=https://gohugo.io/templates/sitemap-template/>https://gohugo.io/templates/sitemap-template/</a></li>
+<li><a href=https://affectalways.github.io/hugo_seo/>https://affectalways.github.io/hugo_seo/</a></li>
+</ul>
+</li>
+<li>Google-Analysis
+<ul>
+<li>analysis：dwcn22，G-80H8N7NN50</li>
+<li><a href=https://analytics.google.com/>https://analytics.google.com/</a></li>
+</ul>
+</li>
+<li>search in site</li>
+<li>table of contents</li>
+</ul>
+</li>
+</ul>
+</section>
+<div class=post-tags>
+<nav class="nav tags">
+<ul class=tags>
+<li><a href=/tags/development-tool>development-tool</a></li>
+<li><a href=/tags/hugo>Hugo</a></li>
+</ul>
+</nav>
+</div>
+</article>
+</main>
+<footer>
+<hr><a class=soc href=https://www.linkedin.com/in/yuedongwoo/ title=LinkedIn><i data-feather=linkedin></i></a>|<a class=soc href=https://github.com/lunarwhite title=GitHub><i data-feather=github></i></a>|<a class=soc href title=Twitter><i data-feather=twitter></i></a>|<a class=soc href title=Instagram><i data-feather=instagram></i></a>|<a class=soc href title=Bilibili><i data-feather=tv></i></a>|<a class=soc href=https://www.zhihu.com/people/wydnlz title=Zhihu><i data-feather=link></i></a>|⚡️
+2021 © lunarwhite | <a href=https://github.com/athul/archie>Archie Theme</a> | Built with <a href=https://gohugo.io>Hugo</a>
+</footer>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-80H8N7NN50','auto'),ga('send','pageview'))</script>
+<script async src=https://www.google-analytics.com/analytics.js></script>
+<script>feather.replace()</script>
+<script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
+</body>
+</html>
