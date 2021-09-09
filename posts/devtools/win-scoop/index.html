@@ -71,27 +71,27 @@ scoop checkup
 </code></pre></div><h2 id=3-软件安装>3 软件安装</h2>
 <ul>
 <li>
-<p>软件查询</p>
+<p>app query</p>
 <ul>
 <li><a href=https://scoop-docs.now.sh/apps/>https://scoop-docs.now.sh/apps/</a></li>
 <li><a href=https://rasa.github.io/scoop-directory/by-apps>https://rasa.github.io/scoop-directory/by-apps</a></li>
 </ul>
 </li>
 <li>
-<p>软件仓库</p>
+<p>app bucket</p>
 </li>
 </ul>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># 添加第三方库</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># add third party bucket</span>
 scoop bucket add &lt;bucket&gt; &lt;bucket_url&gt;
 
-<span style=color:#75715e># 添加库</span>
+<span style=color:#75715e># add official bucket</span>
 scoop bucket add extras
 scoop bucket add versions
 scoop bucket add java
 </code></pre></div><ul>
-<li>日常</li>
+<li>normal</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># 系统</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># system</span>
 scoop install geekuninstaller
 scoop install dismplusplus
 scoop install listary
@@ -99,68 +99,73 @@ scoop install everything
 scoop install motrix
 scoop install kms
 
-<span style=color:#75715e># 网络</span>
+<span style=color:#75715e># network &amp; proxy</span>
 scoop install switchhosts
 scoop install psiphon3
 scoop install shadowsocks
 scoop install v2rayn
 
-<span style=color:#75715e># 日常</span>
+<span style=color:#75715e># daily office</span>
 scoop install chromium
 scoop install firefox
-scoop install hugo-extended
-scoop install steam
+scoop install wpsoffice
 scoop install rambox
 scoop install telegram
 scoop install slack
+scoop install steam
 
-<span style=color:#75715e># 图影</span>
-scoop install ditto
-scoop install wpsoffice
-scoop install lightshot  <span style=color:#75715e># CTRL+shift+S</span>
+<span style=color:#75715e># multimedia</span>
+scoop install ditto <span style=color:#75715e># CTRL+shift+V</span>
+scoop install lightshot <span style=color:#75715e># CTRL+shift+S</span>
 scoop install imageglass
 scoop install mpv
 </code></pre></div><ul>
-<li>开发</li>
+<li>development</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># 终端模拟器</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># terminal emulator</span>
 scoop install windows-terminal	<span style=color:#75715e># admin</span>
 scoop install mobaxterm	<span style=color:#75715e># admin, icon</span>
 scoop install hyper	<span style=color:#75715e># admin</span>
 
-<span style=color:#75715e># 文本编辑器 / IDE</span>
+<span style=color:#75715e># text editor / IDE</span>
 scoop install typora	<span style=color:#75715e># theme: github, night, monokai, misty, purple, fluent, drake</span>
 scoop install vscode
 scoop install vscode-insider
 scoop install jetbrains-toolbox
 
---------------------------
-<span style=color:#75715e># Image &amp; text</span>
+<span style=color:#75715e># image &amp; text</span>
+scoop install hugo-extended
 scoop install pandoc
 scoop install latex
 scoop install graphviz
 
-<span style=color:#75715e># Database</span>
+<span style=color:#75715e># database</span>
 scoop install mysql
+scoop install sqlite
+scoop install postgresql
+scoop install mongodb
 scoop install redis
+scoop install kafka
+scoop install rabbitmq
+scoop install
 
-<span style=color:#75715e># Web &amp; other</span>
+<span style=color:#75715e># web &amp; other</span>
 scoop install nodejs-lts
 scoop install nginx
 scoop install tomcat
 scoop install postman
 
-<span style=color:#75715e># Golang</span>
+<span style=color:#75715e># golang</span>
 scoop install go
 
-<span style=color:#75715e># Python</span>
+<span style=color:#75715e># python</span>
 scoop install miniconda3
 
-<span style=color:#75715e># C/C++</span>
+<span style=color:#75715e># c/cpp</span>
 scoop install gcc
 scoop install gdb
 
-<span style=color:#75715e># Java</span>
+<span style=color:#75715e># java</span>
 scoop install openjdk8-redhat
 scoop install maven
 </code></pre></div><h2 id=常用命令>常用命令</h2>
