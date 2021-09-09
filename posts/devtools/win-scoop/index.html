@@ -40,7 +40,7 @@
 </div>
 <section class=body>
 <p>众所周知，Windows 下进行开发多少有点反人类，环境配置和 macos/linux 相比，简直就是灾难。索性有人开源了一系列包管理工具，scoop/chocolatey/winget，对比之下，选择了 scoop，体验良好，写一文向大家安利。</p>
-<h1 id=必要性>必要性</h1>
+<h2 id=1-必要性>1 必要性</h2>
 <blockquote>
 <p>如果用过 macOS 或者 Linux 的朋友，或多或少都听说过包管理工具。通过包管理工具，你可以直接在终端中快速自动地安装、配置、卸载和升级软件，而无需通过 GUI 页面一步步手动安装下载软件。这非常适合一次性安装非常多软件，大大地节约了软件安装所需要的时间和步骤，同时也在一定程度上确保了来源软件的安全性</p>
 </blockquote>
@@ -55,7 +55,7 @@
 </ul>
 </li>
 </ul>
-<h1 id=环境部署>环境部署</h1>
+<h2 id=2-环境部署>2 环境部署</h2>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>set-executionpolicy remotesigned -scope currentuser
 
 iex <span style=color:#f92672>(</span>new-object net.webclient<span style=color:#f92672>)</span>.downloadstring<span style=color:#f92672>(</span><span style=color:#e6db74>&#39;https://raw.githubusercontent.com/lukesampson/scoop/master/bin/install.ps1&#39;</span><span style=color:#f92672>)</span>
@@ -68,7 +68,7 @@ scoop install innounp
 scoop install dark
 
 scoop checkup
-</code></pre></div><h1 id=软件安装>软件安装</h1>
+</code></pre></div><h2 id=3-软件安装>3 软件安装</h2>
 <ul>
 <li>
 <p>软件查询</p>
@@ -97,14 +97,22 @@ scoop install dismplusplus
 scoop install listary
 scoop install everything
 scoop install motrix
+scoop install kms
 
 <span style=color:#75715e># 网络</span>
 scoop install switchhosts
 scoop install psiphon3
+scoop install shadowsocks
+scoop install v2rayn
 
 <span style=color:#75715e># 日常</span>
 scoop install chromium
+scoop install firefox
 scoop install hugo-extended
+scoop install steam
+scoop install rambox
+scoop install telegram
+scoop install slack
 
 <span style=color:#75715e># 图影</span>
 scoop install ditto
@@ -115,66 +123,47 @@ scoop install mpv
 </code></pre></div><ul>
 <li>开发</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e>#命令行</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># 终端模拟器</span>
 scoop install windows-terminal	<span style=color:#75715e># admin</span>
 scoop install mobaxterm	<span style=color:#75715e># admin, icon</span>
+scoop install hyper	<span style=color:#75715e># admin</span>
 
-<span style=color:#75715e># 编辑器 / IDE</span>
+<span style=color:#75715e># 文本编辑器 / IDE</span>
 scoop install typora	<span style=color:#75715e># theme: github, night, monokai, misty, purple, fluent, drake</span>
 scoop install vscode
+scoop install vscode-insider
 scoop install jetbrains-toolbox
 
 --------------------------
-<span style=color:#75715e># 环境-文本图像</span>
+<span style=color:#75715e># Image &amp; text</span>
 scoop install pandoc
+scoop install latex
 scoop install graphviz
 
-<span style=color:#75715e># 环境-数据库</span>
+<span style=color:#75715e># Database</span>
 scoop install mysql
+scoop install redis
 
-<span style=color:#75715e># 环境-C/C++</span>
-scoop install gcc
-scoop install gdb
-
-<span style=color:#75715e># 环境-Java</span>
-scoop install openjdk8-redhat
-
-<span style=color:#75715e># 环境-Python</span>
-scoop install miniconda3
-
-<span style=color:#75715e># 环境-front</span>
+<span style=color:#75715e># Web &amp; other</span>
 scoop install nodejs-lts
-</code></pre></div><ul>
-<li>备用</li>
-</ul>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>scoop install kms
-scoop install quicklook
-scoop install autohotkey
-
-scoop install shadowsocks
-scoop install v2rayn
-
-scoop install firefox
-scoop install teamviewer
-
-scoop install steam
-
-scoop install rambox
-scoop install telegram
-scoop install slack
-
-scoop install hyper	<span style=color:#75715e># admin</span>
-scoop install vscode-insider
-
-scoop install latex
-
 scoop install nginx
 scoop install tomcat
 scoop install postman
-scoop install redis
-scoop install maven
+
+<span style=color:#75715e># Golang</span>
 scoop install go
-</code></pre></div><h1 id=常用命令>常用命令</h1>
+
+<span style=color:#75715e># Python</span>
+scoop install miniconda3
+
+<span style=color:#75715e># C/C++</span>
+scoop install gcc
+scoop install gdb
+
+<span style=color:#75715e># Java</span>
+scoop install openjdk8-redhat
+scoop install maven
+</code></pre></div><h2 id=常用命令>常用命令</h2>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># 查看已安装程序</span>
 scoop list
 <span style=color:#75715e># 查看已经添加的库</span>
