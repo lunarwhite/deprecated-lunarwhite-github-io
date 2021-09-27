@@ -1,0 +1,322 @@
+<!doctype html><html><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge"><title>[MS-Doc-Go] 3 Control Flows - lunarwhite</title><link rel=icon type=image/png href=favicon/favicon.ico><meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="Notes for awesome courses offered by Microsoft.">
+<meta property="og:image" content>
+<meta property="og:title" content="[MS-Doc-Go] 3 Control Flows">
+<meta property="og:description" content="Notes for awesome courses offered by Microsoft.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lunarwhite.github.io/posts/notes/msdocgo3/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-07-13T20:41:42+00:00">
+<meta property="article:modified_time" content="2021-07-13T20:41:42+00:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="[MS-Doc-Go] 3 Control Flows">
+<meta name=twitter:description content="Notes for awesome courses offered by Microsoft.">
+<script src=https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel=stylesheet>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel=stylesheet>
+<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel=stylesheet>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2295b92014ca185421cf463b4ce4c1bf43322196fcad9519fe35f8e89d36700d.css>
+<link disabled id=dark-mode-theme rel=stylesheet href=https://lunarwhite.github.io/css/dark.80b2eb1f37be2454ead72ba0f2662f3022d939734e00b0909a04541420aa9d6c.css>
+</head>
+<body>
+<div class=content><header>
+<div class=main>
+<a href=https://lunarwhite.github.io/>lunarwhite</a>
+</div>
+<nav>
+<a href=/>Home</a>
+<a href=/posts>Posts</a>
+<a href=/tags>Tags</a>
+<a href=/about>About</a>
+/ <a id=dark-mode-toggle><i data-feather=sun></i></a>
+</nav>
+</header>
+<main>
+<article>
+<div class=title>
+<h1 class=title>[MS-Doc-Go] 3 Control Flows</h1>
+<div class=meta>Posted on Jul 13, 2021</div>
+</div>
+<section class=body>
+<blockquote>
+<p><a href=https://docs.microsoft.com/en-us/learn/modules/go-control-flow/>Use control flows in Go</a></p>
+</blockquote>
+<h2 id=31-ifelse>3.1 If&mldr;else</h2>
+<ul>
+<li>
+<p>Basic example</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>if</span> <span style=color:#a6e22e>num</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>givemeanumber</span>(); <span style=color:#a6e22e>num</span> &lt; <span style=color:#ae81ff>0</span> {
+        <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>num</span>, <span style=color:#e6db74>&#34;is negative&#34;</span>)
+} <span style=color:#66d9ef>else</span> <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>num</span> &lt; <span style=color:#ae81ff>10</span> {
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>num</span>, <span style=color:#e6db74>&#34;has only one digit&#34;</span>)
+} <span style=color:#66d9ef>else</span> {
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>num</span>, <span style=color:#e6db74>&#34;has multiple digits&#34;</span>)
+}
+</code></pre></div></li>
+</ul>
+<h2 id=32-switch>3.2 Switch</h2>
+<ul>
+<li>
+<p>Basic example</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>switch</span> <span style=color:#a6e22e>i</span> {
+<span style=color:#66d9ef>case</span> <span style=color:#ae81ff>0</span>:
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Print</span>(<span style=color:#e6db74>&#34;zero...&#34;</span>)
+<span style=color:#66d9ef>case</span> <span style=color:#ae81ff>1</span>:
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Print</span>(<span style=color:#e6db74>&#34;one...&#34;</span>)
+<span style=color:#66d9ef>case</span> <span style=color:#ae81ff>2</span>:
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Print</span>(<span style=color:#e6db74>&#34;two...&#34;</span>)
+<span style=color:#66d9ef>default</span>:
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Print</span>(<span style=color:#e6db74>&#34;no match...&#34;</span>)
+</code></pre></div></li>
+<li>
+<p>Use multiple expressions, by using <code>,</code></p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>switch</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Now</span>().<span style=color:#a6e22e>Weekday</span>().<span style=color:#a6e22e>String</span>() {
+<span style=color:#66d9ef>case</span> <span style=color:#e6db74>&#34;Monday&#34;</span>, <span style=color:#e6db74>&#34;Tuesday&#34;</span>, <span style=color:#e6db74>&#34;Wednesday&#34;</span>, <span style=color:#e6db74>&#34;Thursday&#34;</span>, <span style=color:#e6db74>&#34;Friday&#34;</span>:
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;It&#39;s time to learn some Go.&#34;</span>)
+<span style=color:#66d9ef>default</span>:
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;It&#39;s weekend, time to rest!&#34;</span>)
+}
+</code></pre></div></li>
+<li>
+<p>Omit a condition, the condition is always true. A conditional <code>switch</code> block can be easier to maintain than a long chain of <code>if</code> and <code>else if</code> statements</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>rand</span>.<span style=color:#a6e22e>Seed</span>(<span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Now</span>().<span style=color:#a6e22e>Unix</span>())
+<span style=color:#a6e22e>r</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>rand</span>.<span style=color:#a6e22e>Float64</span>()
+<span style=color:#66d9ef>switch</span> {
+<span style=color:#66d9ef>case</span> <span style=color:#a6e22e>r</span> &gt; <span style=color:#ae81ff>0.1</span>:
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Common case, 90% of the time&#34;</span>)
+<span style=color:#66d9ef>default</span>:
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;10% of the time&#34;</span>)
+}
+</code></pre></div></li>
+<li>
+<p>In Go, when the logic falls into one case, it exits the <code>switch</code> block unless you explicitly stop it. To make the logic fall through to the next <code>case</code> immediately without validating the case, use the <code>fallthrough</code> keyword</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>switch</span> <span style=color:#a6e22e>num</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>15</span>; {
+<span style=color:#66d9ef>case</span> <span style=color:#a6e22e>num</span> &lt; <span style=color:#ae81ff>50</span>:
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%d is less than 50\n&#34;</span>, <span style=color:#a6e22e>num</span>)
+    <span style=color:#66d9ef>fallthrough</span>
+<span style=color:#66d9ef>case</span> <span style=color:#a6e22e>num</span> &gt; <span style=color:#ae81ff>100</span>:
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%d is greater than 100\n&#34;</span>, <span style=color:#a6e22e>num</span>)
+    <span style=color:#66d9ef>fallthrough</span>
+<span style=color:#66d9ef>case</span> <span style=color:#a6e22e>num</span> &lt; <span style=color:#ae81ff>200</span>:
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%d is less than 200&#34;</span>, <span style=color:#a6e22e>num</span>)
+}
+</code></pre></div></li>
+</ul>
+<h2 id=33-loop>3.3 Loop</h2>
+<ul>
+<li>
+<p>Go uses only one looping construct: <code>for</code> loop</p>
+</li>
+<li>
+<p><code>;</code> separate the three components of for loops</p>
+<ul>
+<li>An initial statement that&rsquo;s executed before the first iteration (optional)</li>
+<li>A condition expression that&rsquo;s evaluated before every iteration. The loop stops when this condition is false</li>
+<li>A poststatement that&rsquo;s executed at the end of every iteration (optional)</li>
+</ul>
+</li>
+<li>
+<p>Basic example</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>sum</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>
+<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>1</span>; <span style=color:#a6e22e>i</span> <span style=color:#f92672>&lt;=</span> <span style=color:#ae81ff>100</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+    <span style=color:#a6e22e>sum</span> <span style=color:#f92672>+=</span> <span style=color:#a6e22e>i</span>
+}
+<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;sum of 1..100 is&#34;</span>, <span style=color:#a6e22e>sum</span>)
+</code></pre></div></li>
+<li>
+<p>Empty prestatements and poststatements</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>for</span> <span style=color:#a6e22e>num</span> <span style=color:#f92672>!=</span> <span style=color:#ae81ff>5</span> {
+    <span style=color:#a6e22e>num</span> = <span style=color:#a6e22e>rand</span>.<span style=color:#a6e22e>Int63n</span>(<span style=color:#ae81ff>15</span>)
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>num</span>)
+}
+</code></pre></div></li>
+<li>
+<p>Infinite loops and <code>break</code> statements</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>for</span> {
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Print</span>(<span style=color:#e6db74>&#34;Writting inside the loop...&#34;</span>)
+    <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>num</span> = <span style=color:#a6e22e>rand</span>.<span style=color:#a6e22e>Int31n</span>(<span style=color:#ae81ff>10</span>); <span style=color:#a6e22e>num</span> <span style=color:#f92672>==</span> <span style=color:#ae81ff>5</span> {
+        <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;finish!&#34;</span>)
+        <span style=color:#66d9ef>break</span>
+    }
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>num</span>)
+}
+</code></pre></div></li>
+<li>
+<p><code>continue</code> statements, to skip the current iteration of a loop</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>for</span> <span style=color:#a6e22e>num</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>1</span>; <span style=color:#a6e22e>num</span> <span style=color:#f92672>&lt;=</span> <span style=color:#ae81ff>100</span>; <span style=color:#a6e22e>num</span><span style=color:#f92672>++</span> {
+    <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>num</span><span style=color:#f92672>%</span><span style=color:#ae81ff>5</span> <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span> {
+        <span style=color:#66d9ef>continue</span>
+    }
+    <span style=color:#a6e22e>sum</span> <span style=color:#f92672>+=</span> <span style=color:#a6e22e>num</span>
+}
+<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;The sum of 1 to 100, excluding numbers divisible by 5, is&#34;</span>, <span style=color:#a6e22e>sum</span>)
+</code></pre></div></li>
+</ul>
+<h2 id=34-defer-function>3.4 Defer function</h2>
+<ul>
+<li>
+<p>Can postpones the running of a function (including any parameters) until the function that contains the <code>defer</code> statement finishes</p>
+</li>
+<li>
+<p>Generally, you defer a function when you want to avoid forgetting about tasks like closing a file or running a cleanup process</p>
+</li>
+<li>
+<p><code>defer</code> statements run in reverse order, from last to first</p>
+</li>
+<li>
+<p>Basic example and output</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>1</span>; <span style=color:#a6e22e>i</span> <span style=color:#f92672>&lt;=</span> <span style=color:#ae81ff>4</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+    <span style=color:#66d9ef>defer</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;deferred&#34;</span>, <span style=color:#f92672>-</span><span style=color:#a6e22e>i</span>)
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;regular&#34;</span>, <span style=color:#a6e22e>i</span>)
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>regular 1
+regular 2
+regular 3
+regular 4
+deferred -4
+deferred -3
+deferred -2
+deferred -1
+</code></pre></div></li>
+<li>
+<p>A typical use case for the <code>defer</code> is to close a file after you finish using it</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+    <span style=color:#a6e22e>newfile</span>, <span style=color:#66d9ef>error</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>os</span>.<span style=color:#a6e22e>Create</span>(<span style=color:#e6db74>&#34;learnGo.txt&#34;</span>)
+    <span style=color:#66d9ef>if</span> <span style=color:#66d9ef>error</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+        <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Error: Could not create file.&#34;</span>)
+        <span style=color:#66d9ef>return</span>
+    }
+    <span style=color:#66d9ef>defer</span> <span style=color:#a6e22e>newfile</span>.<span style=color:#a6e22e>Close</span>()
+
+    <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>_</span>, <span style=color:#66d9ef>error</span> = <span style=color:#a6e22e>io</span>.<span style=color:#a6e22e>WriteString</span>(<span style=color:#a6e22e>newfile</span>, <span style=color:#e6db74>&#34;Learning Go!&#34;</span>); <span style=color:#66d9ef>error</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+        <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Error: Could not write to file.&#34;</span>)
+        <span style=color:#66d9ef>return</span>
+    }
+
+    <span style=color:#a6e22e>newfile</span>.<span style=color:#a6e22e>Sync</span>()
+}
+</code></pre></div></li>
+<li>
+<p>After you create or open a file, you defer the <code>.Close()</code> function to avoid forgetting to close the file after you&rsquo;re done</p>
+</li>
+</ul>
+<h2 id=35-panic-function>3.5 Panic function</h2>
+<ul>
+<li>
+<p>Runtime errors make a Go program panic, such as attempting to access an array by using an out-of-bounds index or dereferencing a nil pointer. You can also force a program to panic</p>
+</li>
+<li>
+<p>The built-in <code>panic()</code> stops the normal flow of control in a Go program. When you use a <code>panic</code> call, any deferred function calls run normally</p>
+</li>
+<li>
+<p>Basic example and output, combines the <code>panic</code> and <code>defer</code></p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>highlow</span>(<span style=color:#a6e22e>high</span> <span style=color:#66d9ef>int</span>, <span style=color:#a6e22e>low</span> <span style=color:#66d9ef>int</span>) {
+    <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>high</span> &lt; <span style=color:#a6e22e>low</span> {
+        <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Panic!&#34;</span>)
+        panic(<span style=color:#e6db74>&#34;highlow() low greater than high&#34;</span>)
+    }
+    <span style=color:#66d9ef>defer</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Deferred: highlow(&#34;</span>, <span style=color:#a6e22e>high</span>, <span style=color:#e6db74>&#34;,&#34;</span>, <span style=color:#a6e22e>low</span>, <span style=color:#e6db74>&#34;)&#34;</span>)
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Call: highlow(&#34;</span>, <span style=color:#a6e22e>high</span>, <span style=color:#e6db74>&#34;,&#34;</span>, <span style=color:#a6e22e>low</span>, <span style=color:#e6db74>&#34;)&#34;</span>)
+
+    <span style=color:#a6e22e>highlow</span>(<span style=color:#a6e22e>high</span>, <span style=color:#a6e22e>low</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>)
+}
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+    <span style=color:#a6e22e>highlow</span>(<span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>0</span>)
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Program finished successfully!&#34;</span>)
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>Call: highlow( 2 , 0 )
+Call: highlow( 2 , 1 )
+Call: highlow( 2 , 2 )
+Panic!
+Deferred: highlow( 2 , 2 )
+Deferred: highlow( 2 , 1 )
+Deferred: highlow( 2 , 0 )
+panic: highlow() low greater than high
+
+goroutine 1 [running]:
+main.highlow(0x2, 0x3)
+	/tmp/sandbox/prog.go:13 +0x34c
+main.highlow(0x2, 0x2)
+	/tmp/sandbox/prog.go:18 +0x298
+main.highlow(0x2, 0x1)
+	/tmp/sandbox/prog.go:18 +0x298
+main.highlow(0x2, 0x0)
+	/tmp/sandbox/prog.go:18 +0x298
+main.main()
+	/tmp/sandbox/prog.go:6 +0x37
+
+Program exited: status 2.
+</code></pre></div></li>
+<li>
+<p>When the value of <code>low</code> is greater than the value of <code>high</code>, the program panics. You see the <code>Panic!</code> message. At this point, the control flow is interrupted, and all the deferred functions start to print the <code>Deferred...</code></p>
+</li>
+<li>
+<p>The program crashes, and you see the full stack trace</p>
+</li>
+</ul>
+<h2 id=36-recover-function>3.6 Recover function</h2>
+<ul>
+<li>
+<p>To avoid a program crash and instead report the error internally. Or perhaps you want to clean up the mess before letting the program crash</p>
+</li>
+<li>
+<p>The built-in <code>recover()</code> to allow you to regain control after a panic</p>
+</li>
+<li>
+<p>You only call <code>recover</code> in a function where you&rsquo;re also calling <code>defer</code>. If you call <code>recover()</code>, it returns <code>nil</code> and has no other effect in normal running</p>
+</li>
+<li>
+<p>Basic example and output, combines the <code>panic</code> and <code>defer</code></p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+    <span style=color:#66d9ef>defer</span> <span style=color:#66d9ef>func</span>() {
+	<span style=color:#a6e22e>handler</span> <span style=color:#f92672>:=</span> recover()
+        <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>handler</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+            <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;main(): recover&#34;</span>, <span style=color:#a6e22e>handler</span>)
+        }
+    }()
+
+    <span style=color:#a6e22e>highlow</span>(<span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>0</span>)
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Program finished successfully!&#34;</span>)
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>Call: highlow( 2 , 0 )
+Call: highlow( 2 , 1 )
+Call: highlow( 2 , 2 )
+Panic!
+Deferred: highlow( 2 , 2 )
+Deferred: highlow( 2 , 1 )
+Deferred: highlow( 2 , 0 )
+main(): recover from panic highlow() low greater than high
+
+Program exited.
+</code></pre></div></li>
+<li>
+<p>The main difference is that you no longer see the stack trace error</p>
+</li>
+<li>
+<p>The combination of the <code>panic</code> and <code>recover</code> is the idiomatic way that Go handles exceptions</p>
+</li>
+</ul>
+</section>
+<div class=post-tags>
+<nav class="nav tags">
+<ul class=tags>
+<li><a href=/tags/awesome-course>awesome-course</a></li>
+<li><a href=/tags/golang>golang</a></li>
+</ul>
+</nav>
+</div>
+</article>
+</main>
+<footer>
+<hr><a class=soc href=https://www.linkedin.com/in/yuedongwoo/ title=LinkedIn><i data-feather=linkedin></i></a>|<a class=soc href=https://github.com/lunarwhite title=GitHub><i data-feather=github></i></a>|<a class=soc href title=Twitter><i data-feather=twitter></i></a>|<a class=soc href title=Instagram><i data-feather=instagram></i></a>|<a class=soc href title=Bilibili><i data-feather=tv></i></a>|<a class=soc href=https://www.zhihu.com/people/wydnlz title=Zhihu><i data-feather=link></i></a>|⚡️
+2021 © lunarwhite | <a href=https://github.com/athul/archie>Archie Theme</a> | Built with <a href=https://gohugo.io>Hugo</a>
+</footer>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-80H8N7NN50','auto'),ga('send','pageview'))</script>
+<script async src=https://www.google-analytics.com/analytics.js></script>
+<script src=https://lunarwhite.github.io/js/toggle.dark.js></script>
+<script>feather.replace()</script>
+<script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
+</body>
+</html>

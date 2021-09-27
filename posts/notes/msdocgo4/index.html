@@ -1,0 +1,388 @@
+<!doctype html><html><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge"><title>[MS-Doc-Go] 4 Arrays, Slices, Maps and Structs - lunarwhite</title><link rel=icon type=image/png href=favicon/favicon.ico><meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="Notes for awesome courses offered by Microsoft.">
+<meta property="og:image" content>
+<meta property="og:title" content="[MS-Doc-Go] 4 Arrays, Slices, Maps and Structs">
+<meta property="og:description" content="Notes for awesome courses offered by Microsoft.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lunarwhite.github.io/posts/notes/msdocgo4/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-07-14T22:21:19+00:00">
+<meta property="article:modified_time" content="2021-07-14T22:21:19+00:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="[MS-Doc-Go] 4 Arrays, Slices, Maps and Structs">
+<meta name=twitter:description content="Notes for awesome courses offered by Microsoft.">
+<script src=https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel=stylesheet>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel=stylesheet>
+<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel=stylesheet>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2295b92014ca185421cf463b4ce4c1bf43322196fcad9519fe35f8e89d36700d.css>
+<link disabled id=dark-mode-theme rel=stylesheet href=https://lunarwhite.github.io/css/dark.80b2eb1f37be2454ead72ba0f2662f3022d939734e00b0909a04541420aa9d6c.css>
+</head>
+<body>
+<div class=content><header>
+<div class=main>
+<a href=https://lunarwhite.github.io/>lunarwhite</a>
+</div>
+<nav>
+<a href=/>Home</a>
+<a href=/posts>Posts</a>
+<a href=/tags>Tags</a>
+<a href=/about>About</a>
+/ <a id=dark-mode-toggle><i data-feather=sun></i></a>
+</nav>
+</header>
+<main>
+<article>
+<div class=title>
+<h1 class=title>[MS-Doc-Go] 4 Arrays, Slices, Maps and Structs</h1>
+<div class=meta>Posted on Jul 14, 2021</div>
+</div>
+<section class=body>
+<blockquote>
+<p><a href=https://docs.microsoft.com/en-us/learn/modules/go-data-types/>Use data types and structs, arrays, slices, and maps in Go</a></p>
+</blockquote>
+<h2 id=41-arrays>4.1 Arrays</h2>
+<ul>
+<li>
+<p>Have to define the size when you declare or initialize them, also can&rsquo;t resize them after they&rsquo;re created. For these reasons, arrays aren&rsquo;t commonly used in Go programs, but they&rsquo;re the foundation for slices and maps</p>
+</li>
+<li>
+<p>Go initializes each element with the default data type</p>
+</li>
+<li>
+<p>Some ways to declare and init</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>city</span> [<span style=color:#ae81ff>3</span>]<span style=color:#66d9ef>string</span>
+<span style=color:#a6e22e>city</span>[<span style=color:#ae81ff>0</span>] = <span style=color:#e6db74>&#34;Shanghai&#34;</span>
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>city</span> <span style=color:#f92672>:=</span> [<span style=color:#ae81ff>4</span>]<span style=color:#66d9ef>string</span>{<span style=color:#e6db74>&#34;Shanghai&#34;</span>, <span style=color:#e6db74>&#34;Beijing&#34;</span>, <span style=color:#e6db74>&#34;Suzhou&#34;</span>}
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>city</span> <span style=color:#f92672>:=</span> [<span style=color:#f92672>...</span>]<span style=color:#66d9ef>string</span>{<span style=color:#e6db74>&#34;Shanghai&#34;</span>, <span style=color:#e6db74>&#34;Beijing&#34;</span>, <span style=color:#e6db74>&#34;Suzhou&#34;</span>}
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>city</span> <span style=color:#f92672>:=</span> [<span style=color:#f92672>...</span>]<span style=color:#66d9ef>string</span>{<span style=color:#ae81ff>2</span>: <span style=color:#e6db74>&#34;Suzhou&#34;</span>}
+
+<span style=color:#75715e>// by default, city[0] and city[1] were inited with &#34;&#34;
+</span></code></pre></div></li>
+<li>
+<p>Go has support for multidimensional arrays</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>twoDim</span> [<span style=color:#ae81ff>3</span>][<span style=color:#ae81ff>5</span>]<span style=color:#66d9ef>int</span>
+
+<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span> &lt; <span style=color:#ae81ff>3</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>j</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>j</span> &lt; <span style=color:#ae81ff>5</span>; <span style=color:#a6e22e>j</span><span style=color:#f92672>++</span> {
+        <span style=color:#a6e22e>twoDim</span>[<span style=color:#a6e22e>i</span>][<span style=color:#a6e22e>j</span>] = (<span style=color:#a6e22e>i</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>) <span style=color:#f92672>*</span> (<span style=color:#a6e22e>j</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>)
+	}
+	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Row&#34;</span>, <span style=color:#a6e22e>i</span>, <span style=color:#a6e22e>twoDim</span>[<span style=color:#a6e22e>i</span>])
+}
+<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;\nAll at once:&#34;</span>, <span style=color:#a6e22e>twoDim</span>)
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>Row 0 [1 2 3 4 5]
+Row 1 [2 4 6 8 10]
+Row 2 [3 6 9 12 15]
+
+All at once: [[1 2 3 4 5] [2 4 6 8 10] [3 6 9 12 15]]
+</code></pre></div></li>
+</ul>
+<h2 id=42-slices>4.2 Slices</h2>
+<ul>
+<li>
+<p>Like arrays, a slice is a data type in Go that represents a sequence of elements of the same type. But the more significant difference with arrays is that the size of a slice is dynamic, not fixed</p>
+</li>
+<li>
+<p>A slice is a data structure on top of an array or another slice. We refer to the originating array or slice as the underlying array. With a slice, you can access the whole underlying array or only a subsequence of elements</p>
+</li>
+<li>
+<p>A slice has three components:</p>
+<ul>
+<li><code>Pointer</code> to the first reachable element of the underlying array</li>
+<li><code>Length</code>, the number of elements in the slice</li>
+<li><code>Capacity</code>, the number of elements between the start of the slice and the end of the underlying array</li>
+</ul>
+</li>
+<li>
+<p>Declaration same as an array, and use the built-in <code>len()</code> and <code>cap()</code></p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>months</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>string</span>{<span style=color:#e6db74>&#34;Jan&#34;</span>, <span style=color:#e6db74>&#34;Feb&#34;</span>, <span style=color:#e6db74>&#34;Mar&#34;</span>, <span style=color:#e6db74>&#34;Apr&#34;</span>, <span style=color:#e6db74>&#34;May&#34;</span>, <span style=color:#e6db74>&#34;Jun&#34;</span>, <span style=color:#e6db74>&#34;Jul&#34;</span>, <span style=color:#e6db74>&#34;Aug&#34;</span>, <span style=color:#e6db74>&#34;Sept&#34;</span>, <span style=color:#e6db74>&#34;Oct&#34;</span>, <span style=color:#e6db74>&#34;Nov&#34;</span>, <span style=color:#e6db74>&#34;Dec&#34;</span>}
+<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>months</span>)
+<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Length:&#34;</span>, len(<span style=color:#a6e22e>months</span>))
+<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Capacity:&#34;</span>, cap(<span style=color:#a6e22e>months</span>))
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>[Jan Feb Mar Apr May Jun Jul Aug Sept Oct Nov Dec]
+Length: 12
+Capacity: 12
+</code></pre></div></li>
+<li>
+<p>Slice operator <code>s[i:p]</code>, refer only to a subset of elements</p>
+<ul>
+<li><code>s</code>: the array</li>
+<li><code>i</code>: the pointer to the first element of the underlying array (or another slice) to add to the new slice. <code>i</code> corresponds to index location</li>
+<li><code>p</code>: corresponds to the last element in the underlying array that can be used in the new slice</li>
+</ul>
+</li>
+<li>
+<p>The capacity of a slice only tells you how much you can extend a slice. For this reason, you could create an extended slice from <code>quarter2</code></p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>months</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>string</span>{<span style=color:#e6db74>&#34;Jan&#34;</span>, <span style=color:#e6db74>&#34;Feb&#34;</span>, <span style=color:#e6db74>&#34;Mar&#34;</span>, <span style=color:#e6db74>&#34;Apr&#34;</span>, <span style=color:#e6db74>&#34;May&#34;</span>, <span style=color:#e6db74>&#34;Jun&#34;</span>, <span style=color:#e6db74>&#34;Jul&#34;</span>, <span style=color:#e6db74>&#34;Aug&#34;</span>, <span style=color:#e6db74>&#34;Sept&#34;</span>, <span style=color:#e6db74>&#34;Oct&#34;</span>, <span style=color:#e6db74>&#34;Nov&#34;</span>, <span style=color:#e6db74>&#34;Dec&#34;</span>}
+<span style=color:#a6e22e>quarter2</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>months</span>[<span style=color:#ae81ff>3</span>:<span style=color:#ae81ff>6</span>]
+<span style=color:#a6e22e>quarter2Extended</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>quarter2</span>[:<span style=color:#ae81ff>4</span>]
+<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>quarter2</span>, len(<span style=color:#a6e22e>quarter2</span>), cap(<span style=color:#a6e22e>quarter2</span>))
+<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>quarter2Extended</span>, len(<span style=color:#a6e22e>quarter2Extended</span>), cap(<span style=color:#a6e22e>quarter2Extended</span>))
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>[April May June] 3 9
+[April May June July] 4 9
+</code></pre></div></li>
+<li>
+<p>To add an element to a slice, Go offers built-in <code>append(slice, element)</code></p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>numbers</span> []<span style=color:#66d9ef>int</span>
+<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span> &lt; <span style=color:#ae81ff>10</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+  <span style=color:#a6e22e>numbers</span> = append(<span style=color:#a6e22e>numbers</span>, <span style=color:#a6e22e>i</span>)
+  <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%d\tcap=%d\t%v\n&#34;</span>, <span style=color:#a6e22e>i</span>, cap(<span style=color:#a6e22e>numbers</span>), <span style=color:#a6e22e>numbers</span>)
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>0       cap=1   [0]
+1       cap=2   [0 1]
+2       cap=4   [0 1 2]
+3       cap=4   [0 1 2 3]
+4       cap=8   [0 1 2 3 4]
+5       cap=8   [0 1 2 3 4 5]
+6       cap=8   [0 1 2 3 4 5 6]
+7       cap=8   [0 1 2 3 4 5 6 7]
+8       cap=16  [0 1 2 3 4 5 6 7 8]
+9       cap=16  [0 1 2 3 4 5 6 7 8 9]
+</code></pre></div></li>
+<li>
+<p>When a slice doesn&rsquo;t have enough capacity to hold more elements, Go doubles its capacity. See the output above. It creates a new underlying array with the new capacity. You do need to be cautious. At some point, a slice might have way more capacity than it needs, and you&rsquo;ll be wasting memory</p>
+</li>
+<li>
+<p>Go doesn&rsquo;t have a built-in function to remove elements. You can use the operator <code>s[i:p]</code> to create a new slice with only the elements you need</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>letters</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>string</span>{<span style=color:#e6db74>&#34;A&#34;</span>, <span style=color:#e6db74>&#34;B&#34;</span>, <span style=color:#e6db74>&#34;C&#34;</span>, <span style=color:#e6db74>&#34;D&#34;</span>, <span style=color:#e6db74>&#34;E&#34;</span>}
+<span style=color:#a6e22e>remove</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>2</span>
+
+<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>remove</span> &lt; len(<span style=color:#a6e22e>letters</span>) {
+	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Before&#34;</span>, <span style=color:#a6e22e>letters</span>, <span style=color:#e6db74>&#34;Remove &#34;</span>, <span style=color:#a6e22e>letters</span>[<span style=color:#a6e22e>remove</span>])
+	<span style=color:#a6e22e>letters</span> = append(<span style=color:#a6e22e>letters</span>[:<span style=color:#a6e22e>remove</span>], <span style=color:#a6e22e>letters</span>[<span style=color:#a6e22e>remove</span><span style=color:#f92672>+</span><span style=color:#ae81ff>1</span>:]<span style=color:#f92672>...</span>)
+	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;After&#34;</span>, <span style=color:#a6e22e>letters</span>)
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>Before [A B C D E]
+After [A B D E]
+</code></pre></div></li>
+<li>
+<p>Go has a built-in <code>copy(dst, src []Type)</code> to create copies of a slice</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>slice2</span> <span style=color:#f92672>:=</span> make([]<span style=color:#66d9ef>string</span>, <span style=color:#ae81ff>3</span>)
+copy(<span style=color:#a6e22e>slice2</span>, <span style=color:#a6e22e>letters</span>[<span style=color:#ae81ff>1</span>:<span style=color:#ae81ff>4</span>])
+</code></pre></div></li>
+<li>
+<p>When changing an elem from a slice, you&rsquo;re changing the underlying array too. Any other slices that refer to the same underlying array will be affected</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>letters</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>string</span>{<span style=color:#e6db74>&#34;A&#34;</span>, <span style=color:#e6db74>&#34;B&#34;</span>, <span style=color:#e6db74>&#34;C&#34;</span>, <span style=color:#e6db74>&#34;D&#34;</span>, <span style=color:#e6db74>&#34;E&#34;</span>}
+<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Before&#34;</span>, <span style=color:#a6e22e>letters</span>)
+
+<span style=color:#a6e22e>slice1</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>letters</span>[<span style=color:#ae81ff>0</span>:<span style=color:#ae81ff>2</span>]
+<span style=color:#a6e22e>slice2</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>letters</span>[<span style=color:#ae81ff>1</span>:<span style=color:#ae81ff>4</span>]
+
+<span style=color:#a6e22e>slice1</span>[<span style=color:#ae81ff>1</span>] = <span style=color:#e6db74>&#34;Z&#34;</span>
+
+<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;After&#34;</span>, <span style=color:#a6e22e>letters</span>)
+<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Slice2&#34;</span>, <span style=color:#a6e22e>slice2</span>)
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>Before [A B C D E]
+After [A Z C D E]
+Slice2 [Z C D]
+</code></pre></div></li>
+<li>
+<p>To fix, you need to create a slice copy, makes a new underlying array</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>letters</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>string</span>{<span style=color:#e6db74>&#34;A&#34;</span>, <span style=color:#e6db74>&#34;B&#34;</span>, <span style=color:#e6db74>&#34;C&#34;</span>, <span style=color:#e6db74>&#34;D&#34;</span>, <span style=color:#e6db74>&#34;E&#34;</span>}
+<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Before&#34;</span>, <span style=color:#a6e22e>letters</span>)
+
+<span style=color:#a6e22e>slice1</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>letters</span>[<span style=color:#ae81ff>0</span>:<span style=color:#ae81ff>2</span>]
+
+<span style=color:#a6e22e>slice2</span> <span style=color:#f92672>:=</span> make([]<span style=color:#66d9ef>string</span>, <span style=color:#ae81ff>3</span>)  <span style=color:#75715e>// create a new array and slice
+</span><span style=color:#75715e></span>copy(<span style=color:#a6e22e>slice2</span>, <span style=color:#a6e22e>letters</span>[<span style=color:#ae81ff>1</span>:<span style=color:#ae81ff>4</span>])
+
+<span style=color:#a6e22e>slice1</span>[<span style=color:#ae81ff>1</span>] = <span style=color:#e6db74>&#34;Z&#34;</span>
+
+<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;After&#34;</span>, <span style=color:#a6e22e>letters</span>)
+<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Slice2&#34;</span>, <span style=color:#a6e22e>slice2</span>)
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>Before [A B C D E]
+After [A Z C D E]
+Slice2 [B C D]
+</code></pre></div></li>
+</ul>
+<h2 id=43-maps>4.3 Maps</h2>
+<ul>
+<li>
+<p>A map in Go is basically a hash table, a collection of key and value pairs</p>
+</li>
+<li>
+<p>Basic example</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#75715e>// initialize a map with items
+</span><span style=color:#75715e></span><span style=color:#a6e22e>studentsAge</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>map</span>[<span style=color:#66d9ef>string</span>]<span style=color:#66d9ef>int</span>{
+    <span style=color:#e6db74>&#34;john&#34;</span>: <span style=color:#ae81ff>32</span>,
+    <span style=color:#e6db74>&#34;bob&#34;</span>:  <span style=color:#ae81ff>31</span>,
+}
+<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>studentsAge</span>)
+
+<span style=color:#75715e>// initialize a map without items
+</span><span style=color:#75715e></span><span style=color:#a6e22e>studentsAge2</span> <span style=color:#f92672>:=</span> make(<span style=color:#66d9ef>map</span>[<span style=color:#66d9ef>string</span>]<span style=color:#66d9ef>int</span>)
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>map[bob:31 john:32]
+</code></pre></div></li>
+<li>
+<p>To add items, you only need to define a key and a value. If the pair doesn&rsquo;t exist, the item is added to the map</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>studentsAge</span> <span style=color:#f92672>:=</span> make(<span style=color:#66d9ef>map</span>[<span style=color:#66d9ef>string</span>]<span style=color:#66d9ef>int</span>)
+<span style=color:#a6e22e>studentsAge</span>[<span style=color:#e6db74>&#34;john&#34;</span>] = <span style=color:#ae81ff>32</span>
+<span style=color:#a6e22e>studentsAge</span>[<span style=color:#e6db74>&#34;bob&#34;</span>] = <span style=color:#ae81ff>31</span>
+</code></pre></div></li>
+<li>
+<p>To access items, you use the usual subscript notation <code>m[key]</code></p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Bob&#39;s age is&#34;</span>, <span style=color:#a6e22e>studentsAge</span>[<span style=color:#e6db74>&#34;bob&#34;</span>])
+</code></pre></div></li>
+<li>
+<p>Go doesn&rsquo;t panic when access doesn&rsquo;t exist. Instead, get the default value back. To know if an item exists or not, we can use the second return values</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>age</span>, <span style=color:#a6e22e>exist</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>studentsAge</span>[<span style=color:#e6db74>&#34;christy&#34;</span>]
+<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>exist</span> {
+  <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Christy&#39;s age is&#34;</span>, <span style=color:#a6e22e>age</span>)
+} <span style=color:#66d9ef>else</span> {
+  <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Christy&#39;s age couldn&#39;t be found&#34;</span>)
+}
+</code></pre></div></li>
+<li>
+<p>To remove an item, use the built-in <code>delete()</code>.Also, if you try to delete an item that doesn&rsquo;t exist, Go won&rsquo;t panic</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go>delete(<span style=color:#a6e22e>studentsAge</span>, <span style=color:#e6db74>&#34;john&#34;</span>)
+</code></pre></div></li>
+<li>
+<p>Use the range-based loop in a map to access all its items</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>for</span> <span style=color:#a6e22e>name</span>, <span style=color:#a6e22e>age</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>studentsAge</span> {
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%s\t%d\n&#34;</span>, <span style=color:#a6e22e>name</span>, <span style=color:#a6e22e>age</span>)
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>john    32
+bob     31
+</code></pre></div></li>
+</ul>
+<h2 id=44-structs>4.4 Structs</h2>
+<ul>
+<li>
+<p>Declare a struct</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Employee</span> <span style=color:#66d9ef>struct</span> {
+  <span style=color:#a6e22e>ID</span>        <span style=color:#66d9ef>int</span>
+  <span style=color:#a6e22e>FirstName</span> <span style=color:#66d9ef>string</span>
+  <span style=color:#a6e22e>LastName</span>  <span style=color:#66d9ef>string</span>
+  <span style=color:#a6e22e>Address</span>   <span style=color:#66d9ef>string</span>
+}
+</code></pre></div></li>
+<li>
+<p>Declare and initialize a variable</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#75715e>// fully
+</span><span style=color:#75715e></span><span style=color:#a6e22e>john</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>Employee</span>{<span style=color:#ae81ff>1001</span>, <span style=color:#e6db74>&#34;John&#34;</span>, <span style=color:#e6db74>&#34;Doe&#34;</span>, <span style=color:#e6db74>&#34;Doe&#39;s Street&#34;</span>}
+
+<span style=color:#75715e>// alternatively
+</span><span style=color:#75715e></span><span style=color:#a6e22e>john</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>Employee</span>{<span style=color:#a6e22e>LastName</span>: <span style=color:#e6db74>&#34;Doe&#34;</span>, <span style=color:#a6e22e>FirstName</span>: <span style=color:#e6db74>&#34;John&#34;</span>}
+</code></pre></div></li>
+<li>
+<p>To access individual fields of a struct, use <code>.</code></p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>employee</span>.<span style=color:#a6e22e>ID</span> = <span style=color:#ae81ff>1001</span>
+<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>employee</span>.<span style=color:#a6e22e>FirstName</span>)
+</code></pre></div></li>
+<li>
+<p>To yield a pointer to the struct, use <code>&</code></p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>employee</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>Employee</span>{<span style=color:#a6e22e>LastName</span>: <span style=color:#e6db74>&#34;Doe&#34;</span>, <span style=color:#a6e22e>FirstName</span>: <span style=color:#e6db74>&#34;John&#34;</span>}
+<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>employee</span>)
+
+<span style=color:#a6e22e>employeeCopy</span> <span style=color:#f92672>:=</span> <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>employee</span>
+<span style=color:#a6e22e>employeeCopy</span>.<span style=color:#a6e22e>FirstName</span> = <span style=color:#e6db74>&#34;David&#34;</span>
+<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>employee</span>)
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>{0 John Doe }
+{0 David Doe }
+</code></pre></div></li>
+<li>
+<p>Embed another struct within a struct</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Person</span> <span style=color:#66d9ef>struct</span> {
+  <span style=color:#a6e22e>ID</span>        <span style=color:#66d9ef>int</span>
+  <span style=color:#a6e22e>FirstName</span> <span style=color:#66d9ef>string</span>
+  <span style=color:#a6e22e>LastName</span>  <span style=color:#66d9ef>string</span>
+  <span style=color:#a6e22e>Address</span>   <span style=color:#66d9ef>string</span>
+}
+
+<span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Employee</span> <span style=color:#66d9ef>struct</span> {
+  <span style=color:#a6e22e>Person</span>
+  <span style=color:#a6e22e>ManagerID</span>   <span style=color:#66d9ef>int</span>
+}
+
+<span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Contractor</span> <span style=color:#66d9ef>struct</span> {
+  <span style=color:#a6e22e>Person</span>
+  <span style=color:#a6e22e>CompanyID</span> <span style=color:#66d9ef>int</span>
+}
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+  <span style=color:#a6e22e>john</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>Employee</span> {<span style=color:#a6e22e>Person</span>: <span style=color:#a6e22e>Person</span>{<span style=color:#a6e22e>FirstName</span>: <span style=color:#e6db74>&#34;John&#34;</span>}}
+  <span style=color:#a6e22e>john</span>.<span style=color:#a6e22e>LastName</span> = <span style=color:#e6db74>&#34;Doe&#34;</span>
+  <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>employee</span>.<span style=color:#a6e22e>FirstName</span>)
+}
+</code></pre></div></li>
+<li>
+<p>Use structs to encode and decode data in JSON. Go has excellent support for the JSON format, already included in the standard library packages</p>
+</li>
+<li>
+<p>You can also do things like rename the name of a field from the struct. For instance, let&rsquo;s say that you don&rsquo;t want the JSON output to show <code>FirstName</code> but simply <code>name</code> or ignore empty fields， using field tags</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Person</span> <span style=color:#66d9ef>struct</span> {
+  <span style=color:#a6e22e>ID</span>        <span style=color:#66d9ef>int</span>
+  <span style=color:#a6e22e>FirstName</span> <span style=color:#66d9ef>string</span> <span style=color:#e6db74>`json:&#34;name&#34;`</span>
+  <span style=color:#a6e22e>LastName</span>  <span style=color:#66d9ef>string</span>
+  <span style=color:#a6e22e>Address</span>   <span style=color:#66d9ef>string</span> <span style=color:#e6db74>`json:&#34;address,omitempty&#34;`</span>
+}
+</code></pre></div></li>
+<li>
+<p>to encode a struct into JSON, you use the <code>json.Marshal</code> function. And to decode a JSON string into a data structure, you use the <code>json.Unmarshal</code> function.</p>
+</li>
+<li>
+<p>Here&rsquo;s an example that puts everything together, encoding an array of employees to JSON and decoding the output into a new variable</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+
+<span style=color:#f92672>import</span> (
+  <span style=color:#e6db74>&#34;encoding/json&#34;</span>
+  <span style=color:#e6db74>&#34;fmt&#34;</span>
+)
+
+<span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Person</span> <span style=color:#66d9ef>struct</span> {
+  <span style=color:#a6e22e>ID</span>        <span style=color:#66d9ef>int</span>
+  <span style=color:#a6e22e>FirstName</span> <span style=color:#66d9ef>string</span> <span style=color:#e6db74>`json:&#34;name&#34;`</span>
+  <span style=color:#a6e22e>LastName</span>  <span style=color:#66d9ef>string</span>
+  <span style=color:#a6e22e>Address</span>   <span style=color:#66d9ef>string</span> <span style=color:#e6db74>`json:&#34;address,omitempty&#34;`</span>
+}
+
+<span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Employee</span> <span style=color:#66d9ef>struct</span> {
+  <span style=color:#a6e22e>Person</span>
+  <span style=color:#a6e22e>ManagerID</span> <span style=color:#66d9ef>int</span>
+}
+
+<span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Contractor</span> <span style=color:#66d9ef>struct</span> {
+  <span style=color:#a6e22e>Person</span>
+  <span style=color:#a6e22e>CompanyID</span> <span style=color:#66d9ef>int</span>
+}
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+  <span style=color:#a6e22e>employees</span> <span style=color:#f92672>:=</span> []<span style=color:#a6e22e>Employee</span>{
+    <span style=color:#a6e22e>Employee</span>{<span style=color:#a6e22e>Person</span>: <span style=color:#a6e22e>Person</span>{<span style=color:#a6e22e>LastName</span>: <span style=color:#e6db74>&#34;Doe&#34;</span>, <span style=color:#a6e22e>FirstName</span>: <span style=color:#e6db74>&#34;John&#34;</span>}},
+    <span style=color:#a6e22e>Employee</span>{<span style=color:#a6e22e>Person</span>: <span style=color:#a6e22e>Person</span>{<span style=color:#a6e22e>LastName</span>: <span style=color:#e6db74>&#34;Cam&#34;</span>, <span style=color:#a6e22e>FirstName</span>: <span style=color:#e6db74>&#34;Dave&#34;</span>}},
+	}
+
+  <span style=color:#a6e22e>data</span>, <span style=color:#a6e22e>_</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>json</span>.<span style=color:#a6e22e>Marshal</span>(<span style=color:#a6e22e>employees</span>)
+  <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%s\n&#34;</span>, <span style=color:#a6e22e>data</span>)
+
+  <span style=color:#66d9ef>var</span> <span style=color:#a6e22e>decoded</span> []<span style=color:#a6e22e>Employee</span>
+  <span style=color:#a6e22e>json</span>.<span style=color:#a6e22e>Unmarshal</span>(<span style=color:#a6e22e>data</span>, <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>decoded</span>)
+  <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v&#34;</span>, <span style=color:#a6e22e>decoded</span>)
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>[{&#34;ID&#34;:0,&#34;name&#34;:&#34;John&#34;,&#34;LastName&#34;:&#34;Doe&#34;,&#34;ManagerID&#34;:0},{&#34;ID&#34;:0,&#34;name&#34;:&#34;Dave&#34;,&#34;LastName&#34;:&#34;Cam&#34;,&#34;ManagerID&#34;:0}]
+[{{0 John Doe } 0} {{0 David Campbell } 0}]
+</code></pre></div></li>
+</ul>
+</section>
+<div class=post-tags>
+<nav class="nav tags">
+<ul class=tags>
+<li><a href=/tags/awesome-course>awesome-course</a></li>
+<li><a href=/tags/golang>golang</a></li>
+</ul>
+</nav>
+</div>
+</article>
+</main>
+<footer>
+<hr><a class=soc href=https://www.linkedin.com/in/yuedongwoo/ title=LinkedIn><i data-feather=linkedin></i></a>|<a class=soc href=https://github.com/lunarwhite title=GitHub><i data-feather=github></i></a>|<a class=soc href title=Twitter><i data-feather=twitter></i></a>|<a class=soc href title=Instagram><i data-feather=instagram></i></a>|<a class=soc href title=Bilibili><i data-feather=tv></i></a>|<a class=soc href=https://www.zhihu.com/people/wydnlz title=Zhihu><i data-feather=link></i></a>|⚡️
+2021 © lunarwhite | <a href=https://github.com/athul/archie>Archie Theme</a> | Built with <a href=https://gohugo.io>Hugo</a>
+</footer>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-80H8N7NN50','auto'),ga('send','pageview'))</script>
+<script async src=https://www.google-analytics.com/analytics.js></script>
+<script src=https://lunarwhite.github.io/js/toggle.dark.js></script>
+<script>feather.replace()</script>
+<script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
+</body>
+</html>

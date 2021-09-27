@@ -1,0 +1,388 @@
+<!doctype html><html><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge"><title>[MS-Doc-Go] 2 Variables, Functions and Packages - lunarwhite</title><link rel=icon type=image/png href=favicon/favicon.ico><meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="Notes for awesome courses offered by Microsoft.">
+<meta property="og:image" content>
+<meta property="og:title" content="[MS-Doc-Go] 2 Variables, Functions and Packages">
+<meta property="og:description" content="Notes for awesome courses offered by Microsoft.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lunarwhite.github.io/posts/notes/msdocgo2/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-07-12T10:11:08+00:00">
+<meta property="article:modified_time" content="2021-07-12T10:11:08+00:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="[MS-Doc-Go] 2 Variables, Functions and Packages">
+<meta name=twitter:description content="Notes for awesome courses offered by Microsoft.">
+<script src=https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel=stylesheet>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel=stylesheet>
+<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel=stylesheet>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2295b92014ca185421cf463b4ce4c1bf43322196fcad9519fe35f8e89d36700d.css>
+<link disabled id=dark-mode-theme rel=stylesheet href=https://lunarwhite.github.io/css/dark.80b2eb1f37be2454ead72ba0f2662f3022d939734e00b0909a04541420aa9d6c.css>
+</head>
+<body>
+<div class=content><header>
+<div class=main>
+<a href=https://lunarwhite.github.io/>lunarwhite</a>
+</div>
+<nav>
+<a href=/>Home</a>
+<a href=/posts>Posts</a>
+<a href=/tags>Tags</a>
+<a href=/about>About</a>
+/ <a id=dark-mode-toggle><i data-feather=sun></i></a>
+</nav>
+</header>
+<main>
+<article>
+<div class=title>
+<h1 class=title>[MS-Doc-Go] 2 Variables, Functions and Packages</h1>
+<div class=meta>Posted on Jul 12, 2021</div>
+</div>
+<section class=body>
+<blockquote>
+<p><a href=https://docs.microsoft.com/en-us/learn/modules/go-variables-functions-packages/>Understand how to use packages, variables, and functions in Go</a></p>
+</blockquote>
+<h2 id=21-variables>2.1 Variables</h2>
+<h3 id=211-declare-variable>2.1.1 Declare variable</h3>
+<ul>
+<li>
+<p>One way</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>firstname</span>, <span style=color:#a6e22e>lastName</span> <span style=color:#66d9ef>string</span>
+<span style=color:#66d9ef>var</span> <span style=color:#a6e22e>age</span> <span style=color:#66d9ef>int</span>
+</code></pre></div></li>
+<li>
+<p>Another way, using <code>{}</code></p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>var</span> {
+  <span style=color:#a6e22e>firstname</span>, <span style=color:#a6e22e>lastName</span> <span style=color:#66d9ef>string</span>
+  <span style=color:#a6e22e>age</span> <span style=color:#66d9ef>int</span>
+}
+</code></pre></div></li>
+<li>
+<p>Go will throw an error if you declare variables and don&rsquo;t use them</p>
+</li>
+</ul>
+<h3 id=212-initialize-variable>2.1.2 Initialize variable</h3>
+<ul>
+<li>
+<p>One way</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>var</span> (
+    <span style=color:#a6e22e>firstName</span> <span style=color:#66d9ef>string</span> = <span style=color:#e6db74>&#34;John&#34;</span>
+    <span style=color:#a6e22e>lastName</span>  <span style=color:#66d9ef>string</span> = <span style=color:#e6db74>&#34;Doe&#34;</span>
+    <span style=color:#a6e22e>age</span>       <span style=color:#66d9ef>int</span>    = <span style=color:#ae81ff>32</span>
+)
+</code></pre></div></li>
+<li>
+<p>Another way, Go will infer the type automatically</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>var</span> (
+    <span style=color:#a6e22e>firstName</span> = <span style=color:#e6db74>&#34;John&#34;</span>
+    <span style=color:#a6e22e>lastName</span>  = <span style=color:#e6db74>&#34;Doe&#34;</span>
+    <span style=color:#a6e22e>age</span>       = <span style=color:#ae81ff>32</span>
+)
+</code></pre></div></li>
+<li>
+<p>Even can be in a single line</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>var</span> (
+    <span style=color:#a6e22e>firstName</span>, <span style=color:#a6e22e>lastName</span>, <span style=color:#a6e22e>age</span> = <span style=color:#e6db74>&#34;John&#34;</span>, <span style=color:#e6db74>&#34;Doe&#34;</span>, <span style=color:#ae81ff>32</span>
+)
+</code></pre></div></li>
+<li>
+<p>The most common way, using <code>:=</code>, but only csn use inside a function</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+    <span style=color:#a6e22e>firstName</span>, <span style=color:#a6e22e>lastName</span> <span style=color:#f92672>:=</span> <span style=color:#e6db74>&#34;John&#34;</span>, <span style=color:#e6db74>&#34;Doe&#34;</span>
+    <span style=color:#a6e22e>age</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>32</span>
+    <span style=color:#a6e22e>fmt</span>.println(<span style=color:#a6e22e>firstName</span>, <span style=color:#a6e22e>lastName</span>, <span style=color:#a6e22e>age</span>)
+}
+</code></pre></div></li>
+</ul>
+<h3 id=213-declare-constant>2.1.3 Declare constant</h3>
+<ul>
+<li>
+<p>Go supports the use of constants</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>HTTPStatusOK</span> = <span style=color:#ae81ff>200</span>
+</code></pre></div></li>
+<li>
+<p>Typically written in MixedCased or all uppercase letters</p>
+</li>
+<li>
+<p>Can&rsquo;t use <code>:=</code> to declare constants</p>
+</li>
+<li>
+<p>Declare multiple constants</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>const</span> (
+    <span style=color:#a6e22e>StatusOK</span>              = <span style=color:#ae81ff>0</span>
+    <span style=color:#a6e22e>StatusConnectionReset</span> = <span style=color:#ae81ff>1</span>
+    <span style=color:#a6e22e>StatusOtherError</span>      = <span style=color:#ae81ff>2</span>
+)
+</code></pre></div></li>
+</ul>
+<h3 id=214-basic-data-type>2.1.4 Basic data type</h3>
+<ul>
+<li>Four categories of data types
+<ul>
+<li>basic:
+<ul>
+<li><code>int</code> and <code>uint</code></li>
+<li><code>int8</code>, <code>int16</code>, <code>int32</code> and <code>int64</code></li>
+<li><code>uint8</code>, <code>uint16</code>, <code>uint32</code>, and <code>uint64</code></li>
+<li><code>float32</code> and <code>float64</code></li>
+<li><code>bool</code></li>
+<li><code>string</code></li>
+</ul>
+</li>
+<li>aggregate: <code>array</code> and <code>struct</code></li>
+<li>reference: <code>pointer</code>, <code>slice</code>, <code>map</code>, <code>function</code>, and <code>channel</code></li>
+<li>interface: <code>interface</code></li>
+</ul>
+</li>
+<li>All data types have a default value when you don&rsquo;t initialize a variable
+<ul>
+<li><code>bool = false</code></li>
+</ul>
+</li>
+</ul>
+<h3 id=215-type-conversion>2.1.5 Type conversion</h3>
+<ul>
+<li>
+<p>Go is a strongly typed language, so implicit casting doesn&rsquo;t work</p>
+</li>
+<li>
+<p>One way</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>integer16</span> <span style=color:#66d9ef>int16</span> = <span style=color:#ae81ff>127</span>
+<span style=color:#66d9ef>var</span> <span style=color:#a6e22e>integer32</span> <span style=color:#66d9ef>int32</span> = <span style=color:#ae81ff>32767</span>
+<span style=color:#a6e22e>fmt</span>.println(int32(<span style=color:#a6e22e>integer16</span>) <span style=color:#f92672>+</span> <span style=color:#a6e22e>integer32</span>)
+</code></pre></div></li>
+<li>
+<p>Or use package <code>strconv</code></p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+
+<span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;strconv&#34;</span>
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+    <span style=color:#a6e22e>i</span>, <span style=color:#a6e22e>_</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>strconv</span>.<span style=color:#a6e22e>Atoi</span>(<span style=color:#e6db74>&#34;-42&#34;</span>)
+    <span style=color:#a6e22e>s</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>strconv</span>.<span style=color:#a6e22e>Itoa</span>(<span style=color:#f92672>-</span><span style=color:#ae81ff>42</span>)
+    <span style=color:#a6e22e>fmt</span>.println(<span style=color:#a6e22e>i</span>, <span style=color:#a6e22e>s</span>)
+}
+</code></pre></div></li>
+</ul>
+<h2 id=22-functions>2.2 Functions</h2>
+<h3 id=221-main-function>2.2.1 Main function</h3>
+<ul>
+<li>
+<p><code>main()</code> doesn&rsquo;t have any parameters and returns nothing, but that doesn&rsquo;t mean it can&rsquo;t read values from the user, like command-line arguments. You can do it with the <code>os</code> package and the <code>os.Args</code> variable</p>
+</li>
+<li>
+<p>The following code reads two numbers from the command line</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+
+<span style=color:#f92672>import</span> (
+    <span style=color:#e6db74>&#34;os&#34;</span>
+    <span style=color:#e6db74>&#34;strconv&#34;</span>
+)
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+    <span style=color:#a6e22e>number1</span>, <span style=color:#a6e22e>_</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>strconv</span>.<span style=color:#a6e22e>Atoi</span>(<span style=color:#a6e22e>os</span>.<span style=color:#a6e22e>Args</span>[<span style=color:#ae81ff>1</span>])
+    <span style=color:#a6e22e>number2</span>, <span style=color:#a6e22e>_</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>strconv</span>.<span style=color:#a6e22e>Atoi</span>(<span style=color:#a6e22e>os</span>.<span style=color:#a6e22e>Args</span>[<span style=color:#ae81ff>2</span>])
+    <span style=color:#a6e22e>fmt</span>.println(<span style=color:#e6db74>&#34;Sum:&#34;</span>, <span style=color:#a6e22e>number1</span><span style=color:#f92672>+</span><span style=color:#a6e22e>number2</span>)
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>go run main.go <span style=color:#ae81ff>3</span> <span style=color:#ae81ff>5</span>
+</code></pre></div></li>
+<li>
+<p>If creating a Go package, don&rsquo;t need to write a <code>main()</code></p>
+</li>
+</ul>
+<h3 id=222-custom-function>2.2.2 Custom function</h3>
+<ul>
+<li>
+<p>Can also set a name to the return value of a function (not recommend)</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>sum</span>(<span style=color:#a6e22e>number1</span> <span style=color:#66d9ef>string</span>, <span style=color:#a6e22e>number2</span> <span style=color:#66d9ef>string</span>) (<span style=color:#a6e22e>result</span> <span style=color:#66d9ef>int</span>) {
+        <span style=color:#a6e22e>body</span><span style=color:#f92672>-</span><span style=color:#a6e22e>content</span>
+    <span style=color:#a6e22e>result</span> = <span style=color:#a6e22e>int1</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>int2</span>
+    <span style=color:#66d9ef>return</span>
+}
+</code></pre></div></li>
+<li>
+<p>Can return more than one value</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>calc</span>(<span style=color:#a6e22e>number1</span> <span style=color:#66d9ef>string</span>, <span style=color:#a6e22e>number2</span> <span style=color:#66d9ef>string</span>) (<span style=color:#a6e22e>sum</span> <span style=color:#66d9ef>int</span>, <span style=color:#a6e22e>mul</span> <span style=color:#66d9ef>int</span>) {
+    <span style=color:#a6e22e>int1</span>, <span style=color:#a6e22e>_</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>strconv</span>.<span style=color:#a6e22e>Atoi</span>(<span style=color:#a6e22e>number1</span>)
+    <span style=color:#a6e22e>int2</span>, <span style=color:#a6e22e>_</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>strconv</span>.<span style=color:#a6e22e>Atoi</span>(<span style=color:#a6e22e>number2</span>)
+    <span style=color:#a6e22e>sum</span> = <span style=color:#a6e22e>int1</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>int2</span>
+    <span style=color:#a6e22e>mul</span> = <span style=color:#a6e22e>int1</span> <span style=color:#f92672>*</span> <span style=color:#a6e22e>int2</span>
+    <span style=color:#66d9ef>return</span>
+}
+</code></pre></div></li>
+<li>
+<p>If don&rsquo;t need one of the return values, can discard it by assigning the returning value to the <code>_</code> variable, it allows the program to compile</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+    <span style=color:#a6e22e>sum</span>, <span style=color:#a6e22e>_</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>calc</span>(<span style=color:#a6e22e>os</span>.<span style=color:#a6e22e>Args</span>[<span style=color:#ae81ff>1</span>], <span style=color:#a6e22e>os</span>.<span style=color:#a6e22e>Args</span>[<span style=color:#ae81ff>2</span>])
+    <span style=color:#a6e22e>fmt</span>.println(<span style=color:#e6db74>&#34;Sum:&#34;</span>, <span style=color:#a6e22e>sum</span>)
+}
+</code></pre></div></li>
+</ul>
+<h3 id=223-pointer>2.2.3 Pointer</h3>
+<ul>
+<li>
+<p>Go is a &ldquo;pass by value&rdquo; PL. This means that whenever you pass a value to a function, Go takes that value and creates a local copy</p>
+</li>
+<li>
+<p>A pointer is a variable that contains the memory address of another variable. when you send a pointer to a function, you&rsquo;re not passing the value but an address memory</p>
+</li>
+<li>
+<p><code>&</code> takes the address of the object that follows it</p>
+</li>
+<li>
+<p><code>*</code> dereferences a pointer, gives you access to the object at the address contained in the pointer</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>updateName</span>(<span style=color:#a6e22e>name</span> <span style=color:#f92672>*</span><span style=color:#66d9ef>string</span>) {
+    <span style=color:#f92672>*</span><span style=color:#a6e22e>name</span> = <span style=color:#e6db74>&#34;David&#34;</span>
+}
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+    <span style=color:#a6e22e>firstName</span> <span style=color:#f92672>:=</span> <span style=color:#e6db74>&#34;John&#34;</span>
+    <span style=color:#a6e22e>updateName</span>(<span style=color:#f92672>&amp;</span><span style=color:#a6e22e>firstName</span>)
+    <span style=color:#a6e22e>fmt</span>.println(<span style=color:#a6e22e>firstName</span>)
+}
+</code></pre></div></li>
+</ul>
+<h2 id=23-packages>2.3 Packages</h2>
+<h3 id=231-package>2.3.1 Package</h3>
+<ul>
+<li>
+<p>when use the <code>main</code> package, it will produce a standalone executable. otherwise doesn&rsquo;t generate a binary file, but generates a package archive file (a file with an .a extension)</p>
+</li>
+<li>
+<p>create a new directory in the <code>$GOPATH/src</code> directory called <code>calculator</code></p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>.
+└── src/
+    └── calculator/
+        └── sum.go
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>calculator</span>
+
+<span style=color:#66d9ef>var</span> <span style=color:#a6e22e>logMessage</span> = <span style=color:#e6db74>&#34;[LOG]&#34;</span>
+
+<span style=color:#75715e>// Version of the calculator
+</span><span style=color:#75715e></span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>Version</span> = <span style=color:#e6db74>&#34;1.0&#34;</span>
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>internalSum</span>(<span style=color:#a6e22e>number</span> <span style=color:#66d9ef>int</span>) <span style=color:#66d9ef>int</span> {
+    <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>number</span> <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>
+}
+
+<span style=color:#75715e>// Sum two integer numbers
+</span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>Sum</span>(<span style=color:#a6e22e>number1</span>, <span style=color:#a6e22e>number2</span> <span style=color:#66d9ef>int</span>) <span style=color:#66d9ef>int</span> {
+    <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>number1</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>number2</span>
+}
+</code></pre></div></li>
+<li>
+<p>no <code>public</code> or <code>private</code> keywords, but follows two simple rules:</p>
+<ul>
+<li>if want sth. to be private, start its name with a lowercase letter</li>
+<li>if want sth. to be public, start its name with an uppercase letter</li>
+</ul>
+</li>
+<li>
+<p>to confirm that everything is working, you can run <code>go build</code> command</p>
+</li>
+</ul>
+<h3 id=232-module>2.3.2 Module</h3>
+<ul>
+<li>
+<p>Go modules typically contain packages that offer related functionality</p>
+</li>
+<li>
+<p>Also, modules help other developers reference specific versions of your code and make working with dependencies easier</p>
+</li>
+<li>
+<p>Another benefit is that our program&rsquo;s source code doesn&rsquo;t strictly need to exist in the <code>$GOPATH/src</code> directory, freeing that restriction makes it more convenient to work with different package versions in other projects at the same time</p>
+</li>
+<li>
+<p>Run this in the root directory <code>$GOPATH/src/calculator</code>to create a module for the <code>calculator</code> package. After that, <code>github.com/myuser/calculator</code> becomes the module&rsquo;s name</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>go</span> <span style=color:#a6e22e>mod</span> <span style=color:#a6e22e>init</span> <span style=color:#a6e22e>github</span>.<span style=color:#a6e22e>com</span><span style=color:#f92672>/</span><span style=color:#a6e22e>myuser</span><span style=color:#f92672>/</span><span style=color:#a6e22e>calculator</span>
+</code></pre></div></li>
+<li>
+<p>The contents of the <code>go.mod</code> like this</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>module github.com/myuser/calculator
+
+go 1.14
+</code></pre></div></li>
+<li>
+<p>The command also creates a new file called <code>go.mod</code>, tree dir like this</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>.
+└── src/
+    ├── calculator/
+    │   ├── go.mod
+    │   └── sum.go
+    └── helloworld/
+        └── main.go
+</code></pre></div></li>
+<li>
+<p>We&rsquo;ll use this code for the <code>$GOPATH/src/helloworld/main.go</code> file</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+
+<span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;github.com/myuser/calculator&#34;</span>
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+    <span style=color:#a6e22e>total</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>calculator</span>.<span style=color:#a6e22e>Sum</span>(<span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>5</span>)
+    <span style=color:#a6e22e>fmt</span>.println(<span style=color:#a6e22e>total</span>)
+    <span style=color:#a6e22e>fmt</span>.println(<span style=color:#e6db74>&#34;Version: &#34;</span>, <span style=color:#a6e22e>calculator</span>.<span style=color:#a6e22e>Version</span>)
+}
+</code></pre></div></li>
+<li>
+<p>To run the program, you need to inform Go that you&rsquo;re using modules to reference other packages. To do so, run this command in the <code>$GOPATH/src/helloworld</code> directory:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>go mod init helloworld
+</code></pre></div></li>
+<li>
+<p>That command creates a new <code>go.mod</code> file, tree dir like this</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>.
+└── src/
+    ├── calculator/
+    │   ├── go.mod
+    │   └── sum.go
+    └── helloworld/
+        ├── go.mod
+        └── main.go
+</code></pre></div></li>
+<li>
+<p>The contents of the <code>go.mod</code> like this</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>module helloworld
+
+go 1.14
+</code></pre></div></li>
+<li>
+<p>You need to inform Go that you don&rsquo;t want to use a remote location. Manually modify the <code>go.mod</code> to include the reference, like this</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>module helloworld
+
+go 1.14
+
+require github.com/myuser/calculator v0.0.0
+
+replace github.com/myuser/calculator =&gt; ../calculator
+</code></pre></div></li>
+<li>
+<p>All future references to external packages will need to be in the <code>go.mod</code>. When you run or compile the application, Go will download all of its dependencies.</p>
+</li>
+<li>
+<p>Now you can run the program</p>
+</li>
+</ul>
+</section>
+<div class=post-tags>
+<nav class="nav tags">
+<ul class=tags>
+<li><a href=/tags/awesome-course>awesome-course</a></li>
+<li><a href=/tags/golang>golang</a></li>
+</ul>
+</nav>
+</div>
+</article>
+</main>
+<footer>
+<hr><a class=soc href=https://www.linkedin.com/in/yuedongwoo/ title=LinkedIn><i data-feather=linkedin></i></a>|<a class=soc href=https://github.com/lunarwhite title=GitHub><i data-feather=github></i></a>|<a class=soc href title=Twitter><i data-feather=twitter></i></a>|<a class=soc href title=Instagram><i data-feather=instagram></i></a>|<a class=soc href title=Bilibili><i data-feather=tv></i></a>|<a class=soc href=https://www.zhihu.com/people/wydnlz title=Zhihu><i data-feather=link></i></a>|⚡️
+2021 © lunarwhite | <a href=https://github.com/athul/archie>Archie Theme</a> | Built with <a href=https://gohugo.io>Hugo</a>
+</footer>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-80H8N7NN50','auto'),ga('send','pageview'))</script>
+<script async src=https://www.google-analytics.com/analytics.js></script>
+<script src=https://lunarwhite.github.io/js/toggle.dark.js></script>
+<script>feather.replace()</script>
+<script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
+</body>
+</html>
