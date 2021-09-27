@@ -16,8 +16,8 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel=stylesheet>
-<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2295b92014ca185421cf463b4ce4c1bf43322196fcad9519fe35f8e89d36700d.css>
-<link disabled id=dark-mode-theme rel=stylesheet href=https://lunarwhite.github.io/css/dark.80b2eb1f37be2454ead72ba0f2662f3022d939734e00b0909a04541420aa9d6c.css>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.b787af43728695b428289b03901b2f1178d1db0f557c3284a5b068337d45655e.css>
+<link disabled id=dark-mode-theme rel=stylesheet href=https://lunarwhite.github.io/css/dark.ce33575c8d9416a29a0c0f11d9c58c1ca865ac0b6e5ab9b37c0e3d89c5a5e4e1.css>
 </head>
 <body>
 <div class=content><header>
@@ -45,11 +45,9 @@
 <h2 id=61-methods>6.1 Methods</h2>
 <h3 id=611-declare-methods>6.1.1 Declare methods</h3>
 <ul>
-<li>
-<p>Methods is a special type of func with a receiver before the func name. It&rsquo;s useful when you want to group functions and tie them to a custom type</p>
-</li>
-<li>
-<p>Basic example, before you can declare a method, you have to create a struct</p>
+<li>Methods is a special type of func with a receiver before the func name. It&rsquo;s useful when you want to group functions and tie them to a custom type</li>
+<li>Basic example, before you can declare a method, you have to create a struct</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>triangle</span> <span style=color:#66d9ef>struct</span> {
     <span style=color:#a6e22e>size</span> <span style=color:#66d9ef>int</span>
 }
@@ -57,9 +55,9 @@
 <span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>t</span> <span style=color:#a6e22e>triangle</span>) <span style=color:#a6e22e>perimeter</span>() <span style=color:#66d9ef>int</span> {
     <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>t</span>.<span style=color:#a6e22e>size</span> <span style=color:#f92672>*</span> <span style=color:#ae81ff>3</span>
 }
-</code></pre></div></li>
-<li>
-<p>If you try to call the <code>perimeter()</code> as ordinarily, it won&rsquo;t work because it needs a receiver. The struct gives you access to the method, you could even have the same name for a method as long as it belongs to a different struct</p>
+</code></pre></div><ul>
+<li>If you try to call the <code>perimeter()</code> as ordinarily, it won&rsquo;t work because it needs a receiver. The struct gives you access to the method, you could even have the same name for a method as long as it belongs to a different struct</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>triangle</span> <span style=color:#66d9ef>struct</span> {
     <span style=color:#a6e22e>size</span> <span style=color:#66d9ef>int</span>
 }
@@ -82,15 +80,13 @@
     <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Perimeter (triangle):&#34;</span>, <span style=color:#a6e22e>t</span>.<span style=color:#a6e22e>perimeter</span>())
     <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Perimeter (square):&#34;</span>, <span style=color:#a6e22e>s</span>.<span style=color:#a6e22e>perimeter</span>())
 }
-</code></pre></div></li>
-<li>
-<p>With different receiver, you could overload methods. In Go, you can override a method and still access the original one if you need it</p>
-</li>
+</code></pre></div><ul>
+<li>With different receiver, you could overload methods. In Go, you can override a method and still access the original one if you need it</li>
 </ul>
 <h3 id=612-pointers-in-methods>6.1.2 Pointers in methods</h3>
 <ul>
-<li>
-<p>Use pointers to pass the address of a variable. For instance, let&rsquo;s say you want to create a new method to double the triangle size. You need to use a pointer in the receiver variable</p>
+<li>Use pointers to pass the address of a variable. For instance, let&rsquo;s say you want to create a new method to double the triangle size. You need to use a pointer in the receiver variable</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>t</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>triangle</span>) <span style=color:#a6e22e>doubleSize</span>() {
     <span style=color:#a6e22e>t</span>.<span style=color:#a6e22e>size</span> <span style=color:#f92672>*=</span> <span style=color:#ae81ff>2</span>
 }
@@ -101,21 +97,15 @@
     <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Size:&#34;</span>, <span style=color:#a6e22e>t</span>.<span style=color:#a6e22e>size</span>)
     <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Perimeter:&#34;</span>, <span style=color:#a6e22e>s</span>.<span style=color:#a6e22e>perimeter</span>())
 }
-</code></pre></div></li>
-<li>
-<p>You don&rsquo;t need a pointer in the receiver variable when the method is merely accessing the receiver&rsquo;s information</p>
-</li>
-<li>
-<p>However, Go convention dictates that if any method of a struct has a pointer receiver, all methods of that struct must have a pointer receiver, even if a method doesn&rsquo;t need it</p>
-</li>
+</code></pre></div><ul>
+<li>You don&rsquo;t need a pointer in the receiver variable when the method is merely accessing the receiver&rsquo;s information</li>
+<li>However, Go convention dictates that if any method of a struct has a pointer receiver, all methods of that struct must have a pointer receiver, even if a method doesn&rsquo;t need it</li>
 </ul>
 <h3 id=613-declare-methods-for-other-types>6.1.3 Declare methods for other types</h3>
 <ul>
-<li>
-<p>Methods can be definined for any type, not just for custom types such as <code>struct</code>. However, you can&rsquo;t define a struct from a type that belongs to another package. Therefore, you can&rsquo;t create a method on a basic type, such as <code>string</code></p>
-</li>
-<li>
-<p>Nonetheless, you can use a hack to create a custom type from a basic type and then use it as if it were the basic type</p>
+<li>Methods can be definined for any type, not just for custom types such as <code>struct</code>. However, you can&rsquo;t define a struct from a type that belongs to another package. Therefore, you can&rsquo;t create a method on a basic type, such as <code>string</code></li>
+<li>Nonetheless, you can use a hack to create a custom type from a basic type and then use it as if it were the basic type</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>upperstring</span> <span style=color:#66d9ef>string</span>
 
 <span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>s</span> <span style=color:#a6e22e>upperstring</span>) <span style=color:#a6e22e>Upper</span>() <span style=color:#66d9ef>string</span> {
@@ -127,42 +117,30 @@
     <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>s</span>)
     <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>s</span>.<span style=color:#a6e22e>Upper</span>())
 }
-</code></pre></div></li>
-</ul>
-<h3 id=614-embed-methods>6.1.4 Embed methods</h3>
+</code></pre></div><h3 id=614-embed-methods>6.1.4 Embed methods</h3>
 <ul>
-<li>
-<p>You can call methods of the embedded struct even if the receiver is different</p>
-</li>
-<li>
-<p>For instance, let&rsquo;s say you want to create a new triangle struct with logic to include a <code>color</code>, continue using the <code>triangle</code> struct declared before</p>
+<li>You can call methods of the embedded struct even if the receiver is different</li>
+<li>For instance, let&rsquo;s say you want to create a new triangle struct with logic to include a <code>color</code>, continue using the <code>triangle</code> struct declared before</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>coloredTriangle</span> <span style=color:#66d9ef>struct</span> {
     <span style=color:#a6e22e>triangle</span>
     <span style=color:#a6e22e>color</span> <span style=color:#66d9ef>string</span>
 }
-</code></pre></div></li>
-<li>
-<p>You could then initialize the coloredTriangle struct, and call the <code>perimeter()</code> method from the <code>triangle</code> struct (and even access its fields)</p>
+</code></pre></div><ul>
+<li>You could then initialize the coloredTriangle struct, and call the <code>perimeter()</code> method from the <code>triangle</code> struct (and even access its fields)</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
     <span style=color:#a6e22e>t</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>coloredTriangle</span>{<span style=color:#a6e22e>triangle</span>{<span style=color:#ae81ff>3</span>}, <span style=color:#e6db74>&#34;blue&#34;</span>}
     <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Size:&#34;</span>, <span style=color:#a6e22e>t</span>.<span style=color:#a6e22e>size</span>)
     <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Perimeter:&#34;</span>, <span style=color:#a6e22e>t</span>.<span style=color:#a6e22e>perimeter</span>())
 }
-</code></pre></div></li>
-</ul>
-<h3 id=615-encapsulation-in-methods>6.1.5 Encapsulation in methods</h3>
+</code></pre></div><h3 id=615-encapsulation-in-methods>6.1.5 Encapsulation in methods</h3>
 <ul>
-<li>
-<p>Encapsulation means that a method is inaccessible to the caller of an object</p>
-</li>
-<li>
-<p>In Go, you need to use only a capitalized identifier to make a method public and an uncapitalized identifier to make a method private</p>
-</li>
-<li>
-<p>Encapsulation takes effect only between packages. In other words, you can hide only implementation details from another package, not the package itself</p>
-</li>
-<li>
-<p>To give it a try, create a new package <code>geometry</code> and move the <code>triangle</code> there</p>
+<li>Encapsulation means that a method is inaccessible to the caller of an object</li>
+<li>In Go, you need to use only a capitalized identifier to make a method public and an uncapitalized identifier to make a method private</li>
+<li>Encapsulation takes effect only between packages. In other words, you can hide only implementation details from another package, not the package itself</li>
+<li>To give it a try, create a new package <code>geometry</code> and move the <code>triangle</code> there</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>geometry</span>
 
 <span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Triangle</span> <span style=color:#66d9ef>struct</span> {
@@ -186,32 +164,22 @@
     <span style=color:#a6e22e>t</span>.<span style=color:#a6e22e>SetSize</span>(<span style=color:#ae81ff>3</span>)
     <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Perimeter&#34;</span>, <span style=color:#a6e22e>t</span>.<span style=color:#a6e22e>Perimeter</span>())
 }
-</code></pre></div></li>
-</ul>
-<h2 id=62-interfaces>6.2 Interfaces</h2>
+</code></pre></div><h2 id=62-interfaces>6.2 Interfaces</h2>
 <h3 id=621-declare-an-interface>6.2.1 Declare an interface</h3>
 <ul>
-<li>
-<p>Interfaces are a type of data that&rsquo;s used to represent the behavior of other types. It is an abstract type that includes only the methods that a concrete type must possess or implement, like a blueprint or a contract</p>
-</li>
-<li>
-<p>When you use interfaces, your code base becomes more flexible and adaptable, because you&rsquo;re writing code that isn&rsquo;t tied to a particular implementation. So you can extend the functionality of a program quickly</p>
-</li>
-<li>
-<p>Let&rsquo;s say that you want to create an interface in your <code>geometry</code> package that indicates what methods a shape must implement</p>
+<li>Interfaces are a type of data that&rsquo;s used to represent the behavior of other types. It is an abstract type that includes only the methods that a concrete type must possess or implement, like a blueprint or a contract</li>
+<li>When you use interfaces, your code base becomes more flexible and adaptable, because you&rsquo;re writing code that isn&rsquo;t tied to a particular implementation. So you can extend the functionality of a program quickly</li>
+<li>Let&rsquo;s say that you want to create an interface in your <code>geometry</code> package that indicates what methods a shape must implement</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Shape</span> <span style=color:#66d9ef>interface</span> {
     <span style=color:#a6e22e>Perimeter</span>() <span style=color:#66d9ef>float64</span>
     <span style=color:#a6e22e>Area</span>() <span style=color:#66d9ef>float64</span>
 }
-</code></pre></div></li>
-</ul>
-<h3 id=622-implement-an-interface>6.2.2 Implement an interface</h3>
+</code></pre></div><h3 id=622-implement-an-interface>6.2.2 Implement an interface</h3>
 <ul>
-<li>
-<p>Go doesn&rsquo;t offer keywords to implement an interface, but implicitly by a <code>type</code></p>
-</li>
-<li>
-<p>Let&rsquo;s create a <code>Square</code> struct that has both methods from the <code>Shape</code> interface. Notice how the <code>Square</code> struct matches the <code>Shape</code> interface</p>
+<li>Go doesn&rsquo;t offer keywords to implement an interface, but implicitly by a <code>type</code></li>
+<li>Let&rsquo;s create a <code>Square</code> struct that has both methods from the <code>Shape</code> interface. Notice how the <code>Square</code> struct matches the <code>Shape</code> interface</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Square</span> <span style=color:#66d9ef>struct</span> {
     <span style=color:#a6e22e>size</span> <span style=color:#66d9ef>float64</span>
 }
@@ -223,14 +191,14 @@
 <span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>s</span> <span style=color:#a6e22e>Square</span>) <span style=color:#a6e22e>Perimeter</span>() <span style=color:#66d9ef>float64</span> {
     <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>s</span>.<span style=color:#a6e22e>size</span> <span style=color:#f92672>*</span> <span style=color:#ae81ff>4</span>
 }
-</code></pre></div></li>
-<li>
-<p>The total <code>.go</code> file, explore why interfaces are useful</p>
+</code></pre></div><ul>
+<li>The total <code>.go</code> file, explore why interfaces are useful</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
 
 <span style=color:#f92672>import</span> (
-	<span style=color:#e6db74>&#34;fmt&#34;</span>
-	<span style=color:#e6db74>&#34;math&#34;</span>
+  <span style=color:#e6db74>&#34;fmt&#34;</span>
+  <span style=color:#e6db74>&#34;math&#34;</span>
 )
 
 <span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Shape</span> <span style=color:#66d9ef>interface</span> {
@@ -283,21 +251,19 @@ Perimeter: 12
 main.Circle
 Area:  113.09733552923255
 Perimeter: 37.69911184307752
-</code></pre></div></li>
-<li>
-<p>The beauty of using interfaces is that, for every new type or implementation of <code>Shape</code>, the <code>printInformation</code> function doesn&rsquo;t have to change. This is why we said earlier that your code becomes more flexible and easier to extend when you use interfaces</p>
-</li>
+</code></pre></div><ul>
+<li>The beauty of using interfaces is that, for every new type or implementation of <code>Shape</code>, the <code>printInformation</code> function doesn&rsquo;t have to change. This is why we said earlier that your code becomes more flexible and easier to extend when you use interfaces</li>
 </ul>
 <h3 id=623-implement-a-stringer-interface>6.2.3 Implement a Stringer interface</h3>
 <ul>
-<li>
-<p>A simple example of extending existing functionality is to use a <code>Stringer</code>, which is an interface that has a <code>String()</code> method</p>
+<li>A simple example of extending existing functionality is to use a <code>Stringer</code>, which is an interface that has a <code>String()</code> method</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Stringer</span> <span style=color:#66d9ef>interface</span> {
     <span style=color:#a6e22e>String</span>() <span style=color:#66d9ef>string</span>
 }
-</code></pre></div></li>
-<li>
-<p>The <code>fmt.Printf</code> function uses this interface to print out values, which means that you can write your custom <code>String()</code> method to print a custom string</p>
+</code></pre></div><ul>
+<li>The <code>fmt.Printf</code> function uses this interface to print out values, which means that you can write your custom <code>String()</code> method to print a custom string</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
 
 <span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
@@ -316,18 +282,14 @@ Perimeter: 37.69911184307752
 }
 </code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>John Doe is from USA
 Mark Collins is from United Kingdom
-</code></pre></div></li>
-<li>
-<p>you&rsquo;ve used a custom type (a struct) to write a custom version of the <code>String()</code> method. This is a common way of implementing an interface</p>
-</li>
+</code></pre></div><ul>
+<li>you&rsquo;ve used a custom type (a struct) to write a custom version of the <code>String()</code> method. This is a common way of implementing an interface</li>
 </ul>
 <h3 id=624-extend-an-existing-implementation>6.2.4 Extend an existing implementation</h3>
 <ul>
-<li>
-<p>Let&rsquo;s say that you have the following code, and you&rsquo;d like to extend its functionality by writing a custom implementation of a Writer method that&rsquo;s in charge of manipulating some data</p>
-</li>
-<li>
-<p>By using the following code, you can create a program that consumes the GitHub API to get three repositories from Microsoft</p>
+<li>Let&rsquo;s say that you have the following code, and you&rsquo;d like to extend its functionality by writing a custom implementation of a Writer method that&rsquo;s in charge of manipulating some data</li>
+<li>By using the following code, you can create a program that consumes the GitHub API to get three repositories from Microsoft</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
 
 <span style=color:#f92672>import</span> (
@@ -348,29 +310,25 @@ Mark Collins is from United Kingdom
 }
 </code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>[{&#34;id&#34;:276496384,&#34;node_id&#34;:&#34;MDEwOlJlcG9zaXRvcnkyNzY0OTYzODQ=&#34;,&#34;name&#34;:&#34;-Users-deepakdahiya-Desktop-juhibubash-test21zzzzzzzzzzz&#34;,&#34;full_name&#34;:&#34;microsoft/-Users-deepakdahiya-Desktop-juhibubash-test21zzzzzzzzzzz&#34;,&#34;private&#34;:false,&#34;owner&#34;:{&#34;login&#34;:&#34;microsoft&#34;,&#34;id&#34;:6154722,&#34;node_id&#34;:&#34;MDEyOk9yZ2FuaXphdGlvbjYxNTQ3MjI=&#34;,&#34;avatar_url&#34;:&#34;https://avatars2.githubusercontent.com/u/6154722?v=4&#34;,&#34;gravatar_id&#34;:&#34;&#34;,&#34;url&#34;:&#34;https://api.github.com/users/microsoft&#34;,&#34;html_url&#34;:&#34;https://github.com/micro
 ....
-</code></pre></div></li>
-<li>
-<p>Notice that the <code>io.Copy(os.Stdout, resp.Body)</code> call is the one that prints to the terminal the content you&rsquo;ve obtained from the call to the GitHub API. Let&rsquo;s say that you want to write your own implementation to shorten the content you see in the terminal</p>
-</li>
-<li>
-<p>When you look at the <a href=https://golang.org/pkg/io/#Copy>source of the io.Copy function</a>, you see the following</p>
+</code></pre></div><ul>
+<li>Notice that the <code>io.Copy(os.Stdout, resp.Body)</code> call is the one that prints to the terminal the content you&rsquo;ve obtained from the call to the GitHub API. Let&rsquo;s say that you want to write your own implementation to shorten the content you see in the terminal</li>
+<li>When you look at the <a href=https://golang.org/pkg/io/#Copy>source of the io.Copy function</a>, you see the following</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>Copy</span>(<span style=color:#a6e22e>dst</span> <span style=color:#a6e22e>Writer</span>, <span style=color:#a6e22e>src</span> <span style=color:#a6e22e>Reader</span>) (<span style=color:#a6e22e>written</span> <span style=color:#66d9ef>int64</span>, <span style=color:#a6e22e>err</span> <span style=color:#66d9ef>error</span>)
-</code></pre></div></li>
-<li>
-<p>If you go deeper into the details of the first parameter, <code>dst Writer</code>, you&rsquo;ll notice that <code>Writer</code> is an interface</p>
+</code></pre></div><ul>
+<li>If you go deeper into the details of the first parameter, <code>dst Writer</code>, you&rsquo;ll notice that <code>Writer</code> is an interface</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Writer</span> <span style=color:#66d9ef>interface</span> {
     <span style=color:#a6e22e>Write</span>(<span style=color:#a6e22e>p</span> []<span style=color:#66d9ef>byte</span>) (<span style=color:#a6e22e>n</span> <span style=color:#66d9ef>int</span>, <span style=color:#a6e22e>err</span> <span style=color:#66d9ef>error</span>)
 }
-</code></pre></div></li>
-<li>
-<p>Because <code>Writer</code> is an interface and it&rsquo;s an object that the <code>Copy</code> function is expecting, you could write your custom implementation of the Write method</p>
-</li>
-<li>
-<p>The first thing you need to implement an interface is to create a custom type. In this case, you can create an empty struct, because you simply need to write your custom <code>Write</code> method</p>
+</code></pre></div><ul>
+<li>Because <code>Writer</code> is an interface and it&rsquo;s an object that the <code>Copy</code> function is expecting, you could write your custom implementation of the Write method</li>
+<li>The first thing you need to implement an interface is to create a custom type. In this case, you can create an empty struct, because you simply need to write your custom <code>Write</code> method</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>customWriter</span> <span style=color:#66d9ef>struct</span>{}
-</code></pre></div></li>
-<li>
-<p>Now you&rsquo;re ready to write your custom <code>Write</code> function. You also need to write a struct to parse the API response in JSON format to a Golang object. You could use the JSON-to-Go site to create a struct from a JSON payload</p>
+</code></pre></div><ul>
+<li>Now you&rsquo;re ready to write your custom <code>Write</code> function. You also need to write a struct to parse the API response in JSON format to a Golang object. You could use the JSON-to-Go site to create a struct from a JSON payload</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>GitHubResponse</span> []<span style=color:#66d9ef>struct</span> {
     <span style=color:#a6e22e>FullName</span> <span style=color:#66d9ef>string</span> <span style=color:#e6db74>`json:&#34;full_name&#34;`</span>
 }
@@ -383,9 +341,9 @@ Mark Collins is from United Kingdom
     }
     <span style=color:#66d9ef>return</span> len(<span style=color:#a6e22e>p</span>), <span style=color:#66d9ef>nil</span>
 }
-</code></pre></div></li>
-<li>
-<p>Finally, you have to modify the <code>main()</code> function to use your custom object</p>
+</code></pre></div><ul>
+<li>Finally, you have to modify the <code>main()</code> function to use your custom object</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
     <span style=color:#a6e22e>resp</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>http</span>.<span style=color:#a6e22e>Get</span>(<span style=color:#e6db74>&#34;https://api.github.com/users/microsoft/repos?page=15&amp;per_page=5&#34;</span>)
     <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
@@ -401,9 +359,9 @@ microsoft/aed-content-nasa-su20
 microsoft/aed-external-learn-template
 microsoft/aed-go-learn-content
 microsoft/aed-learn-template
-</code></pre></div></li>
-<li>
-<p>The final version of the program</p>
+</code></pre></div><ul>
+<li>The final version of the program</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
 
 <span style=color:#f92672>import</span> (
@@ -439,25 +397,21 @@ microsoft/aed-learn-template
     <span style=color:#a6e22e>writer</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>customWriter</span>{}
     <span style=color:#a6e22e>io</span>.<span style=color:#a6e22e>Copy</span>(<span style=color:#a6e22e>writer</span>, <span style=color:#a6e22e>resp</span>.<span style=color:#a6e22e>Body</span>)
 }
-</code></pre></div></li>
-</ul>
-<h3 id=625-write-a-custom-server-api>6.2.5 Write a custom server API</h3>
+</code></pre></div><h3 id=625-write-a-custom-server-api>6.2.5 Write a custom server API</h3>
 <ul>
-<li>
-<p>The typical way of writing a web server is by using the <code>http.Handler</code> interface from the <code>net/http package</code>, which looks like the following</p>
+<li>The typical way of writing a web server is by using the <code>http.Handler</code> interface from the <code>net/http package</code>, which looks like the following</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>http</span>
 
 <span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Handler</span> <span style=color:#66d9ef>interface</span> {
-	<span style=color:#a6e22e>ServerHTTP</span>(<span style=color:#a6e22e>w</span> <span style=color:#a6e22e>PesponseWriter</span>, <span style=color:#a6e22e>r</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Request</span>)
+  <span style=color:#a6e22e>ServerHTTP</span>(<span style=color:#a6e22e>w</span> <span style=color:#a6e22e>PesponseWriter</span>, <span style=color:#a6e22e>r</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Request</span>)
 }
 
 <span style=color:#66d9ef>func</span> <span style=color:#a6e22e>ListenAndServer</span>(<span style=color:#a6e22e>address</span> <span style=color:#66d9ef>string</span>, <span style=color:#a6e22e>h</span> <span style=color:#a6e22e>Handler</span>) <span style=color:#66d9ef>error</span>
-</code></pre></div></li>
-<li>
-<p>Notice how the <code>ListenAndServe</code> function is expecting a server address, such as <code>http://localhost:8000</code>, and an instance of the <code>Handler</code> that will dispatch the response from the call to the server address</p>
-</li>
-<li>
-<p>Let&rsquo;s create and then explore the following program</p>
+</code></pre></div><ul>
+<li>Notice how the <code>ListenAndServe</code> function is expecting a server address, such as <code>http://localhost:8000</code>, and an instance of the <code>Handler</code> that will dispatch the response from the call to the server address</li>
+<li>Let&rsquo;s create and then explore the following program</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
 
 <span style=color:#f92672>import</span> (
@@ -488,8 +442,7 @@ microsoft/aed-learn-template
 curl http://localhost:8000
 </code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>Go T-Shirt: $25.00
 Go Jacket: $55.00
-</code></pre></div></li>
-</ul>
+</code></pre></div>
 </section>
 <div class=post-tags>
 <nav class="nav tags">

@@ -1,6 +1,6 @@
 body {
   color: white;
-  background-color: #363636;
+  background-color: #303030;
 }
 
 ::-moz-selection {
@@ -10,17 +10,17 @@ body {
 }
 
 ::selection {
-  background: #AB82FF;
-  color: #fff;
+  background: MediumSeaGreen;
+  color: DimGrey;
   text-shadow: none;
 }
 
 hr {
-  border-top: 3px dotted #AB82FF;
+  border-top: 3px dotted MediumSeaGreen;
 }
 code {
-  background-color: Grey;
-  color: black;
+  background-color: Gray;
+  color: #dddddd;
   text-decoration: bold;
   padding: 0.1em 0.2em;
 }
@@ -31,7 +31,7 @@ pre {
   padding: 1em;
 }
 blockquote {
-  border-color: #AB82FF;
+  border-color: MediumSeaGreen;
 }
 
 h1,

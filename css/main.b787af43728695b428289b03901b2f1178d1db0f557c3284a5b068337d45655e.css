@@ -1,11 +1,11 @@
 /* Markdown */
 /* https://tool.oschina.net/commons?type=3 */
 :root{
---maincolor: blue;
---bordercl: blue;
+--maincolor:	RoyalBlue;
+--bordercl:	RoyalBlue;
 --callouctcolor:dodgerblue;
---hovercolor:navy;
---darkMaincolor: 	#AB82FF;
+--hovercolor:RoyalBlue;;
+--darkMaincolor: 	MediumSeaGreen;
 }
 html {
   color: #232333;
@@ -27,7 +27,7 @@ body{
 }
 
 p {
-  font-family: 'Fira Sans', sans-serif;
+  font-family: 'IBM Plex Mono', sans-serif;
   line-height: 1.5;
 }
 
@@ -100,8 +100,9 @@ figure h4::before {
 
 /* Code blocks */
 code {
-  background-color: #f1f1f1;
+  background-color: LightGray;
   padding: .1em .2em;
+  font-family: 'Roboto Mono';
 }
 
 pre {
@@ -142,7 +143,8 @@ header {
 }
 
 header .main {
-  font-size: 1.5rem;
+  font-size: 2rem;
+  font-weight: bold;
 }
 h1, h2, h3, h4, h5, h6 {
   font-size: 1.2rem;

@@ -16,8 +16,8 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel=stylesheet>
-<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.2295b92014ca185421cf463b4ce4c1bf43322196fcad9519fe35f8e89d36700d.css>
-<link disabled id=dark-mode-theme rel=stylesheet href=https://lunarwhite.github.io/css/dark.80b2eb1f37be2454ead72ba0f2662f3022d939734e00b0909a04541420aa9d6c.css>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.b787af43728695b428289b03901b2f1178d1db0f557c3284a5b068337d45655e.css>
+<link disabled id=dark-mode-theme rel=stylesheet href=https://lunarwhite.github.io/css/dark.ce33575c8d9416a29a0c0f11d9c58c1ca865ac0b6e5ab9b37c0e3d89c5a5e4e1.css>
 </head>
 <body>
 <div class=content><header>
@@ -44,8 +44,8 @@
 </blockquote>
 <h2 id=51-error-handling-strategies>5.1 Error handling strategies</h2>
 <ul>
-<li>
-<p>Go&rsquo;s approach to error handling is simply a control-flow mechanism where only an <code>if</code> and a <code>return</code> statement are needed</p>
+<li>Go&rsquo;s approach to error handling is simply a control-flow mechanism where only an <code>if</code> and a <code>return</code> statement are needed</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
 
 <span style=color:#f92672>import</span> (
@@ -78,9 +78,9 @@
     <span style=color:#a6e22e>employee</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>Employee</span>{<span style=color:#a6e22e>LastName</span>: <span style=color:#e6db74>&#34;Doe&#34;</span>, <span style=color:#a6e22e>FirstName</span>: <span style=color:#e6db74>&#34;John&#34;</span>}
     <span style=color:#66d9ef>return</span> <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>employee</span>, <span style=color:#66d9ef>nil</span>
 }
-</code></pre></div></li>
-<li>
-<p>When a function returns an error, it&rsquo;s usually going to be the last return value. It&rsquo;s the caller&rsquo;s responsibility to check if an error exists and handle it. So a common strategy is to continue using that pattern to propagate the error in a subroutine. For example, a subroutine (like <code>getInformation</code>) could return the error to the caller without doing anything else</p>
+</code></pre></div><ul>
+<li>When a function returns an error, it&rsquo;s usually going to be the last return value. It&rsquo;s the caller&rsquo;s responsibility to check if an error exists and handle it. So a common strategy is to continue using that pattern to propagate the error in a subroutine. For example, a subroutine (like <code>getInformation</code>) could return the error to the caller without doing anything else</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>getInformation</span>(<span style=color:#a6e22e>id</span> <span style=color:#66d9ef>int</span>) (<span style=color:#f92672>*</span><span style=color:#a6e22e>Employee</span>, <span style=color:#66d9ef>error</span>) {
     <span style=color:#a6e22e>employee</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>apiCallEmployee</span>(<span style=color:#ae81ff>1000</span>)
     <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
@@ -88,9 +88,9 @@
 </span><span style=color:#75715e></span>    }
     <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>employee</span>, <span style=color:#66d9ef>nil</span>
 }
-</code></pre></div></li>
-<li>
-<p>You might also want to include more information before propagating the error, use the <code>fmt.Errorf()</code>, return an error</p>
+</code></pre></div><ul>
+<li>You might also want to include more information before propagating the error, use the <code>fmt.Errorf()</code>, return an error</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>getInformation</span>(<span style=color:#a6e22e>id</span> <span style=color:#66d9ef>int</span>) (<span style=color:#f92672>*</span><span style=color:#a6e22e>Employee</span>, <span style=color:#66d9ef>error</span>) {
     <span style=color:#a6e22e>employee</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>apiCallEmployee</span>(<span style=color:#ae81ff>1000</span>)
     <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
@@ -98,9 +98,9 @@
     }
     <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>employee</span>, <span style=color:#66d9ef>nil</span>
 }
-</code></pre></div></li>
-<li>
-<p>Another strategy is to run retry logic when errors are transient. For example, you could use a retry policy to call a function three times and wait for 2s</p>
+</code></pre></div><ul>
+<li>Another strategy is to run retry logic when errors are transient. For example, you could use a retry policy to call a function three times and wait for 2s</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>getInformation</span>(<span style=color:#a6e22e>id</span> <span style=color:#66d9ef>int</span>) (<span style=color:#f92672>*</span><span style=color:#a6e22e>Employee</span>, <span style=color:#66d9ef>error</span>) {
     <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>tries</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>tries</span> &lt; <span style=color:#ae81ff>3</span>; <span style=color:#a6e22e>tries</span><span style=color:#f92672>++</span> {
         <span style=color:#a6e22e>employee</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>apiCallEmployee</span>(<span style=color:#ae81ff>1000</span>)
@@ -114,12 +114,10 @@
 
     <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>nil</span>, <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Errorf</span>(<span style=color:#e6db74>&#34;server has failed to respond to get the employee information&#34;</span>)
 }
-</code></pre></div></li>
-</ul>
-<h2 id=52-create-reusable-errors>5.2 Create reusable errors</h2>
+</code></pre></div><h2 id=52-create-reusable-errors>5.2 Create reusable errors</h2>
 <ul>
-<li>
-<p>use the <code>errors.New()</code> to create errors and reuse them in several parts</p>
+<li>use the <code>errors.New()</code> to create errors and reuse them in several parts</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>ErrNotFound</span> = <span style=color:#a6e22e>errors</span>.<span style=color:#a6e22e>New</span>(<span style=color:#e6db74>&#34;Employee not found!&#34;</span>)
 
 <span style=color:#66d9ef>func</span> <span style=color:#a6e22e>getInformation</span>(<span style=color:#a6e22e>id</span> <span style=color:#66d9ef>int</span>) (<span style=color:#f92672>*</span><span style=color:#a6e22e>Employee</span>, <span style=color:#66d9ef>error</span>) {
@@ -130,9 +128,9 @@
     <span style=color:#a6e22e>employee</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>Employee</span>{<span style=color:#a6e22e>LastName</span>: <span style=color:#e6db74>&#34;Doe&#34;</span>, <span style=color:#a6e22e>FirstName</span>: <span style=color:#e6db74>&#34;John&#34;</span>}
     <span style=color:#66d9ef>return</span> <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>employee</span>, <span style=color:#66d9ef>nil</span>
 }
-</code></pre></div></li>
-<li>
-<p><code>errors.Is()</code> allows you to compare the type of error you&rsquo;re getting</p>
+</code></pre></div><ul>
+<li><code>errors.Is()</code> allows you to compare the type of error you&rsquo;re getting</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>employee</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>getInformation</span>(<span style=color:#ae81ff>1000</span>)
 
 <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>errors</span>.<span style=color:#a6e22e>Is</span>(<span style=color:#a6e22e>err</span>, <span style=color:#a6e22e>ErrNotFound</span>) {
@@ -140,9 +138,7 @@
 } <span style=color:#66d9ef>else</span> {
     <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Print</span>(<span style=color:#a6e22e>employee</span>)
 }
-</code></pre></div></li>
-</ul>
-<h2 id=53-recommended-practices-for-error-handling>5.3 Recommended practices for error handling</h2>
+</code></pre></div><h2 id=53-recommended-practices-for-error-handling>5.3 Recommended practices for error handling</h2>
 <ul>
 <li>Always check for errors, even if you don&rsquo;t expect them. Then handle them properly to avoid exposing unnecessary information to end users</li>
 <li>Include a prefix in an error message so you know the origin of the error. For example, you could include the name of the package and function</li>
@@ -152,27 +148,25 @@
 </ul>
 <h2 id=54-the-log-package>5.4 The log package</h2>
 <ul>
-<li>
-<p>The standard package doesn&rsquo;t provide log levels and doesn&rsquo;t let you configure separate loggers for each package. If you need to write more complex logging configurations, you can do it by using a logging framework</p>
-</li>
-<li>
-<p>Here&rsquo;s the easiest way to use logs. By default, <code>log.Print()</code> includes the date and time as the log message&rsquo;s prefix</p>
+<li>The standard package doesn&rsquo;t provide log levels and doesn&rsquo;t let you configure separate loggers for each package. If you need to write more complex logging configurations, you can do it by using a logging framework</li>
+<li>Here&rsquo;s the easiest way to use logs. By default, <code>log.Print()</code> includes the date and time as the log message&rsquo;s prefix</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
     <span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Print</span>(<span style=color:#e6db74>&#34;Hey, I&#39;m a log!&#34;</span>)
 }
 </code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>2020/12/19 13:39:17 Hey, I&#39;m a log!
-</code></pre></div></li>
-<li>
-<p>use the <code>log.Fatal()</code> to log an error and end the program as if you&rsquo;d used <code>os.Exit(1)</code></p>
+</code></pre></div><ul>
+<li>use the <code>log.Fatal()</code> to log an error and end the program as if you&rsquo;d used <code>os.Exit(1)</code></li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
     <span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Fatal</span>(<span style=color:#e6db74>&#34;Hey, I&#39;m an error log!&#34;</span>)
     <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Print</span>(<span style=color:#e6db74>&#34;Can you see me?&#34;</span>)
 }
 </code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>2020/12/19 13:53:19  Hey, I&#39;m an error log!
 exit status 1
-</code></pre></div></li>
-<li>
-<p>use the <code>log.Panic()</code> similarly, but also get the error stack trace</p>
+</code></pre></div><ul>
+<li>use the <code>log.Panic()</code> similarly, but also get the error stack trace</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
     <span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Panic</span>(<span style=color:#e6db74>&#34;Hey, I&#39;m an error log!&#34;</span>)
     <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Print</span>(<span style=color:#e6db74>&#34;Can you see me?&#34;</span>)
@@ -186,9 +180,9 @@ log.Panic(0xc000060f58, 0x1, 0x1)
 main.main()
         /Users/christian/go/src/helloworld/logs.go:9 +0x65
 exit status 2
-</code></pre></div></li>
-<li>
-<p>Another essential is <code>log.SetPrefix()</code>. You can use it to add a prefix to log messages, include info like the name of the function from which the log came</p>
+</code></pre></div><ul>
+<li>Another essential is <code>log.SetPrefix()</code>. You can use it to add a prefix to log messages, include info like the name of the function from which the log came</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
     <span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>SetPrefix</span>(<span style=color:#e6db74>&#34;main(): &#34;</span>)
     <span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Print</span>(<span style=color:#e6db74>&#34;Hey, I&#39;m a log!&#34;</span>)
@@ -197,12 +191,10 @@ exit status 2
 </code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>main(): 2021/01/05 13:59:58 Hey, I&#39;m a log!
 main(): 2021/01/05 13:59:58 Hey, I&#39;m an error log!
 exit status 1
-</code></pre></div></li>
-</ul>
-<h2 id=55-logging-to-a-file>5.5 Logging to a file</h2>
+</code></pre></div><h2 id=55-logging-to-a-file>5.5 Logging to a file</h2>
 <ul>
-<li>
-<p>Basic example</p>
+<li>Basic example</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
     <span style=color:#a6e22e>file</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>os</span>.<span style=color:#a6e22e>OpenFile</span>(<span style=color:#e6db74>&#34;info.log&#34;</span>, <span style=color:#a6e22e>os</span>.<span style=color:#a6e22e>O_CREATE</span>|<span style=color:#a6e22e>os</span>.<span style=color:#a6e22e>O_APPEND</span>|<span style=color:#a6e22e>os</span>.<span style=color:#a6e22e>O_WRONLY</span>, <span style=color:#ae81ff>0644</span>)
     <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
@@ -214,22 +206,16 @@ exit status 1
     <span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>SetOutput</span>(<span style=color:#a6e22e>file</span>)
     <span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Print</span>(<span style=color:#e6db74>&#34;Hey, I&#39;m a log!&#34;</span>)
 }
-</code></pre></div></li>
-</ul>
-<h2 id=56-logging-frameworks>5.6 Logging frameworks</h2>
+</code></pre></div><h2 id=56-logging-frameworks>5.6 Logging frameworks</h2>
 <ul>
-<li>
-<p>It helpful to use a logging framework instead of writing your own libraries</p>
-</li>
-<li>
-<p>A few logging frameworks for Go are <a href=https://github.com/sirupsen/logrus>Logrus</a>, <a href=https://github.com/rs/zerolog>zerolog</a>, <a href=https://github.com/uber-go/zap>zap</a>, and <a href=https://github.com/apex/log>Apex</a>, let&rsquo;s explore what we can do with <code>zerolog</code></p>
-</li>
-<li>
-<p>First, install the package</p>
+<li>It helpful to use a logging framework instead of writing your own libraries</li>
+<li>A few logging frameworks for Go are <a href=https://github.com/sirupsen/logrus>Logrus</a>, <a href=https://github.com/rs/zerolog>zerolog</a>, <a href=https://github.com/uber-go/zap>zap</a>, and <a href=https://github.com/apex/log>Apex</a>, let&rsquo;s explore what we can do with <code>zerolog</code></li>
+<li>First, install the package</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>go get -u github.com/rs/zerolog/log
-</code></pre></div></li>
-<li>
-<p>Basic example, notice how the output changes to JSON format. JSON is a useful format for logs when you run searches in a centralized location</p>
+</code></pre></div><ul>
+<li>Basic example, notice how the output changes to JSON format. JSON is a useful format for logs when you run searches in a centralized location</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
 
 <span style=color:#f92672>import</span> (
@@ -243,9 +229,9 @@ exit status 1
     <span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Print</span>(<span style=color:#e6db74>&#34;Hey! I&#39;m a log message!&#34;</span>)
 }
 </code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>{&#34;level&#34;:&#34;debug&#34;,&#34;time&#34;:1609855453,&#34;message&#34;:&#34;Hey! I&#39;m a log message!&#34;}
-</code></pre></div></li>
-<li>
-<p>Another useful feature is that you can include context data quickly</p>
+</code></pre></div><ul>
+<li>Another useful feature is that you can include context data quickly</li>
+</ul>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
 
 <span style=color:#f92672>import</span> (
@@ -266,10 +252,8 @@ exit status 1
 }
 </code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>{&#34;level&#34;:&#34;debug&#34;,&#34;EmployeeID&#34;:1001,&#34;time&#34;:1609855731,&#34;message&#34;:&#34;Getting employee information&#34;}
 {&#34;level&#34;:&#34;debug&#34;,&#34;Name&#34;:&#34;John&#34;,&#34;time&#34;:1609855731}
-</code></pre></div></li>
-<li>
-<p>You can implement other features with zerolog, like using leveled logging, using formatted stack traces, and using more than one logger instance to manage different outputs</p>
-</li>
+</code></pre></div><ul>
+<li>You can implement other features with zerolog, like using leveled logging, using formatted stack traces, and using more than one logger instance to manage different outputs</li>
 </ul>
 </section>
 <div class=post-tags>
