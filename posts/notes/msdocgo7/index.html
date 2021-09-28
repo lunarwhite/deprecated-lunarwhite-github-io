@@ -1,0 +1,585 @@
+<!doctype html><html><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge"><title>[MS-Doc-Go] 7 Concurrency - lunarwhite</title><link rel=icon type=image/png href=favicon/favicon.ico><meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="Notes for awesome courses offered by Microsoft.">
+<meta property="og:image" content>
+<meta property="og:title" content="[MS-Doc-Go] 7 Concurrency">
+<meta property="og:description" content="Notes for awesome courses offered by Microsoft.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lunarwhite.github.io/posts/notes/msdocgo7/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-09-03T22:12:23+00:00">
+<meta property="article:modified_time" content="2021-09-03T22:12:23+00:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="[MS-Doc-Go] 7 Concurrency">
+<meta name=twitter:description content="Notes for awesome courses offered by Microsoft.">
+<script src=https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel=stylesheet>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel=stylesheet>
+<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel=stylesheet>
+<link rel=stylesheet type=text/css media=screen href=https://lunarwhite.github.io/css/main.b787af43728695b428289b03901b2f1178d1db0f557c3284a5b068337d45655e.css>
+<link disabled id=dark-mode-theme rel=stylesheet href=https://lunarwhite.github.io/css/dark.ce33575c8d9416a29a0c0f11d9c58c1ca865ac0b6e5ab9b37c0e3d89c5a5e4e1.css>
+</head>
+<body>
+<div class=content><header>
+<div class=main>
+<a href=https://lunarwhite.github.io/>lunarwhite</a>
+</div>
+<nav>
+<a href=/>Home</a>
+<a href=/posts>Posts</a>
+<a href=/tags>Tags</a>
+<a href=/about>About</a>
+/ <a id=dark-mode-toggle><i data-feather=sun></i></a>
+</nav>
+</header>
+<main>
+<article>
+<div class=title>
+<h1 class=title>[MS-Doc-Go] 7 Concurrency</h1>
+<div class=meta>Posted on Sep 3, 2021</div>
+</div>
+<section class=body>
+<blockquote>
+<p><a href=https://docs.microsoft.com/en-us/learn/modules/go-concurrency/>Learn how concurrency works in Go</a></p>
+</blockquote>
+<h2 id=70-introduction>7.0 Introduction</h2>
+<ul>
+<li>Concurrency is the composition of independent activities, like the work that a web server does when it deals with multiple user requests simultaneously but in an autonomous way</li>
+<li>Go has two styles for writing concurrent programs. One is the traditional style that you might have used in other languages with threads. In this module, you&rsquo;ll learn about Go&rsquo;s style, where values are passed between independent activities known as goroutines to communicate processes</li>
+<li>Typically, the biggest problem in writing concurrent programs is sharing data between processes</li>
+<li>Go takes a different approach: Go passes data back and forth through channels, only one activity (goroutine) has access to the data, and there&rsquo;s no race condition by design</li>
+<li>&ldquo;Do not communicate by sharing memory; instead, share memory by communicating.&rdquo;</li>
+</ul>
+<h2 id=71-goroutines>7.1 Goroutines</h2>
+<ul>
+<li>We can say that the first goroutine that a program executes is the <code>main()</code> function. If you want to create another goroutine, you have to use the go keyword before calling the function</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>(){
+    <span style=color:#a6e22e>login</span>()
+    <span style=color:#66d9ef>go</span> <span style=color:#a6e22e>launch</span>()
+}
+</code></pre></div><ul>
+<li>Alternatively, you&rsquo;ll find that many programs like to use anonymous functions to create goroutines</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>(){
+    <span style=color:#a6e22e>login</span>()
+
+    <span style=color:#66d9ef>go</span> <span style=color:#66d9ef>func</span>() {
+        <span style=color:#a6e22e>launch</span>()
+    }()
+}
+</code></pre></div><ul>
+<li>Because we want to focus only on the concurrent part, let&rsquo;s use an existing program that checks if an API endpoint is responding or not. Here&rsquo;s the code:</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+
+<span style=color:#f92672>import</span> (
+    <span style=color:#e6db74>&#34;fmt&#34;</span>
+    <span style=color:#e6db74>&#34;net/http&#34;</span>
+    <span style=color:#e6db74>&#34;time&#34;</span>
+)
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+    <span style=color:#a6e22e>start</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Now</span>()
+
+    <span style=color:#a6e22e>apis</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>string</span>{
+        <span style=color:#e6db74>&#34;https://management.azure.com&#34;</span>,
+        <span style=color:#e6db74>&#34;https://dev.azure.com&#34;</span>,
+        <span style=color:#e6db74>&#34;https://api.github.com&#34;</span>,
+        <span style=color:#e6db74>&#34;https://outlook.office.com/&#34;</span>,
+        <span style=color:#e6db74>&#34;https://api.somewhereintheinternet.com/&#34;</span>,
+        <span style=color:#e6db74>&#34;https://graph.microsoft.com&#34;</span>,
+    }
+
+    <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>api</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>apis</span> {
+        <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>http</span>.<span style=color:#a6e22e>Get</span>(<span style=color:#a6e22e>api</span>)
+        <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+            <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;ERROR: %s is down!\n&#34;</span>, <span style=color:#a6e22e>api</span>)
+            <span style=color:#66d9ef>continue</span>
+        }
+
+        <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;SUCCESS: %s is up and running!\n&#34;</span>, <span style=color:#a6e22e>api</span>)
+    }
+
+    <span style=color:#a6e22e>elapsed</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Since</span>(<span style=color:#a6e22e>start</span>)
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Done! It took %v seconds!\n&#34;</span>, <span style=color:#a6e22e>elapsed</span>.<span style=color:#a6e22e>Seconds</span>())
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>SUCCESS: https://management.azure.com is up and running!
+SUCCESS: https://dev.azure.com is up and running!
+SUCCESS: https://api.github.com is up and running!
+SUCCESS: https://outlook.office.com/ is up and running!
+ERROR: https://api.somewhereintheinternet.com/ is down!
+SUCCESS: https://graph.microsoft.com is up and running!
+Done! It took 1.658436834 seconds!
+</code></pre></div><ul>
+<li>Nothing is out of the ordinary here, but we can do better. Perhaps we can check all sites at the same time? We need to create a goroutine for each API that the program is checking</li>
+<li>To create a goroutine, we need to use the <code>go</code> keyword before calling a function. Let&rsquo;s refactor that code:</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>checkAPI</span>(<span style=color:#a6e22e>api</span> <span style=color:#66d9ef>string</span>) {
+    <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>http</span>.<span style=color:#a6e22e>Get</span>(<span style=color:#a6e22e>api</span>)
+    <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+        <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;ERROR: %s is down!\n&#34;</span>, <span style=color:#a6e22e>api</span>)
+        <span style=color:#66d9ef>return</span>
+    }
+
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;SUCCESS: %s is up and running!\n&#34;</span>, <span style=color:#a6e22e>api</span>)
+}
+</code></pre></div><ul>
+<li>Modify the code in <code>main()</code> to create a goroutine per API</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>api</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>apis</span> {
+    <span style=color:#66d9ef>go</span> <span style=color:#a6e22e>checkAPI</span>(<span style=color:#a6e22e>api</span>)
+}
+</code></pre></div><ul>
+<li>Whole improved progr</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+
+<span style=color:#f92672>import</span> (
+  <span style=color:#e6db74>&#34;fmt&#34;</span>
+  <span style=color:#e6db74>&#34;net/http&#34;</span>
+  <span style=color:#e6db74>&#34;time&#34;</span>
+)
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>CheckAPI</span>(<span style=color:#a6e22e>api</span> <span style=color:#66d9ef>string</span>) {
+  <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>http</span>.<span style=color:#a6e22e>Get</span>(<span style=color:#a6e22e>api</span>)
+  <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;ERROR: %s is down!\n&#34;</span>, <span style=color:#a6e22e>api</span>)
+  }
+
+  <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;SUCCESS: %s is up and running!\n&#34;</span>, <span style=color:#a6e22e>api</span>)
+}
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+  <span style=color:#a6e22e>start</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Now</span>()
+
+  <span style=color:#a6e22e>apis</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>string</span>{
+    <span style=color:#e6db74>&#34;https://management.azure.com&#34;</span>,
+    <span style=color:#e6db74>&#34;https://dev.azure.com&#34;</span>,
+    <span style=color:#e6db74>&#34;https://api.github.com&#34;</span>,
+    <span style=color:#e6db74>&#34;https://outlook.office.com/&#34;</span>,
+    <span style=color:#e6db74>&#34;https://api.somewhereintheinternet.com/&#34;</span>,
+    <span style=color:#e6db74>&#34;https://graph.microsoft.com&#34;</span>,
+  }
+
+  <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>api</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>apis</span> {
+    <span style=color:#66d9ef>go</span> <span style=color:#a6e22e>CheckAPI</span>(<span style=color:#a6e22e>api</span>)
+  }
+
+  <span style=color:#a6e22e>elapsed</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Since</span>(<span style=color:#a6e22e>start</span>)
+  <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Done! It took %v seconds\n&#34;</span>, <span style=color:#a6e22e>elapsed</span>.<span style=color:#a6e22e>Seconds</span>())
+}
+</code></pre></div><h2 id=72-channels>7.2 Channels</h2>
+<ul>
+<li>A channel in Go is a communication mechanism between goroutines. When you need to send a value from one goroutine to another, you use channels</li>
+<li>Use <code>chan</code> as the data type for a channel, but you also need to specify the data type that will pass through the channel, like <code>int</code></li>
+<li>Every time you declare a channel or want to specify a channel as a parameter in a function, you need to use <code>chan &lt;type></code>, like <code>chan int</code>. To create a channel, you use the built-in <code>make()</code></li>
+</ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>ch</span> <span style=color:#f92672>:=</span> make(<span style=color:#66d9ef>chan</span> <span style=color:#66d9ef>int</span>)
+</code></pre></div><ul>
+<li>A channel can do two operations: send data and receive data. To specify the type of operation that a channel has, you need to use the channel operator <code>&lt;-</code>. Additionally, sending data and receiving data in channels are blocking operations</li>
+<li>When a channel only sends data, use the <code>&lt;-</code> after the channel. When a channel receive data, use the <code>&lt;-</code> before the channel</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>ch</span> <span style=color:#f92672>&lt;-</span> <span style=color:#a6e22e>x</span> <span style=color:#75715e>// sends (or write) x through channel ch
+</span><span style=color:#75715e></span><span style=color:#a6e22e>x</span> = <span style=color:#f92672>&lt;-</span><span style=color:#a6e22e>ch</span> <span style=color:#75715e>// x receives (or reads) data sent to the channel ch
+</span><span style=color:#75715e></span><span style=color:#f92672>&lt;-</span><span style=color:#a6e22e>ch</span> <span style=color:#75715e>// receives data, but the result is discarded
+</span></code></pre></div><ul>
+<li>To close a channel, you use the built-in <code>close()</code></li>
+</ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go>close(<span style=color:#a6e22e>ch</span>)
+</code></pre></div><ul>
+<li>If try to send data to a closed channel, the program will panic. If try to receive data from a closed channel, you&rsquo;ll be able to read all data sent. Every subsequent &ldquo;read&rdquo; will then return a zero value</li>
+<li>Let&rsquo;s go back to the program that we created before, and let&rsquo;s use channels to remove the sleep functionality and clean it a little bit. First, let&rsquo;s create a string channel in the main function:</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>ch</span> <span style=color:#f92672>:=</span> make(<span style=color:#66d9ef>chan</span> <span style=color:#66d9ef>string</span>)
+</code></pre></div><ul>
+<li>And remove the sleep line <code>time.Sleep(3 * time.Second)</code></li>
+<li>Instead of printing out the result in the checkAPI function, let&rsquo;s refactor our code and send that message over the channel. To use the channel from that function, you need to add the channel as the parameter.</li>
+<li>Notice that we have to use the <code>fmt.Sprintf</code> because we don&rsquo;t want to print out any text from there. Also, notice that we&rsquo;re using the <code>&lt;-</code> after the channel variable to send data</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>CheckAPI</span>(<span style=color:#a6e22e>api</span> <span style=color:#66d9ef>string</span>, <span style=color:#a6e22e>ch</span> <span style=color:#66d9ef>chan</span> <span style=color:#66d9ef>string</span>) {
+    <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>http</span>.<span style=color:#a6e22e>Get</span>(<span style=color:#a6e22e>api</span>)
+    <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+        <span style=color:#a6e22e>ch</span> <span style=color:#f92672>&lt;-</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;ERROR: %s is down!\n&#34;</span>, <span style=color:#a6e22e>api</span>)
+        <span style=color:#66d9ef>return</span>
+    }
+
+    <span style=color:#a6e22e>ch</span> <span style=color:#f92672>&lt;-</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;SUCCESS: %s is up and running!\n&#34;</span>, <span style=color:#a6e22e>api</span>)
+}
+</code></pre></div><ul>
+<li>Change <code>main()</code> to send and receive</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>ch</span> <span style=color:#f92672>:=</span> make(<span style=color:#66d9ef>chan</span> <span style=color:#66d9ef>string</span>)
+
+<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>api</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>apis</span> {
+    <span style=color:#66d9ef>go</span> <span style=color:#a6e22e>CheckAPI</span>(<span style=color:#a6e22e>api</span>, <span style=color:#a6e22e>ch</span>) <span style=color:#75715e>// send channel variable
+</span><span style=color:#75715e></span>}
+
+<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Print</span>(<span style=color:#f92672>&lt;-</span><span style=color:#a6e22e>ch</span>) <span style=color:#75715e>// receive the data to print it out
+</span></code></pre></div><ul>
+<li>Whole program</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+
+<span style=color:#f92672>import</span> (
+  <span style=color:#e6db74>&#34;fmt&#34;</span>
+  <span style=color:#e6db74>&#34;net/http&#34;</span>
+  <span style=color:#e6db74>&#34;time&#34;</span>
+)
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>CheckAPI</span>(<span style=color:#a6e22e>api</span> <span style=color:#66d9ef>string</span>, <span style=color:#a6e22e>ch</span> <span style=color:#66d9ef>chan</span> <span style=color:#66d9ef>string</span>) {
+  <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>http</span>.<span style=color:#a6e22e>Get</span>(<span style=color:#a6e22e>api</span>)
+  <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+    <span style=color:#a6e22e>ch</span> <span style=color:#f92672>&lt;-</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;ERROR: %s is down!\n&#34;</span>, <span style=color:#a6e22e>api</span>)
+    <span style=color:#66d9ef>return</span>
+  }
+
+  <span style=color:#a6e22e>ch</span> <span style=color:#f92672>&lt;-</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;SUCCESS: %s is up and running!\n&#34;</span>, <span style=color:#a6e22e>api</span>)
+}
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+  <span style=color:#a6e22e>start</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Now</span>()
+
+  <span style=color:#a6e22e>apis</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>string</span>{
+    <span style=color:#e6db74>&#34;https://management.azure.com&#34;</span>,
+    <span style=color:#e6db74>&#34;https://dev.azure.com&#34;</span>,
+    <span style=color:#e6db74>&#34;https://api.github.com&#34;</span>,
+    <span style=color:#e6db74>&#34;https://outlook.office.com/&#34;</span>,
+    <span style=color:#e6db74>&#34;https://api.somewhereintheinternet.com/&#34;</span>,
+    <span style=color:#e6db74>&#34;https://graph.microsoft.com&#34;</span>,
+  }
+
+  <span style=color:#a6e22e>ch</span> <span style=color:#f92672>:=</span> make(<span style=color:#66d9ef>chan</span> <span style=color:#66d9ef>string</span>)
+
+  <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>api</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>apis</span> {
+    <span style=color:#66d9ef>go</span> <span style=color:#a6e22e>CheckAPI</span>(<span style=color:#a6e22e>api</span>, <span style=color:#a6e22e>ch</span>)
+  }
+
+  <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Print</span>(<span style=color:#f92672>&lt;-</span><span style=color:#a6e22e>ch</span>)
+
+  <span style=color:#a6e22e>elapsed</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Since</span>(<span style=color:#a6e22e>start</span>)
+  <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Done! It took %v seconds\n&#34;</span>, <span style=color:#a6e22e>elapsed</span>.<span style=color:#a6e22e>Seconds</span>())
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>ERROR: https://api.somewhereintheinternet.com/ is down!
+
+Done! It took 0.007401217 seconds!
+</code></pre></div><ul>
+<li>But it&rsquo;s still not doing what we want. We&rsquo;re seeing the output only from one of the goroutines, and we created five</li>
+</ul>
+<h2 id=73-unbuffered-channels>7.3 Unbuffered channels</h2>
+<ul>
+<li>When you create a channel by using the <code>make()</code> function, you create an unbuffered channel, which is the default behavior</li>
+<li>It block the sending operation until there&rsquo;s someone ready to receive the data</li>
+<li>This is why we said before that sending and receiving are blocking operations. This is also why the program from the previous section stopped as soon as it received the first message</li>
+<li>We can start by saying that <code>fmt.Print(&lt;-ch)</code> blocks the program because it&rsquo;s reading from a channel, and it&rsquo;s waiting for some data to arrive. As soon as it has something, it continues with the next line, and the program finishes</li>
+<li>What happened to the rest of the goroutines? They&rsquo;re still running, but no one is listening anymore. And because the program finished early, some goroutines couldn&rsquo;t send data</li>
+<li>To fix this problem, you might simply change the code for a loop and receive only the data that you&rsquo;re sure you&rsquo;re sending</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span> &lt; len(<span style=color:#a6e22e>apis</span>); <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Print</span>(<span style=color:#f92672>&lt;-</span><span style=color:#a6e22e>ch</span>)
+}
+</code></pre></div><ul>
+<li>Here&rsquo;s the final version of the program</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+
+<span style=color:#f92672>import</span> (
+    <span style=color:#e6db74>&#34;fmt&#34;</span>
+    <span style=color:#e6db74>&#34;net/http&#34;</span>
+    <span style=color:#e6db74>&#34;time&#34;</span>
+)
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+    <span style=color:#a6e22e>start</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Now</span>()
+
+    <span style=color:#a6e22e>apis</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>string</span>{
+        <span style=color:#e6db74>&#34;https://management.azure.com&#34;</span>,
+        <span style=color:#e6db74>&#34;https://dev.azure.com&#34;</span>,
+        <span style=color:#e6db74>&#34;https://api.github.com&#34;</span>,
+        <span style=color:#e6db74>&#34;https://outlook.office.com/&#34;</span>,
+        <span style=color:#e6db74>&#34;https://api.somewhereintheinternet.com/&#34;</span>,
+        <span style=color:#e6db74>&#34;https://graph.microsoft.com&#34;</span>,
+    }
+
+    <span style=color:#a6e22e>ch</span> <span style=color:#f92672>:=</span> make(<span style=color:#66d9ef>chan</span> <span style=color:#66d9ef>string</span>)
+
+    <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>api</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>apis</span> {
+        <span style=color:#66d9ef>go</span> <span style=color:#a6e22e>checkAPI</span>(<span style=color:#a6e22e>api</span>, <span style=color:#a6e22e>ch</span>)
+    }
+
+    <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span> &lt; len(<span style=color:#a6e22e>apis</span>); <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+        <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Print</span>(<span style=color:#f92672>&lt;-</span><span style=color:#a6e22e>ch</span>)
+    }
+
+    <span style=color:#a6e22e>elapsed</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Since</span>(<span style=color:#a6e22e>start</span>)
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Done! It took %v seconds!\n&#34;</span>, <span style=color:#a6e22e>elapsed</span>.<span style=color:#a6e22e>Seconds</span>())
+}
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>checkAPI</span>(<span style=color:#a6e22e>api</span> <span style=color:#66d9ef>string</span>, <span style=color:#a6e22e>ch</span> <span style=color:#66d9ef>chan</span> <span style=color:#66d9ef>string</span>) {
+    <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>http</span>.<span style=color:#a6e22e>Get</span>(<span style=color:#a6e22e>api</span>)
+    <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+        <span style=color:#a6e22e>ch</span> <span style=color:#f92672>&lt;-</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;ERROR: %s is down!\n&#34;</span>, <span style=color:#a6e22e>api</span>)
+        <span style=color:#66d9ef>return</span>
+    }
+
+    <span style=color:#a6e22e>ch</span> <span style=color:#f92672>&lt;-</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;SUCCESS: %s is up and running!\n&#34;</span>, <span style=color:#a6e22e>api</span>)
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>ERROR: https://api.somewhereintheinternet.com/ is down!
+SUCCESS: https://api.github.com is up and running!
+SUCCESS: https://management.azure.com is up and running!
+SUCCESS: https://dev.azure.com is up and running!
+SUCCESS: https://graph.microsoft.com is up and running!
+SUCCESS: https://outlook.office.com/ is up and running!
+Done! It took 0.602099714 seconds!
+</code></pre></div><ul>
+<li>Finally, we could say that unbuffered channels are synchronizing the sending and receiving operations. Even though you&rsquo;re using concurrency, the communication is synchronous</li>
+</ul>
+<h2 id=74-buffered-channels>7.4 Buffered channels</h2>
+<ul>
+<li>Buffered channels send and receive data without blocking the program because a buffered channel behaves like a queue. You can limit the size of this queue when you create the channel, like this:</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#a6e22e>ch</span> <span style=color:#f92672>:=</span> make(<span style=color:#66d9ef>chan</span> <span style=color:#66d9ef>string</span>, <span style=color:#ae81ff>10</span>)
+</code></pre></div><ul>
+<li>Every time you send something to the channel, the element is added to the queue. Then, a receive operation removes the element from the queue. When the channel is full, any send operation simply waits until there&rsquo;s space to hold the data. Conversely, if the channel is empty and there&rsquo;s a read operation, it&rsquo;s blocked until there&rsquo;s something to read</li>
+<li>Here&rsquo;s a simple example</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+
+<span style=color:#f92672>import</span> (
+    <span style=color:#e6db74>&#34;fmt&#34;</span>
+)
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>send</span>(<span style=color:#a6e22e>ch</span> <span style=color:#66d9ef>chan</span> <span style=color:#66d9ef>string</span>, <span style=color:#a6e22e>message</span> <span style=color:#66d9ef>string</span>) {
+    <span style=color:#a6e22e>ch</span> <span style=color:#f92672>&lt;-</span> <span style=color:#a6e22e>message</span>
+}
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+    <span style=color:#a6e22e>size</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>2</span>
+    <span style=color:#a6e22e>ch</span> <span style=color:#f92672>:=</span> make(<span style=color:#66d9ef>chan</span> <span style=color:#66d9ef>string</span>, <span style=color:#a6e22e>size</span>)
+    <span style=color:#a6e22e>send</span>(<span style=color:#a6e22e>ch</span>, <span style=color:#e6db74>&#34;one&#34;</span>)
+    <span style=color:#a6e22e>send</span>(<span style=color:#a6e22e>ch</span>, <span style=color:#e6db74>&#34;two&#34;</span>)
+    <span style=color:#66d9ef>go</span> <span style=color:#a6e22e>send</span>(<span style=color:#a6e22e>ch</span>, <span style=color:#e6db74>&#34;three&#34;</span>) <span style=color:#75715e>// goroutines
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>go</span> <span style=color:#a6e22e>send</span>(<span style=color:#a6e22e>ch</span>, <span style=color:#e6db74>&#34;four&#34;</span>) <span style=color:#75715e>// goroutines
+</span><span style=color:#75715e></span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;All data sent to the channel ...&#34;</span>)
+
+    <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span> &lt; <span style=color:#ae81ff>4</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+        <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#f92672>&lt;-</span><span style=color:#a6e22e>ch</span>)
+    }
+
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Done!&#34;</span>)
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>All data sent to the channel ...
+one
+two
+three
+four
+Done!
+</code></pre></div><ul>
+<li>When you use channels, you should better use goroutines</li>
+<li>To test the case where you create a buffered channel with more elements than you&rsquo;ll need, let&rsquo;s use the example that we used before to check APIs and create a buffered channel with a size of 10</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+
+<span style=color:#f92672>import</span> (
+    <span style=color:#e6db74>&#34;fmt&#34;</span>
+    <span style=color:#e6db74>&#34;net/http&#34;</span>
+    <span style=color:#e6db74>&#34;time&#34;</span>
+)
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>checkAPI</span>(<span style=color:#a6e22e>api</span> <span style=color:#66d9ef>string</span>, <span style=color:#a6e22e>ch</span> <span style=color:#66d9ef>chan</span> <span style=color:#66d9ef>string</span>) {
+    <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>http</span>.<span style=color:#a6e22e>Get</span>(<span style=color:#a6e22e>api</span>)
+    <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+        <span style=color:#a6e22e>ch</span> <span style=color:#f92672>&lt;-</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;ERROR: %s is down!\n&#34;</span>, <span style=color:#a6e22e>api</span>)
+        <span style=color:#66d9ef>return</span>
+    }
+
+    <span style=color:#a6e22e>ch</span> <span style=color:#f92672>&lt;-</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;SUCCESS: %s is up and running!\n&#34;</span>, <span style=color:#a6e22e>api</span>)
+}
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+    <span style=color:#a6e22e>start</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Now</span>()
+
+    <span style=color:#a6e22e>apis</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>string</span>{
+        <span style=color:#e6db74>&#34;https://management.azure.com&#34;</span>,
+        <span style=color:#e6db74>&#34;https://dev.azure.com&#34;</span>,
+        <span style=color:#e6db74>&#34;https://api.github.com&#34;</span>,
+        <span style=color:#e6db74>&#34;https://outlook.office.com/&#34;</span>,
+        <span style=color:#e6db74>&#34;https://api.somewhereintheinternet.com/&#34;</span>,
+        <span style=color:#e6db74>&#34;https://graph.microsoft.com&#34;</span>,
+    }
+
+    <span style=color:#a6e22e>ch</span> <span style=color:#f92672>:=</span> make(<span style=color:#66d9ef>chan</span> <span style=color:#66d9ef>string</span>, <span style=color:#ae81ff>10</span>)
+
+    <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>api</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>apis</span> {
+        <span style=color:#66d9ef>go</span> <span style=color:#a6e22e>checkAPI</span>(<span style=color:#a6e22e>api</span>, <span style=color:#a6e22e>ch</span>)
+    }
+
+    <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span> &lt; len(<span style=color:#a6e22e>apis</span>); <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+        <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Print</span>(<span style=color:#f92672>&lt;-</span><span style=color:#a6e22e>ch</span>)
+    }
+
+    <span style=color:#a6e22e>elapsed</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Since</span>(<span style=color:#a6e22e>start</span>)
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Done! It took %v seconds!\n&#34;</span>, <span style=color:#a6e22e>elapsed</span>.<span style=color:#a6e22e>Seconds</span>())
+}
+</code></pre></div><ul>
+<li>Calculate Fibonacci numbers faster with concurrency</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+
+<span style=color:#f92672>import</span> (
+    <span style=color:#e6db74>&#34;fmt&#34;</span>
+    <span style=color:#e6db74>&#34;math/rand&#34;</span>
+    <span style=color:#e6db74>&#34;time&#34;</span>
+)
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>fib</span>(<span style=color:#a6e22e>number</span> <span style=color:#66d9ef>float64</span>, <span style=color:#a6e22e>ch</span> <span style=color:#66d9ef>chan</span> <span style=color:#66d9ef>string</span>) { <span style=color:#75715e>// before: no &#34;chan string&#34;
+</span><span style=color:#75715e></span>    <span style=color:#a6e22e>x</span>, <span style=color:#a6e22e>y</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>1.0</span>, <span style=color:#ae81ff>1.0</span>
+    <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span> &lt; int(<span style=color:#a6e22e>number</span>); <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+        <span style=color:#a6e22e>x</span>, <span style=color:#a6e22e>y</span> = <span style=color:#a6e22e>y</span>, <span style=color:#a6e22e>x</span><span style=color:#f92672>+</span><span style=color:#a6e22e>y</span>
+    }
+
+    <span style=color:#a6e22e>r</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>rand</span>.<span style=color:#a6e22e>Intn</span>(<span style=color:#ae81ff>3</span>)
+    <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Sleep</span>(<span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Duration</span>(<span style=color:#a6e22e>r</span>) <span style=color:#f92672>*</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Second</span>)
+
+    <span style=color:#a6e22e>ch</span> <span style=color:#f92672>&lt;-</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;Fib(%v): %v\n&#34;</span>, <span style=color:#a6e22e>number</span>, <span style=color:#a6e22e>x</span>) <span style=color:#75715e>// before: return x
+</span><span style=color:#75715e></span>}
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+    <span style=color:#a6e22e>start</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Now</span>()
+
+    <span style=color:#a6e22e>size</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>15</span>
+    <span style=color:#a6e22e>ch</span> <span style=color:#f92672>:=</span> make(<span style=color:#66d9ef>chan</span> <span style=color:#66d9ef>string</span>, <span style=color:#a6e22e>size</span>) <span style=color:#75715e>// declare chan string buffered
+</span><span style=color:#75715e></span>
+    <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span> &lt; <span style=color:#a6e22e>size</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+        <span style=color:#66d9ef>go</span> <span style=color:#a6e22e>fib</span>(float64(<span style=color:#a6e22e>i</span>), <span style=color:#a6e22e>ch</span>) <span style=color:#75715e>// use &#34;go&#34;
+</span><span style=color:#75715e></span>    }
+
+    <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span> &lt; <span style=color:#a6e22e>size</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+        <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#f92672>&lt;-</span><span style=color:#a6e22e>ch</span>) <span style=color:#75715e>// receive from chan
+</span><span style=color:#75715e></span>    }
+
+    <span style=color:#a6e22e>elapsed</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Since</span>(<span style=color:#a6e22e>start</span>)
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Done! It took %v seconds!\n&#34;</span>, <span style=color:#a6e22e>elapsed</span>.<span style=color:#a6e22e>Seconds</span>())
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>Fib(2): 2
+Fib(9): 55
+Fib(3): 3
+Fib(10): 89
+Fib(8): 34
+Fib(13): 377
+Fib(1): 1
+Fib(11): 144
+Fib(14): 610
+Fib(12): 233
+Fib(7): 21
+Fib(6): 13
+Fib(4): 5
+Fib(5): 8
+Fib(0): 1
+Done! It took 2.0056393 seconds!
+</code></pre></div><h2 id=75-unbuffered-vs-buffered-channels>7.5 Unbuffered vs. buffered channels</h2>
+<ul>
+<li>At this point, you might be wondering when to use one type or another. It all depends on how you want the communication to flow between goroutines</li>
+<li>Unbuffered channels communicate synchronously. They guarantee that every time you send data, the program gets blocked until someone is reading from the channel</li>
+<li>Conversely, buffered channels decouple the send and receive operations. They don&rsquo;t block a program, but you have to be careful because you might end up causing a deadlock</li>
+<li>When you use unbuffered channels, you can control how many goroutines can run concurrently. For instance, you might be making calls to an API, and you want to control how many calls you perform every second. Otherwise, you might get blocked</li>
+</ul>
+<h2 id=76-channel-directions>7.6 Channel directions</h2>
+<ul>
+<li>When you use channels as parameters to a function, you can specify whether a channel is meant to send or receive data</li>
+<li>As your program grows, you might have too many functions, and it&rsquo;s a good idea to document the intent of each channel to use them properly. Or perhaps you&rsquo;re writing a library and want to expose a channel as read-only to maintain data consistency</li>
+<li>The syntax to define the type of channel as a parameter in a function is like:</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>chan</span><span style=color:#f92672>&lt;-</span> <span style=color:#66d9ef>int</span> <span style=color:#75715e>// it&#39;s a channel to only send data
+</span><span style=color:#75715e></span><span style=color:#f92672>&lt;-</span><span style=color:#66d9ef>chan</span> <span style=color:#66d9ef>int</span> <span style=color:#75715e>// it&#39;s a channel to only receive data
+</span></code></pre></div><ul>
+<li>An example, one func reads data and another sends data</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+
+<span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>send</span>(<span style=color:#a6e22e>ch</span> <span style=color:#66d9ef>chan</span><span style=color:#f92672>&lt;-</span> <span style=color:#66d9ef>string</span>, <span style=color:#a6e22e>message</span> <span style=color:#66d9ef>string</span>) {
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Sending: %#v\n&#34;</span>, <span style=color:#a6e22e>message</span>)
+    <span style=color:#a6e22e>ch</span> <span style=color:#f92672>&lt;-</span> <span style=color:#a6e22e>message</span>
+}
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>read</span>(<span style=color:#a6e22e>ch</span> <span style=color:#f92672>&lt;-</span><span style=color:#66d9ef>chan</span> <span style=color:#66d9ef>string</span>) {
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Receiving: %#v\n&#34;</span>, <span style=color:#f92672>&lt;-</span><span style=color:#a6e22e>ch</span>)
+}
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+    <span style=color:#a6e22e>ch</span> <span style=color:#f92672>:=</span> make(<span style=color:#66d9ef>chan</span> <span style=color:#66d9ef>string</span>, <span style=color:#ae81ff>1</span>)
+    <span style=color:#a6e22e>send</span>(<span style=color:#a6e22e>ch</span>, <span style=color:#e6db74>&#34;Hello World!&#34;</span>)
+    <span style=color:#a6e22e>read</span>(<span style=color:#a6e22e>ch</span>)
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>Sending: &#34;Hello World!&#34;
+Receiving: &#34;Hello World!&#34;
+</code></pre></div><h2 id=77-multiplexing>7.7 Multiplexing</h2>
+<ul>
+<li>It&rsquo;s to interact with more than one channel simultaneously by using the <code>select</code> keyword. At times, you&rsquo;ll want to wait for an event to happen when you&rsquo;re working with multiple channels</li>
+<li>For instance, you might include some logic to cancel an operation when there&rsquo;s an anomaly in the data that your program is processing</li>
+<li><code>select</code> works like <code>switch</code> but for channels. It blocks the program&rsquo;s execution until it receives an event to process. If it gets more than one event, it chooses one at random</li>
+<li>An essential aspect of the <code>select</code> is that it finishes its execution after it processes an event. If you want to wait for more events to happen, you might need to use a loop</li>
+<li>Use the following program to see:</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+
+<span style=color:#f92672>import</span> (
+  <span style=color:#e6db74>&#34;fmt&#34;</span>
+  <span style=color:#e6db74>&#34;time&#34;</span>
+)
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>process</span>(<span style=color:#a6e22e>ch</span> <span style=color:#66d9ef>chan</span> <span style=color:#66d9ef>string</span>) {
+  <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Sleep</span>(<span style=color:#ae81ff>3</span> <span style=color:#f92672>*</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Second</span>)
+  <span style=color:#a6e22e>ch</span> <span style=color:#f92672>&lt;-</span> <span style=color:#e6db74>&#34;Done processing!&#34;</span>
+}
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>replicate</span>(<span style=color:#a6e22e>ch</span> <span style=color:#66d9ef>chan</span> <span style=color:#66d9ef>string</span>) {
+  <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Sleep</span>(<span style=color:#ae81ff>1</span> <span style=color:#f92672>*</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Second</span>)
+  <span style=color:#a6e22e>ch</span> <span style=color:#f92672>&lt;-</span> <span style=color:#e6db74>&#34;Done replicating&#34;</span>
+}
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+  <span style=color:#a6e22e>ch1</span> <span style=color:#f92672>:=</span> make(<span style=color:#66d9ef>chan</span> <span style=color:#66d9ef>string</span>)
+  <span style=color:#a6e22e>ch2</span> <span style=color:#f92672>:=</span> make(<span style=color:#66d9ef>chan</span> <span style=color:#66d9ef>string</span>)
+
+  <span style=color:#66d9ef>go</span> <span style=color:#a6e22e>process</span>(<span style=color:#a6e22e>ch1</span>)
+  <span style=color:#66d9ef>go</span> <span style=color:#a6e22e>replicate</span>(<span style=color:#a6e22e>ch2</span>)
+
+  <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span> &lt; <span style=color:#ae81ff>2</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+    <span style=color:#66d9ef>select</span> {
+    <span style=color:#66d9ef>case</span> <span style=color:#a6e22e>process</span> <span style=color:#f92672>:=</span> <span style=color:#f92672>&lt;-</span><span style=color:#a6e22e>ch1</span>:
+      <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>process</span>)
+    <span style=color:#66d9ef>case</span> <span style=color:#a6e22e>replicate</span> <span style=color:#f92672>:=</span> <span style=color:#f92672>&lt;-</span><span style=color:#a6e22e>ch2</span>:
+      <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>replicate</span>)
+    }
+  }
+}
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>Done replicating!
+Done processing!
+</code></pre></div><ul>
+<li>Notice that the <code>replicate</code> function finished first. That&rsquo;s why you see its output in the terminal first. The main function has a loop because the select statement ends as soon as it receives an event, but we&rsquo;re still waiting for the process function to finish</li>
+</ul>
+</section>
+<div class=post-tags>
+<nav class="nav tags">
+<ul class=tags>
+<li><a href=/tags/awesome-course>awesome-course</a></li>
+<li><a href=/tags/golang>golang</a></li>
+</ul>
+</nav>
+</div>
+</article>
+</main>
+<footer>
+<hr><a class=soc href=https://www.linkedin.com/in/yuedongwoo/ title=LinkedIn><i data-feather=linkedin></i></a>|<a class=soc href=https://github.com/lunarwhite title=GitHub><i data-feather=github></i></a>|<a class=soc href title=Twitter><i data-feather=twitter></i></a>|<a class=soc href title=Instagram><i data-feather=instagram></i></a>|<a class=soc href title=Bilibili><i data-feather=tv></i></a>|<a class=soc href=https://www.zhihu.com/people/wydnlz title=Zhihu><i data-feather=link></i></a>|⚡️
+2021 © lunarwhite | <a href=https://github.com/athul/archie>Archie Theme</a> | Built with <a href=https://gohugo.io>Hugo</a>
+</footer>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','G-80H8N7NN50','auto'),ga('send','pageview'))</script>
+<script async src=https://www.google-analytics.com/analytics.js></script>
+<script src=https://lunarwhite.github.io/js/toggle.dark.js></script>
+<script>feather.replace()</script>
+<script type=text/javascript async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:!0,processEnvironments:!0,skipTags:['script','noscript','style','textarea','pre'],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var b=MathJax.Hub.getAllJax(),a;for(a=0;a<b.length;a+=1)b[a].SourceElement().parentNode.className+=' has-jax'}),MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}})</script></div>
+</body>
+</html>
