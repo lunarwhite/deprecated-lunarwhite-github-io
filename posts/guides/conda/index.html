@@ -49,7 +49,7 @@ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/m
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2
 conda config --set show_channel_urls yes
-</code></pre></div><h3 id=13-其他常用>1.3 其他常用</h3>
+</code></pre></div><h3 id=13-管理环境>1.3 管理环境</h3>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># 创建环境</span>
 conda create --name &lt;env_name&gt; &lt;package_names&gt;
 
@@ -63,6 +63,15 @@ conda info --envs
 <span style=color:#75715e># 复制，后删除</span>
 conda create --name &lt;new_env_name&gt; --clone &lt;copied_env_name&gt;
 conda remove --name &lt;env_name&gt; --all
+</code></pre></div><h3 id=14-清理>1.4 清理</h3>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># 删除从不使用的包</span>
+conda clean --packages
+
+<span style=color:#75715e># 删除tar包</span>
+conda clean --tarballs
+
+<span style=color:#75715e># 删除索引缓存、锁定文件、未使用过的包和tar包</span>
+conda clean -a
 </code></pre></div><h2 id=2-常用包库>2 常用包库</h2>
 <h3 id=21-工具包>2.1 工具包</h3>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>pip3 install numpy
