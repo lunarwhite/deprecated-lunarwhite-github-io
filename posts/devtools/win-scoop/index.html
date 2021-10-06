@@ -39,50 +39,39 @@
 <div class=meta>Posted on Nov 20, 2019</div>
 </div>
 <section class=body>
-<p>众所周知，Windows 下进行开发多少有点反人类，环境配置和 macos/linux 相比，简直就是灾难。索性有人开源了一系列包管理工具，scoop/chocolatey/winget，对比之下，选择了 scoop，体验良好，写一文向大家安利。</p>
-<h2 id=1-必要性>1 必要性</h2>
-<blockquote>
-<p>如果用过 macOS 或者 Linux 的朋友，或多或少都听说过包管理工具。通过包管理工具，你可以直接在终端中快速自动地安装、配置、卸载和升级软件，而无需通过 GUI 页面一步步手动安装下载软件。这非常适合一次性安装非常多软件，大大地节约了软件安装所需要的时间和步骤，同时也在一定程度上确保了来源软件的安全性</p>
-</blockquote>
+<h2 id=1-do-i-really-need>1 Do I really need？</h2>
+<p>众所周知，在Windows下进行开发多少有点反人类，环境配置和macos/linux相比，可以说是灾难。索性有人开源了一系列包管理工具，主要有scoop/chocolatey/winget。对比之下，选择了 scoop，体验良好，写一文向大家安利。</p>
+<p>通过包管理工具，你可以直接在终端中快速自动地安装、配置、卸载和升级软件，而无需通过 GUI 页面一步步手动安装下载软件。这非常适合一次性安装非常多软件，大大地节约了软件安装所需要的时间和步骤，同时也在一定程度上确保了来源软件的安全性。</p>
+<p>优点包括不限于：降低安装维护软件的成本，避免安装大量软件造成的路径污染，不必查找和安装软件的其他依赖项，避免捆绑和垃圾软件，卸载彻底。</p>
+<h2 id=2-setup-environment>2 Setup environment</h2>
 <ul>
-<li>Windows下三大包管理工具，scoop/winget/chocolatey
-<ul>
-<li>降低安装维护软件的成本</li>
-<li>避免安装大量软件造成的路径污染</li>
-<li>不必查找和安装软件的其他依赖项</li>
-<li>避免捆绑和垃圾软件</li>
-<li>彻底地卸载</li>
+<li>scoop init</li>
 </ul>
-</li>
-</ul>
-<h2 id=2-环境部署>2 环境部署</h2>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>set-executionpolicy remotesigned -scope currentuser
 
 iex <span style=color:#f92672>(</span>new-object net.webclient<span style=color:#f92672>)</span>.downloadstring<span style=color:#f92672>(</span><span style=color:#e6db74>&#39;https://raw.githubusercontent.com/lukesampson/scoop/master/bin/install.ps1&#39;</span><span style=color:#f92672>)</span>
-
-<span style=color:#75715e># basic</span>
-scoop install 7zip
+</code></pre></div><ul>
+<li>basic apps</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>scoop install 7zip
 scoop install git
 scoop install sudo
 scoop install innounp
 scoop install dark
-
-scoop checkup
-</code></pre></div><h2 id=3-软件安装>3 软件安装</h2>
-<ul>
-<li>app query
+</code></pre></div><ul>
+<li>checkup</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>scoop checkup
+</code></pre></div><h2 id=3-search-for-apps>3 Search for apps</h2>
 <ul>
 <li><a href=https://scoop-docs.now.sh/apps/>https://scoop-docs.now.sh/apps/</a></li>
 <li><a href=https://rasa.github.io/scoop-directory/by-apps>https://rasa.github.io/scoop-directory/by-apps</a></li>
 </ul>
-</li>
-<li>app bucket</li>
+<h2 id=4-personal-app-list>4 Personal app-list</h2>
+<ul>
+<li>bucket</li>
 </ul>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># add third party bucket</span>
-scoop bucket add &lt;bucket&gt; &lt;bucket_url&gt;
-
-<span style=color:#75715e># add official bucket</span>
-scoop bucket add extras
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>scoop bucket add extras
 scoop bucket add versions
 scoop bucket add java
 </code></pre></div><ul>
@@ -97,19 +86,13 @@ scoop install motrix
 scoop install kms
 
 <span style=color:#75715e># network &amp; proxy</span>
-scoop install switchhosts
-scoop install psiphon3
 scoop install shadowsocks
 scoop install v2rayn
+scoop install psiphon3
 
 <span style=color:#75715e># daily office</span>
 scoop install chromium
-scoop install firefox
 scoop install wpsoffice
-scoop install rambox
-scoop install telegram
-scoop install slack
-scoop install steam
 
 <span style=color:#75715e># multimedia</span>
 scoop install ditto <span style=color:#75715e># CTRL+shift+V</span>
@@ -122,78 +105,70 @@ scoop install mpv
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># terminal emulator</span>
 scoop install windows-terminal	<span style=color:#75715e># admin</span>
 scoop install mobaxterm	<span style=color:#75715e># admin, icon</span>
-scoop install hyper	<span style=color:#75715e># admin</span>
 
 <span style=color:#75715e># text editor / IDE</span>
 scoop install typora	<span style=color:#75715e># theme: github, night, monokai, misty, purple, fluent, drake</span>
 scoop install vscode
-scoop install vscode-insider
 scoop install jetbrains-toolbox
 
 <span style=color:#75715e># image &amp; text</span>
 scoop install hugo-extended
 scoop install pandoc
-scoop install latex
-scoop install graphviz
-
-<span style=color:#75715e># database</span>
-scoop install mysql
-scoop install sqlite
-scoop install postgresql
-scoop install mongodb
-scoop install redis
-scoop install kafka
-scoop install rabbitmq
-
-<span style=color:#75715e># web &amp; other</span>
-scoop install nodejs-lts
-scoop install nginx
-scoop install tomcat
-scoop install postman
 
 <span style=color:#75715e># golang</span>
 scoop install go
 
 <span style=color:#75715e># python</span>
 scoop install miniconda3
+</code></pre></div><ul>
+<li>development (not suggest to install on windows)</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># # c/cpp</span>
+<span style=color:#75715e># scoop install gcc</span>
+<span style=color:#75715e># scoop install gdb</span>
 
-<span style=color:#75715e># c/cpp</span>
-scoop install gcc
-scoop install gdb
+<span style=color:#75715e># # java</span>
+<span style=color:#75715e># scoop install openjdk8-redhat</span>
+<span style=color:#75715e># scoop install maven</span>
 
-<span style=color:#75715e># java</span>
-scoop install openjdk8-redhat
-scoop install maven
-</code></pre></div><h2 id=常用命令>常用命令</h2>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># 查看已安装程序</span>
-scoop list
-<span style=color:#75715e># 查看已经添加的库</span>
-scoop bucket list
-<span style=color:#75715e># 查看其他库</span>
-scoop bucket known
-<span style=color:#75715e># 移除已经添加的库</span>
-scoop bucket rm nerd
+<span style=color:#75715e># # web &amp; other</span>
+<span style=color:#75715e># scoop install nodejs-lts</span>
+<span style=color:#75715e># scoop install nginx</span>
+<span style=color:#75715e># scoop install tomcat</span>
 
-<span style=color:#75715e># 查找软件</span>
+<span style=color:#75715e># # database</span>
+<span style=color:#75715e># scoop install mysql</span>
+<span style=color:#75715e># scoop install sqlite</span>
+<span style=color:#75715e># scoop install postgresql</span>
+<span style=color:#75715e># scoop install mongodb</span>
+<span style=color:#75715e># scoop install redis</span>
+</code></pre></div><h2 id=5-frequently-used-commands>5 Frequently used commands</h2>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># get</span>
 scoop search &lt;app&gt;
-<span style=color:#75715e># 显示软件信息（含必要配置说明）</span>
 scoop info &lt;app&gt;
 
-<span style=color:#75715e># 查看更新</span>
-scoop status
-<span style=color:#75715e># 自身诊断</span>
-scoop checkup
-<span style=color:#75715e># 更新scoop, 更新指定软件</span>
-scoop update *
+<span style=color:#75715e># bucket</span>
+scoop bucket list
+scoop bucket known
+scoop bucket add &lt;bucket&gt; &lt;bucket_url&gt;
+scoop bucket rm nerd
 
-<span style=color:#75715e># 卸载程序并移除所有配置文件</span>
+<span style=color:#75715e># install &amp; update</span>
+scoop install &lt;app&gt;
+scoop update &lt;app&gt;
+
+<span style=color:#75715e># uninstall</span>
 scoop uninstall &lt;app&gt; -p
-<span style=color:#75715e># 删除所有缓存</span>
+scoop uninstall scoop
+
+<span style=color:#75715e># check</span>
+scoop list
+scoop status
+scoop checkup
+
+<span style=color:#75715e># clean</span>
 scoop cache rm *
 scoop cleanup *
-
-<span style=color:#75715e># 卸载 Scoop</span>
-scoop uninstall scoop
 </code></pre></div>
 </section>
 <div class=post-tags>
